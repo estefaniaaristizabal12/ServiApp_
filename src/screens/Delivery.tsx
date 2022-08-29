@@ -1,7 +1,10 @@
 import React from 'react'
+import { Text } from 'react-native'
 
 export const Delivery = () => {
   return (
-    <div>Delivery</div>
+    <Text>
+        Hola
+    </Text>
   )
 }

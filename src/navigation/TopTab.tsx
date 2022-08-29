@@ -12,8 +12,8 @@ export const TopTab = () => {
                 tabBarIndicatorStyle: { backgroundColor: Colors.primary },
             }}
         >
-            <Tab.Screen name="Inicio" component={Delivery} />
-            <Tab.Screen name="Recomendaciones" component={PickUp} />
+            <Tab.Screen name="Domicilio" component={Delivery} />
+            <Tab.Screen name="Recoger" component={PickUp} />
         </Tab.Navigator>
     )
 }

@@ -1,7 +1,10 @@
 import React from 'react'
+import { Text } from 'react-native'
 
 export const PickUp = () => {
   return (
-    <div>PickUp</div>
+    <Text>
+        Hola
+    </Text>
   )
 }

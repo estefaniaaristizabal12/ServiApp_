@@ -1,7 +1,10 @@
 import React from 'react'
+import { Text } from 'react-native'
 
 export const Cart = () => {
   return (
-    <div>Cart</div>
+    <Text>
+        Hola
+    </Text>
   )
 }

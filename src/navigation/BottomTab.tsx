@@ -2,7 +2,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../constants/colors';
-import { Pressable } from 'react-native';
+import { Cart } from '../screens/Cart';
+import { TopTab } from './TopTab';
+import { Profile } from '../screens/Profile';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Orders } from '../screens/Orders';
 
 
 const BtTap = createBottomTabNavigator();
@@ -11,44 +15,43 @@ export default function BottomTab() {
     const navigation = useNavigation();
 
     return (
+
         <BtTap.Navigator
             initialRouteName="TopTab" //OJO
-            screenOptions={{
+            screenOptions={({ route }) => ({
                 tabBarActiveTintColor: Colors.secondary,
                 headerTitleAlign: 'center',
-            }}>
+                tabBarIcon: ({ color, focused }) => {
 
+                    let iconName: string = '';
+                    switch (route.name) {
+                        case 'Home':
+                            iconName = "home"
+                            break;
 
-            {/* <BtTap.Screen
-                name="TopTab"
-                // component={MyTopTab}
-                options={{
-                    headerLeft: () => (
-                        <Pressable onPress={() => navigation.openDrawer()}>
-                            <FontAwesome
-                                name="align-left"
-                                size={25}
-                                color={Colors.secondary}
-                                style={{ marginLeft: 15 }}
-                            />
-                        </Pressable>
-                    ),
-                    headerRight: () => (
-                        <Pressable onPress={() => navigation.navigate('Cart')}>
-                            <FontAwesome5
-                                name="shopping-cart"
-                                size={22}
-                                color={Colors.secondary}
-                                style={{ marginRight: 15 }}
-                            />
-                        </Pressable>
-                    ),
-                    tabBarLabel: 'incio',
-                    tabBarIcon: ({ color }) => (
-                        <FontAwesome name="home" size={30} color={color} />
-                    ),
-                }}
-            /> */}
+                        case 'Cart':
+                            iconName = 'shopping-cart'
+                            break;
+
+                        case 'Orders':
+                            iconName = 'clipboard-list'
+                            break;
+
+                        case 'Profile':
+                            iconName = 'user'
+                            break;
+                    }
+
+                    return <FontAwesome5 name={iconName} size={25} color={Colors.secondary} style={{ marginLeft: 15 }} />
+
+                }
+            })}>
+
+            <BtTap.Screen name="Home" options={{ title: 'Home' }} component={TopTab} />
+            <BtTap.Screen name="Cart" options={{ title: 'Cart' }} component={Cart} />
+            <BtTap.Screen name="Orders" options={{ title: 'Orders' }} component={Orders} />
+            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
+
 
         </BtTap.Navigator>
 

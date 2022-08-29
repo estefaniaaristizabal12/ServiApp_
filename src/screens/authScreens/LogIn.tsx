@@ -37,7 +37,7 @@ export const LogIn = ({navigation})  => {
             error //OJO ACA
             password
           />
-          <Button title="Log In" onPress={() => navigation.navigate('MyDrawer')}/>
+          <Button title="Log In" onPress={() => navigation.navigate('BottomTab')}/>
           <Text
             onPress={() => navigation.navigate('SignUp')}
             style={{
