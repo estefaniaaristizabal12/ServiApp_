@@ -4,6 +4,7 @@ import { Colors } from '../constants/colors';
 import { PickUp } from '../screens/PickUp';
 import { Delivery } from '../screens/Delivery';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { RestStack } from './RestStack';
 
 const Tab = createMaterialTopTabNavigator();
 export const TopTab = () => {

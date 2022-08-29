@@ -1,10 +1,11 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
+import Button from '../components/Button'
 
-export const Delivery = () => {
+export const Delivery = ({ navigation }) => {
   return (
-    <Text>
-        Hola
-    </Text>
+    <View>
+      <Button title="Prueba" onPress={() => navigation.navigate('Restaurant')}/>
+    </View>
   )
 }
