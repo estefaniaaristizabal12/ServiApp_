@@ -3,11 +3,16 @@ import React from 'react'
 import { Colors } from '../constants/colors';
 import { PickUp } from '../screens/PickUp';
 import { Delivery } from '../screens/Delivery';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 export const TopTab = () => {
+
+    const { top:paddingTop } = useSafeAreaInsets()
+
     return (
         <Tab.Navigator
+            style={{ paddingTop }}
             screenOptions={{
                 tabBarIndicatorStyle: { backgroundColor: Colors.primary },
             }}
