@@ -17,29 +17,29 @@ export const LogIn = ({ navigation }) => {
           Bienvenido
         </Text>
         <Text style={{ color: Colors.grey, fontSize: 14, marginVertical: -30, textAlign: 'center' }}>
-          Desea ingresar y disfrutar de multiples servicios?
+          Ingrese y disfrute de múltiples servicios
         </Text>
         <View style={{ marginVertical: 80 }}>
           <Input
 
             iconName="email-outline"
-            label="Email"
-            placeholder="Ingrese su email address"
-            error  //OJO aca
+            label="Correo Electrónico"
+            placeholder="Ingrese su correo electrónico"
+            error 
             password
           />
           <Input
             //onChangeText={text => handleOnchange(text, 'password')}
             //onFocus={() => handleError(null, 'password')}
             iconName="lock-outline"
-            label="Password"
-            placeholder="Ingrese su password"
+            label="Contraseña"
+            placeholder="Ingrese su contraseña"
             error //OJO ACA
             password
           />
-          <Button title="Log In" onPress={() => navigation.navigate('BottomTab')} />
+          <Button title="Iniciar sesión" onPress={() => navigation.navigate('BottomTab')} />
           <Text
-            onPress={() => navigation.navigate('SignUp')}
+            onPress={() => navigation.navigate('SignIn')}
             style={{
               color: Colors.black,
               fontWeight: 'bold',

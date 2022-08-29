@@ -30,8 +30,8 @@ export const SignIn = ({ navigation }) => {
             //onChangeText={text => handleOnchange(text, 'email')}
             //onFocus={() => handleError(null, 'email')}
             iconName="email-outline"
-            label="Email"
-            placeholder="Ingrese su email address"
+            label="Correo electrónico"
+            placeholder="Ingrese su correo electrónico"
             error
             password
           />
@@ -51,8 +51,8 @@ export const SignIn = ({ navigation }) => {
             //onChangeText={text => handleOnchange(text, 'phone')}
             //onFocus={() => handleError(null, 'phone')}
             iconName="phone-outline"
-            label="Numero Telefonico"
-            placeholder="Ingrese su numero Telefonico"
+            label="Número telefónico"
+            placeholder="Ingrese su número telefónico"
             error
             password
           />
@@ -60,14 +60,14 @@ export const SignIn = ({ navigation }) => {
             //onChangeText={text => handleOnchange(text, 'password')}
             //onFocus={() => handleError(null, 'password')}
             iconName="lock-outline"
-            label="Password"
-            placeholder="Ingrese su password"
+            label="Contraseña"
+            placeholder="Ingrese su contraseña"
             error
             password
           />
           <Button title="Registrarse" />
           <Text
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => navigation.navigate('LogIn')}
             style={{
               color: Colors.black,
               fontWeight: 'bold',

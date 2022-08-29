@@ -29,14 +29,14 @@ const DATA = [
 const Item = ({ title }) => (
     <View style={styles.item}>
         <View style={{ flex: 1, flexDirection: "row" }}>
-            <View style={{ flex: 1 }}>
-                <Image
-                    style={{width:80,height:70 }}
-                    source={require('../../../assets/pizza.jpg')}
-                />
-            </View>
             <View style={{ flex: 3 }}>
                 <Text style={styles.title}>{title}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+                <Image
+                    style={{ width: 80, height: 70 }}
+                    source={require('../../../assets/pizza.jpg')}
+                />
             </View>
 
         </View>
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: "#f9c2ff",
         padding: 20,
-        marginVertical: 8
+        marginVertical: 8,
+
     },
     header: {
         fontSize: 32,
