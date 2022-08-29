@@ -21,8 +21,8 @@ export const Splash = ({navigation}) => {
                     resizeMode="stretch" />
             </View>
             <Animatable.View style={[styles.footer, {}]} animation="fadeInUpBig">
-                <Text style={[styles.title, {}]}>Pide tu comida favorita Online</Text>
-                <Text style={styles.text}>Sign in with account</Text>
+                <Text style={[styles.title, {}]}>Pide tu comida favorita en línea</Text>
+                <Text style={styles.text}>Inicia tu experiencia en ServiApp</Text>
                 <View style={styles.button}>
                     <TouchableOpacity onPress={()=>navigation.navigate('LogIn')}>
 
@@ -30,7 +30,7 @@ export const Splash = ({navigation}) => {
                             colors={[Colors.primary, Colors.secondary]}
                             style={styles.signIn}
                         >
-                            <Text style={styles.textSign}>Get Started</Text>
+                            <Text style={styles.textSign}>Iniciar</Text>
                             <MaterialIcons
                                 name="navigate-next"
                                 color="#fff"
