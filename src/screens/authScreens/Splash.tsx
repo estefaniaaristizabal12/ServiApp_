@@ -2,7 +2,6 @@ import React from 'react'
 import { StatusBar, TouchableOpacity, Text, Dimensions, StyleSheet, View, Button } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from '../../constants/colors';
 import { StackScreenProps } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native';
@@ -21,8 +20,8 @@ export const Splash = ({navigation}) => {
                     resizeMode="stretch" />
             </View>
             <Animatable.View style={[styles.footer, {}]} animation="fadeInUpBig">
-                <Text style={[styles.title, {}]}>Pide tu comida favorita en línea</Text>
-                <Text style={styles.text}>Inicia tu experiencia en ServiApp</Text>
+                <Text style={[styles.title, {}]}>Pide tu comida</Text>
+                <Text style={[styles.title, {}]}>favorita Online</Text>
                 <View style={styles.button}>
                     <TouchableOpacity onPress={()=>navigation.navigate('LogIn')}>
 
@@ -30,12 +29,7 @@ export const Splash = ({navigation}) => {
                             colors={[Colors.primary, Colors.secondary]}
                             style={styles.signIn}
                         >
-                            <Text style={styles.textSign}>Iniciar</Text>
-                            <MaterialIcons
-                                name="navigate-next"
-                                color="#fff"
-                                size={20}
-                            />
+                            <Text style={styles.textSign}>Ingresar</Text>
                         </LinearGradient>
 
                     </TouchableOpacity>
@@ -94,7 +88,7 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         fontWeight: 'bold',
-        marginTop: 30
+        marginTop: 40
     },
     signIn: {
         width: 150,
@@ -106,6 +100,7 @@ const styles = StyleSheet.create({
     },
     textSign: {
         color: 'white',
+        fontSize: 21,
         fontWeight: 'bold'
     }
 });
