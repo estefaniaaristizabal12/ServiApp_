@@ -30,8 +30,6 @@ const DATA = [
 
 
 const Item = ({ title, navigation }) => (
-
-    
     <View style={styles.item}>
         <TouchableOpacity onPress={ () => navigation.navigate('Product') } >
             <View style={{ flex: 1, flexDirection: "row" }}>
@@ -51,25 +49,6 @@ const Item = ({ title, navigation }) => (
 
         </TouchableOpacity>
     </View>
-
-    // <View style={styles.item}>
-    //     <View style={{ flex: 1, flexDirection: "row" }}>
-    //         <View style={{ flex: 3 }}>
-    //             <Text style={styles.titulo}>{title}</Text>
-    //             <Text style={styles.descripcion}>Increible comida de servicios de alimentacion, se destaca por su ..</Text>
-    //             <Text style={styles.precio}> $25.000</Text>
-    //         </View>
-    //         <View style={{ flex: 1, alignItems: 'center' }}>
-    //             <Image
-    //                 style={{ width: 120, height: 110, borderRadius: 5 }}
-    //                 source={require('../../../assets/pizza.jpg')}
-    //             />
-    //         </View>
-
-    //     </View>
-
-
-    // </View>
 );
 
 export const Restaurant = ({ navigation }) => {
