@@ -3,6 +3,8 @@ import { Dimensions, SectionList, StyleSheet, Text, ScrollView } from 'react-nat
 import { Image, View } from 'react-native-animatable'
 import Button from '../../components/Button'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -26,25 +28,48 @@ const DATA = [
 ];
 
 
-const Item = ({ title }) => (
+
+const Item = ({ title, navigation }) => (
+
+    
     <View style={styles.item}>
-        <View style={{ flex: 1, flexDirection: "row" }}>
-            <View style={{ flex: 3 }}>
-                <Text style={styles.titulo}>{title}</Text>
-                <Text style={styles.descripcion}>Increible comida de servicios de alimentacion, se destaca por su ..</Text>
-                <Text style={styles.precio}> $25.000</Text>
+        <TouchableOpacity onPress={ () => navigation.navigate('Product') } >
+            <View style={{ flex: 1, flexDirection: "row" }}>
+                <View style={{ flex: 3 }}>
+                    <Text style={styles.titulo}>{title}</Text>
+                    <Text style={styles.descripcion}>Increible comida de servicios de alimentacion, se destaca por su ..</Text>
+                    <Text style={styles.precio}> $25.000</Text>
+                </View>
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                    <Image
+                        style={{ width: 120, height: 110, borderRadius: 5 }}
+                        source={require('../../../assets/pizza.jpg')}
+                    />
+                </View>
+
             </View>
-            <View style={{ flex: 1, alignItems: 'center' }}>
-                <Image
-                    style={{ width: 120, height: 110, borderRadius: 5 }}
-                    source={require('../../../assets/pizza.jpg')}
-                />
-            </View>
 
-        </View>
-
-
+        </TouchableOpacity>
     </View>
+
+    // <View style={styles.item}>
+    //     <View style={{ flex: 1, flexDirection: "row" }}>
+    //         <View style={{ flex: 3 }}>
+    //             <Text style={styles.titulo}>{title}</Text>
+    //             <Text style={styles.descripcion}>Increible comida de servicios de alimentacion, se destaca por su ..</Text>
+    //             <Text style={styles.precio}> $25.000</Text>
+    //         </View>
+    //         <View style={{ flex: 1, alignItems: 'center' }}>
+    //             <Image
+    //                 style={{ width: 120, height: 110, borderRadius: 5 }}
+    //                 source={require('../../../assets/pizza.jpg')}
+    //             />
+    //         </View>
+
+    //     </View>
+
+
+    // </View>
 );
 
 export const Restaurant = ({ navigation }) => {
@@ -61,11 +86,11 @@ export const Restaurant = ({ navigation }) => {
                     source={require('../../../assets/pizza.jpg')}
                 />
 
-                <View style={{ flex: 1, flexDirection: "row"}}>
+                <View style={{ flex: 1, flexDirection: "row" }}>
 
                     <View style={{ flex: 1 }}>
                         <Image
-                            style={{width: 50, height: 50,  marginTop:7, marginLeft: 7, borderRadius: 50 }}
+                            style={{ width: 50, height: 50, marginTop: 7, marginLeft: 7, borderRadius: 50 }}
                             source={require('../../../assets/logoEjemplo.jpg')}
                         />
 
@@ -84,7 +109,7 @@ export const Restaurant = ({ navigation }) => {
                 <SectionList style={{}}
                     sections={DATA}
                     keyExtractor={(item, index) => item + index}
-                    renderItem={({ item }) => <Item title={item} />}
+                    renderItem={({ item }) => <Item title={item} navigation={navigation}/>}
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={styles.header}>{title}</Text>
                     )}
