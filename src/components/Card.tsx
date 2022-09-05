@@ -47,18 +47,18 @@ const style = StyleSheet.create({
   
     cardTitle: {
       fontWeight: "bold",
-      fontSize: 16,
+      fontSize: 20,
       marginLeft: 10,
     },
   
     cardLocation: {
-      fontSize: 11.5,
+      fontSize: 14,
       color: "#777",
       marginLeft: 10,
     },
   
     cardDescription: {
-      fontSize: 12,
+      fontSize: 15,
       marginVertical: 8,
       marginLeft: 10,
     },

@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
 
     },
     titulo: {
-        fontSize: 22,
+        fontSize: 20,
         color: '#000000',
 
     },
     descripcion: {
-        fontSize: 17,
+        fontSize: 15,
         marginTop: 10,
         color: '#6D6D6D',
         height: 50,
