@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions, SectionList, StyleSheet, Text, ScrollView, Button } from 'react-native';
+import { Dimensions, SectionList, StyleSheet, Text, ScrollView, Button, FlatList } from 'react-native';
 import { Image, View } from 'react-native-animatable'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,49 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../constants/colors';
 import { Icon } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
 import { FontAwesome5 } from '@expo/vector-icons';
+import productEx from '../../constants/productEx';
+import ItemRest from '../../components/ItemRest';
 
-
-
-const DATA = [
-    {
-        title: "Main dishes",
-        data: ["Pizza", "Burger", "Risotto"]
-    },
-    {
-        title: "Sides",
-        data: ["French Fries", "Onion Rings", "Fried Shrimps"]
-    },
-    {
-        title: "Drinks",
-        data: ["Water", "Coke", "Beer"]
-    },
-    {
-        title: "Desserts",
-        data: ["Cheese Cake", "Ice Cream"]
-    }
-];
-
-
-
-const Item = ({ title, navigation }) => (
-    <View style={styles.item}>
-        <TouchableOpacity onPress={() => navigation.navigate('Product')} >
-            <View style={{ flex: 1, flexDirection: "row" }}>
-                <View style={{ flex: 3 }}>
-                    <Text style={styles.titulo}>{title}</Text>
-                    <Text style={styles.descripcion}>Increible comida de servicios de alimentacion, se destaca por su ..</Text>
-                    <Text style={styles.precio}> $25.000</Text>
-                </View>
-                <View style={{ flex: 1.5, alignItems: 'center' }}>
-                    <Image
-                        style={{ width: 110, height: 110, borderRadius: 5 }}
-                        source={require('../../../assets/pizza.jpg')}
-                    />
-                </View>
-            </View>
-        </TouchableOpacity>
-    </View>
-);
 
 export const Restaurant = ({ navigation }) => {
     const { top: paddingTop } = useSafeAreaInsets();
@@ -109,29 +69,28 @@ export const Restaurant = ({ navigation }) => {
 
                 {/* Menu de productos */}
                 <View style={{ flex: 0.7, marginBottom: 8 }}>
-                    <SectionList style={{ flexDirection: 'row' }}
-                        sections={DATA}
-                        keyExtractor={(item, index) => item + index}
-                        renderItem={({ item }) => <Text> </Text>}
-                    />
+
+
                 </View>
 
 
             </View>
 
             <View style={{ flex: 3.5, paddingLeft: 15, paddingRight: 15, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
-                <SectionList style={{ marginTop: 10 }}
-                    sections={DATA}
-                    keyExtractor={(item, index) => item + index}
-                    renderItem={({ item }) => <Item title={item} navigation={navigation} />}
-                // renderSectionHeader={({ section: { title } }) => (
-                //     <TouchableOpacity style={{backgroundColor: "#fff", borderRadius: 30,}}>
-                //         <Text style={styles.header}>
-                //             {title}
-                //         </Text>
-                //     </TouchableOpacity>
-                // )}
+
+                <FlatList
+                    data={productEx}
+                    renderItem={({ item }) => (
+                        <ItemRest
+                            title={item.title}
+                            precio={item.precio}
+                            image={item.image}
+                            description={item.description}
+                            navigation={navigation}
+                        />
+                    )}
                 />
+
             </View>
 
         </View>
@@ -142,38 +101,6 @@ const styles = StyleSheet.create({
     logo: {
         width: Dimensions.get('window').width,
         height: 200
-    },
-    item: {
-        paddingTop: 20,
-        paddingBottom: 20,
-        paddingLeft: 10,
-        marginVertical: 6,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#E7E7E7',
-
-    },
-    header: {
-        // paddingLeft: 10,
-        // paddingTop: 10,
-        // paddingBottom: 10,
-        fontSize: 25,
-        fontWeight: 'bold'
-    },
-    titulo: {
-        fontSize: 22,
-        color: '#000000',
-
-    },
-    descripcion: {
-        fontSize: 17,
-        marginTop: 10,
-        color: '#6D6D6D',
-        height: 50,
-    },
-    precio: {
-        fontSize: 18,
-        fontWeight: 'bold'
-
     },
     infoRest: {
         marginBottom: 20,

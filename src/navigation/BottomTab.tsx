@@ -9,6 +9,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Orders } from '../screens/Orders';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { RestStack } from './RestStack';
+import { Restaurant } from '../screens/restScreens/Restaurant';
 
 
 const BtTap = createMaterialBottomTabNavigator();
@@ -58,7 +59,7 @@ export default function BottomTab() {
             })}>
 
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={RestStack} />
-            <BtTap.Screen name="Cart" options={{ title: 'Carrito' }} component={Cart} />
+            <BtTap.Screen name="Cart" options={{ title: 'Carrito' }} component={Restaurant} />
             <BtTap.Screen name="Orders" options={{ title: 'Ordenes' }} component={Orders} />
             <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
 

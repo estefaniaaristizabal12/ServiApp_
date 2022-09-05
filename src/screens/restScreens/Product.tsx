@@ -36,7 +36,7 @@ export const Product = () => {
             <View style={{ flex: 2 }}>
                 <Image
                     style={styles.logo}
-                    source={require('../../../assets/producto.jpg')}
+                    source={require('../../../assets/ejemplo.jpg')}
                 />
 
                 <View style={{ flex: 1, flexDirection: "row" }}>
