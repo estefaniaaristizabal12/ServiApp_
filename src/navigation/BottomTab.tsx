@@ -1,10 +1,7 @@
-
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { Colors } from '../constants/colors';
 import { Cart } from '../screens/Cart';
-import { TopTab } from './TopTab';
-import { Profile } from '../screens/Profile';
+import { Profile } from '../screens/userScreens/Profile';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Orders } from '../screens/Orders';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
