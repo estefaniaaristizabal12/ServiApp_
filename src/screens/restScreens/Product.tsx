@@ -1,35 +1,58 @@
 import React from 'react'
-import { Dimensions, Image, SectionList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Image, SectionList, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import Button from '../../components/Button';
+import { Colors } from '../../constants/colors';
+import ingredients from '../../constants/ingredients';
 
 
 
-const Item = ({ title, navigation }) => (
-    <View style={styles.item}>
-        <TouchableOpacity onPress={ () => navigation.navigate('Product') } >
-            <View style={{ flex: 1, flexDirection: "row" }}>
-                <View style={{ flex: 3 }}>
-                    <Text style={styles.titulo}>{title}</Text>
-                    <Text style={styles.descripcion}>Increible comida de servicios de alimentacion, se destaca por su ..</Text>
-                    <Text style={styles.precio}> $25.000</Text>
-                </View>
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                    <Image
-                        style={{ width: 120, height: 110, borderRadius: 5 }}
-                        source={require('../../../assets/pizza.jpg')}
-                    />
-                </View>
+const ListIngredients = () => {
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+    return (
+        <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoriesListContainer}>
+            {ingredients.map((category, index) => (
+                <TouchableOpacity
+                    key={index}
+                    activeOpacity={0.8}
+                >
+                    <View
+                        style={{
+                            backgroundColor: "#F0F3FA",
+                            ...styles.categoryBtn,
+                            justifyContent: 'center',
+                        }}>
+                        <View style={{alignItems: 'center',}}>
+                            <Image
+                                source={category.image}
+                                style={{ height: 70, width: 70 }}
+                            />
 
-            </View>
+                            <Text
+                                style={{
+                                    marginTop:5,
+                                    fontSize: 15,
+                                    fontWeight: 'bold',
+                                }}>
+                                {category.name}
+                            </Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            ))}
+        </ScrollView>
+    );
+};
 
-        </TouchableOpacity>
-    </View>
-);
 
-export const Product = () => {
+
+export const Product = ({ navigation }) => {
     const { top: paddingTop } = useSafeAreaInsets();
     return (
-        
+
         <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: 'white' }}>
 
 
@@ -38,35 +61,23 @@ export const Product = () => {
                     style={styles.logo}
                     source={require('../../../assets/ejemplo.jpg')}
                 />
-
-                <View style={{ flex: 1, flexDirection: "row" }}>
-
-                    <View style={{ flex: 1 }}>
-                        <Image
-                            style={{ width: 50, height: 50, marginTop: 7, marginLeft: 7, borderRadius: 50 }}
-                            source={require('../../../assets/logoEjemplo.jpg')}
-                        />
-
-                    </View>
-
-                    <View style={{ flex: 7 }}>
-                        <Text style={{ fontSize: 27, fontWeight: 'bold', alignContent: 'center', padding: 20 }}> El restaurante  - la central</Text>
-                        {/* <Button title="Product" onPress={() => navigation.navigate('Product')} /> */}
-
-                    </View>
-
-                </View>
             </View>
 
-            <View style={{ flex: 3.5, paddingLeft: 15, paddingRight: 15 }}>
-                {/* <SectionList style={{}}
-                    sections={DATA}
-                    keyExtractor={(item, index) => item + index}
-                    renderItem={({ item }) => <Item title={item} navigation={navigation}/>}
-                    renderSectionHeader={({ section: { title } }) => (
-                        <Text style={styles.header}>{title}</Text>
-                    )}
-                /> */}
+            <View style={{ flex: 3, paddingLeft: 15, paddingRight: 30 }}>
+                <Text style={styles.tituloProd}>Pizza Pepperoni</Text>
+                <Text style={styles.descrProd}>Increible comida de servicios de alimentacion, se destaca por su inocuidad.</Text>
+                <Text style={styles.preProd}> $15.900</Text>
+                <Text style={styles.ingredients}>Ingedientes</Text>
+                <View>
+                    <ListIngredients />
+                </View>
+
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Cart')}
+                    activeOpacity={0.7}
+                    style={styles.boton}>
+                    <Text style={{ color: "white", fontWeight: 'bold', fontSize: 18 }}>Añadir al carrito</Text>
+                </TouchableOpacity>
             </View>
 
         </View>
@@ -77,8 +88,8 @@ export const Product = () => {
 
 const styles = StyleSheet.create({
     logo: {
-        width: Dimensions.get('window').width,
-        height: 200
+        width: "100%",
+        height: "100%"
     },
     item: {
         paddingTop: 20,
@@ -89,28 +100,66 @@ const styles = StyleSheet.create({
         borderBottomColor: '#E7E7E7',
 
     },
-    header: {
-        paddingLeft: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        fontSize: 25,
-        backgroundColor: "#fff",
-        fontWeight: 'bold'
+    tituloProd: {
+        marginTop: 20,
+        fontSize: 30,
+        fontWeight: 'bold',
     },
-    titulo: {
-        fontSize: 22,
-        color: '#000000',
-
-    },
-    descripcion: {
-        fontSize: 17,
-        marginTop: 10,
-        color: '#6D6D6D',
-        height: 50,
-    },
-    precio: {
+    descrProd: {
+        marginTop: 5,
         fontSize: 18,
-        fontWeight: 'bold'
+    },
+    preProd: {
+        marginTop: 10,
+        fontSize: 20,
+        fontWeight: 'bold',
 
-    }
+    },
+    ingredients: {
+        marginTop: 20,
+        fontSize: 20,
+        fontWeight: 'bold',
+
+    },
+    boton: {
+        height: 55,
+        borderRadius: 15,
+        width: '100%',
+        backgroundColor: '#CC2C2A',
+        marginVertical: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    sortBtn: {
+        width: 50,
+        height: 50,
+        marginLeft: 10,
+        backgroundColor: Colors.primary1,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    categoriesListContainer: {
+        paddingVertical: 30,
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    categoryBtn: {
+        height: 100,
+        width: 100,
+        marginRight: 7,
+        borderRadius: 30,
+        paddingHorizontal: 5,
+        flexDirection: 'row',
+    },
+    categoryBtnImgCon: {
+        height: 35,
+        width: 35,
+        backgroundColor: Colors.white1,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
 });
