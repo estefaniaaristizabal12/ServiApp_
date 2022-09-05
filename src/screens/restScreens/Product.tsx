@@ -63,11 +63,11 @@ export const Product = ({ navigation }) => {
                 />
             </View>
 
-            <View style={{ flex: 3, paddingLeft: 15, paddingRight: 30 }}>
+            <View style={{ flex: 3, paddingLeft: 15, paddingRight: 15 }}>
                 <Text style={styles.tituloProd}>Pizza Pepperoni</Text>
                 <Text style={styles.descrProd}>Increible comida de servicios de alimentacion, se destaca por su inocuidad.</Text>
                 <Text style={styles.preProd}> $15.900</Text>
-                <Text style={styles.ingredients}>Ingedientes</Text>
+                <Text style={styles.ingredients}>Ingredientes</Text>
                 <View>
                     <ListIngredients />
                 </View>
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         width: 100,
         marginRight: 7,
         borderRadius: 30,
-        paddingHorizontal: 5,
+    
         flexDirection: 'row',
     },
     categoryBtnImgCon: {

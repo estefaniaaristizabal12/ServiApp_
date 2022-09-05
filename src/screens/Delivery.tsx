@@ -121,7 +121,7 @@ const Delivery = ({navigation}) => {
                 image={item.image}
                 location={item.location}
                 description={item.description}
-                onPress={() => navigation.navigate('BottomTab')}
+                onPress={() => navigation.navigate('Restaurant')}
               />
             )}
           />  
