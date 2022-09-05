@@ -2,7 +2,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import React from 'react'
 import { Colors } from '../constants/colors';
 import { PickUp } from '../screens/PickUp';
-import { Delivery } from '../screens/Delivery';
+import Delivery from '../screens/Delivery';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RestStack } from './RestStack';
 
