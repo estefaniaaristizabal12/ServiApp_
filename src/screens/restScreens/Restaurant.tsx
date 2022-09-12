@@ -10,6 +10,7 @@ import { Icon } from 'react-native-paper/lib/typescript/components/Avatar/Avatar
 import { FontAwesome5 } from '@expo/vector-icons';
 import productEx from '../../constants/productEx';
 import ItemRest from '../../components/ItemRest';
+import CardRest from '../../components/CardRest';
 
 
 export const Restaurant = ({ navigation }) => {
@@ -76,12 +77,12 @@ export const Restaurant = ({ navigation }) => {
 
             </View>
 
-            <View style={{ flex: 3.5, paddingLeft: 15, paddingRight: 15, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
+            <View style={{ flex: 3.5, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
 
                 <FlatList
                     data={productEx}
                     renderItem={({ item }) => (
-                        <ItemRest
+                        <CardRest
                             title={item.title}
                             precio={item.precio}
                             image={item.image}

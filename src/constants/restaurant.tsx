@@ -42,7 +42,7 @@ const restaurant = [
     },
     {
       
-        id: 1,
+        id: 4,
         title: "El Italiano",
         location: "Edificio 67, G Maldonado",
         description: "Ofrecemos amplia carta, de deliciosos platos italianos",

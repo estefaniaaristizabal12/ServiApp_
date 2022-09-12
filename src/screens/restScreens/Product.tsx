@@ -1,103 +1,101 @@
-import React from 'react'
-import { Dimensions, Image, SectionList, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import React, { useState } from 'react'
+import { Dimensions, Image, SectionList, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList, Button } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import Button from '../../components/Button';
+import AcompProd from '../../components/AcompProd';
+import acompanamientos from '../../constants/acompanamientos';
 import { Colors } from '../../constants/colors';
 import ingredients from '../../constants/ingredients';
 
 
 
-const ListIngredients = () => {
-    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-    return (
-        <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.categoriesListContainer}>
-            {ingredients.map((category, index) => (
-                <TouchableOpacity
-                    key={index}
-                    activeOpacity={0.8}
-                >
-                    <View
-                        style={{
-                            backgroundColor: "#F0F3FA",
-                            ...styles.categoryBtn,
-                            justifyContent: 'center',
-                        }}>
-                        <View style={{alignItems: 'center',}}>
-                            <Image
-                                source={category.image}
-                                style={{ height: 70, width: 70 }}
-                            />
-
-                            <Text
-                                style={{
-                                    marginTop:5,
-                                    fontSize: 15,
-                                    fontWeight: 'bold',
-                                }}>
-                                {category.name}
-                            </Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            ))}
-        </ScrollView>
-    );
-};
-
 
 
 export const Product = ({ navigation }) => {
     const { top: paddingTop } = useSafeAreaInsets();
+    const [count, setCount] = useState(0);
+    const onPressPlus = () => setCount(prevCount => prevCount + 1);
+    const onPressRest = () => setCount(prevCount => prevCount - 1);
     return (
 
-        <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: 'white' }}>
+        <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.secondary }}>
 
 
-            <View style={{ flex: 2 }}>
+            <View style={{ flex: 0.3, alignItems: 'center' }}>
                 <Image
                     style={styles.logo}
-                    source={require('../../../assets/ejemplo.jpg')}
+                    source={require('../../../assets/fondo.png')}
                 />
             </View>
 
-            <View style={{ flex: 3, paddingLeft: 15, paddingRight: 15 }}>
+            <View style={styles.componente2}>
                 <Text style={styles.tituloProd}>Pizza Pepperoni</Text>
-                <Text style={styles.descrProd}>Increible comida de servicios de alimentacion, se destaca por su inocuidad.</Text>
+                <Text style={styles.descrProd}>Increíble comida de Servicios de Alimentación, se destaca por su inocuidad.</Text>
                 <Text style={styles.preProd}> $15.900</Text>
-                <Text style={styles.ingredients}>Ingredientes</Text>
-                <View>
-                    <ListIngredients />
+
+                <View style={{ flex: 0.8, flexDirection: "row", borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#E7E7E7', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#E7E7E7', marginTop: 20 }}>
+                    <View style={{ flex: 0.7 }}>
+                        <Text style={styles.acompanamientos}>Acompaña Tu Orden Con</Text>
+                    </View>
+                    <View style={{ flex: 0.3, paddingRight: 10 }}>
+                        <Text style={styles.sugerido}>Sugerido</Text>
+                    </View>
                 </View>
 
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('Cart')}
-                    activeOpacity={0.7}
-                    style={styles.boton}>
-                    <Text style={{ color: "white", fontWeight: 'bold', fontSize: 18 }}>Añadir al carrito</Text>
-                </TouchableOpacity>
+                <View style={{ flex: 3.5, backgroundColor: "white" }}>
+                    <FlatList
+                        data={acompanamientos}
+                        renderItem={({ item }) => (
+                            <AcompProd
+                                title={item.title}
+                                precio={item.precio}
+                                navigation={navigation}
+                            />
+                        )}
+                    />
+                </View>
+
+            </View>
+
+
+            <View style={{ backgroundColor: 'white', flex: 0.07, flexDirection: "row", borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#E7E7E7' }}>
+                <View style={styles.btnModificar}>
+                    <TouchableOpacity onPress={onPressRest}>
+                        <Text style={styles.textBtn}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.textBtn}> {count}</Text>
+                    <TouchableOpacity onPress={onPressPlus}>
+                        <Text style={styles.textBtn}>+</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.btnACarro}>
+                    <TouchableOpacity onPress={onPressPlus}>
+                        <Text style={styles.textBtnCarro}> Agregar $17.000</Text>
+                    </TouchableOpacity>
+                </View>
+
             </View>
 
         </View>
-    )
+    );
 }
+
 
 
 
 const styles = StyleSheet.create({
     logo: {
-        width: "100%",
-        height: "100%"
+        width: "90%",
+        height: "90%"
     },
-    item: {
-        paddingTop: 20,
+    componente2: {
+        flex: 0.65,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        backgroundColor: "white",
+        paddingTop: 10,
         paddingBottom: 20,
-        paddingLeft: 10,
-        marginVertical: 6,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#E7E7E7',
+        paddingLeft: 15,
+        paddingRight: 15,
 
     },
     tituloProd: {
@@ -115,10 +113,23 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
 
     },
-    ingredients: {
-        marginTop: 20,
-        fontSize: 20,
+    acompanamientos: {
+        fontSize: 18,
+        marginTop: 25,
         fontWeight: 'bold',
+    },
+    sugerido: {
+        backgroundColor: 'rgba(204, 44, 42, 0.42)',
+        fontSize: 15,
+        padding: 5,
+        borderRadius: 5,
+        marginTop: 20,
+        fontWeight: 'bold',
+        borderWidth: 1,
+        borderColor: 'rgba(204, 44, 42, 0.42)',
+        overflow: "hidden",
+        textAlign: 'center',
+        color: "#CC2C2A"
 
     },
     boton: {
@@ -140,26 +151,35 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    categoriesListContainer: {
-        paddingVertical: 30,
-        alignItems: 'center',
-        paddingHorizontal: 20,
-    },
-    categoryBtn: {
-        height: 100,
-        width: 100,
-        marginRight: 7,
-        borderRadius: 30,
-    
-        flexDirection: 'row',
-    },
-    categoryBtnImgCon: {
-        height: 35,
-        width: 35,
-        backgroundColor: Colors.white1,
-        borderRadius: 30,
+    btnModificar: {
+        flex: 0.3,
+        flexDirection: "row",
+        backgroundColor: '#D8D3D3',
+        borderRadius: 5,
+        margin: 10,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
+    textBtn:{
+        fontSize: 18,
+        marginLeft:12,
+        marginRight: 12,
+        fontWeight: 'bold',
+    },
+    btnACarro: {
+        backgroundColor: "#CC2C2A",
+        borderRadius: 5,
+        margin: 8,
+        flex: 0.7,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textBtnCarro:{
+        fontSize: 18,
+        marginLeft:12,
+        marginRight: 12,
+        fontWeight: 'bold',
+        color:"white"
 
+    }
 });
