@@ -68,7 +68,7 @@ export const Product = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnACarro}>
-                    <TouchableOpacity onPress={onPressPlus}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                         <Text style={styles.textBtnCarro}> Agregar $17.000</Text>
                     </TouchableOpacity>
                 </View>
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     btnModificar: {
         flex: 0.3,
         flexDirection: "row",
-        backgroundColor: '#D8D3D3',
+        backgroundColor: '#F0F3FA',
         borderRadius: 5,
         margin: 10,
         justifyContent: 'center',

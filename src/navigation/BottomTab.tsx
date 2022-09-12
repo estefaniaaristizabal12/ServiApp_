@@ -3,9 +3,10 @@ import { useNavigation } from '@react-navigation/native';
 import { Cart } from '../screens/Cart';
 import { Profile } from '../screens/userScreens/Profile';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Orders } from '../screens/Orders';
+import { Orders } from '../screens/cartScreens/Orders';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { RestStack } from './RestStack';
+import { OrderStack } from './OrderStack';
 
 const BtTap = createMaterialBottomTabNavigator();
 
@@ -39,7 +40,7 @@ export default function BottomTab() {
                             iconName = 'shopping-cart'
                             break;
 
-                        case 'Orders':
+                        case 'OrdersStack':
                             iconName = 'clipboard-list'
                             break;
 
@@ -55,7 +56,7 @@ export default function BottomTab() {
 
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={RestStack} />
             <BtTap.Screen name="Cart" options={{ title: 'Carrito' }} component={Cart} />
-            <BtTap.Screen name="Orders" options={{ title: 'Ordenes' }} component={Orders} />
+            <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={OrderStack} />
             <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
 
 
