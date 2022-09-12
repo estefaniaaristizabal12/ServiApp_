@@ -9,13 +9,13 @@ export const Orders = ({ navigation }) => {
     <View style={{ flex: 1, flexDirection: "column", backgroundColor: Colors.secondary }}>
 
 
-      <View style={{ flex: 0.3, }}>
+      <View style={{ flex: 0.32, }}>
         <Text style={styles.textoInicio}>Historial de</Text>
         <Text style={styles.textoInicio2}>pedidos</Text>
         <Text style={styles.textoDescripcion}>Encuentra aquí tus pedidos y servicios anteriores</Text>
       </View>
 
-      <View style={{ flex: 0.7, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
+      <View style={{ flex: 0.68, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
 
         <FlatList
           data={orders}
