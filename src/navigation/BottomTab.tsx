@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { Cart } from '../screens/Cart';
-import { Profile } from '../screens/userScreens/Profile';
+import  Profile  from '../screens/userScreens/Profile';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Orders } from '../screens/cartScreens/Orders';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';

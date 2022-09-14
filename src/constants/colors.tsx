@@ -24,4 +24,9 @@ export const Colors = {
     //secondary1: '#fedac5',
     light1: '#E5E5E5',
     grey1: '#908e8c',
+
+    primary3: '#633974',  // 99, 57, 116
+    lightGrey: '#DCDADD',
+    primaryLigth: '#e5b8be',
+    
   };
