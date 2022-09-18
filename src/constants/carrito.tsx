@@ -14,20 +14,6 @@ const carrito = [
         cantidad: 2,
         image: require('../../assets/pizza.jpg'),
     },
-    {
-        id:3,
-        title: "Sandwich",
-        precio: 15000,
-        cantidad: 1,
-        image: require('../../assets/pizza.jpg'),
-    },
-    {
-        id:4,
-        title: "Coca cola",
-        precio: 15000,
-        cantidad: 1,
-        image: require('../../assets/pizza.jpg'),
-    },
 
 
 ];

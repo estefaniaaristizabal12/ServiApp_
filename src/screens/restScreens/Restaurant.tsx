@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../constants/colors';
 import { Icon } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import productEx from '../../constants/productEx';
 import ItemRest from '../../components/ItemRest';
 import CardRest from '../../components/CardRest';
@@ -24,9 +24,26 @@ export const Restaurant = ({ navigation }) => {
             <View style={{ flex: 1.5, backgroundColor: Colors.secondary }}>
 
                 {/* Boton de regreso */}
-                <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={{ marginLeft: 25 }}>
-                    <FontAwesome5 name='arrow-alt-circle-left' size={30} style={{ color: "white" }} />
-                </TouchableOpacity>
+
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View style={{ flex: 0.5}}>
+                        <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
+                            <Ionicons name="arrow-back" size={25} color={Colors.gray} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{ flex: 0.5, alignItems: "flex-end", marginRight:25 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={styles.btnAtas}>
+                            <Ionicons name="cart" size={22} color={Colors.gray} />
+                        </TouchableOpacity>
+                    </View>
+
+
+                </View>
+
+
+
+                {/* <Ionicons name="cart" size={SPACING * 2.5} color={Colors.gray} /> */}
 
                 {/* Logo y nombre del restaurante */}
 
@@ -129,5 +146,14 @@ const styles = StyleSheet.create({
         color: "white",
         marginTop: 5
     },
+    btnAtas: {
+        marginLeft: 25,
+        backgroundColor: Colors.white,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 25,
+        height: 30,
+        width: 30
+    }
 
 });
