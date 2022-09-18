@@ -162,7 +162,7 @@ const style = StyleSheet.create({
   },
   categoryBtn: {
     height: 45,
-    width: 120,
+    width: 165,
     marginRight: 7,
     borderRadius: 30,
     alignItems: 'center',

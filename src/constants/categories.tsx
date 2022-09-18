@@ -1,8 +1,9 @@
 const categories = [
-  {id: '1', name: 'Pizza', image: require('../../assets/pizza.png')},
-  {id: '2', name: 'Burger', image: require('../../assets/burger.png')},
-  {id: '4', name: 'Ensalada', image: require('../../assets/salad.png')},
-  {id: '3', name: 'Sushi', image: require('../../assets/sushi.png')},
+  {id: '1', name: 'Restaurantes', image: require('../../assets/restaurantes.png')},
+  {id: '2', name: 'Cafés y kioskos', image: require('../../assets/cafes_kioskos.png')},
+  {id: '3', name: 'Saludable', image: require('../../assets/opcionSaludable.png')},
+  {id: '4', name: 'Cafeterías', image: require('../../assets/cafeterias.png')},
+  {id: '5', name: 'Especialidades', image: require('../../assets/especialidades.png')},
 ];
 
 export default categories;
