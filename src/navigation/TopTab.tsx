@@ -13,7 +13,7 @@ export const TopTab = () => {
 
     return (
         <Tab.Navigator
-            style={{ paddingTop }}
+            style={{ paddingTop,backgroundColor: Colors.secondary }}
             screenOptions={{
                 tabBarIndicatorStyle: { backgroundColor: Colors.primary },
             }}
