@@ -105,7 +105,7 @@ const MyCard = ({ navigation, route }) => {
             backgroundColor:
               selectedCard === null ? Colors.grayItemCard : Colors.primaryItemCard,
           }}
-          label={selectedCard?.key === 'NewCard' ? 'Add' : 'Place your Order'}
+          label={selectedCard?.key === 'NewCard' ? 'Agregar' : 'Haga su pedido'}
           onPress={() => {
             if (selectedCard?.key === 'NewCard') {
               navigation.navigate('AddCard', {

@@ -19,7 +19,7 @@ const myCards = [
 const allCards = [
   {
     id: 1,
-    name: 'Apple Pay',
+    name: 'Master Card',
     icon: require('../../assets/mastercardI.png'),
   },
   {
@@ -29,18 +29,13 @@ const allCards = [
   },
   {
     id: 3,
-    name: 'PayPal',
-    icon: require('../../assets/mastercardI.png'),
+    name: 'Discover',
+    icon: require('../../assets/discover.png'),
   },
   {
     id: 4,
-    name: 'Google Pay',
-    icon: require('../../assets/mastercardI.png'),
-  },
-  {
-    id: 5,
-    name: 'Master Card',
-    icon: require('../../assets/mastercardI.png'),
+    name: 'American Express',
+    icon: require('../../assets/american.jpg'),
   },
 ];
 
