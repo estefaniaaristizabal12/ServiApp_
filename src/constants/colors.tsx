@@ -7,7 +7,7 @@ export const Colors = {
     border: 'rgb(223, 225, 226)',
   
   
-    white: '#fff',
+    white: '#FFFFFF',
     black: '#000',
     blue: '#5D5FEE',
     grey: '#BABBC3',
@@ -28,5 +28,14 @@ export const Colors = {
     primary3: '#633974',  // 99, 57, 116
     lightGrey: '#DCDADD',
     primaryLigth: '#e5b8be',
-    
+
+
+    // Colors My Credit Cards
+    primaryItemCard: '#FF6C44', 
+    lightGray2: '#F5F5F8',
+    gray2: '#BBBDC1',
+    grayItemCard: '#898B9A',
+    transparentPrimary: 'rgba(227, 120, 75, 0.4)',
+    redError: '#FF1717',
+    green: '#27AE60',
   };
