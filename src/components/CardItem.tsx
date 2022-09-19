@@ -40,7 +40,7 @@ const CardItem: FunctionComponent<CardItemProps> = ({
     <TouchableOpacity
       style={{
         ...styles.container,
-        borderColor: isSelected ? Colors.primaryItemCard : Colors.lightGray2,
+        borderColor: isSelected ? Colors.secondaryItemCard : Colors.lightGray2,
       }}
       onPress={onPress}>
       {/* Card Image */}
@@ -58,7 +58,7 @@ const CardItem: FunctionComponent<CardItemProps> = ({
       <Text style={styles.name}>{item.name}</Text>
       {/* Radio Button */}
       <Image
-        source={isSelected ? require('../../assets/check_off.png') : require('../../assets/check.png')}
+        source={isSelected ? require('../../assets/check.png') : require('../../assets/check_off.png') }
         style={{
           width: 25,
           height: 25,

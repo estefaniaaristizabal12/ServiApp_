@@ -10,8 +10,8 @@ const myCards = [
   },
   {
     id: 2,
-    name: 'Google Pay',
-    icon: require('../../assets/mastercardI.png'),
+    name: 'Visa',
+    icon: require('../../assets/visaI.png'),
     card_no: '1234',
   },
 ];

@@ -38,4 +38,6 @@ export const Colors = {
     transparentPrimary: 'rgba(227, 120, 75, 0.4)',
     redError: '#FF1717',
     green: '#27AE60',
+    secondaryItemCard: '#DE6E68',
+    
   };
