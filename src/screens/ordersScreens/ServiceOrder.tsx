@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from 'react-native'
-export const ListProducts = () => {
+export const ServiceOrder = () => {
   return (
-    <Text> Lista de productos</Text>
+    <Text></Text>
   )
 }
