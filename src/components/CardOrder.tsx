@@ -13,7 +13,7 @@ const CardOrder = ({ title, fecha, image, navigation }) => {
         <View style={{ flexDirection: "row", flex: 0.7 }}>
           <View style={style.cardImage}>
             <Image
-              style={{ width: "100%", height: "100%", borderRadius: 20 }}
+              style={{ width: "100%", height: 70, borderRadius: 2 }}
               source={image}
             />
           </View>
@@ -26,7 +26,7 @@ const CardOrder = ({ title, fecha, image, navigation }) => {
         <View style={{flex: 0.3, flexDirection: "row" }}>
           <View style={style.btnOrdenes}>
             <TouchableOpacity onPress={() => navigation.navigate('Details')}>
-              <Text style={style.textDetalle}>Detalle del pedido</Text>
+              <Text style={style.textDetalle}>Detalle</Text>
             </TouchableOpacity>
           </View>
           <View style={style.btnOrdenes} >

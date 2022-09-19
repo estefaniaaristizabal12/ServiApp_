@@ -10,7 +10,7 @@ export const Details = ({ navigation }) => {
   return (
     <View style={{ flex: 1, paddingTop,flexDirection: "column", backgroundColor: Colors.secondary }}>
 
-      <View style={{ flex: 0.20, }}>
+      <View style={{ flex: 0.20 }}>
 
         <TouchableOpacity onPress={() => navigation.navigate('Orders')} style={styles.btnAtas}>
           <Ionicons name="arrow-back" size={25} color={Colors.gray} />
@@ -19,15 +19,13 @@ export const Details = ({ navigation }) => {
         <Text style={styles.textoInicio}>La Central Cafetería</Text>
         <Text style={styles.textoFecha}>05/02/2022</Text>
 
-
-
       </View>
       <View style={{ flex: 0.80, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white", padding: 10 }}>
 
         <Text style={styles.titulo}>Califica tu pedido </Text>
 
         <View style={{ flex: 0.15, marginTop: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#E7E7E7', paddingBottom: 10 }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('ServiceOrder')} >
             <View style={{ flexDirection: "row" }}>
               <View style={{ flex: 0.2, alignItems: "center", justifyContent: "center" }}>
                 <Image
