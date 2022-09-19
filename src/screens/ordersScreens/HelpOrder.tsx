@@ -1,8 +1,7 @@
 import React from 'react'
 import { Text } from 'react-native'
-
-export const Details = () => {
+export const HelpOrder = () => {
   return (
-    <Text></Text>
+    <Text> </Text>
   )
 }

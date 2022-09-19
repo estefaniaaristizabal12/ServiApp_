@@ -1,8 +1,10 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { Cart } from '../screens/Cart';
-import { Details } from '../screens/cartScreens/Details';
-import { Orders } from '../screens/cartScreens/Orders';
+import { Orders } from '../screens/ordersScreens/Orders';
+import { Details } from '../screens/ordersScreens/Details';
+import { HelpOrder } from '../screens/ordersScreens/HelpOrder';
+import { ListProducts } from '../screens/ordersScreens/ListProducts';
+
 
 const StackOrder = createStackNavigator();
 export const OrderStack = () => {
@@ -15,6 +17,8 @@ export const OrderStack = () => {
 
             <StackOrder.Screen name="Orders" component={Orders} />
             <StackOrder.Screen name="Details" component={Details} />
+            <StackOrder.Screen name="HelpOrder" component={HelpOrder} />
+            <StackOrder.Screen name="ListProducts" component={ListProducts} />
             
         </StackOrder.Navigator>
     )

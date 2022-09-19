@@ -8,12 +8,12 @@ const CardOrder = ({ title, fecha, image, navigation }) => {
   return (
 
     // onPress={() => navigation.navigate('Product')}
-    <TouchableOpacity style={style.card}>
+    <View style={style.card}>
       <View style={{ flexDirection: "column", flex: 1 }}>
         <View style={{ flexDirection: "row", flex: 0.7 }}>
           <View style={style.cardImage}>
             <Image
-              style={{ width: "80%", height: "80%", borderRadius: 20 }}
+              style={{ width: "100%", height: "100%", borderRadius: 20 }}
               source={image}
             />
           </View>
@@ -29,15 +29,15 @@ const CardOrder = ({ title, fecha, image, navigation }) => {
               <Text style={style.textDetalle}>Detalle del pedido</Text>
             </TouchableOpacity>
           </View>
-          <View style={style.btnOrdenes}>
-            <TouchableOpacity>
+          <View style={style.btnOrdenes} >
+            <TouchableOpacity onPress={() => navigation.navigate('HelpOrder')}>
               <Text style={style.textAyuda}>Ayuda</Text>
             </TouchableOpacity>
           </View>
         </View>
 
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

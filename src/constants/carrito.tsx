@@ -12,7 +12,7 @@ const carrito = [
         title: "Hamburguesa",
         precio: 15000,
         cantidad: 2,
-        image: require('../../assets/pizza.jpg'),
+        image: require('../../assets/hamburguesa.jpeg'),
     },
 
 

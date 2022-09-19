@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Cart } from '../screens/Cart';
 import  Profile  from '../screens/userScreens/Profile';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Orders } from '../screens/cartScreens/Orders';
+import { Orders } from '../screens/ordersScreens/Orders';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { RestStack } from './RestStack';
 import { OrderStack } from './OrderStack';

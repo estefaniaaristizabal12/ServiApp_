@@ -6,7 +6,7 @@ const { width, height } = Dimensions.get("screen");
 
 export const CardCart = ({ title, precio, cantidad, image }) => {
     return (
-        <TouchableOpacity style={style.card}>
+        <View style={style.card}>
             <View style={{ flexDirection: "row" }}>
                 <View style={{ flex: 0.3 }}>
                     <Image
@@ -22,7 +22,7 @@ export const CardCart = ({ title, precio, cantidad, image }) => {
                     <Text style={style.titulo}>{title}</Text>
                     <Text style={style.precio}>${precio}</Text>
 
-                    <View style={{ alignItems: "flex-end", marginTop: 15}}>
+                    <View style={{ alignItems: "flex-end", marginTop: 15, padding:5}}>
                         <View style={style.btnModificar}>
                             <TouchableOpacity >
                                 <Text style={style.textBtn}>-</Text>
@@ -41,7 +41,7 @@ export const CardCart = ({ title, precio, cantidad, image }) => {
 
 
             </View>
-        </TouchableOpacity>
+        </View>
     )
 }
 
