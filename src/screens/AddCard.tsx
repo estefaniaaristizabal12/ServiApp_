@@ -46,7 +46,7 @@ const AddCard = ({ navigation, route }) => {
   const renderHeader = () => {
     return (
       <HeaderNavigation
-        title="ADD NEW CARD"
+        title="Agregar Nueva Tarjeta"
         containerStyle={{
           height: 50,
           marginHorizontal: 24,
@@ -142,7 +142,7 @@ const AddCard = ({ navigation, route }) => {
               ? Colors.primary
               : Colors.transparentPrimary,
           }}
-          label={'Add Card'}
+          label={'Agregar Tarjeta'}
           onPress={() => {
             // navigation.goBack();
             navigation.navigate('Checkout', { selectedCard });
@@ -157,7 +157,7 @@ const AddCard = ({ navigation, route }) => {
       <View style={{ marginTop: 24 * 2 }}>
         {/* Card Number */}
         <FormInput
-          label="Card Number"
+          label="Número de la tarjeta"
           keyboardType="number-pad"
           value={cardNumber}
           onChange={value => {
@@ -181,7 +181,7 @@ const AddCard = ({ navigation, route }) => {
         />
         {/* Cardholder Name */}
         <FormInput
-          label="Cardholder Name"
+          label="Nombre De Tarjeta"
           value={cardName}
           containerStyle={{ marginTop: 12 }}
           onChange={value => {
@@ -196,7 +196,7 @@ const AddCard = ({ navigation, route }) => {
         {/* Expire Date & CVV */}
         <View style={{ flexDirection: 'row', marginTop: 12 }}>
           <FormInput
-            label="Expire Date"
+            label="Fecha de caducidad"
             value={expireDate}
             placeholder={'MM/YY'}
             maxLength={5}
@@ -233,7 +233,7 @@ const AddCard = ({ navigation, route }) => {
           <RadioButton
             isSelected={isRemember}
             onPress={() => setIsRemember(!isRemember)}
-            label="Remember this card details."
+            label="Recuerdame esta tarjeta."
           />
         </View>
       </View>
