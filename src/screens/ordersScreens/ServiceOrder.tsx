@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { AirbnbRating, Rating } from 'react-native-ratings';
 
 export const ServiceOrder = ({ navigation }) => {
     const { top: paddingTop } = useSafeAreaInsets();
@@ -21,6 +22,17 @@ export const ServiceOrder = ({ navigation }) => {
 
             </View>
             <View style={{ flex: 0.80, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white", padding: 10 }}>
+
+
+                <Text> g</Text>
+                <AirbnbRating
+                    count={5}
+                    reviews={["Terrible", "Malo", "Regular", "Bueno", "Excelente"]}
+                    defaultRating={5}
+                    size={30}
+                    starContainerStyle={styles.estrella}
+                />
+
             </View>
         </View>
     )
@@ -48,6 +60,9 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         height: 30,
         width: 30
+    },
+    estrella:{
+       marginHorizontal:10, backgroundColor:"green"
     }
 
 });

@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const ListProducts = ({ navigation }) => {
   const { top: paddingTop } = useSafeAreaInsets();
+
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.secondary }}>
 
@@ -21,6 +22,7 @@ export const ListProducts = ({ navigation }) => {
 
       </View>
       <View style={{ flex: 0.80, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white", padding: 10 }}>
+
       </View>
     </View>
   )
@@ -28,27 +30,27 @@ export const ListProducts = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   textoInicio: {
-      fontSize: 30,
-      fontWeight: 'bold',
-      color: 'white',
-      marginTop: 30,
-      marginLeft: 20
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+    marginTop: 30,
+    marginLeft: 20
   },
   textoFecha: {
-      fontSize: 18,
-      color: 'white',
-      marginTop: 10,
-      marginLeft: 20,
-      fontStyle: "italic"
+    fontSize: 18,
+    color: 'white',
+    marginTop: 10,
+    marginLeft: 20,
+    fontStyle: "italic"
   },
   btnAtas: {
-      marginLeft: 20,
-      backgroundColor: Colors.white,
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 25,
-      height: 30,
-      width: 30
+    marginLeft: 20,
+    backgroundColor: Colors.white,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 25,
+    height: 30,
+    width: 30
   }
 
 });
