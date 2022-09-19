@@ -68,7 +68,7 @@ export const Cart = ({ navigation }) => {
 
           </View>
           <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity style={styles.btnIrPago}>
+            <TouchableOpacity onPress={() => navigation.navigate('MyCard')}   style={styles.btnIrPago}>
               <Text style={styles.textBtnPago}> Ir a pagar</Text>
             </TouchableOpacity>
 
