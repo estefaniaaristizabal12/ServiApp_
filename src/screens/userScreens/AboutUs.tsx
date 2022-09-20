@@ -14,9 +14,9 @@ import { Colors } from '../../constants/colors';
 const DATA = [
   {
     id: '1',
-    bankName: 'SBI',
+    bankName: 'Nu Bank',
     cardNo: '5535 6535 2345 3786',
-    name: 'ARIF MAHMOOD',
+    name: 'Julian Rizo',
     cvv: '123',
     expireDate: '11/19',
     image: require('../../../assets/visa.png'),
@@ -24,9 +24,9 @@ const DATA = [
   },
   {
     id: '2',
-    bankName: 'BOI',
+    bankName: 'Nu Bank',
     cardNo: '5598 6545 4545 5686',
-    name: 'PRAVAT BEHERA',
+    name: 'Estefania Aristizabal',
     cvv: '123',
     expireDate: '11/19',
     image: require('../../../assets/masterCard.png'),
@@ -34,9 +34,9 @@ const DATA = [
   },
   {
     id: '3',
-    bankName: 'NIOX',
+    bankName: 'Bancolombia',
     cardNo: '5598 6545 4545 5456',
-    name: 'KAMRUDDIN KHAN',
+    name: 'Juan Jose Bolaños Melo',
     cvv: '123',
     expireDate: '11/19',
     image: require('../../../assets/masterCard.png'),
