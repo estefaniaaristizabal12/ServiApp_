@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Text, Image, View, StyleSheet, Dimensions } from "react-native";
+import { Colors } from '../constants/colors';
 
 const { width, height } = Dimensions.get("screen");
 
@@ -87,7 +88,7 @@ const style = StyleSheet.create({
   textAyuda: {
     fontSize: 15,
     fontWeight: 'bold',
-    color:"#CC2C2A"
+    color:Colors.primary1
   },
   btnOrdenes: {
     backgroundColor: "#F0F3FA",

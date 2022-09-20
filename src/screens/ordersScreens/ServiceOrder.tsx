@@ -24,13 +24,13 @@ export const ServiceOrder = ({ navigation }) => {
             <View style={{ flex: 0.80, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white", padding: 10 }}>
 
 
-                <Text style={styles.titServicio}> ¿Cómo te pareció el servicio?</Text>
+                <Text style={styles.titServicio}>¿Cómo te pareció el servicio?</Text>
                 <AirbnbRating
                     count={5}
                     reviews={["Terrible", "Malo", "Regular", "Bueno", "Excelente"]}
                     defaultRating={5}
                     size={30}
-                    starContainerStyle={styles.estrella}
+                    ratingContainerStyle={styles.estrella}
                 />
 
             </View>
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     },
     estrella:{
        marginHorizontal:10,
+       fontSize:10
     },
     titServicio:{
         fontSize: 18,

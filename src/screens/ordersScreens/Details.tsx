@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 export const Details = ({ navigation }) => {
   const { top: paddingTop } = useSafeAreaInsets();
   return (
-    <View style={{ flex: 1, paddingTop,flexDirection: "column", backgroundColor: Colors.secondary }}>
+    <View style={{ flex: 1, paddingTop,flexDirection: "column", backgroundColor: Colors.grey }}>
 
       <View style={{ flex: 0.20 }}>
 
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic"
   },
   btnVerLista: {
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary1,
     paddingHorizontal: 30,
     paddingVertical: 5,
     borderRadius: 10

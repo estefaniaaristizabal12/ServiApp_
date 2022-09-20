@@ -17,13 +17,10 @@ export const Restaurant = ({ navigation }) => {
     const { top: paddingTop } = useSafeAreaInsets();
     return (
 
+        <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
-        <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.secondary }}>
 
-
-            <View style={{ flex: 1.5, backgroundColor: Colors.secondary }}>
-
-                {/* Boton de regreso */}
+            <View style={{ flex: 1.5 }}>
 
                 <View style={{ flex: 1, flexDirection: "row" }}>
                     <View style={{ flex: 0.5}}>
@@ -43,9 +40,6 @@ export const Restaurant = ({ navigation }) => {
 
 
 
-                {/* <Ionicons name="cart" size={SPACING * 2.5} color={Colors.gray} /> */}
-
-                {/* Logo y nombre del restaurante */}
 
                 <View style={{ flex: 2, flexDirection: "row", marginTop: 10 }}>
 

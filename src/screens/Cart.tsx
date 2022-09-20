@@ -6,13 +6,15 @@ import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native-animatable'
 import carrito from '../constants/carrito';
 import CardCart from '../components/CardCart';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const Cart = ({ navigation }) => {
+  const { top: paddingTop } = useSafeAreaInsets();
   return (
-    <View style={{ flex: 1, flexDirection: "column", backgroundColor: Colors.secondary }}>
+    <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
       <View style={styles.superior}>
-        <View style={{ flex: 0.3, marginBottom: 35 }}>
+        <View style={{ flex: 0.3, marginBottom: 30 }}>
           <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
             <Ionicons name="arrow-back" size={25} color={Colors.grey} />
           </TouchableOpacity>
@@ -29,7 +31,7 @@ export const Cart = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={{ flex: 0.85, backgroundColor: "white", borderTopLeftRadius: 30, borderTopRightRadius: 30 }}>
+      <View style={{ flex: 0.9, backgroundColor: "white", borderTopLeftRadius: 30, borderTopRightRadius: 30 }}>
         <View style={{ flex: 0.1, flexDirection: "row", marginTop: 10, borderBottomColor: "#E7E7E7", borderBottomWidth: 1 }}>
 
           <View style={{ flex: 0.2, alignItems: "flex-end", justifyContent: "center" }}>
@@ -60,7 +62,7 @@ export const Cart = ({ navigation }) => {
 
         </View>
 
-        <View style={{ flex: 0.13, flexDirection: "row",borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.gray}}>
+        <View style={{ flex: 0.13, flexDirection: "row", borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.gray }}>
 
           <View style={{ flex: 0.5, justifyContent: "center" }}>
             <Text style={styles.textSubTotal}>Subtotal</Text>
@@ -68,8 +70,8 @@ export const Cart = ({ navigation }) => {
 
           </View>
           <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity onPress={() => navigation.navigate('MyCard')}   style={styles.btnIrPago}>
-              <Text style={styles.textBtnPago}> Ir a pagar</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('MyCard')} style={styles.btnIrPago}>
+              <Text style={styles.textBtnPago}>Ir a pagar</Text>
             </TouchableOpacity>
 
           </View>
@@ -78,21 +80,13 @@ export const Cart = ({ navigation }) => {
 
       </View>
 
-
-
-      {/* <View style={{ flex: 0.32}}>
-      </View>
-
-      <View style={{ flex: 0.68, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
-      </View> */}
-
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   superior: {
-    flex: 0.15,
+    flex: 0.1,
     flexDirection: "row",
     alignItems: "flex-end",
 
@@ -105,7 +99,7 @@ const styles = StyleSheet.create({
   textVaciar: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: "#7ED957"
+    color: "#4DA537"
   },
   btnAtas: {
     marginLeft: 25,
@@ -130,17 +124,17 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   btnIrPago: {
-    backgroundColor: Colors.primary,
-    borderRadius:50
+    backgroundColor: Colors.primary1,
+    borderRadius: 50
   },
   textBtnPago: {
     fontSize: 18,
     marginLeft: 12,
     marginRight: 12,
     fontWeight: 'bold',
-    color: "white", 
-    paddingHorizontal:30,
-    paddingVertical:15
+    color: "white",
+    paddingHorizontal: 30,
+    paddingVertical: 15
   }
 
 

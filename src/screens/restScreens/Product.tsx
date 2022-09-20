@@ -17,7 +17,7 @@ export const Product = ({ navigation }) => {
     const onPressRest = () => setCount(prevCount => prevCount - 1);
     return (
 
-        <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.secondary }}>
+        <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
 
             <View style={{ flex: 0.3, alignItems: 'center' }}>
@@ -69,7 +69,7 @@ export const Product = ({ navigation }) => {
                 </View>
                 <View style={styles.btnACarro}>
                     <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
-                        <Text style={styles.textBtnCarro}> Agregar $17.000</Text>
+                        <Text style={styles.textBtnCarro}>Agregar $17.000</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     btnACarro: {
-        backgroundColor: "#CC2C2A",
+        backgroundColor: Colors.primary1,
         borderRadius: 5,
         margin: 8,
         flex: 0.7,

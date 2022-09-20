@@ -5,19 +5,21 @@ import { Colors } from '../../constants/colors'
 import orders from '../../constants/orders'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const Orders = ({ navigation }) => {
+  const { top: paddingTop } = useSafeAreaInsets();
   return (
-    <View style={{ flex: 1, flexDirection: "column", backgroundColor: Colors.secondary }}>
+    <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
 
-      <View style={{ flex: 0.30, }}>
+      <View style={{ flex: 0.2, }}>
         <Text style={styles.textoInicio}>Historial de</Text>
         <Text style={styles.textoInicio2}>pedidos</Text>
         <Text style={styles.textoDescripcion}>Encuentra aquí tus pedidos y servicios anteriores</Text>
       </View>
 
-      <View style={{ flex: 0.70, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
+      <View style={{ flex: 0.8, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
 
         <FlatList
           data={orders}
@@ -38,14 +40,14 @@ export const Orders = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   textoInicio: {
-    fontSize: 45,
+    fontSize: 35,
     fontWeight: 'bold',
     color: 'white',
-    marginTop: 75,
+    marginTop: 10,
     marginLeft: 20
   },
   textoInicio2: {
-    fontSize: 45,
+    fontSize: 35,
     fontWeight: 'bold',
     color: 'white',
     marginLeft: 20

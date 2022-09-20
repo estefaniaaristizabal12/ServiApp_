@@ -7,6 +7,7 @@ import { Orders } from '../screens/ordersScreens/Orders';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { RestStack } from './RestStack';
 import { OrderStack } from './OrderStack';
+import { Colors } from '../constants/colors';
 
 const BtTap = createMaterialBottomTabNavigator();
 
@@ -22,7 +23,7 @@ export default function BottomTab() {
                 backgroundColor: "#ffffff"
             }}
 
-            activeColor="#4F1A24"
+            activeColor={Colors.primary1}
             inactiveColor="#E7E7E7"
             screenOptions={({ route }) => ({
                 // tabBarActiveTintColor: Colors.secondary,

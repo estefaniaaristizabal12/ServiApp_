@@ -10,7 +10,7 @@ export const CardCart = ({ title, precio, cantidad, image }) => {
             <View style={{ flexDirection: "row" }}>
                 <View style={{ flex: 0.3 }}>
                     <Image
-                        style={{ width: "100%", height: "100%", borderRadius: 20, marginLeft:5 }}
+                        style={{ width: "100%", height: "100%", borderRadius: 20, marginLeft: 5 }}
                         source={image}
                     />
                 </View>
@@ -22,7 +22,7 @@ export const CardCart = ({ title, precio, cantidad, image }) => {
                     <Text style={style.titulo}>{title}</Text>
                     <Text style={style.precio}>${precio}</Text>
 
-                    <View style={{ alignItems: "flex-end", marginTop: 15, padding:5}}>
+                    <View style={{ alignItems: "flex-end", marginTop: 15, padding: 5 }}>
                         <View style={style.btnModificar}>
                             <TouchableOpacity >
                                 <Text style={style.textBtn}>-</Text>
@@ -32,14 +32,8 @@ export const CardCart = ({ title, precio, cantidad, image }) => {
                                 <Text style={style.textBtn}>+</Text>
                             </TouchableOpacity>
                         </View>
-
                     </View>
-
-
-
                 </View>
-
-
             </View>
         </View>
     )
