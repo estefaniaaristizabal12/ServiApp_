@@ -39,5 +39,6 @@ export const Colors = {
     redError: '#FF1717',
     green: '#27AE60',
     secondaryItemCard: '#DE6E68',
+    darkGray: '#525C67',
     
   };

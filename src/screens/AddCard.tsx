@@ -145,7 +145,8 @@ const AddCard = ({ navigation, route }) => {
           label={'Agregar Tarjeta'}
           onPress={() => {
             // navigation.goBack();
-            navigation.navigate('Checkout', { selectedCard });
+            //navigation.navigate('Checkout', { selectedCard });
+            navigation.navigate('Confirmation');
           }}
         />
       </View>
