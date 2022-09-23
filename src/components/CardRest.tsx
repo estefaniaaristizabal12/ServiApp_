@@ -4,9 +4,10 @@ import { Text, Image, View, StyleSheet, Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("screen");
 
-const CardRest = ({ title, precio, description, image, navigation }) => {
+const CardRest = ({ title, precio, description, image, navigation ,onPress}) => {
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Product')} style={style.card}>
+        // <TouchableOpacity onPress={() => navigation.navigate('Product')} style={style.card}>
+        <TouchableOpacity onPress={onPress} style={style.card}>
             <View style={{ flexDirection: "row" }}>
                 <View style={{ flex: 0.65
                     , marginHorizontal: 12, overflow: "hidden" }}>

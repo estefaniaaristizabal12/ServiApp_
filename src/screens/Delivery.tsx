@@ -17,7 +17,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from '../constants/colors';
 import categories from '../constants/categories';
-//import restaurant from '../constants/restaurant';
+// import restaurant from '../constants/restaurant';
 import Card from '../components/Card';
 import useEffect from 'react';
 

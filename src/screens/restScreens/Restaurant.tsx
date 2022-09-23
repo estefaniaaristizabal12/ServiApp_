@@ -19,6 +19,8 @@ export const Restaurant = ({ navigation, route }) => {
     
   const [selectedRestaurant, setSelectedRestaurant] = useState<null>(null);
   const [selectedProducts, setSelectedProducts] = useState<null>(null);
+  
+  const [selectedProduct, setSelectedProduct] = React.useState<null>(null);
 
   useEffect(() => {
     let { selectedRestaurant } = route.params;
@@ -118,6 +120,11 @@ export const Restaurant = ({ navigation, route }) => {
                             image={item.Imagen}
                             description={item.Descripcion}
                             navigation={navigation}
+                            onPress={() => {
+                                setSelectedProduct(item);
+                                navigation.navigate('Product', {selectedProduct: item});
+                                }
+                            }
                         />
                     )}
                 />

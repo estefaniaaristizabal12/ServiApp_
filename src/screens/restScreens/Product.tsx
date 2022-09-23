@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react'
 import { Dimensions, Image, SectionList, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList, Button } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AcompProd from '../../components/AcompProd';
@@ -10,11 +10,24 @@ import ingredients from '../../constants/ingredients';
 
 
 
-export const Product = ({ navigation }) => {
+export const Product = ({ navigation, route}) => {
     const { top: paddingTop } = useSafeAreaInsets();
     const [count, setCount] = useState(0);
     const onPressPlus = () => setCount(prevCount => prevCount + 1);
     const onPressRest = () => setCount(prevCount => prevCount - 1);
+
+    const [selectedProduct, setSelectedProduct] = React.useState<null>(null);
+
+
+
+    useEffect(() => {
+        let { selectedProduct } = route.params;
+        setSelectedProduct(selectedProduct);
+      
+      }, []);
+    
+
+
     return (
 
         <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
@@ -23,14 +36,14 @@ export const Product = ({ navigation }) => {
             <View style={{ flex: 0.3, alignItems: 'center' }}>
                 <Image
                     style={styles.logo}
-                    source={require('../../../assets/fondo.png')}
+                    source={{ uri: selectedProduct?.Imagen }}
                 />
             </View>
 
             <View style={styles.componente2}>
-                <Text style={styles.tituloProd}>Pizza Pepperoni</Text>
-                <Text style={styles.descrProd}>Increíble comida de Servicios de Alimentación, se destaca por su inocuidad.</Text>
-                <Text style={styles.preProd}> $15.900</Text>
+                <Text style={styles.tituloProd}>{selectedProduct?.Nombre}</Text>
+                <Text style={styles.descrProd}>{selectedProduct?.Descripcion}</Text>
+                <Text style={styles.preProd}> $ {selectedProduct?.Precio}</Text>
 
                 <View style={{ flex: 0.8, flexDirection: "row", borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#E7E7E7', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#E7E7E7', marginTop: 20 }}>
                     <View style={{ flex: 0.7 }}>
