@@ -11,7 +11,7 @@ const Card = ({ title, description, image, location, onPress }) => {
           <View style={style.cardImage}>
             <Image
               style={{ width: "100%", height: "100%", borderRadius: 20 }}
-              source={image}
+              source={{uri: image}}
             />
           </View>
           <View style={{ flex: 0.6, marginHorizontal: 12, overflow: "hidden" }}>

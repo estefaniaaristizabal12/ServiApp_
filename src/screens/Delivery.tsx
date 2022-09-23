@@ -17,8 +17,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from '../constants/colors';
 import categories from '../constants/categories';
-import restaurant from '../constants/restaurant';
+//import restaurant from '../constants/restaurant';
 import Card from '../components/Card';
+import useEffect from 'react';
+
+
 
 
 
@@ -30,6 +33,20 @@ const Delivery = ({navigation}) => {
 
   
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+
+  const [restaurant, setRestaurant] = React.useState([]);
+  const [selectedRestaurant, setSelectedRestaurant] = React.useState<null>(null);
+  
+
+  React.useEffect(() => {
+    getRestaurantes();
+  }, []);
+
+  const getRestaurantes = async () => {
+    const response = await fetch('http://10.195.41.47:8000/api/restaurantes');
+    const data = await response.json();
+    setRestaurant(data);
+  };
 
   const ListCategories = () => {
     return (
@@ -117,11 +134,15 @@ const Delivery = ({navigation}) => {
             data={restaurant}
             renderItem={({ item }) => (
               <Card
-                title={item.title}
-                image={item.image}
-                location={item.location}
-                description={item.description}
-                onPress={() => navigation.navigate('Restaurant')}
+                title={item.Nombre}
+                image={item.Imagen}
+                location={item.Localizacion}
+                description={item.Descripcion}
+                onPress={() => {
+                  setSelectedRestaurant(item);
+                  navigation.navigate('Restaurant', {selectedRestaurant: item});
+                  }
+                } 
               />
             )}
           />  

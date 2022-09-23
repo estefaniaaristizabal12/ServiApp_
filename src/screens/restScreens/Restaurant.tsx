@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Dimensions, SectionList, StyleSheet, Text, ScrollView, Button, FlatList } from 'react-native';
 import { Image, View } from 'react-native-animatable'
 
@@ -11,10 +11,29 @@ import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import productEx from '../../constants/productEx';
 import ItemRest from '../../components/ItemRest';
 import CardRest from '../../components/CardRest';
+import React, { FunctionComponent, useState, useEffect } from 'react';
+import restaurant from '../../constants/restaurant';
 
 
-export const Restaurant = ({ navigation }) => {
-    const { top: paddingTop } = useSafeAreaInsets();
+export const Restaurant = ({ navigation, route }) => {
+    
+  const [selectedRestaurant, setSelectedRestaurant] = useState<null>(null);
+  const [selectedProducts, setSelectedProducts] = useState<null>(null);
+
+  useEffect(() => {
+    let { selectedRestaurant } = route.params;
+    setSelectedRestaurant(selectedRestaurant);
+    getProducts(selectedRestaurant?.id);
+  }, []);
+
+  const getProducts = async (restaurantId) => {
+
+    const response = await fetch('http://10.195.41.47:8000/api/productos/rest/' + restaurantId);
+    const data = await response.json();
+    setSelectedProducts(data);
+  };
+
+  const { top: paddingTop } = useSafeAreaInsets();
     return (
 
         <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
@@ -46,13 +65,13 @@ export const Restaurant = ({ navigation }) => {
                     <View style={{ flex: 1, marginLeft: 30 }}>
                         <Image
                             style={{ width: 50, height: 50, marginTop: 7, borderRadius: 5 }}
-                            source={require('../../../assets/italiano.jpg')}
+                            source={{uri: selectedRestaurant?.Imagen}}
                         />
 
                     </View>
 
                     <View style={{ flex: 7, marginLeft: 2 }}>
-                        <Text style={{ fontSize: 30, fontWeight: 'bold', alignContent: 'center', padding: 20, color: "white" }}> El Italiano</Text>
+                        <Text style={{ fontSize: 30, fontWeight: 'bold', alignContent: 'center', padding: 20, color: "white" }}>{selectedRestaurant?.Nombre}</Text>
                         {/* <Button title="Product" onPress={() => navigation.navigate('Product')} /> */}
 
                     </View>
@@ -62,7 +81,7 @@ export const Restaurant = ({ navigation }) => {
                 <View style={styles.infoRest}>
                     <View style={styles.itemsRestInfo}>
                         <Text style={styles.tituloItemRest}>Entrega</Text>
-                        <Text style={styles.contItemRest}>31 min</Text>
+                        <Text style={styles.contItemRest}>{selectedRestaurant?.TiempoEntrega}</Text>
 
                     </View>
                     <View style={styles.itemsRestInfo}>
@@ -73,7 +92,7 @@ export const Restaurant = ({ navigation }) => {
                     </View>
                     <View style={styles.itemsRestInfo}>
                         <Text style={styles.tituloItemRest}>Horario</Text>
-                        <Text style={styles.contItemRest}>10:00 - 16:00</Text>
+                        <Text style={styles.contItemRest}>{selectedRestaurant?.Horario}</Text>
 
                     </View>
 
@@ -91,13 +110,13 @@ export const Restaurant = ({ navigation }) => {
             <View style={{ flex: 3.5, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
 
                 <FlatList
-                    data={productEx}
+                    data={selectedProducts}
                     renderItem={({ item }) => (
                         <CardRest
-                            title={item.title}
-                            precio={item.precio}
-                            image={item.image}
-                            description={item.description}
+                            title={item.Nombre}
+                            precio={item.Precio}
+                            image={item.Imagen}
+                            description={item.Descripcion}
                             navigation={navigation}
                         />
                     )}

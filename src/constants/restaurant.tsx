@@ -2,16 +2,12 @@
 const restaurant = [
     {
       id: 1,
-      title: "El Italiano",
-      location: "Edificio 67, G Maldonado",
-      description: "Ofrecemos amplia carta, de deliciosos platos italianos",
-      information:
+      Nombre: "El Italiano",
+      Localizacion: "Edificio 67, G Maldonado",
+      Descripcion: "Ofrecemos amplia carta, de deliciosos platos italianos",
+      InformacionHorario:
         "xxx",
-      paymentInfo:
-        "XXX",
-      detailedDescription:
-        "XXX",
-      image: require('../../assets/2.jpg'),
+      Imagen: require('../../assets/2.jpg'),
     },
     {
       id: 2,
