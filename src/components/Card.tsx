@@ -17,7 +17,7 @@ const Card = ({ title, description, image, location, onPress }) => {
           <View style={{ flex: 0.6, marginHorizontal: 12, overflow: "hidden" }}>
             <Text style={style.cardTitle}>{title}</Text>
             <Text style={style.cardLocation}>{location}</Text>
-            <Text style={style.cardDescription}>{description}</Text>
+            <Text  numberOfLines={2} ellipsizeMode="tail" style={style.cardDescription}>{description}</Text>
           </View>
         </View>
       </TouchableOpacity>
