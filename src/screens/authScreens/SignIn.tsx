@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../../components/Loader';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const SignIn = ({ navigation }) => {
 
@@ -93,17 +94,28 @@ export const SignIn = ({ navigation }) => {
 
    
   return (
+
     <SafeAreaView style={{ backgroundColor: Colors.white, flex: 1 }}>
+
      <Loader visible={loading} />
+
       <ScrollView
         contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 22 }}>
+    
         <Text style={{ color: Colors.black, fontSize: 40, textAlign: 'center', fontWeight: 'bold' }}>
           Registrarse
         </Text>
         <Text style={{ color: Colors.grey, fontSize: 14, textAlign: 'center', marginVertical: 10 }}>
           Desea registrarte y disfrutar de multiples servicios?
         </Text>
-        <View style={{ marginVertical: 20 }}>
+
+        <KeyboardAwareScrollView
+          keyboardDismissMode="on-drag"
+          contentContainerStyle={{
+            flexGrow: 1,
+
+        }}>
+         <View style={{ marginVertical: 20 }}>
           <Input
             onChangeText={text => handleOnchange(text, 'email')}
             onFocus={() => handleError(null, 'email')}
@@ -153,6 +165,7 @@ export const SignIn = ({ navigation }) => {
             Tienes una cuenta? Iniciar sesión
           </Text>
         </View>
+      </KeyboardAwareScrollView>
       </ScrollView>
     </SafeAreaView>
   )
