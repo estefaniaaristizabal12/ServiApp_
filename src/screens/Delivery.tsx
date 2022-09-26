@@ -20,9 +20,13 @@ import categories from '../constants/categories';
 // import restaurant from '../constants/restaurant';
 import Card from '../components/Card';
 import useEffect from 'react';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from './firebaseConfig';
 
 
-
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 
 const {width} = Dimensions.get('screen');
@@ -100,7 +104,8 @@ const Delivery = ({navigation}) => {
           <View style={{flexDirection: 'row', marginTop: 6}}>
             <Text style={{fontSize: 28}}>Hola,</Text>
             <Text style={{fontSize: 28, fontWeight: 'bold', marginLeft: 10}}>
-              Estefania
+               Estefania
+              {/* {auth.currentUser?.email} */}
             </Text>
           </View>
           <Text style={{marginTop: 5, fontSize: 22, color: Colors.grey1}}>
