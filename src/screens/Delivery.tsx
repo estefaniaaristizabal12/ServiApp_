@@ -47,7 +47,7 @@ const Delivery = ({navigation}) => {
   }, []);
 
   const getRestaurantes = async () => {
-    const response = await fetch('http://3.90.53.65/api/restaurantes');
+    const response = await fetch('http://54.226.101.30/api/restaurantes');
     const data = await response.json();
     setRestaurant(data);
   };

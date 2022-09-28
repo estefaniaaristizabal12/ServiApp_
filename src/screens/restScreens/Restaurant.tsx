@@ -30,7 +30,7 @@ export const Restaurant = ({ navigation, route }) => {
 
   const getProducts = async (restaurantId) => {
 
-    const response = await fetch('http://3.90.53.65/api/productos/rest/' + restaurantId);
+    const response = await fetch('http:/54.226.101.30/api/productos/rest/' + restaurantId);
     const data = await response.json();
     setSelectedProducts(data);
   };
