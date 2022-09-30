@@ -6,6 +6,13 @@ import acompanamientos from '../../constants/acompanamientos';
 import { Colors } from '../../constants/colors';
 import ingredients from '../../constants/ingredients';
 import { Ionicons } from '@expo/vector-icons';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from '../firebaseConfig';
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 
 
@@ -27,6 +34,13 @@ export const Product = ({ navigation, route }) => {
 
     }, []);
 
+    const postAddToCart = async (prodId) => {
+
+        const response = await fetch('http:/54.226.101.30/api/usuarios/addcart/' + prodId+ '/?uid='+ auth.currentUser.uid, { method: 'POST' });
+        const data = await response.json();
+        console.log(data);
+
+      };
 
 
     return (
@@ -106,8 +120,13 @@ export const Product = ({ navigation, route }) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnACarro}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
-                        <Text style={styles.textBtnCarro}>Agregar $17.000</Text>
+                    <TouchableOpacity onPress={() => {
+                        postAddToCart(selectedProduct?.id);
+                 
+                        navigation.navigate('Cart')
+                    }
+                    }>
+                        <Text style={styles.textBtnCarro}>Agregar ${selectedProduct?.Precio} </Text>
                     </TouchableOpacity>
                 </View>
 

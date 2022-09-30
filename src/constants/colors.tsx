@@ -40,5 +40,8 @@ export const Colors = {
     green: '#27AE60',
     secondaryItemCard: '#DE6E68',
     darkGray: '#525C67',
+    gray3: '#898B9A',
+    white2: '#FBFBFB',
+    lightGray1: '#DDDDDD',
     
   };
