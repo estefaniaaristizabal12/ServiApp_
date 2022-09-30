@@ -11,8 +11,8 @@ const CardRest = ({ title, precio, description, image, navigation ,onPress}) => 
             <View style={{ flexDirection: "row" }}>
                 <View style={{ flex: 0.65
                     , marginHorizontal: 12, overflow: "hidden" }}>
-                    <Text style={style.titulo}>{title}</Text>
-                    <Text style={style.descripcion}>{description}</Text>
+                    <Text numberOfLines={1} ellipsizeMode="tail" style={style.titulo}>{title}</Text>
+                    <Text numberOfLines={2} ellipsizeMode="tail" style={style.descripcion}>{description}</Text>
                     <Text style={style.precio}>${precio}</Text>
                 </View>
 

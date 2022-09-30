@@ -1,16 +1,17 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Dimensions, Image, SectionList, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList, Button } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AcompProd from '../../components/AcompProd';
 import acompanamientos from '../../constants/acompanamientos';
 import { Colors } from '../../constants/colors';
 import ingredients from '../../constants/ingredients';
+import { Ionicons } from '@expo/vector-icons';
 
 
 
 
 
-export const Product = ({ navigation, route}) => {
+export const Product = ({ navigation, route }) => {
     const { top: paddingTop } = useSafeAreaInsets();
     const [count, setCount] = useState(0);
     const onPressPlus = () => setCount(prevCount => prevCount + 1);
@@ -23,29 +24,53 @@ export const Product = ({ navigation, route}) => {
     useEffect(() => {
         let { selectedProduct } = route.params;
         setSelectedProduct(selectedProduct);
-      
-      }, []);
-    
+
+    }, []);
+
 
 
     return (
 
         <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
+            <View style={{ flex: 0.08, alignItems: 'center' }}>
 
-            <View style={{ flex: 0.3, alignItems: 'center' }}>
-                <Image
-                    style={styles.logo}
-                    source={{ uri: selectedProduct?.Imagen }}
-                />
+
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View style={{ flex: 0.5 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Restaurant')} style={styles.btnAtas}>
+                            <Ionicons name="arrow-back" size={25} color={Colors.gray} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{ flex: 0.5, alignItems: "flex-end", marginRight: 25 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={styles.btnAtas}>
+                            <Ionicons name="cart" size={22} color={Colors.gray} />
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+
             </View>
 
             <View style={styles.componente2}>
-                <Text style={styles.tituloProd}>{selectedProduct?.Nombre}</Text>
-                <Text style={styles.descrProd}>{selectedProduct?.Descripcion}</Text>
-                <Text style={styles.preProd}> $ {selectedProduct?.Precio}</Text>
 
-                <View style={{ flex: 0.8, flexDirection: "row", borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#E7E7E7', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#E7E7E7', marginTop: 20 }}>
+                <View style={{ flex: 1.4, flexDirection: "row" }}>
+                    <View style={{ flex: 0.8 }}>
+                        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.tituloProd}>{selectedProduct?.Nombre}</Text>
+                        <Text numberOfLines={3} ellipsizeMode="tail" style={styles.descrProd}>{selectedProduct?.Descripcion}</Text>
+                        <Text style={styles.preProd}> $ {selectedProduct?.Precio}</Text>
+                    </View>
+                    <View style={{ flex: 0.3, justifyContent:'center' }}>
+                        <Image
+                            style={styles.logo}
+                            source={{ uri: selectedProduct?.Imagen }}
+                        />
+                    </View>
+
+                </View>
+
+                <View style={{ flex: 0.6, flexDirection: "row", borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#E7E7E7', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#E7E7E7', marginTop: 20 }}>
                     <View style={{ flex: 0.7 }}>
                         <Text style={styles.acompanamientos}>Acompaña Tu Orden Con</Text>
                     </View>
@@ -97,11 +122,13 @@ export const Product = ({ navigation, route}) => {
 
 const styles = StyleSheet.create({
     logo: {
-        width: "90%",
-        height: "90%"
+        width: "100%",
+        height: 120,
+        borderRadius:10, 
+        marginLeft:3
     },
     componente2: {
-        flex: 0.65,
+        flex: 0.92,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         backgroundColor: "white",
@@ -173,9 +200,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    textBtn:{
+    textBtn: {
         fontSize: 18,
-        marginLeft:12,
+        marginLeft: 12,
         marginRight: 12,
         fontWeight: 'bold',
     },
@@ -187,12 +214,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    textBtnCarro:{
+    textBtnCarro: {
         fontSize: 18,
-        marginLeft:12,
+        marginLeft: 12,
         marginRight: 12,
         fontWeight: 'bold',
-        color:"white"
+        color: "white"
 
+    },
+    btnAtas: {
+        marginLeft: 25,
+        backgroundColor: Colors.white,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 25,
+        height: 30,
+        width: 30
     }
 });
