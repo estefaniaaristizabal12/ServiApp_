@@ -38,8 +38,7 @@ export default [
       name: "Napolitana",
       image: require('../../assets/ensalada1.jpg'),
       price: "10.000",
-      description:
-        "XXX",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam officiis maxime saepe voluptatibus? Iure, maiores provident. Alias voluptates ab beatae, facilis rerum reiciendis laborum, fugiat iure vero ipsum suscipit corrupti!",
       categoryId: 4,
       rating: 4.5,
       included: "queso y Pan",
