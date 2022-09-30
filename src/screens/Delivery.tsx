@@ -104,8 +104,8 @@ const Delivery = ({navigation}) => {
           <View style={{flexDirection: 'row', marginTop: 6}}>
             <Text style={{fontSize: 28}}>Hola,</Text>
             <Text style={{fontSize: 28, fontWeight: 'bold', marginLeft: 10}}>
-               Estefania
-              {/* {auth.currentUser?.email} */}
+                Estefania 
+               {/* {auth.currentUser?.uid}  */}
             </Text>
           </View>
           <Text style={{marginTop: 5, fontSize: 22, color: Colors.grey1}}>
