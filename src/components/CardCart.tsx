@@ -11,7 +11,7 @@ export const CardCart = ({ title, precio, cantidad, image }) => {
                 <View style={{ flex: 0.3 }}>
                     <Image
                         style={{ width: "100%", height: "100%", borderRadius: 20, marginLeft: 5 }}
-                        source={image}
+                        source={{uri: image}}
                     />
                 </View>
 

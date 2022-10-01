@@ -7,9 +7,33 @@ import { Image } from 'react-native-animatable'
 import carrito from '../constants/carrito';
 import CardCart from '../components/CardCart';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from './firebaseConfig';
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+
+
 
 export const Cart = ({ navigation }) => {
   const { top: paddingTop } = useSafeAreaInsets();
+
+  const [cart, setCart] = React.useState([]);
+
+
+  React.useEffect(() => {
+    getCart();
+  }, []);
+
+const getCart = async () => {
+  const response = await fetch('http://54.226.101.30/api/usuarios/cart'+ '/?uid='+ auth.currentUser.uid, { method: 'GET' });
+  const data = await response.json();
+  setCart(data);
+};
+
+
+
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
@@ -48,13 +72,13 @@ export const Cart = ({ navigation }) => {
         </View>
         <View style={{ flex: 0.8, flexDirection: "column" }}>
           <FlatList
-            data={carrito}
+            data={cart}
             renderItem={({ item }) => (
               <CardCart
-                title={item.title}
-                precio={item.precio}
-                image={item.image}
-                cantidad={item.cantidad}
+                title={item.Nombre}
+                // precio={item.precio}
+                image={item.Imagen}
+                // cantidad={item.cantidad}
               />
             )}
           />
