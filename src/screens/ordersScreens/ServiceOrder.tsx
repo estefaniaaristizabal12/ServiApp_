@@ -9,7 +9,7 @@ import { AirbnbRating, Rating } from 'react-native-ratings';
 export const ServiceOrder = ({ navigation }) => {
     const { top: paddingTop } = useSafeAreaInsets();
     return (
-        <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.secondary }}>
+        <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
             <View style={{ flex: 0.20 }}>
 
