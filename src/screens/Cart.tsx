@@ -10,6 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
+import restaurant from '../constants/restaurant';
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
@@ -23,7 +24,16 @@ export const Cart = ({ navigation }) => {
 
 
   React.useEffect(() => {
+
+    // //recorrer productor y sumar total
+    // let total = 0;
+    // cart.forEach((item) => {
+    //   total += item.cant * item.precio;
+    // });
+
+
     getCart();
+    console.log('EJECUTANDO USEFFECT CARRITO');
   }, []);
 
 const getCart = async () => {
@@ -61,26 +71,34 @@ const getCart = async () => {
           <View style={{ flex: 0.2, alignItems: "flex-end", justifyContent: "center" }}>
             <Image
               style={{ width: 45, height: 45, marginTop: 7, borderRadius: 5 }}
-              source={require('../../assets/italiano.jpg')}
+              source ={{uri: cart?.Restaurante?.Imagen}}
+
+           
             />
 
           </View>
 
           <View style={{ flex: 0.8, justifyContent: "center", marginLeft: 5 }}>
-            <Text style={{ fontSize: 22, fontWeight: 'bold', alignContent: 'center', marginLeft: 10, color: "black" }}> El Italiano</Text>
+            <Text style={{ fontSize: 22, fontWeight: 'bold', alignContent: 'center', marginLeft: 10, color: "black" }}> {cart?.Restaurante?.Nombre}</Text>
           </View>
         </View>
         <View style={{ flex: 0.8, flexDirection: "column" }}>
-          <FlatList
-            data={cart}
+
+            <FlatList
+            data={cart?.Productos}
+      
             renderItem={({ item }) => (
+              
               <CardCart
                 title={item.Nombre}
-                // precio={item.precio}
+                precio={item.Precio}
                 image={item.Imagen}
-                // cantidad={item.cantidad}
+                cantidad={item.Cantidad}
               />
+        
+  
             )}
+            
           />
 
 
@@ -90,6 +108,7 @@ const getCart = async () => {
 
           <View style={{ flex: 0.5, justifyContent: "center" }}>
             <Text style={styles.textSubTotal}>Subtotal</Text>
+
             <Text style={styles.textSPrecio}>$18.000</Text>
 
           </View>

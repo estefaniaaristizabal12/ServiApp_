@@ -25,20 +25,27 @@ export const Product = ({ navigation, route }) => {
     const onPressRest = () => setCount(prevCount => prevCount - 1);
 
     const [selectedProduct, setSelectedProduct] = React.useState<null>(null);
+    const [selectedRestaurant, setSelectedRestaurant] = React.useState<null>(null);
+
 
 
 
     useEffect(() => {
-        let { selectedProduct } = route.params;
+        let { selectedProduct, selectedRestaurant } = route.params;
         setSelectedProduct(selectedProduct);
+   
+        setSelectedRestaurant(selectedRestaurant);
+
+        console.log(selectedProduct);
+
 
     }, []);
 
-    const postAddToCart = async (prodId) => {
+    const postAddToCart = async (prodId,cant,idRest) => {
 
-        const response = await fetch('http:/54.226.101.30/api/usuarios/addcart/' + prodId+ '/?uid='+ auth.currentUser.uid, { method: 'POST' });
+        const response = await fetch('http:/54.226.101.30/api/usuarios/addcart/' + prodId+ '/'+ cant+'/'+idRest+'/?uid='+ auth.currentUser.uid, { method: 'POST' });
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
 
       };
 
@@ -121,7 +128,10 @@ export const Product = ({ navigation, route }) => {
                 </View>
                 <View style={styles.btnACarro}>
                     <TouchableOpacity onPress={() => {
-                        postAddToCart(selectedProduct?.id);
+
+                      
+
+                        postAddToCart(selectedProduct?.id, count, selectedRestaurant?.id);
                  
                         navigation.navigate('Cart')
                     }

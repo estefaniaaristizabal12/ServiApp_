@@ -122,7 +122,8 @@ export const Restaurant = ({ navigation, route }) => {
                             navigation={navigation}
                             onPress={() => {
                                 setSelectedProduct(item);
-                                navigation.navigate('Product', {selectedProduct: item});
+                                
+                                navigation.navigate('Product', {selectedProduct: item,selectedRestaurant: selectedRestaurant});
                                 }
                             }
                         />
