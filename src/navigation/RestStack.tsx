@@ -8,6 +8,7 @@ import { RestProfile } from '../screens/restScreens/RestProfile';
 import AddCard from '../screens/AddCard';
 import MyCard from '../screens/MyCard';
 import Confirmation from '../screens/Confirmation';
+import Delivery from '../screens/Delivery';
 
 const StackRest = createStackNavigator();
 export const RestStack = () => {
@@ -18,7 +19,8 @@ export const RestStack = () => {
                 animationTypeForReplace: 'pop',
             }}>
 
-            <StackRest.Screen name="TopTab" component={TopTab} />
+            {/* <StackRest.Screen name="TopTab" component={TopTab} /> */}
+            <StackRest.Screen name="Delivery" component={Delivery} />
             <StackRest.Screen name="Restaurant" component={Restaurant} />
             <StackRest.Screen name="Product" component={Product} />
             <StackRest.Screen name="Cart" component={Cart} />
