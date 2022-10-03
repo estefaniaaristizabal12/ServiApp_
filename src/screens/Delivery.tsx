@@ -40,17 +40,37 @@ const Delivery = ({navigation}) => {
 
   const [restaurant, setRestaurant] = React.useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = React.useState<null>(null);
+  const [filteredData, setFilteredData] = React.useState([]);
   
 
-  React.useEffect(() => {
-    getRestaurantes();
-  }, []);
 
-  const getRestaurantes = async () => {
-    const response = await fetch('http://54.226.101.30/api/restaurantes');
-    const data = await response.json();
-    setRestaurant(data);
-  };
+
+
+
+  const searchFilterFunction = (text) => {
+    if(text){  
+        const newData = restaurant.filter(item => {
+            const itemData = item.Nombre ? item.Nombre.toUpperCase() : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        })
+        setFilteredData(newData);
+    } else {
+        setFilteredData(restaurant);
+    }
+}
+
+React.useEffect(() => {
+  getRestaurantes();
+}, []);
+
+const getRestaurantes = async () => {
+  const response = await fetch('http://54.226.101.30/api/restaurantes');
+  const data = await response.json();
+  setFilteredData(data);
+  setRestaurant(data);
+};
+
 
   const ListCategories = () => {
     return (
@@ -128,6 +148,7 @@ const Delivery = ({navigation}) => {
           <TextInput
             style={{flex: 1, fontSize: 18}}
             placeholder="Buscar un restaurante"
+            onChangeText={(text) => searchFilterFunction(text)}
           />
         </View>
       </View>
@@ -136,7 +157,7 @@ const Delivery = ({navigation}) => {
       </View>
 
       <FlatList
-            data={restaurant}
+            data={filteredData}
             renderItem={({ item }) => (
               <Card
                 title={item.Nombre}
@@ -150,7 +171,7 @@ const Delivery = ({navigation}) => {
                 } 
               />
             )}
-          />  
+        />  
 
     </SafeAreaView>
   );

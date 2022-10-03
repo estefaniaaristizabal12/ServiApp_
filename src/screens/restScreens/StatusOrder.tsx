@@ -10,20 +10,18 @@ import {
   import { StackScreenProps } from '@react-navigation/stack';
   import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
   
+  
   import { useSafeAreaInsets } from 'react-native-safe-area-context';
-  import { SwipeListView } from 'react-native-swipe-list-view';
   import { Colors } from '../../constants/colors';
 
-  import {
-    HeaderNavigation,
-    IconButton,
-    CartQuantityButton,
-    IconLabel,
-    TextButton,
-    LineDivider,
-    TextIconButton,
-  } from '../../components';
-  
+
+  import TextButton from '../../components/TextButton';
+  import  HeaderNavigation from '../../components/HeaderNavigation';
+  import IconButton from '../../components/IconButton';
+  import LineDivider from '../../components/LineDivider';
+  import TextIconButton from '../../components/TextIconButton';
+  import status from '../../constants/status';
+
   
   const StatusOrder= ({ navigation }) => {
 
@@ -32,6 +30,7 @@ import {
     const [currentStep, setCurrentStep] = useState(4);
   
     const renderHeader = () => {
+      
       return (
         <HeaderNavigation
           title="DELIVERY STATUS"
@@ -43,7 +42,7 @@ import {
           titleStyle={{}}
           leftComponent={
             <IconButton
-              icon={ require('../../assets/back.png')}
+              icon={ require('../../../assets/back.png')}
               containerStyle={styles.leftIconButton}
               iconStyle={{
                 width: 16,
@@ -114,7 +113,7 @@ import {
               marginTop: 24,
               paddingHorizontal: 24,
             }}>
-            {constants.track_order_status.map((item, index) => {
+            {status.map((item, index) => {
               return (
                 <View key={`StatusList-${index}`} style={{}}>
                   <View
@@ -124,7 +123,7 @@ import {
                       marginVertical: -5,
                     }}>
                     <Image
-                      source={ require('../../assets/check_circle.png')}
+                      source={ require('../../../assets/check_circle.png')}
                       style={{
                         width: 40,
                         height: 40,
@@ -143,7 +142,7 @@ import {
                       </Text>
                     </View>
                   </View>
-                  {index < constants.track_order_status.length - 1 && (
+                  {index < status.length - 1 && (
                     <View>
                       {index < currentStep && (
                         <View
@@ -158,7 +157,7 @@ import {
                       )}
                       {index >= currentStep && (
                         <Image
-                          source={icons.dotted_line}
+                          source={ require('../../../assets/dotted_line.png')}
                           style={{ width: 4, height: 50, marginLeft: 17 }}
                           resizeMode="cover"
                         />
@@ -175,45 +174,45 @@ import {
   
     const renderFooter = () => {
       return (
-        <View style={{ marginTop: SIZES.radius, marginBottom: SIZES.padding }}>
-          {currentStep < constants.track_order_status.length - 1 && (
+        <View style={{ marginTop: 12, marginBottom: 24 }}>
+          {currentStep < status.length - 1 && (
             <View style={{ flexDirection: 'row', height: 55 }}>
               {/* Cancel */}
               <TextButton
                 buttonContainerStyle={{
                   width: '40%',
-                  borderRadius: SIZES.base,
-                  backgroundColor: COLORS.lightGray2,
+                  borderRadius: 8,
+                  backgroundColor: Colors.lightGray2,
                 }}
                 label="Cancel"
-                labelStyle={{ color: COLORS.primary }}
+                labelStyle={{ color: Colors.primaryItemCard }}
                 onPress={() => navigation.navigate('FoodDetail')}
               />
               {/* MapView*/}
               <TextIconButton
                 containerStyle={{
                   flex: 1,
-                  marginLeft: SIZES.radius,
-                  borderRadius: SIZES.radius,
-                  backgroundColor: COLORS.primary,
+                  marginLeft: 12,
+                  borderRadius: 12,
+                  backgroundColor: Colors.primaryItemCard,
                 }}
                 label="Map View"
-                labelStyle={{ color: COLORS.white, ...FONTS.h3 }}
-                icon={icons.map}
+                labelStyle={{ color: Colors.white, fontSize: 16 }}
+                icon={ require('../../../assets/map.png')}
                 iconPosition="LEFT"
                 iconStyle={{
                   width: 25,
                   height: 25,
-                  marginRight: SIZES.base,
-                  tintColor: COLORS.white,
+                  marginRight: 8,
+                  tintColor: Colors.white,
                 }}
                 onPress={() => navigation.navigate('Map')}
               />
             </View>
           )}
-          {currentStep === constants.track_order_status.length - 1 && (
+          {currentStep === status.length - 1 && (
             <TextButton
-              buttonContainerStyle={{ height: 55, borderRadius: SIZES.radius }}
+              buttonContainerStyle={{ height: 55, borderRadius: 12 }}
               label="DONE"
               onPress={() => navigation.navigate('Home')}
             />
@@ -241,8 +240,8 @@ import {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: COLORS.white,
-      paddingHorizontal: SIZES.padding,
+      backgroundColor: Colors.white,
+      paddingHorizontal: 24,
     },
     leftIconButton: {
       width: 40,
@@ -250,8 +249,8 @@ import {
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
-      borderRadius: SIZES.radius,
-      borderColor: COLORS.gray2,
+      borderRadius: 12,
+      borderColor: Colors.gray2,
     },
   });
   
