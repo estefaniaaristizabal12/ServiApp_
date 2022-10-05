@@ -23,6 +23,7 @@ import useEffect from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
+import * as RestService from '../services/RestaurantService'
 
 
 const app = initializeApp(firebaseConfig);
@@ -64,12 +65,14 @@ React.useEffect(() => {
   getRestaurantes();
 }, []);
 
-const getRestaurantes = async () => {
-  const response = await fetch('http://54.226.101.30/api/restaurantes');
-  const data = await response.json();
-  setFilteredData(data);
-  setRestaurant(data);
-};
+  const getRestaurantes = async () => {
+    RestService.getRestaurants().
+      then(data => {
+        setFilteredData(data)
+        setRestaurant(data)
+      })
+      .catch(error => console.error(error))
+  };
 
 
   const ListCategories = () => {

@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseConfig';
+import * as UserService from '../../services/UserService'
 
 
 const app = initializeApp(firebaseConfig);
@@ -24,8 +25,8 @@ export const Product = ({ navigation, route }) => {
     const onPressPlus = () => setCount(prevCount => prevCount + 1);
     const onPressRest = () => setCount(prevCount => prevCount - 1);
 
-    const [selectedProduct, setSelectedProduct] = React.useState<null>(null);
-    const [selectedRestaurant, setSelectedRestaurant] = React.useState<null>(null);
+    const [selectedProduct, setSelectedProduct] = React.useState<any>(null);
+    const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>(null);
 
 
 
@@ -41,13 +42,11 @@ export const Product = ({ navigation, route }) => {
 
     }, []);
 
-    const postAddToCart = async (prodId,cant,idRest) => {
-
-        const response = await fetch('http:/54.226.101.30/api/usuarios/addcart/' + prodId+ '/'+ cant+'/'+idRest+'/?uid='+ auth.currentUser.uid, { method: 'POST' });
-        const data = await response.json();
-        //console.log(data);
-
-      };
+  const addProdCart = (prodId: any, cant: any, restId: any, uid: any) => {
+    UserService.addProdCart(prodId, cant, restId, uid)
+      .then(res => console.log(res))
+      .catch(error => console.error(error))
+  }
 
 
     return (
@@ -131,7 +130,7 @@ export const Product = ({ navigation, route }) => {
 
                       
 
-                        postAddToCart(selectedProduct?.id, count, selectedRestaurant?.id);
+                        addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, auth.currentUser.uid)
                  
                         navigation.navigate('Cart')
                     }

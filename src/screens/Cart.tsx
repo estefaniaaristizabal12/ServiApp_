@@ -11,37 +11,44 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 import restaurant from '../constants/restaurant';
+import * as UserService from '../services/UserService'
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-
+import { useIsFocused } from "@react-navigation/native";
 
 
 export const Cart = ({ navigation }) => {
+  const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets();
 
-  const [cart, setCart] = React.useState([]);
+  const [cart, setCart] = React.useState<any>({});
+  const [total, setTotal] = React.useState(0);
 
 
   React.useEffect(() => {
-
-    // //recorrer productor y sumar total
-    // let total = 0;
-    // cart.forEach((item) => {
-    //   total += item.cant * item.precio;
-    // });
-
-
-    getCart();
     console.log('EJECUTANDO USEFFECT CARRITO');
-  }, []);
+    if (isFocused) {
+      getCart();
+    }
+  }, [isFocused]);
 
-const getCart = async () => {
-  const response = await fetch('http://54.226.101.30/api/usuarios/cart'+ '/?uid='+ auth.currentUser.uid, { method: 'GET' });
-  const data = await response.json();
-  setCart(data);
-};
+  function currencyFormat(num: number) {
+    if (!num) return '$0,00'
+    return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
 
+  const getCart = async () => {
+    UserService.getCart(auth.currentUser.uid)
+      .then(data => {
+        const sum = data?.Productos?.reduce((a, b) => { return a + b?.Precio }, 0);
+        setCart(data);
+        setTotal(sum);
+      })
+      .catch(error => {
+        console.error(error)
+      });
+  };
 
 
   return (
@@ -71,9 +78,7 @@ const getCart = async () => {
           <View style={{ flex: 0.2, alignItems: "flex-end", justifyContent: "center" }}>
             <Image
               style={{ width: 45, height: 45, marginTop: 7, borderRadius: 5 }}
-              source ={{uri: cart?.Restaurante?.Imagen}}
-
-           
+              source={{ uri: cart?.Restaurante?.Imagen }}
             />
 
           </View>
@@ -84,21 +89,21 @@ const getCart = async () => {
         </View>
         <View style={{ flex: 0.8, flexDirection: "column" }}>
 
-            <FlatList
+          <FlatList
             data={cart?.Productos}
-      
+
             renderItem={({ item }) => (
-              
+
               <CardCart
                 title={item.Nombre}
                 precio={item.Precio}
                 image={item.Imagen}
                 cantidad={item.Cantidad}
               />
-        
-  
+
+
             )}
-            
+
           />
 
 
@@ -108,9 +113,7 @@ const getCart = async () => {
 
           <View style={{ flex: 0.5, justifyContent: "center" }}>
             <Text style={styles.textSubTotal}>Subtotal</Text>
-
-            <Text style={styles.textSPrecio}>$18.000</Text>
-
+            <Text style={styles.textSPrecio}>{currencyFormat(total)}</Text>
           </View>
           <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
             <TouchableOpacity onPress={() => navigation.navigate('MyCard')} style={styles.btnIrPago}>

@@ -13,14 +13,15 @@ import ItemRest from '../../components/ItemRest';
 import CardRest from '../../components/CardRest';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import restaurant from '../../constants/restaurant';
+import * as prodService from '../../services/ProductService'
 
 
 export const Restaurant = ({ navigation, route }) => {
     
-  const [selectedRestaurant, setSelectedRestaurant] = useState<null>(null);
-  const [selectedProducts, setSelectedProducts] = useState<null>(null);
+  const [selectedRestaurant, setSelectedRestaurant] = useState<any>(null);
+  const [selectedProducts, setSelectedProducts] = useState<any>(null);
   
-  const [selectedProduct, setSelectedProduct] = React.useState<null>(null);
+  const [selectedProduct, setSelectedProduct] = React.useState<any>(null);
 
   useEffect(() => {
     let { selectedRestaurant } = route.params;
@@ -29,10 +30,9 @@ export const Restaurant = ({ navigation, route }) => {
   }, []);
 
   const getProducts = async (restaurantId) => {
-
-    const response = await fetch('http:/54.226.101.30/api/productos/rest/' + restaurantId);
-    const data = await response.json();
-    setSelectedProducts(data);
+    prodService.getProductsRest(restaurantId)
+      .then(data => setSelectedProducts(data))
+      .catch(error => console.error(error))
   };
 
   const { top: paddingTop } = useSafeAreaInsets();
