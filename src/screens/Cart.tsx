@@ -12,6 +12,7 @@ import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 import restaurant from '../constants/restaurant';
 import * as UserService from '../services/UserService'
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
@@ -46,9 +47,19 @@ export const Cart = ({ navigation }) => {
         setTotal(sum);
       })
       .catch(error => {
-        console.error(error)
+        console.error("getCart: ", error)
       });
   };
+
+  const clearCart = async () => {
+    UserService.clearCart(auth.currentUser.uid)
+      .then(data => {
+        console.log("clearCart:", data)
+        setCart({})
+        setTotal(0)
+      })
+      .catch(error => console.error("clearCart:", error))
+  }
 
 
   return (
@@ -66,7 +77,10 @@ export const Cart = ({ navigation }) => {
 
         </View>
         <View style={{ flex: 0.3, alignItems: "flex-end", marginBottom: 30, marginRight: 20, }}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              clearCart()
+            }}>
             <Text style={styles.textVaciar} > Vaciar </Text>
           </TouchableOpacity>
         </View>

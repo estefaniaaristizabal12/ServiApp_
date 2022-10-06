@@ -23,7 +23,7 @@ export async function removeProdCart(prodId: any, uid: any) {
 }
 
 export async function clearCart(uid: any) {
-  const res = await fetch(`${url}/clearcart/?uid=${uid}`, { method: 'GET' })
+  const res = await fetch(`${url}/clearcart/?uid=${uid}`, { method: 'POST' })
   return res.json()
 }
 

@@ -9,6 +9,13 @@ import TextButton from '../components/TextButton';
 import { Colors } from '../constants/colors';
 import dummyData from '../constants/dummyData';
 
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from './firebaseConfig';
+import * as UserService from '../services/UserService'
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 
 //type MyCardProps = StackScreenProps<MainParamType, 'MyCard'>;
@@ -16,7 +23,24 @@ import dummyData from '../constants/dummyData';
 const MyCard = ({ navigation, route }) => {
 
   const insets = useSafeAreaInsets();
-  const [selectedCard, setSelectedCard] = useState<null>(null);
+  const [selectedCard, setSelectedCard] = useState<any>(null);
+  const [cards, setCards] = useState<any>(null);
+
+  React.useEffect(() => {
+    console.log('Ejecutando useeffect mycard...');
+    getCards()
+  }, []);
+
+  const getCards = async () => {
+    UserService.getCards(auth.currentUser.uid)
+      .then(data => {
+        setCards(data);
+        console.log("getCards: ", data)
+      })
+      .catch(error => {
+        console.error("getCards: ", error)
+      });
+  };
 
   const renderHeader = () => {
     return (
