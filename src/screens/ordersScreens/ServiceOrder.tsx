@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AirbnbRating, Rating } from 'react-native-ratings';
+import { normalize } from '../../../FontNormalize';
 
 export const ServiceOrder = ({ navigation }) => {
     const { top: paddingTop } = useSafeAreaInsets();
@@ -39,14 +40,14 @@ export const ServiceOrder = ({ navigation }) => {
 }
 const styles = StyleSheet.create({
     textoInicio: {
-        fontSize: 30,
+        fontSize: normalize(30),
         fontWeight: 'bold',
         color: 'white',
         marginTop: 30,
         marginLeft: 20
     },
     textoFecha: {
-        fontSize: 18,
+        fontSize: normalize(18),
         color: 'white',
         marginTop: 10,
         marginLeft: 20,
@@ -63,10 +64,10 @@ const styles = StyleSheet.create({
     },
     estrella:{
        marginHorizontal:10,
-       fontSize:10
+       fontSize:normalize(10)
     },
     titServicio:{
-        fontSize: 18,
+        fontSize: normalize(18),
         fontWeight: 'bold',
         color: 'black',
         marginTop: 30,

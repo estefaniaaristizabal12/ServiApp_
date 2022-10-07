@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, ImageBackground, View, Text, ScrollView, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { normalize } from "../../../FontNormalize";
 import DrawerItem from "../../components/DrawerItem";
 import { Colors } from "../../constants/colors";
 const { Dimensions } = require("react-native");
@@ -70,13 +71,13 @@ const styles = StyleSheet.create({
     },
     name: {
         color: Colors.white,
-        fontSize: 18,
+        fontSize: normalize(18),
         fontWeight: 'bold',
         marginBottom: 2,
     },
     locationText: {
         color: Colors.white,
-        fontSize: 14,
+        fontSize: normalize(14),
         fontWeight: '500',
     },
     icon: {
@@ -98,12 +99,12 @@ const styles = StyleSheet.create({
     },
     appName: {
         color: Colors.grey,
-        fontSize: 16,
+        fontSize: normalize(16),
         fontWeight: 'bold',
     },
     versionText: {
         color: Colors.grey,
-        fontSize: 14,
+        fontSize: normalize(14),
         fontWeight: '500',
     },
 });

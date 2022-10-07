@@ -13,6 +13,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 import * as UserService from '../services/UserService'
+import { normalize } from '../../FontNormalize';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -95,7 +96,7 @@ const MyCard = ({ navigation, route }) => {
   const renderAddNewCard = () => {
     return (
       <View style={{ marginTop: 24 }}>
-        <Text style={{ fontSize: 16, color: Colors.black }}>Agregar Nueva Tarjeta</Text>
+        <Text style={{ fontSize: normalize(16), color: Colors.black }}>Agregar Nueva Tarjeta</Text>
         {dummyData.allCards.map(item => {
           return (
             <CardItem

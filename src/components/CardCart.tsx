@@ -1,6 +1,7 @@
 import React from 'react'
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Text, Image, View, StyleSheet, Dimensions } from "react-native";
+import { normalize } from '../../FontNormalize';
 
 const { width, height } = Dimensions.get("screen");
 
@@ -66,19 +67,19 @@ const style = StyleSheet.create({
         flex: 0.3,
     },
     titulo: {
-        fontSize: 18,
+        fontSize: normalize(18),
         color: '#000000',
         marginLeft: 10,
     },
     descripcion: {
-        fontSize: 15,
+        fontSize: normalize(15),
         marginTop: 10,
         color: '#6D6D6D',
         height: 50,
         marginLeft: 10,
     },
     precio: {
-        fontSize: 15,
+        fontSize: normalize(15),
         fontWeight: 'bold',
         marginLeft: 10,
         marginTop: 5
@@ -92,7 +93,7 @@ const style = StyleSheet.create({
         alignItems: 'center'
     },
     textBtn: {
-        fontSize: 18,
+        fontSize: normalize(18),
         marginLeft: 12,
         marginRight: 12,
         fontWeight: 'bold',

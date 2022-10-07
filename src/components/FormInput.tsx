@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import { Dimensions } from 'react-native';
+import { normalize } from '../../FontNormalize';
 const { width, height } = Dimensions.get('window');
 
 type FormInputProps = TextInputProps & {
@@ -44,8 +45,8 @@ const FormInput: FunctionComponent<FormInputProps> = ({
     <View style={{ ...containerStyle }}>
       {/* Label & Error msg */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text style={{ color: Colors.grayItemCard, fontSize:14 }}>{label}</Text>
-        <Text style={{ color: Colors.redError, fontSize:14 }}>{errorMsg}</Text>
+        <Text style={{ color: Colors.grayItemCard, fontSize:normalize(14) }}>{label}</Text>
+        <Text style={{ color: Colors.redError, fontSize:normalize(14) }}>{errorMsg}</Text>
       </View>
       {/* Text input */}
       <View style={[styles.containerInput, { ...inputContainerStyle }]}>

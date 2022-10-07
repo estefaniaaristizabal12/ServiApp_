@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Text, Image, View , StyleSheet,Dimensions} from "react-native";
+import { normalize } from "../../FontNormalize";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -47,18 +48,18 @@ const style = StyleSheet.create({
   
     cardTitle: {
       fontWeight: "bold",
-      fontSize: 20,
+      fontSize: normalize(20),
       marginLeft: 10,
     },
   
     cardLocation: {
-      fontSize: 14,
+      fontSize: normalize(14),
       color: "#777",
       marginLeft: 10,
     },
   
     cardDescription: {
-      fontSize: 15,
+      fontSize: normalize(15),
       marginVertical: 8,
       marginLeft: 10,
     },

@@ -6,6 +6,7 @@ import orders from '../../constants/orders'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { normalize } from '../../../FontNormalize';
 
 export const Orders = ({ navigation }) => {
   const { top: paddingTop } = useSafeAreaInsets();
@@ -40,14 +41,14 @@ export const Orders = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   textoInicio: {
-    fontSize: 35,
+    fontSize: normalize(35),
     fontWeight: 'bold',
     color: 'white',
     marginTop: 10,
     marginLeft: 20
   },
   textoInicio2: {
-    fontSize: 35,
+    fontSize: normalize(35),
     fontWeight: 'bold',
     color: 'white',
     marginLeft: 20
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   textoDescripcion: {
     marginLeft: 20,
     marginTop: 20,
-    fontSize: 18,
+    fontSize: normalize(18),
     color: 'white',
 
   },

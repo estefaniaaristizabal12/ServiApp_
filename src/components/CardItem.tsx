@@ -9,6 +9,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
+import { normalize } from '../../FontNormalize';
 import { Colors } from '../constants/colors';
 
 
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
     marginLeft: 12,
-    fontSize: 16,
+    fontSize: normalize(16),
     color: Colors.black,
   },
 });

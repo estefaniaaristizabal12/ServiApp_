@@ -21,6 +21,7 @@ import {
   import LineDivider from '../../components/LineDivider';
   import TextIconButton from '../../components/TextIconButton';
   import status from '../../constants/status';
+import { normalize } from '../../../FontNormalize';
 
   
   const StatusOrder= ({ navigation }) => {
@@ -63,11 +64,11 @@ import {
         <View
           style={{ marginTop: 12, paddingHorizontal: 24 }}>
           <Text
-            style={{ textAlign: 'center', color: Colors.gray, fontSize:14 }}>
+            style={{ textAlign: 'center', color: Colors.gray, fontSize:normalize(14) }}>
             Estimated Delivery
           </Text>
   
-          <Text style={{ textAlign: 'center', fontSize: 22, color: Colors.black }}>
+          <Text style={{ textAlign: 'center', fontSize: normalize(22), color: Colors.black }}>
             21 Sep 2021 / 12:30PM
           </Text>
         </View>
@@ -95,8 +96,8 @@ import {
               marginBottom: 20,
               paddingHorizontal: 24,
             }}>
-            <Text style={{ fontSize: 16, color: Colors.black }}>Track Order</Text>
-            <Text style={{ color: Colors.gray, fontSize: 16 }}>NY012345</Text>
+            <Text style={{ fontSize: normalize(16), color: Colors.black }}>Track Order</Text>
+            <Text style={{ color: Colors.gray, fontSize: normalize(16) }}>NY012345</Text>
           </View>
           <LineDivider
           // lineStyle={{
@@ -134,10 +135,10 @@ import {
                       }}
                     />
                     <View style={{ marginLeft: 12}}>
-                      <Text style={{ fontSize: 16, color: Colors.black }}>
+                      <Text style={{ fontSize: normalize(16), color: Colors.black }}>
                         {item.title}
                       </Text>
-                      <Text style={{ color: Colors.gray3, fontSize: 14 }}>
+                      <Text style={{ color: Colors.gray3, fontSize: normalize(14) }}>
                         {item.sub_title}
                       </Text>
                     </View>
@@ -197,7 +198,7 @@ import {
                   backgroundColor: Colors.primaryItemCard,
                 }}
                 label="Map View"
-                labelStyle={{ color: Colors.white, fontSize: 16 }}
+                labelStyle={{ color: Colors.white, fontSize: normalize(16) }}
                 icon={ require('../../../assets/map.png')}
                 iconPosition="LEFT"
                 iconStyle={{
