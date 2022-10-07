@@ -17,8 +17,14 @@ import TextButton from '../components/TextButton';
 import FormInput from '../components/FormInput';
 import FormInputCheck from '../components/FormInputCheck';
 import RadioButton from '../components/RadioButton';
+import * as UserService from '../services/UserService'
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from './firebaseConfig';
+import { initializeApp } from 'firebase/app';
 
 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 import utils from '../constants/Utils';
 
@@ -26,7 +32,7 @@ import utils from '../constants/Utils';
 const AddCard = ({ navigation, route }) => {
     
   const insets = useSafeAreaInsets();
-  const [selectedCard, setSelectedCard] = useState<null>(null);
+  const [selectedCard, setSelectedCard] = useState<any>(null);
   const [cardNumber, setCardNumber] = useState('');
   const [cardNumberError, setCardNumberError] = useState('');
   const [cardName, setCardName] = useState('');
@@ -37,11 +43,18 @@ const AddCard = ({ navigation, route }) => {
   const [cvvError, setCvvError] = useState('');
   const [isRemember, setIsRemember] = useState(false);
 
+
   useEffect(() => {
     let { selectedCard } = route.params;
     setSelectedCard(selectedCard);
     console.log('selectedCard: ', selectedCard);
   }, []);
+
+  const addCard = (nameCard: any, numCard: any, urlImagen: any, csv: any, uid: any) => {
+    UserService.addCard(nameCard, numCard, urlImagen,csv, uid)
+      .then(res => console.log("addcard", res))
+      .catch(error => console.error(error))
+  }
 
   const renderHeader = () => {
     return (
@@ -146,9 +159,19 @@ const AddCard = ({ navigation, route }) => {
           onPress={() => {
             // navigation.goBack();
             // navigation.navigate('StatusOrder');
-            navigation.navigate('Map');
+            console.log("cardNumber", cardNumber);
+            console.log("cardName", cardName);
+            console.log("expireDate", expireDate);
+            console.log("cvv", cvv);
+            //console log icon
+
+            console.log("Icon", selectedCard?.icon);
+
+            addCard(cardName, cardNumber, "https://storage.googleapis.com/serviapp-e9a34.appspot.com/Tarjeta/american.jpg", cvv, auth.currentUser.uid)
+            // navigation.navigate('Map');
             //navigation.navigate('Checkout', { selectedCard });
-            //navigation.navigate('Confirmation');
+            navigation.navigate('Confirmation');
+            
           }}
         />
       </View>
@@ -232,13 +255,13 @@ const AddCard = ({ navigation, route }) => {
           />
         </View>
         {/* Remember */}
-        <View style={{ alignItems: 'flex-start', marginTop: 24 }}>
+        {/* <View style={{ alignItems: 'flex-start', marginTop: 24 }}>
           <RadioButton
             isSelected={isRemember}
             onPress={() => setIsRemember(!isRemember)}
             label="Recuerdame esta tarjeta."
           />
-        </View>
+        </View> */}
       </View>
     );
   };

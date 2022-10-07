@@ -10,7 +10,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
-import restaurant from '../constants/restaurant';
 import * as UserService from '../services/UserService'
 
 const app = initializeApp(firebaseConfig);

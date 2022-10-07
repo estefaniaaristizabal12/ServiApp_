@@ -13,7 +13,8 @@ export function normalize(size: any) {
   const newSize = size * scale 
   if (Platform.OS === 'ios') {
     // return Math.round(PixelRatio.roundToNearestPixel(newSize))
-    return size
+    // return size
+    return RFValue(size, SCREEN_HEIGHT)
   } else {
     // return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 8
     // return size - 3
