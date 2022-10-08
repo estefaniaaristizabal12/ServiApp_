@@ -72,7 +72,7 @@ export const Product = ({ navigation, route }) => {
                     </View>
 
                     <View style={{ flex: 0.5, alignItems: "flex-end", marginRight: 25 }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={styles.btnAtas}>
+                        <TouchableOpacity onPress={() => navigation.navigate('CartStack')} style={styles.btnAtas}>
                             <Ionicons name="cart" size={22} color={Colors.gray} />
                         </TouchableOpacity>
                     </View>

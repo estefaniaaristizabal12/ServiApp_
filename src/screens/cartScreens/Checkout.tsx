@@ -83,7 +83,7 @@ export const Checkout = ({ navigation }) => {
 
         <View style={{ flex: 0.23, marginTop: 20, marginLeft: 7, marginRight: 7, borderBottomColor: "#E7E7E7", borderBottomWidth: 1 }}>
           <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 8 }}> Método de pago</Text>
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: 'center', marginTop: 30 }}>
+          <TouchableOpacity style={{ flexDirection: "row", alignItems: 'center', marginTop: 30 }} onPress={() => navigation.navigate('AddCard')}>
             <View style={{ flex: 0.8, flexDirection: "row" }}>
               <TouchableOpacity style={styles.btnTarjeta}>
                 <Image

@@ -24,7 +24,6 @@ export const RestStack = () => {
             <StackRest.Screen name="Delivery" component={Delivery} />
             <StackRest.Screen name="Restaurant" component={Restaurant} />
             <StackRest.Screen name="Product" component={Product} />
-            {/* <StackRest.Screen name="Cart" component={Cart} /> */}
             <StackRest.Screen name="CartStack" component={CartStack} />
             <StackRest.Screen name="Profile" component={RestProfile} />
         </StackRest.Navigator>

@@ -133,7 +133,7 @@ export const Cart = ({ navigation }) => {
             <Text style={styles.textSPrecio}>{currencyFormat(total)}</Text>
           </View>
           <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity onPress={() => navigation.navigate('CartStack')} style={styles.btnIrPago}>
+            <TouchableOpacity onPress={() => navigation.navigate('Checkout')} style={styles.btnIrPago}>
               <Text style={styles.textBtnPago}>Ir a pagar</Text>
             </TouchableOpacity>
 

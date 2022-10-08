@@ -8,6 +8,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { RestStack } from './RestStack';
 import { OrderStack } from './OrderStack';
 import { Colors } from '../constants/colors';
+import { CartStack } from './CartStack';
 
 const BtTap = createMaterialBottomTabNavigator();
 
@@ -56,7 +57,7 @@ export default function BottomTab() {
             })}>
 
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={RestStack} />
-            <BtTap.Screen name="Cart" options={{ title: 'Carrito' }} component={Cart} />
+            <BtTap.Screen name="Cart" options={{ title: 'Carrito' }} component={CartStack} />
             <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={OrderStack} />
             <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
 
