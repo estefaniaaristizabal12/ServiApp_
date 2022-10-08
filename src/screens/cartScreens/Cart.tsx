@@ -29,11 +29,17 @@ export const Cart = ({ navigation }) => {
   const [cart, setCart] = React.useState<any>({});
   const [total, setTotal] = React.useState(0);
 
+  let vacio = false;
+
+
 
   React.useEffect(() => {
     console.log('EJECUTANDO USEFFECT CARRITO');
     if (isFocused) {
       getCart();
+      if (cart?.Productos == null) {
+        vacio = true;
+      }
     }
   }, [isFocused]);
 
@@ -60,15 +66,13 @@ export const Cart = ({ navigation }) => {
         console.log("clearCart:", data)
         setCart({})
         setTotal(0)
+        vacio = true;
       })
       .catch(error => console.error("clearCart:", error))
   }
 
-  let vacio = true;
 
-  if (!cart?.Productos) {
-    vacio = true;
-  }
+ 
 
 
   return (
