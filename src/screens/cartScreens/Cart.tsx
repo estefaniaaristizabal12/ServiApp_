@@ -64,6 +64,8 @@ export const Cart = ({ navigation }) => {
       .catch(error => console.error("clearCart:", error))
   }
 
+  let vacio = true;
+
 
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>

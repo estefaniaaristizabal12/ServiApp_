@@ -38,7 +38,7 @@ export default function BottomTab() {
                             iconName = "home"
                             break;
 
-                        case 'Cart':
+                        case 'CartS':
                             iconName = 'shopping-cart'
                             break;
 
@@ -57,7 +57,7 @@ export default function BottomTab() {
             })}>
 
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={RestStack} />
-            <BtTap.Screen name="Cart" options={{ title: 'Carrito' }} component={CartStack} />
+            <BtTap.Screen name="CartS" options={{ title: 'Carrito' }} component={CartStack} />
             <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={OrderStack} />
             <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
 

@@ -14,7 +14,7 @@ import CardRest from '../../components/CardRest';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import restaurant from '../../constants/restaurant';
 import * as prodService from '../../services/ProductService'
-import categories from '../../constants/categories';
+import productCategories from '../../constants/productCategories';
 import { normalize } from '../../../FontNormalize';
 
 
@@ -46,7 +46,7 @@ export const Restaurant = ({ navigation, route }) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.categoriesListContainer}>
-                {categories.map((category, index) => (
+                {productCategories.map((category, index) => (
                     <TouchableOpacity
                         key={index}
                         activeOpacity={0.8}
