@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, StatusBar} from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import  HeaderNavigation from '../components/HeaderNavigation';
@@ -77,6 +77,7 @@ const MyCard = ({ navigation, route }) => {
   const renderMyCards = () => {
     return (
       <View>
+        <StatusBar backgroundColor="#FFFFFF" barStyle='dark-content' hidden={false} />
         {cards.map((item, index) => {
           return (
             <CardItem

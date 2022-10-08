@@ -47,11 +47,11 @@ const AddCard = ({ navigation, route }) => {
   useEffect(() => {
     let { selectedCard } = route.params;
     setSelectedCard(selectedCard);
-    console.log('selectedCard: ', selectedCard);
+    console.log('selectedCard to add: ', selectedCard);
   }, []);
 
-  const addCard = (nameCard: any, numCard: any, urlImagen: any, csv: any, uid: any) => {
-    UserService.addCard(nameCard, numCard, urlImagen,csv, uid)
+  const addCard = async (nameCard: any, numCard: any, fecha: any, csv: any, uid: any) => {
+    UserService.addCard(nameCard, numCard, fecha, csv, uid)
       .then(res => console.log("addcard", res))
       .catch(error => console.error(error))
   }
@@ -167,7 +167,7 @@ const AddCard = ({ navigation, route }) => {
 
             console.log("Icon", selectedCard?.icon);
 
-            addCard(cardName, cardNumber, "https://storage.googleapis.com/serviapp-e9a34.appspot.com/Tarjeta/american.jpg", cvv, auth.currentUser.uid)
+            addCard(cardName, cardNumber, expireDate, cvv, auth.currentUser.uid)
             // navigation.navigate('Map');
             //navigation.navigate('Checkout', { selectedCard });
             navigation.navigate('Confirmation');

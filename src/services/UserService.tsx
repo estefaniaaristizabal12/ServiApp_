@@ -35,11 +35,11 @@ export async function getCards(uid: any) {
   return res.json()
 }
 
-export async function addCard(nameCard: any, numCard: any, urlImagen: any, csv: any, uid: any) {
+export async function addCard(nameCard: any, numCard: any, date: any, csv: any, uid: any) {
   const data = {
     Nombre: nameCard,
     NumeroTarjeta: numCard,
-    Imagen: urlImagen,
+    Fecha: date,
     csv: csv
   }
   const res = await fetch(`${url}/addcard/?uid=${uid}`, { 

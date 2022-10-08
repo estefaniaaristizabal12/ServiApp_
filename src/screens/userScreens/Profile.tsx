@@ -24,13 +24,18 @@ export const Profile = () => {
     }, []);
 
     const getUser = async () => {
-        await UserService.getUser(auth.currentUser.uid)
-            .then((response) => {
-                setUser(response);
-                console.log(response)
+        UserService.getUser(auth.currentUser.uid)
+            .then((data) => {
+                const name_words = data?.nombrecliente.toLowerCase().split(" ");
+                const name_normalized = name_words.map((word:any) => { 
+                  return word[0].toUpperCase() + word.substring(1) 
+                }).join(" ");
+                data.nombrecliente = name_normalized
+                setUser(data);
+                console.log("getUser", user)
             })
             .catch((error) => {
-                console.log(error)
+                console.error(error)
             });
     }
 
@@ -50,7 +55,7 @@ export const Profile = () => {
                     </View>
 
                     <View style={styles.infoContainer}>
-                        <Text style={[styles.text, { fontWeight: "200", fontSize: 30 }]}>{user?.nombrecliente}</Text>
+                        <Text style={[styles.text, { fontWeight: "200", fontSize: 30, textAlign:'center' }]}>{user?.nombrecliente}</Text>
                         <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Universidad Javeriana</Text>
                     </View>
 
