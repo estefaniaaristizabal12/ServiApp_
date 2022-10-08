@@ -66,6 +66,10 @@ export const Cart = ({ navigation }) => {
 
   let vacio = true;
 
+  if (!cart?.Productos) {
+    vacio = true;
+  }
+
 
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
@@ -82,12 +86,11 @@ export const Cart = ({ navigation }) => {
 
         </View>
         <View style={{ flex: 0.3, alignItems: "flex-end", marginBottom: 30, marginRight: 20, }}>
-          <TouchableOpacity
-            onPress={() => {
-              clearCart()
-            }}>
-            <Text style={styles.textVaciar} > Vaciar </Text>
-          </TouchableOpacity>
+          {!vacio ?
+            <TouchableOpacity onPress={() => { clearCart() }}>
+              <Text style={styles.textVaciar} > Vaciar </Text>
+            </TouchableOpacity>
+            : <Text></Text>}
         </View>
       </View>
 
@@ -108,22 +111,33 @@ export const Cart = ({ navigation }) => {
         </View>
         <View style={{ flex: 0.8, flexDirection: "column" }}>
 
-          <FlatList
-            data={cart?.Productos}
+          {!vacio ?
 
-            renderItem={({ item }) => (
 
-              <CardCart
-                title={item.Nombre}
-                precio={item.Precio}
-                image={item.Imagen}
-                cantidad={item.Cantidad}
+            <FlatList
+              data={cart?.Productos}
+
+              renderItem={({ item }) => (
+
+                <CardCart
+                  title={item.Nombre}
+                  precio={item.Precio}
+                  image={item.Imagen}
+                  cantidad={item.Cantidad}
+                />
+
+
+              )}
+
+            /> :
+            <View style={{alignItems:'center'}}>
+              <Image
+                style={{ width: 230, height: 230, marginTop: 35, borderRadius: 5 }}
+                source={require('../../../assets/vacio.png')}
               />
-
-
-            )}
-
-          />
+              <Text style={{ fontSize: normalize(20), fontWeight: 'bold',color: Colors.grey1}}> Carro de compras vacío </Text>
+            </View>
+          }
 
 
         </View>
@@ -135,9 +149,16 @@ export const Cart = ({ navigation }) => {
             <Text style={styles.textSPrecio}>{currencyFormat(total)}</Text>
           </View>
           <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity onPress={() => navigation.navigate('Checkout')} style={styles.btnIrPago}>
-              <Text style={styles.textBtnPago}>Ir a pagar</Text>
-            </TouchableOpacity>
+
+            {!vacio ?
+              <TouchableOpacity onPress={() => navigation.navigate('Checkout')} style={styles.btnIrPago}>
+                <Text style={styles.textBtnPago}>Ir a pagar</Text>
+              </TouchableOpacity>
+              : <TouchableOpacity style={styles.btnIrPagoV}>
+                <Text style={styles.textBtnPago}>Ir a pagar</Text>
+              </TouchableOpacity>}
+
+
 
           </View>
 
@@ -190,6 +211,10 @@ const styles = StyleSheet.create({
   },
   btnIrPago: {
     backgroundColor: Colors.primary1,
+    borderRadius: 50
+  },
+  btnIrPagoV: {
+    backgroundColor: Colors.grey1,
     borderRadius: 50
   },
   textBtnPago: {
