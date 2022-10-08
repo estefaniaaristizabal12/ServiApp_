@@ -10,6 +10,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseConfig';
 import * as UserService from '../../services/UserService'
+import categories from '../../constants/categories';
 import { normalize } from '../../../FontNormalize';
 
 
@@ -20,7 +21,13 @@ const auth = getAuth(app);
 
 
 
+
+
+
 export const Product = ({ navigation, route }) => {
+
+    
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const { top: paddingTop } = useSafeAreaInsets();
     const [count, setCount] = useState(1);
     const onPressPlus = () => setCount(prevCount => prevCount + 1);
@@ -35,7 +42,7 @@ export const Product = ({ navigation, route }) => {
     useEffect(() => {
         let { selectedProduct, selectedRestaurant } = route.params;
         setSelectedProduct(selectedProduct);
-   
+
         setSelectedRestaurant(selectedRestaurant);
 
         console.log(selectedProduct);
@@ -43,11 +50,11 @@ export const Product = ({ navigation, route }) => {
 
     }, []);
 
-  const addProdCart = (prodId: any, cant: any, restId: any, uid: any) => {
-    UserService.addProdCart(prodId, cant, restId, uid)
-      .then(res => console.log(res))
-      .catch(error => console.error(error))
-  }
+    const addProdCart = (prodId: any, cant: any, restId: any, uid: any) => {
+        UserService.addProdCart(prodId, cant, restId, uid)
+            .then(res => console.log(res))
+            .catch(error => console.error(error))
+    }
 
 
     return (
@@ -82,7 +89,7 @@ export const Product = ({ navigation, route }) => {
                         <Text numberOfLines={3} ellipsizeMode="tail" style={styles.descrProd}>{selectedProduct?.Descripcion}</Text>
                         <Text style={styles.preProd}> $ {selectedProduct?.Precio}</Text>
                     </View>
-                    <View style={{ flex: 0.3, justifyContent:'center' }}>
+                    <View style={{ flex: 0.3, justifyContent: 'center' }}>
                         <Image
                             style={styles.logo}
                             source={{ uri: selectedProduct?.Imagen }}
@@ -129,10 +136,10 @@ export const Product = ({ navigation, route }) => {
                 <View style={styles.btnACarro}>
                     <TouchableOpacity onPress={() => {
 
-                      
+
 
                         addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, auth.currentUser.uid)
-                 
+
                         navigation.navigate('Cart')
                     }
                     }>
@@ -153,8 +160,8 @@ const styles = StyleSheet.create({
     logo: {
         width: "100%",
         height: 120,
-        borderRadius:10, 
-        marginLeft:3
+        borderRadius: 10,
+        marginLeft: 3
     },
     componente2: {
         flex: 0.92,
@@ -259,5 +266,27 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         height: 30,
         width: 30
-    }
+    },
+    categoriesListContainer: {
+        paddingVertical: 30,
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    categoryBtn: {
+        height: 45,
+        width: 165,
+        marginRight: 7,
+        borderRadius: 30,
+        alignItems: 'center',
+        paddingHorizontal: 5,
+        flexDirection: 'row',
+    },
+    categoryBtnImgCon: {
+        height: 35,
+        width: 35,
+        backgroundColor: Colors.white1,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });

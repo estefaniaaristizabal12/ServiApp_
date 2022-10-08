@@ -1,19 +1,14 @@
-import React from 'react'
-import { useNavigation } from '@react-navigation/native';
-import { Cart } from '../screens/cartScreens/Cart';
-import  Profile  from '../screens/userScreens/Profile';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Orders } from '../screens/ordersScreens/Orders';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { RestStack } from './RestStack';
-import { OrderStack } from './OrderStack';
-import { Colors } from '../constants/colors';
+import React from 'react'
+import { Colors } from '../../constants/colors';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { RestProfile } from '../../screens/restScreens/RestProfile';
+import { ReviewRest } from '../../screens/restProfileScreens/ReviewRest';
+import { OrdersRest } from '../../screens/restProfileScreens/OrdersRest';
 
 const BtTap = createMaterialBottomTabNavigator();
 
-export default function BottomTab() {
-    const navigation = useNavigation();
-
+export const BottomTabRP = () => {
     return (
 
         <BtTap.Navigator
@@ -37,11 +32,7 @@ export default function BottomTab() {
                             iconName = "home"
                             break;
 
-                        case 'Cart':
-                            iconName = 'shopping-cart'
-                            break;
-
-                        case 'OrdersStack':
+                        case 'Review':
                             iconName = 'clipboard-list'
                             break;
 
@@ -55,15 +46,11 @@ export default function BottomTab() {
                 }
             })}>
 
-            <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={RestStack} />
-            <BtTap.Screen name="Cart" options={{ title: 'Carrito' }} component={Cart} />
-            <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={OrderStack} />
-            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
+            <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={OrdersRest} />
+            <BtTap.Screen name="Review" options={{ title: 'Historial pedidos' }} component={ReviewRest} />
+            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={RestProfile} />
 
 
         </BtTap.Navigator>
-
     )
-
-
 }

@@ -8,9 +8,13 @@ import {
   ImageBackground,
   Platform,
 } from 'react-native';
-import { Colors } from '../constants/colors';
+import { Colors } from '../../constants/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+<<<<<<< HEAD:src/screens/cartScreens/AddCard.tsx
+import HeaderNavigation from '../../components/HeaderNavigation';
+import IconButton from '../../components/IconButton';
+=======
 import HeaderNavigation from '../components/HeaderNavigation';
 import IconButton from '../components/IconButton';
 import TextButton from '../components/TextButton';
@@ -21,12 +25,18 @@ import * as UserService from '../services/UserService'
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 import { initializeApp } from 'firebase/app';
+>>>>>>> ee35ccacde360dfa12690c4f1e584d154b5c74ea:src/screens/AddCard.tsx
 
+import FormInput from '../../components/FormInput';
+import FormInputCheck from '../../components/FormInputCheck';
+import RadioButton from '../../components/RadioButton';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-import utils from '../constants/Utils';
+
+import utils from '../../constants/Utils';
+import TextButton from '../../components/TextButton';
 
 
 const AddCard = ({ navigation, route }) => {
@@ -68,7 +78,7 @@ const AddCard = ({ navigation, route }) => {
         titleStyle={{}}
         leftComponent={
           <IconButton
-            icon={require('../../assets/back.png')}
+            icon={require('../../../assets/back.png')}
             containerStyle={styles.leftIconButton}
             iconStyle={{
               width: 16,
@@ -89,7 +99,7 @@ const AddCard = ({ navigation, route }) => {
   const renderCard = () => {
     return (
       <ImageBackground
-        source={require('../../assets/card.png')}
+        source={require('../../../assets/card.png')}
         style={{
           height: 200,
           width: '100%',
