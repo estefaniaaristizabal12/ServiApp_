@@ -5,8 +5,21 @@ import { Colors } from '../../constants/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons, FontAwesome5, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
-export const Checkout = ({ navigation }) => {
+export const Checkout = ({ navigation , route}) => {
   const { top: paddingTop } = useSafeAreaInsets();
+
+  const [selectedCard, setSelectedCard] = React.useState<any>({});
+
+
+
+  React.useEffect(() => {
+    if(route.params && route.params.selectedCard){
+      let { selectedCard } = route.params;
+      setSelectedCard(selectedCard);
+      console.log(selectedCard);
+    }
+  }, []);
+
   let condicion = 1;
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
@@ -93,7 +106,8 @@ export const Checkout = ({ navigation }) => {
               </TouchableOpacity>
               <View style={{ flexDirection: "column", marginLeft: 15 }}>
                 <Text style={{ fontSize: 19, fontWeight: 'bold' }}>Tarjeta</Text>
-                <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>****4035</Text>
+                <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>{selectedCard?.NumeroTarjeta ? selectedCard?.NumeroTarjeta : "Seleccionar tarjeta"}</Text>
+                {/* <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>{selectedCard?.NumeroTarjeta}</Text> */}
               </View>
 
             </View>
@@ -128,7 +142,7 @@ export const Checkout = ({ navigation }) => {
 
         </View>
 
-        <View style={{ flex: 0.13, flexDirection: "row", borderTopColor: "#E7E7E7", borderTopWidth: 1}}>
+        <View style={{ flex: 0.13, flexDirection: "row", borderTopColor: "#E7E7E7", borderTopWidth: 1 }}>
 
           <View style={{ flex: 0.60, flexDirection: "column", justifyContent: 'center' }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 20, color: Colors.grey1 }}>Total a pagar</Text>

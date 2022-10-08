@@ -66,7 +66,7 @@ const MyCard = ({ navigation, route }) => {
             }}
             //onPress={() => navigation.goBack()}
 
-            onPress={() => navigation.navigate('Cart')} 
+            onPress={() => navigation.navigate('Checkout')}
           />
         }
         rightComponent={<View style={{ width: 40 }} />}
