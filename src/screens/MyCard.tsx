@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import  HeaderNavigation from '../components/HeaderNavigation';
 import IconButton from '../components/IconButton';
 import CardItem from '../components/CardItem';
+import CardItemNewCard from '../components/CardItemNewCard';
 import TextButton from '../components/TextButton';
 import { Colors } from '../constants/colors';
 import dummyData from '../constants/dummyData';
@@ -13,6 +14,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 import * as UserService from '../services/UserService'
+import { normalize } from '../../FontNormalize';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -24,7 +26,7 @@ const MyCard = ({ navigation, route }) => {
 
   const insets = useSafeAreaInsets();
   const [selectedCard, setSelectedCard] = useState<any>(null);
-  const [cards, setCards] = useState<any>(null);
+  const [cards, setCards] = useState<any>([]);
 
   React.useEffect(() => {
     console.log('Ejecutando useeffect mycard...');
@@ -75,7 +77,7 @@ const MyCard = ({ navigation, route }) => {
   const renderMyCards = () => {
     return (
       <View>
-        {dummyData.myCards.map((item, index) => {
+        {cards.map((item, index) => {
           return (
             <CardItem
               key={`MyCards-${index}`}
@@ -95,10 +97,10 @@ const MyCard = ({ navigation, route }) => {
   const renderAddNewCard = () => {
     return (
       <View style={{ marginTop: 24 }}>
-        <Text style={{ fontSize: 16, color: Colors.black }}>Agregar Nueva Tarjeta</Text>
+        <Text style={{ fontSize: normalize(16), color: Colors.black }}>Agregar Nueva Tarjeta</Text>
         {dummyData.allCards.map(item => {
           return (
-            <CardItem
+            <CardItemNewCard
               key={`NewCard-${item.id}`}
               item={item}
               isSelected={

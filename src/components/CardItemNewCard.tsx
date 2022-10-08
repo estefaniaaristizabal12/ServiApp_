@@ -22,10 +22,10 @@ import { Colors } from '../constants/colors';
 
 type CardItemProps = {
   item: {
-    Nombre: string;
-    id: string;
-    Imagen: string;
-    NumeroTarjeta: string;
+    name: string;
+    id: number;
+    icon: string;
+    card_no: string;
   };
   isSelected: boolean;
   key: string;
@@ -47,7 +47,7 @@ const CardItem: FunctionComponent<CardItemProps> = ({
       {/* Card Image */}
       <View>
         <Image
-          source={{ uri: item.Imagen}}
+          source={item.icon}
           resizeMode="center"
           style={{
             width: 35,
@@ -56,7 +56,7 @@ const CardItem: FunctionComponent<CardItemProps> = ({
         />
       </View>
       {/* Name */}
-      <Text style={styles.name}>{item.Nombre}</Text>
+      <Text style={styles.name}>{item.name}</Text>
       {/* Radio Button */}
       <Image
         source={isSelected ? require('../../assets/check.png') : require('../../assets/check_off.png') }

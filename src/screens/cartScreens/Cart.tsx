@@ -1,6 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Colors } from '../../constants/colors'
+import { StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Colors } from '../constants/colors'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native-animatable'
@@ -17,6 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 import { useIsFocused } from "@react-navigation/native";
+// import { normalize } from '../../FontNormalize';
 
 
 export const Cart = ({ navigation }) => {
@@ -98,7 +101,7 @@ export const Cart = ({ navigation }) => {
           </View>
 
           <View style={{ flex: 0.8, justifyContent: "center", marginLeft: 5 }}>
-            <Text style={{ fontSize: 22, fontWeight: 'bold', alignContent: 'center', marginLeft: 10, color: "black" }}> {cart?.Restaurante?.Nombre}</Text>
+            <Text style={{ fontSize: normalize(22), fontWeight: 'bold', alignContent: 'center', marginLeft: 10, color: "black" }}> {cart?.Restaurante?.Nombre}</Text>
           </View>
         </View>
         <View style={{ flex: 0.8, flexDirection: "column" }}>
@@ -152,12 +155,12 @@ const styles = StyleSheet.create({
 
   },
   textCarrito: {
-    fontSize: 25,
+    fontSize: normalize(25),
     fontWeight: 'bold',
     color: "white"
   },
   textVaciar: {
-    fontSize: 20,
+    fontSize: normalize(20),
     fontWeight: 'bold',
     color: "#4DA537"
   },
@@ -171,13 +174,13 @@ const styles = StyleSheet.create({
     width: 30
   },
   textSubTotal: {
-    fontSize: 17,
+    fontSize: normalize(17),
     color: "#6D6D6D",
     marginLeft: 25
 
   },
   textSPrecio: {
-    fontSize: 20,
+    fontSize: normalize(20),
     fontWeight: 'bold',
     color: "black",
     marginLeft: 25,
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
     borderRadius: 50
   },
   textBtnPago: {
-    fontSize: 18,
+    fontSize: normalize(18),
     marginLeft: 12,
     marginRight: 12,
     fontWeight: 'bold',

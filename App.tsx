@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { RootNavigation } from './src/navigation/RootNavigation';
-import { Home } from './src/screens/Home';
+// import { Home } from './src/screens/Home';
 
 export default function App() {
   return (

@@ -15,6 +15,7 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import restaurant from '../../constants/restaurant';
 import * as prodService from '../../services/ProductService'
 import categories from '../../constants/categories';
+import { normalize } from '../../../FontNormalize';
 
 
 export const Restaurant = ({ navigation, route }) => {
@@ -118,7 +119,7 @@ export const Restaurant = ({ navigation, route }) => {
                     </View>
 
                     <View style={{ flex: 7, marginLeft: 2 }}>
-                        <Text style={{ fontSize: 30, fontWeight: 'bold', alignContent: 'center', padding: 20, color: "white" }}>{selectedRestaurant?.Nombre}</Text>
+                        <Text style={{ fontSize: normalize(30), fontWeight: 'bold', alignContent: 'center', padding: 20, color: "white" }}>{selectedRestaurant?.Nombre}</Text>
                         {/* <Button title="Product" onPress={() => navigation.navigate('Product')} /> */}
 
                     </View>
@@ -202,12 +203,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     tituloItemRest: {
-        fontSize: 15,
+        fontSize: normalize(15),
         fontWeight: 'bold',
         color: "white"
     },
     contItemRest: {
-        fontSize: 13,
+        fontSize: normalize(13),
         color: "white",
         marginTop: 5
     },

@@ -42,7 +42,14 @@ export async function addCard(nameCard: any, numCard: any, urlImagen: any, csv: 
     Imagen: urlImagen,
     csv: csv
   }
-  const res = await fetch(`${url}/addcard/?uid=${uid}`, { method: 'POST', body: JSON.stringify(data) })
+  const res = await fetch(`${url}/addcard/?uid=${uid}`, { 
+    method: 'POST',  
+    body: JSON.stringify(data) ,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
   return res.json()
 }
 

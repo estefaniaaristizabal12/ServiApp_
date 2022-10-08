@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Text, Image, View, StyleSheet, Dimensions, Button } from "react-native";
+import { normalize } from "../../FontNormalize";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -37,12 +38,12 @@ const styles = StyleSheet.create({
 
     },
     titulo: {
-        fontSize: 18,
+        fontSize: normalize(18),
         color: '#000000',
 
     },
     precio: {
-        fontSize: 17,
+        fontSize: normalize(17),
         fontWeight: 'bold',
         marginTop: 10,
 

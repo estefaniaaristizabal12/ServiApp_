@@ -19,6 +19,7 @@ import {
   import dummyData from '../../constants/dummyData';
   const { width, height } = Dimensions.get('window');
   import { Dimensions } from 'react-native';
+import { normalize } from '../../../FontNormalize';
 
  
   
@@ -188,10 +189,10 @@ import {
                 style={{ width: 40, height: 40, tintColor: Colors.black }}
               />
               <View style={{ marginLeft: 24 }}>
-                <Text style={{ color: Colors.gray, fontSize:14 }}>
+                <Text style={{ color: Colors.gray, fontSize:normalize(14) }}>
                   Your delivery time
                 </Text>
-                <Text style={{ fontSize:16 , color: Colors.black }}>
+                <Text style={{ fontSize:normalize(16) , color: Colors.black }}>
                   {duration} minutes
                 </Text>
               </View>
@@ -208,10 +209,10 @@ import {
                 style={{ width: 40, height: 40, tintColor: Colors.black }}
               />
               <View style={{ marginLeft: 24 }}>
-                <Text style={{ color: Colors.gray, fontSize: 14 }}>
+                <Text style={{ color: Colors.gray, fontSize: normalize(14) }}>
                   Your Address
                 </Text>
-                <Text style={{ fontSize: 16, color: Colors.black }}>
+                <Text style={{ fontSize: normalize(16), color: Colors.black }}>
                   88, Jln Padungan, Kuching
                 </Text>
               </View>
@@ -233,10 +234,10 @@ import {
                 style={{ width: 40, height: 40, borderRadius: 5 }}
               />
               <View style={{ marginLeft: 12, flex: 1 }}>
-                <Text style={{ color: Colors.white, fontSize:16 }}>
+                <Text style={{ color: Colors.white, fontSize:normalize(16) }}>
                   Nguyen Quoc Viet
                 </Text>
-                <Text style={{ color: Colors.white, fontSize:14 }}>
+                <Text style={{ color: Colors.white, fontSize:normalize(14) }}>
                   Delivery Man
                 </Text>
               </View>

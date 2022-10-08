@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { View, Text, ViewStyle, StyleSheet, TextStyle } from 'react-native';
+import { normalize } from '../../FontNormalize';
 
 
 type HeaderNavigationProps = {
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     //tamaño 16
-    fontSize: 16,
+    fontSize: normalize(16),
     color: 'black',
   },
 });

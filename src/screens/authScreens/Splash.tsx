@@ -5,12 +5,13 @@ import * as Animatable from 'react-native-animatable';
 import { Colors } from '../../constants/colors';
 import { StackScreenProps } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native';
+import { normalize } from '../../../FontNormalize';
 
 export const Splash = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor='#009387' barStyle="light-content" />
+            <StatusBar backgroundColor='#4F1A24' barStyle="light-content" />
             <View style={styles.header}>
                 <Animatable.Image
                     animation="bounceIn"
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: 'black',
-        fontSize: 32,
+        fontSize: normalize(32),
         fontWeight: 'bold',
         textAlign: 'center'
 
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     },
     textSign: {
         color: 'white',
-        fontSize: 21,
+        fontSize: normalize(21),
         fontWeight: 'bold'
     }
 });

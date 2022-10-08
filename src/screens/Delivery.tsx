@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  StatusBar,
 } from 'react-native';
 import {
   FlatList,
@@ -24,6 +25,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 import * as RestService from '../services/RestaurantService'
+import { normalize } from '../../FontNormalize';
 
 
 const app = initializeApp(firebaseConfig);
@@ -103,7 +105,7 @@ React.useEffect(() => {
               </View>
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: normalize(15),
                   fontWeight: 'bold',
                   marginLeft: 10,
                   color:
@@ -122,16 +124,17 @@ React.useEffect(() => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.white1}}>
+        <StatusBar backgroundColor="#BABBC3" barStyle='dark-content' hidden={false} />
       <View style={style.header}>
         <View>
           <View style={{flexDirection: 'row', marginTop: 6}}>
-            <Text style={{fontSize: 28}}>Hola,</Text>
-            <Text style={{fontSize: 28, fontWeight: 'bold', marginLeft: 10}}>
+            <Text style={{fontSize: normalize(28)}}>Hola,</Text>
+            <Text style={{fontSize: normalize(28), fontWeight: 'bold', marginLeft: 10}}>
                 Estefania 
                {/* {auth.currentUser?.uid}  */}
             </Text>
           </View>
-          <Text style={{marginTop: 5, fontSize: 22, color: Colors.grey1}}>
+          <Text style={{marginTop: 5, fontSize: normalize(22), color: Colors.grey1}}>
             Ya puedes pedir tu domicilio
           </Text>
         </View>
@@ -149,7 +152,7 @@ React.useEffect(() => {
         <View style={style.inputContainer}>
           <Icon name="search" size={28} />
           <TextInput
-            style={{flex: 1, fontSize: 18}}
+            style={{flex: 1, fontSize: normalize(18)}}
             placeholder="Buscar un restaurante"
             onChangeText={(text) => searchFilterFunction(text)}
           />

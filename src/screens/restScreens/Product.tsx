@@ -10,7 +10,11 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseConfig';
 import * as UserService from '../../services/UserService'
+<<<<<<< HEAD
 import categories from '../../constants/categories';
+=======
+import { normalize } from '../../../FontNormalize';
+>>>>>>> ee35ccacde360dfa12690c4f1e584d154b5c74ea
 
 
 const app = initializeApp(firebaseConfig);
@@ -28,7 +32,7 @@ export const Product = ({ navigation, route }) => {
     
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     const { top: paddingTop } = useSafeAreaInsets();
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(1);
     const onPressPlus = () => setCount(prevCount => prevCount + 1);
     const onPressRest = () => setCount(prevCount => prevCount - 1);
 
@@ -175,27 +179,27 @@ const styles = StyleSheet.create({
     },
     tituloProd: {
         marginTop: 20,
-        fontSize: 30,
+        fontSize: normalize(30),
         fontWeight: 'bold',
     },
     descrProd: {
         marginTop: 5,
-        fontSize: 18,
+        fontSize: normalize(18),
     },
     preProd: {
         marginTop: 10,
-        fontSize: 20,
+        fontSize: normalize(20),
         fontWeight: 'bold',
 
     },
     acompanamientos: {
-        fontSize: 18,
+        fontSize: normalize(18),
         marginTop: 25,
         fontWeight: 'bold',
     },
     sugerido: {
         backgroundColor: 'rgba(204, 44, 42, 0.42)',
-        fontSize: 15,
+        fontSize: normalize(15),
         padding: 5,
         borderRadius: 5,
         marginTop: 20,
@@ -236,7 +240,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textBtn: {
-        fontSize: 18,
+        fontSize: normalize(18),
         marginLeft: 12,
         marginRight: 12,
         fontWeight: 'bold',
@@ -250,7 +254,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textBtnCarro: {
-        fontSize: 18,
+        fontSize: normalize(18),
         marginLeft: 12,
         marginRight: 12,
         fontWeight: 'bold',

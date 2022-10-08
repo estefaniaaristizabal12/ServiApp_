@@ -21,6 +21,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/colors";
 import Categories from "../components/Categories";
 import products from "../constants/products";
+import { normalize } from "../../FontNormalize";
 
 const PickUp = ({}) => {
 
@@ -91,7 +92,7 @@ const PickUp = ({}) => {
               <View style={{ width: "70%" }}>
                 <Text
                   style={{
-                    fontSize: SPACING * 3,
+                    fontSize: normalize(SPACING * 3),
                     marginLeft: 17,
                     color: Colors.black,
                     fontWeight: "700",
@@ -118,7 +119,7 @@ const PickUp = ({}) => {
                 />
                 <Text
                   style={{
-                    fontSize: SPACING * 1.6,
+                    fontSize: normalize(SPACING * 1.6),
                     fontWeight: "600",
                     marginLeft: SPACING / 2,
                     color: Colors.black,
@@ -149,7 +150,7 @@ const PickUp = ({}) => {
                 />
                 <Text
                   style={{
-                    fontSize: SPACING * 1.6,
+                    fontSize: normalize(SPACING * 1.6),
                     fontWeight: "600",
                     marginLeft: SPACING / 2,
                     color: Colors.gray,
@@ -176,7 +177,7 @@ const PickUp = ({}) => {
                 />
                 <Text
                   style={{
-                    fontSize: SPACING * 1.6,
+                    fontSize: normalize(SPACING * 1.6),
                     fontWeight: "600",
                     marginLeft: SPACING / 2,
                     color: Colors.gray,
@@ -203,7 +204,7 @@ const PickUp = ({}) => {
                 />
                 <Text
                   style={{
-                    fontSize: SPACING * 1.6,
+                    fontSize: normalize(SPACING * 1.6),
                     fontWeight: "600",
                     marginLeft: SPACING / 2,
                     color: Colors.gray,
@@ -308,7 +309,7 @@ const PickUp = ({}) => {
                           style={{
                             color: Colors.white,
                             fontWeight: "600",
-                            fontSize: SPACING * 1.7,
+                            fontSize: normalize(SPACING * 1.7),
                             marginTop: SPACING,
                             marginBottom: SPACING / 2,
                           }}
@@ -317,7 +318,7 @@ const PickUp = ({}) => {
                         </Text>
                         <Text
                           numberOfLines={1}
-                          style={{ color: Colors.primary1, fontSize: SPACING * 1.2 }}
+                          style={{ color: Colors.primary1, fontSize: normalize(SPACING * 1.2) }}
                         >
                           {products.included}
                         </Text>
@@ -334,13 +335,13 @@ const PickUp = ({}) => {
                               style={{
                                 color: Colors.primary,
                                 marginRight: SPACING / 2,
-                                fontSize: SPACING * 1.6,
+                                fontSize: normalize(SPACING * 1.6),
                               }}
                             >
                               $
                             </Text>
                             <Text
-                              style={{ color: Colors.white, fontSize: SPACING * 1.6 }}
+                              style={{ color: Colors.white, fontSize: normalize(SPACING * 1.6) }}
                             >
                               {products.price}
                             </Text>

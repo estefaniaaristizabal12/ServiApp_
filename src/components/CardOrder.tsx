@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Text, Image, View, StyleSheet, Dimensions } from "react-native";
 import { Colors } from '../constants/colors';
+import { normalize } from "../../FontNormalize";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -65,12 +66,12 @@ const style = StyleSheet.create({
 
   cardTitle: {
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: normalize(20),
     marginLeft: 10,
   },
 
   cardFecha: {
-    fontSize: 14,
+    fontSize: normalize(14),
     color: "#777",
     marginLeft: 10,
     marginTop:5
@@ -82,11 +83,11 @@ const style = StyleSheet.create({
     alignItems:'center'
   },
   textDetalle: {
-    fontSize: 15,
+    fontSize: normalize(15),
     fontWeight: 'bold',
   },
   textAyuda: {
-    fontSize: 15,
+    fontSize: normalize(15),
     fontWeight: 'bold',
     color:Colors.primary1
   },

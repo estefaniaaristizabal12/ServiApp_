@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { Colors } from '../../constants/colors';
-
+import { normalize } from '../../../FontNormalize';
 
 const DATA = [
   {
@@ -52,12 +52,12 @@ const AboutUs = () => {
     return (
       <TouchableOpacity onPress={() => setDetails(item)}>
         <View style={[styles.card, {backgroundColor: item.bg_color}]}>
-          <Text style={{fontSize: 18, fontWeight: 'bold', color: '#fff'}}>
+          <Text style={{fontSize: normalize(18), fontWeight: 'bold', color: '#fff'}}>
             {item.bankName}
           </Text>
           <Text
             style={{
-              fontSize: 28,
+              fontSize: normalize(28),
               fontWeight: 'bold',
               color: '#fff',
               marginVertical: 40,
@@ -70,7 +70,7 @@ const AboutUs = () => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={{fontSize: 22, fontWeight: 'bold', color: '#fff'}}>
+            <Text style={{fontSize: normalize(22), fontWeight: 'bold', color: '#fff'}}>
               {item.name}
             </Text>
             <Image
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    fontSize: 20,
+    fontSize: normalize(20),
     fontWeight: 'bold',
   },
   card: {
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   textLabel: {
-    fontSize: 20,
+    fontSize: normalize(20),
     fontWeight: 'bold',
     color: '#ccc',
   },
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 15,
+    fontSize: normalize(15),
     fontWeight: 'bold',
   },
 });

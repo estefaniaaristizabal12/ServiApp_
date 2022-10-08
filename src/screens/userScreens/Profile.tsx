@@ -1,111 +1,218 @@
 import React from "react";
-import { Image, ImageBackground, View, Text, ScrollView, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import DrawerItem from "../../components/DrawerItem";
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from "react-native";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Colors } from "../../constants/colors";
-const { Dimensions } = require("react-native");
-const { width, height } = Dimensions.get('window');
+import Input2 from "../../components/input2";
+import * as UserService from "../../services/UserService";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from '../firebaseConfig';
 
-const Profile = () => (
-    <View style={styles.container}>
-        <ImageBackground source={require('../../../assets/person.png')}>
-            <View style={styles.topContainer}>
-                <View style={styles.topDetails}>
-                    <Image style={styles.profile} source={require('../../../assets/person.png')} />
-                    <View>
-                        <Text style={styles.name}>Estefania Aristizabal</Text>
-                        <View style={styles.row}>
-                            <Icon name="map-marker"  size={15} style={styles.icon} />
-                            <Text style={styles.locationText}>Universidad Javeriana, Bogota</Text>
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+
+
+
+export const Profile = () => {
+    const [user, setUser] = React.useState<any>({});
+    
+    React.useEffect(() => {
+        getUser();
+    }, []);
+
+    const getUser = async () => {
+        await UserService.getUser(auth.currentUser.uid)
+            .then((response) => {
+                setUser(response);
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <View style={{ paddingTop: 0, paddingHorizontal: 22 }}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+
+                    <View style={styles.titleBar}>
+                        <Ionicons name="ios-arrow-back" size={24} color="#52575D"></Ionicons>
+                    </View>
+
+                    <View style={{ alignSelf: "center" }}>
+                        <View style={styles.profileImage}>
+                            <Image source={require('../../../assets/person.png')} style={styles.image} resizeMode="center"></Image>
                         </View>
                     </View>
-                </View>
+
+                    <View style={styles.infoContainer}>
+                        <Text style={[styles.text, { fontWeight: "200", fontSize: 30 }]}>{user?.nombrecliente}</Text>
+                        <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Universidad Javeriana</Text>
+                    </View>
+
+
+                    <View style={{ marginVertical: 80, marginTop: 50 }}>
+                        <Input2
+
+                            iconName="email-outline"
+                            label="Correo Electrónico"
+                            placeholder={user?.e_mail}
+                            error
+                            password
+                        />
+
+                        <Input2
+
+                            iconName="account-outline"
+                            label="Nombre"
+                            placeholder={user?.nombrecliente}
+                            error
+                            password
+                        />
+
+                        <Input2
+
+                            iconName="account-outline"
+                            label="Dirección"
+                            placeholder={user?.direccion1}
+                            error
+                            password
+                        />
+
+                        <Input2
+
+                            iconName="lock-outline"
+                            label="Contraseña"
+                            placeholder="***********"
+                            error //OJO ACA
+                            password
+                        />
+
+                    </View>
+
+
+                </ScrollView>
             </View>
-        </ImageBackground>
-        <ScrollView>
-            <View style={styles.itemContainer}>
-                <DrawerItem iconName="account" text="Mi Cuenta" pro />
-                <DrawerItem iconName="swap-horizontal" text="Transacciones" />
-                <DrawerItem iconName="credit-card-check" text="Datos De Facturación" />
-                <DrawerItem iconName="account-multiple" text="Quiero Ser Aliado" />
-                <View style={styles.line} />
-                <DrawerItem iconName="bell-ring" text="Notificación" notification />
-                <DrawerItem iconName="shield-link-variant" text="Privacidad " />
-                <DrawerItem iconName="information" text="Sobre Nestra App" />
-            </View>
-        </ScrollView>
-        <View style={styles.bottomContainer}>
-            <Text style={styles.appName}>ServiApp</Text>
-            <Text style={styles.versionText}>Version 1.0.0</Text>
-        </View>
-    </View>
-)
+        </SafeAreaView>
+    );
+}
+
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#FFF"
     },
-    topContainer: {
-        backgroundColor: 'rgba(118, 13, 39, 0.9)',
-        height: height / 5,
-        justifyContent: 'flex-end',
-        padding: 15,
+    text: {
+        fontFamily: "HelveticaNeue",
+        color: Colors.black
     },
-    topDetails: {
-        flexDirection: 'row',
-        alignItems: 'center',
+    image: {
+        flex: 1,
+        width: 130,
+        height: 130,
     },
-    profile: {
-        width: 70,
-        height: 70,
-        borderRadius: 50,
-        marginRight: 15,
-        borderColor: Colors.white,
-        borderWidth: 2,
+    titleBar: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 24,
+        marginHorizontal: 16
     },
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
+    subText: {
+        fontSize: 12,
+        color: "#AEB5BC",
+        textTransform: "uppercase",
+        fontWeight: "500"
     },
-    name: {
-        color: Colors.white,
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 2,
+    profileImage: {
+        width: 130,
+        height: 130,
+        borderRadius: 100,
+        overflow: "hidden"
     },
-    locationText: {
-        color: Colors.white,
-        fontSize: 14,
-        fontWeight: '500',
+    dm: {
+        backgroundColor: "#41444B",
+        position: "absolute",
+        top: 20,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: "center"
     },
-    icon: {
-        color: Colors.white,
-        marginRight: 5,
+    add: {
+        backgroundColor: "#41444B",
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        width: 40,
+        height: 40,
+        borderRadius: 30,
+        alignItems: "center",
+        justifyContent: "center"
     },
-    itemContainer: {
-        marginTop: 10,
+    infoContainer: {
+        alignSelf: "center",
+        alignItems: "center",
+        marginTop: 16
     },
-    line: {
-        backgroundColor: Colors.lightGrey,
-        height: 2,
-        marginHorizontal: 15,
-        marginVertical: 20,
+    statsContainer: {
+        flexDirection: "row",
+        alignSelf: "center",
+        marginTop: 32
     },
-    bottomContainer: {
-        alignItems: 'center',
-        marginBottom: 15,
+    statsBox: {
+        alignItems: "center",
+        flex: 1
     },
-    appName: {
-        color: Colors.grey,
-        fontSize: 16,
-        fontWeight: 'bold',
+    mediaImageContainer: {
+        width: 180,
+        height: 200,
+        borderRadius: 12,
+        overflow: "hidden",
+        marginHorizontal: 10
     },
-    versionText: {
-        color: Colors.grey,
-        fontSize: 14,
-        fontWeight: '500',
+    mediaCount: {
+        backgroundColor: "#41444B",
+        position: "absolute",
+        top: "50%",
+        marginTop: -50,
+        marginLeft: 30,
+        width: 100,
+        height: 100,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 12,
+        shadowColor: "rgba(0, 0, 0, 0.38)",
+        shadowOffset: { width: 0, height: 10 },
+        shadowRadius: 20,
+        shadowOpacity: 1
     },
+    recent: {
+        marginLeft: 78,
+        marginTop: 32,
+        marginBottom: 6,
+        fontSize: 10
+    },
+    recentItem: {
+        flexDirection: "row",
+        alignItems: "flex-start",
+        marginBottom: 16
+    },
+    activityIndicator: {
+        backgroundColor: "#CABFAB",
+        padding: 4,
+        height: 12,
+        width: 12,
+        borderRadius: 6,
+        marginTop: 3,
+        marginRight: 20
+    }
 });
 
 export default Profile;
