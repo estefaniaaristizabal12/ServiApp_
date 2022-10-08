@@ -7,7 +7,7 @@ import { Ionicons, FontAwesome5, FontAwesome, MaterialIcons } from '@expo/vector
 
 export const Checkout = ({ navigation }) => {
   const { top: paddingTop } = useSafeAreaInsets();
-  let condicion = 2;
+  let condicion = 1;
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
       <View style={styles.superior}>
@@ -83,7 +83,7 @@ export const Checkout = ({ navigation }) => {
 
         <View style={{ flex: 0.23, marginTop: 20, marginLeft: 7, marginRight: 7, borderBottomColor: "#E7E7E7", borderBottomWidth: 1 }}>
           <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 8 }}> Método de pago</Text>
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: 'center', marginTop: 30 }} onPress={() => navigation.navigate('AddCard')}>
+          <TouchableOpacity style={{ flexDirection: "row", alignItems: 'center', marginTop: 30 }} onPress={() => navigation.navigate('MyCard')}>
             <View style={{ flex: 0.8, flexDirection: "row" }}>
               <TouchableOpacity style={styles.btnTarjeta}>
                 <Image

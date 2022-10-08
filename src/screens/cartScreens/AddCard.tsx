@@ -51,8 +51,8 @@ const AddCard = ({ navigation, route }) => {
     console.log('selectedCard to add: ', selectedCard);
   }, []);
 
-  const addCard = async (nameCard: any, numCard: any, fecha: any, csv: any, uid: any) => {
-    UserService.addCard(nameCard, numCard, fecha, csv, uid)
+  const addCard = async (nameCard: any, numCard: any, fecha: any, csv: any,type:any, uid: any) => {
+    UserService.addCard(nameCard, numCard, fecha, csv, type, uid)
       .then(res => console.log("addcard", res))
       .catch(error => console.error(error))
   }
@@ -167,8 +167,9 @@ const AddCard = ({ navigation, route }) => {
             //console log icon
 
             console.log("Icon", selectedCard?.icon);
+            console.log("name", selectedCard?.name);
 
-            addCard(cardName, cardNumber, expireDate, cvv, auth.currentUser.uid)
+            addCard(cardName, cardNumber, expireDate, cvv, selectedCard?.name, auth.currentUser.uid)
             // navigation.navigate('Map');
             //navigation.navigate('Checkout', { selectedCard });
             navigation.navigate('Confirmation');

@@ -108,7 +108,7 @@ const MyCard = ({ navigation, route }) => {
                 `${selectedCard?.key}-${selectedCard?.id}` ===
                 `NewCard-${item.id}`
               }
-              onPress={() => setSelectedCard({ ...item, key: 'NewCard' })}
+              onPress={() => setSelectedCard({ ...item,  key: 'NewCard' })}
             />
           );
         })}
