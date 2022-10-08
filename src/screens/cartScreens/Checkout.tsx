@@ -7,7 +7,7 @@ import { Ionicons, FontAwesome5, FontAwesome, MaterialIcons } from '@expo/vector
 
 export const Checkout = ({ navigation }) => {
   const { top: paddingTop } = useSafeAreaInsets();
-  let condicion = 1;
+  let condicion = 2;
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
       <View style={styles.superior}>
