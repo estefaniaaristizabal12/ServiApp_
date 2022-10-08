@@ -13,9 +13,8 @@ export const CartStack = () => {
                 headerShown: false,
                 animationTypeForReplace: 'pop',
             }}>
-
-            <StackCart.Screen name="Checkout" component={Checkout} />
             <StackCart.Screen name="Cart" component={Cart} />
+            <StackCart.Screen name="Checkout" component={Checkout} />
             <StackCart.Screen name="MyCard" component={MyCard} />
             <StackCart.Screen name="AddCard" component={AddCard} />
 
