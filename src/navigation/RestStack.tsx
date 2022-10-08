@@ -3,12 +3,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Restaurant } from '../screens/restScreens/Restaurant';
 import { Product } from '../screens/restScreens/Product';
 import { TopTab } from './TopTab';
-import  {Cart}  from '../screens/Cart';
+import  {Cart}  from '../screens/cartScreens/Cart';
 import { RestProfile } from '../screens/restScreens/RestProfile';
-import AddCard from '../screens/AddCard';
+import AddCard from '../screens/cartScreens/AddCard';
 import MyCard from '../screens/MyCard';
 import Confirmation from '../screens/Confirmation';
 import Delivery from '../screens/Delivery';
+import { CartStack } from './CartStack';
 
 const StackRest = createStackNavigator();
 export const RestStack = () => {
@@ -19,15 +20,11 @@ export const RestStack = () => {
                 animationTypeForReplace: 'pop',
             }}>
 
-            {/* <StackRest.Screen name="TopTab" component={TopTab} /> */}
+            <StackRest.Screen name="TopTab" component={TopTab} />
             <StackRest.Screen name="Delivery" component={Delivery} />
             <StackRest.Screen name="Restaurant" component={Restaurant} />
             <StackRest.Screen name="Product" component={Product} />
-            <StackRest.Screen name="Cart" component={Cart} />
-            <StackRest.Screen name="MyCard" component={MyCard} />
-            <StackRest.Screen name="AddCard" component={AddCard} />
-            <StackRest.Screen name="Confirmation" component={Confirmation} />
-
+            <StackRest.Screen name="CartStack" component={CartStack} />
             <StackRest.Screen name="Profile" component={RestProfile} />
         </StackRest.Navigator>
     )

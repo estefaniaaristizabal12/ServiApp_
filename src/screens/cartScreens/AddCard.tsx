@@ -8,19 +8,20 @@ import {
   ImageBackground,
   Platform,
 } from 'react-native';
-import { Colors } from '../constants/colors';
+import { Colors } from '../../constants/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import HeaderNavigation from '../components/HeaderNavigation';
-import IconButton from '../components/IconButton';
-import TextButton from '../components/TextButton';
-import FormInput from '../components/FormInput';
-import FormInputCheck from '../components/FormInputCheck';
-import RadioButton from '../components/RadioButton';
+import HeaderNavigation from '../../components/HeaderNavigation';
+import IconButton from '../../components/IconButton';
+
+import FormInput from '../../components/FormInput';
+import FormInputCheck from '../../components/FormInputCheck';
+import RadioButton from '../../components/RadioButton';
 
 
 
-import utils from '../constants/Utils';
+import utils from '../../constants/Utils';
+import TextButton from '../../components/TextButton';
 
 
 const AddCard = ({ navigation, route }) => {
@@ -55,7 +56,7 @@ const AddCard = ({ navigation, route }) => {
         titleStyle={{}}
         leftComponent={
           <IconButton
-            icon={require('../../assets/back.png')}
+            icon={require('../../../assets/back.png')}
             containerStyle={styles.leftIconButton}
             iconStyle={{
               width: 16,
@@ -76,7 +77,7 @@ const AddCard = ({ navigation, route }) => {
   const renderCard = () => {
     return (
       <ImageBackground
-        source={require('../../assets/card.png')}
+        source={require('../../../assets/card.png')}
         style={{
           height: 200,
           width: '100%',

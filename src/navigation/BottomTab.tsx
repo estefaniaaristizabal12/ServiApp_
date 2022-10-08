@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { Cart } from '../screens/Cart';
+import { Cart } from '../screens/cartScreens/Cart';
 import  Profile  from '../screens/userScreens/Profile';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Orders } from '../screens/ordersScreens/Orders';

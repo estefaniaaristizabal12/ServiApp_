@@ -1,17 +1,17 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Colors } from '../constants/colors'
+import { Colors } from '../../constants/colors'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native-animatable'
-import carrito from '../constants/carrito';
-import CardCart from '../components/CardCart';
+import carrito from '../../constants/carrito';
+import CardCart from '../../components/CardCart';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { firebaseConfig } from './firebaseConfig';
-import restaurant from '../constants/restaurant';
-import * as UserService from '../services/UserService'
+import { firebaseConfig } from '../firebaseConfig';
+import restaurant from '../../constants/restaurant';
+import * as UserService from '../../services/UserService'
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -130,7 +130,7 @@ export const Cart = ({ navigation }) => {
             <Text style={styles.textSPrecio}>{currencyFormat(total)}</Text>
           </View>
           <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity onPress={() => navigation.navigate('MyCard')} style={styles.btnIrPago}>
+            <TouchableOpacity onPress={() => navigation.navigate('CartStack')} style={styles.btnIrPago}>
               <Text style={styles.textBtnPago}>Ir a pagar</Text>
             </TouchableOpacity>
 
