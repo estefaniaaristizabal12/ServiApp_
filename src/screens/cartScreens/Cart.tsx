@@ -1,8 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Colors } from '../../constants/colors'
-import { StatusBar, StyleSheet, Text, View } from 'react-native'
-import { Colors } from '../constants/colors'
+
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native-animatable'
@@ -19,7 +18,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 import { useIsFocused } from "@react-navigation/native";
-// import { normalize } from '../../FontNormalize';
+import { normalize } from '../../../FontNormalize'
+
 
 
 export const Cart = ({ navigation }) => {

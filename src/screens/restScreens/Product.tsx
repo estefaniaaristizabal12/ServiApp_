@@ -10,11 +10,8 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseConfig';
 import * as UserService from '../../services/UserService'
-<<<<<<< HEAD
 import categories from '../../constants/categories';
-=======
 import { normalize } from '../../../FontNormalize';
->>>>>>> ee35ccacde360dfa12690c4f1e584d154b5c74ea
 
 
 const app = initializeApp(firebaseConfig);
