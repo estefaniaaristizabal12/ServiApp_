@@ -9,13 +9,18 @@ import Loader from '../../components/Loader';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import * as UserService from '../../services/UserService'
 
 export const SignIn = ({ navigation }) => {
-
-
-
-
   
+  const create = async (nameUsu: any, direction: any, email: any, pass: any, deviceToken: any, phone: any)=> {
+    UserService.create(nameUsu, direction, email, pass, deviceToken, phone)
+      .then(res => console.log("addcard", res))
+      .catch(error => console.error(error))
+  }
+
+
+
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -71,18 +76,21 @@ export const SignIn = ({ navigation }) => {
       try {
         setLoading(false);
 
-        createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
-        .then((userCredential) => {
-          console.log('Account created!')
-          const user = userCredential.user;
-          console.log(user)
-          navigation.navigate('BottomTab');
+        // createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
+        // .then((userCredential) => {
+        //   console.log('Account created!')
+        //   const user = userCredential.user;
+        //   console.log(user)
+        //   navigation.navigate('BottomTab');
     
-        })
-        .catch(error => {
-          console.log(error)
-          Alert.alert(error.message)
-        })
+        // })
+        // .catch(error => {
+        //   console.log(error)
+        //   Alert.alert(error.message)
+        // })
+
+        create(inputs.fullname, inputs.phone, inputs.email, inputs.password, 'token', inputs.phone)
+        navigation.navigate('BottomTab');
 
       } catch (error) {
         Alert.alert('Error', 'Something went wrong');
@@ -137,6 +145,15 @@ export const SignIn = ({ navigation }) => {
             iconName="account-outline"
             label="Nombre"
             placeholder="Ingrese su nombre completo"
+            error={errors.fullname}
+          />
+
+          <Input
+            onChangeText={text => handleOnchange(text, 'direccion')}
+            onFocus={() => handleError(null, 'fullname')}
+            iconName="account-outline"
+            label="Dirección"
+            placeholder="Ingrese su Direccion"
             error={errors.fullname}
           />
 
