@@ -12,6 +12,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 export const SignIn = ({ navigation }) => {
 
+
+
+
+  
+
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
