@@ -50,7 +50,7 @@ export const Profile = () => {
 
                     <View style={{ alignSelf: "center" }}>
                         <View style={styles.profileImage}>
-                            <Image source={require('../../../assets/person.png')} style={styles.image} resizeMode="center"></Image>
+                            <Image source={require('../../../assets/robot.png')} style={styles.image} resizeMode="center"></Image>
                         </View>
                     </View>
 

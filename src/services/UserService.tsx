@@ -71,7 +71,11 @@ export async function create(nameUsu: any, direction: any, email: any, pass: any
     DeviceToken: deviceToken,
     Telefono: phone
   }
-  const res = await fetch(`${url}/create/`, { method: 'POST', body: JSON.stringify(data) })
+  const res = await fetch(`${url}/create/`, { method: 'POST', body: JSON.stringify(data),
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }, })
   return res.json()
 }
 

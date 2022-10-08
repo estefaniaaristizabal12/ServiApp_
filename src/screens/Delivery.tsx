@@ -139,7 +139,7 @@ React.useEffect(() => {
           </Text>
         </View>
         <Image
-          source={require('../../assets/person.png')}
+          source={require('../../assets/robot.png')}
           style={{height: 55, width: 55, borderRadius: 25, marginRight: 9}}
         />
       </View>
