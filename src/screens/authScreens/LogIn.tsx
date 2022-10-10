@@ -15,7 +15,6 @@ import Loader from '../../components/Loader';
 export const LogIn = ({ navigation }) => {
 
 
-    
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
 
@@ -150,6 +149,18 @@ export const LogIn = ({ navigation }) => {
               fontSize: 16,
             }}>
             Nuevo en Serviapp? Registrate
+          </Text>
+          <Text
+            onPress={() => navigation.navigate('RecoverPassword')}
+            style={{
+              color: Colors.primary1,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              fontSize: 16,
+              marginTop: 9,
+              
+            }}>
+            Olvidaste tu Contrasela? Recupérala
           </Text>
         </View>
       </View>

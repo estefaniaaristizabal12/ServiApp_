@@ -4,6 +4,7 @@ import { LogIn } from '../screens/authScreens/LogIn';
 import { SignIn } from '../screens/authScreens/SignIn';
 import { Splash } from '../screens/authScreens/Splash';
 import BottomTab from './BottomTab';
+import RecoverPassword from '../screens/authScreens/RecoverPassword';
 
 const Stack = createStackNavigator();
 export const AuthStack = () => {
@@ -16,6 +17,7 @@ export const AuthStack = () => {
             <Stack.Screen name="Splash" component={Splash} />
             <Stack.Screen name="LogIn" component={LogIn} />
             <Stack.Screen name="SignIn" component={SignIn} />
+            <Stack.Screen name="RecoverPassword" component={RecoverPassword} />
             <Stack.Screen name="BottomTab" component={BottomTab} />
         </Stack.Navigator>
     )
