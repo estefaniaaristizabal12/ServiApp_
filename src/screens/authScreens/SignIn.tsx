@@ -113,7 +113,7 @@ export const SignIn = ({ navigation }) => {
      <Loader visible={loading} />
 
       <ScrollView
-        contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 22 }}>
+        contentContainerStyle={{ paddingTop: 41, paddingHorizontal: 22 }}>
     
         <Text style={{ color: Colors.black, fontSize: 40, textAlign: 'center', fontWeight: 'bold' }}>
           Registrarse
