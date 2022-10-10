@@ -135,12 +135,8 @@ export const Product = ({ navigation, route }) => {
                 </View>
                 <View style={styles.btnACarro}>
                     <TouchableOpacity onPress={() => {
-
-
-
                         addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, auth.currentUser.uid)
-
-                        navigation.navigate('Cart')
+                        navigation.navigate('CartStack')
                     }
                     }>
                         <Text style={styles.textBtnCarro}>Agregar ${selectedProduct?.Precio} </Text>
