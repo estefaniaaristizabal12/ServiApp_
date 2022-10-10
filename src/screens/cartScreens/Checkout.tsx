@@ -4,8 +4,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons, FontAwesome5, FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import { useIsFocused } from "@react-navigation/native";
 
 export const Checkout = ({ navigation , route}) => {
+  const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets();
 
   const [selectedCard, setSelectedCard] = React.useState<any>({});
@@ -13,12 +15,14 @@ export const Checkout = ({ navigation , route}) => {
 
 
   React.useEffect(() => {
-    if(route.params && route.params.selectedCard){
+    if(isFocused && route.params && route.params.selectedCard){
       let { selectedCard } = route.params;
       setSelectedCard(selectedCard);
-      console.log(selectedCard);
+
+      console.log("test:", "*****" + selectedCard?.NumeroTarjeta?.substring(selectedCard?.NumeroTarjeta?.length-3));
     }
-  }, []);
+    console.log("checkout selectedcCard", selectedCard);
+  }, [isFocused]);
 
   let condicion = 1;
   return (
@@ -106,7 +110,9 @@ export const Checkout = ({ navigation , route}) => {
               </TouchableOpacity>
               <View style={{ flexDirection: "column", marginLeft: 15 }}>
                 <Text style={{ fontSize: 19, fontWeight: 'bold' }}>Tarjeta</Text>
-                <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>{selectedCard?.NumeroTarjeta ? selectedCard?.NumeroTarjeta : "Seleccionar tarjeta"}</Text>
+                <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>
+                  {selectedCard?.NumeroTarjeta ? "*****" + selectedCard?.NumeroTarjeta?.substring(selectedCard?.NumeroTarjeta?.length-3) : "Seleccionar tarjeta"}
+                </Text>
                 {/* <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>{selectedCard?.NumeroTarjeta}</Text> */}
               </View>
 

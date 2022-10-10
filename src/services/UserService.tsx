@@ -35,7 +35,7 @@ export async function getCards(uid: any) {
   return res.json()
 }
 
-export async function addCard(nameCard: any, numCard: any, date: any, csv: any, type:any, uid: any) {
+export async function addCard(nameCard: any, numCard: any, date: any, csv: any, type: any, uid: any) {
   const data = {
     Nombre: nameCard,
     NumeroTarjeta: numCard,
@@ -43,9 +43,9 @@ export async function addCard(nameCard: any, numCard: any, date: any, csv: any, 
     csv: csv,
     Tipo: type
   }
-  const res = await fetch(`${url}/addcard/?uid=${uid}`, { 
-    method: 'POST',  
-    body: JSON.stringify(data) ,
+  const res = await fetch(`${url}/addcard/?uid=${uid}`, {
+    method: 'POST',
+    body: JSON.stringify(data),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -58,7 +58,13 @@ export async function delCard(numTarjeta: any, uid: any) {
   const data = {
     NumeroTarjeta: numTarjeta
   }
-  const res = await fetch(`${url}/delcard/?uid=${uid}`, { method: 'POST', body: JSON.stringify(data) })
+  const res = await fetch(`${url}/delcard/?uid=${uid}`, {
+    method: 'POST', body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
   return res.json()
 }
 
@@ -71,11 +77,13 @@ export async function create(nameUsu: any, direction: any, email: any, pass: any
     DeviceToken: deviceToken,
     Telefono: phone
   }
-  const res = await fetch(`${url}/create/`, { method: 'POST', body: JSON.stringify(data),
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }, })
+  const res = await fetch(`${url}/create/`, {
+    method: 'POST', body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
   return res.json()
 }
 
@@ -86,7 +94,13 @@ export async function update(nameUsu: any, direction: any, email: any, phone: an
     e_mail: email,
     Telefono: phone
   }
-  const res = await fetch(`${url}/update/?uid=${uid}`, { method: 'PUT', body: JSON.stringify(data) })
+  const res = await fetch(`${url}/update/?uid=${uid}`, {
+    method: 'PUT', body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
   return res.json()
 }
 
@@ -94,7 +108,13 @@ export async function changePassword(newPass: any, uid: any) {
   const data = {
     new_pass: newPass
   }
-  const res = await fetch(`${url}/changepass/?uid=${uid}`, { method: 'PUT', body: JSON.stringify(data) })
+  const res = await fetch(`${url}/changepass/?uid=${uid}`, {
+    method: 'PUT', body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
   return res.json()
 }
 
@@ -102,7 +122,13 @@ export async function updateDeviceToken(deviceToken: any, uid: any) {
   const data = {
     DeviceToken: deviceToken
   }
-  const res = await fetch(`${url}/dt/?uid=${uid}`, { method: 'PUT', body: JSON.stringify(data) })
+  const res = await fetch(`${url}/dt/?uid=${uid}`, {
+    method: 'PUT', body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
   return res.json()
 }
 

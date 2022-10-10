@@ -15,6 +15,7 @@ import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 import * as UserService from '../services/UserService'
 import { normalize } from '../../FontNormalize';
+import { useIsFocused } from "@react-navigation/native";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -23,15 +24,18 @@ const auth = getAuth(app);
 //type MyCardProps = StackScreenProps<MainParamType, 'MyCard'>;
 
 const MyCard = ({ navigation, route }) => {
+  const isFocused = useIsFocused()
 
   const insets = useSafeAreaInsets();
   const [selectedCard, setSelectedCard] = useState<any>(null);
   const [cards, setCards] = useState<any>([]);
 
   React.useEffect(() => {
-    console.log('Ejecutando useeffect mycard...');
-    getCards()
-  }, []);
+    if(isFocused){
+        console.log('Ejecutando useeffect mycard...');
+        getCards()
+    }
+  }, [isFocused]);
 
   const getCards = async () => {
     UserService.getCards(auth.currentUser.uid)

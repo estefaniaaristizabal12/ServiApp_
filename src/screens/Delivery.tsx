@@ -25,6 +25,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 import * as RestService from '../services/RestaurantService'
+import * as UserService from "../services/UserService";
 import { normalize } from '../../FontNormalize';
 
 
@@ -38,34 +39,46 @@ const cardWidth = width / 2 - 20;
 
 const Delivery = ({navigation}) => {
 
-  
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-
   const [restaurant, setRestaurant] = React.useState([]);
-  const [selectedRestaurant, setSelectedRestaurant] = React.useState<null>(null);
+  const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>({});
   const [filteredData, setFilteredData] = React.useState([]);
-  
-
-
-
-
+  const [user, setUser] = React.useState<any>({});
 
   const searchFilterFunction = (text) => {
     if(text){  
-        const newData = restaurant.filter(item => {
-            const itemData = item.Nombre ? item.Nombre.toUpperCase() : ''.toUpperCase();
-            const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
-        })
-        setFilteredData(newData);
+      const newData = restaurant.filter(item => {
+          const itemData = item.Nombre ? item.Nombre.toUpperCase() : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+          })
+      setFilteredData(newData);
     } else {
-        setFilteredData(restaurant);
+      setFilteredData(restaurant);
     }
-}
+  }
 
-React.useEffect(() => {
-  getRestaurantes();
-}, []);
+  React.useEffect(() => {
+      if(!restaurant.length) getRestaurantes();
+      if(JSON.stringify(user) === '{}') getUser();
+  }, []);
+
+    
+  const getUser = async () => {
+    UserService.getUser(auth.currentUser.uid)
+      .then((data) => {
+          const name_words = data?.nombrecliente.toLowerCase().split(" ");
+          const name_normalized = name_words.map((word:any) => { 
+               return word[0].toUpperCase() + word.substring(1) 
+          }).join(" ");
+          data.nombrecliente = name_normalized
+          setUser(data);
+          console.log("getUser", user)
+      })
+      .catch((error) => {
+         console.error(error)
+      });
+  }
 
   const getRestaurantes = async () => {
     RestService.getRestaurants().
@@ -130,7 +143,7 @@ React.useEffect(() => {
           <View style={{flexDirection: 'row', marginTop: 6}}>
             <Text style={{fontSize: normalize(28)}}>Hola,</Text>
             <Text style={{fontSize: normalize(28), fontWeight: 'bold', marginLeft: 10}}>
-                Estefania 
+                {user?.nombrecliente ? user.nombrecliente.split(" ")[0]: ""} 
                {/* {auth.currentUser?.uid}  */}
             </Text>
           </View>
