@@ -9,6 +9,8 @@ import { RestStack } from './RestStack';
 import { OrderStack } from './OrderStack';
 import { Colors } from '../constants/colors';
 import { CartStack } from './CartStack';
+import Account from '../screens/userScreens/Account';
+
 
 const BtTap = createMaterialBottomTabNavigator();
 
@@ -59,7 +61,7 @@ export default function BottomTab() {
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={RestStack} />
             <BtTap.Screen name="CartStack" options={{ title: 'Carrito' }} component={CartStack} />
             <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={OrderStack} />
-            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
+            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Account} />
 
 
         </BtTap.Navigator>

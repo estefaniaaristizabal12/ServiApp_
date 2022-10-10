@@ -7,7 +7,7 @@ import { Colors } from "../../constants/colors";
 const { Dimensions } = require("react-native");
 const { width, height } = Dimensions.get('window');
 
-const Profile = () => (
+const Profile = ({navigation}) => (
     <View style={styles.container}>
         <ImageBackground source={require('../../../assets/robot.png')}>
             <View style={styles.topContainer}>
@@ -25,7 +25,7 @@ const Profile = () => (
         </ImageBackground>
         <ScrollView>
             <View style={styles.itemContainer}>
-                <DrawerItem iconName="account" text="Mi Cuenta" pro />
+                <DrawerItem iconName="account" text="Mi Cuenta" pro  onPress={() => navigation.navigate('Account')} />
                 <DrawerItem iconName="swap-horizontal" text="Transacciones" />
                 <DrawerItem iconName="credit-card-check" text="Datos De Facturación" />
                 <DrawerItem iconName="account-multiple" text="Quiero Ser Aliado" />
