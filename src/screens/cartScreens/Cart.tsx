@@ -47,7 +47,7 @@ export const Cart = ({ navigation }) => {
     UserService.getCart(auth.currentUser.uid)
       .then(data => {
         const sum = data?.Productos?.reduce((a, b) => { return a + b?.Precio }, 0);
-        setCart(data);
+        setCart({...data});
         setTotal(sum);
         setVacio(false);
       })

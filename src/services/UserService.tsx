@@ -27,8 +27,24 @@ export async function clearCart(uid: any) {
   return res.json()
 }
 
-// TODO: 
-// export async function payCart(uid: any) {}
+export async function payCart(cart: any, delivery: boolean, state: any, rest: any, card: any, uid: any) {
+  const data = {
+    Carro: cart,
+    Domicilio: delivery,
+    Estado: state,
+    Restaruante: rest,
+    Tarjeta: card
+  }
+  const res = await fetch(`${url}/pay/?uid=${uid}`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+  return res.json()
+}
 
 export async function getCards(uid: any) {
   const res = await fetch(`${url}/cards/?uid=${uid}`, { method: 'GET' })
