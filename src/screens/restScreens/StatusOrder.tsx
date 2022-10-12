@@ -34,13 +34,17 @@ import { normalize } from '../../../FontNormalize';
       
       return (
         <HeaderNavigation
-          title="DELIVERY STATUS"
+          title="ESTADO DE TU PEDIDO"
           containerStyle={{
             height: 50,
             // marginHorizontal: SIZES.padding,
             marginTop: insets.top,
+            marginLeft: -5,
+      
           }}
-          titleStyle={{}}
+          titleStyle={{
+            marginLeft: -30,
+          }}
           leftComponent={
             <IconButton
               icon={ require('../../../assets/back.png')}
@@ -54,7 +58,6 @@ import { normalize } from '../../../FontNormalize';
             />
           }
   
-          // rightComponent={<CartQuantityButton quantity={3} />}
         />
       );
     };
@@ -65,11 +68,11 @@ import { normalize } from '../../../FontNormalize';
           style={{ marginTop: 12, paddingHorizontal: 24 }}>
           <Text
             style={{ textAlign: 'center', color: Colors.gray, fontSize:normalize(14) }}>
-            Estimated Delivery
+            Estimamos Entrega
           </Text>
   
           <Text style={{ textAlign: 'center', fontSize: normalize(22), color: Colors.black }}>
-            21 Sep 2021 / 12:30PM
+            27 Sep 2022 / 12:30PM
           </Text>
         </View>
       );
@@ -85,7 +88,7 @@ import { normalize } from '../../../FontNormalize';
             borderWidth: 2,
             borderColor: Colors.lightGray2,
             backgroundColor: Colors.white2,
-            // backgroundColor: 'red',
+
           }}>
           {/* Tracking Order */}
           <View
@@ -96,17 +99,11 @@ import { normalize } from '../../../FontNormalize';
               marginBottom: 20,
               paddingHorizontal: 24,
             }}>
-            <Text style={{ fontSize: normalize(16), color: Colors.black }}>Track Order</Text>
-            <Text style={{ color: Colors.gray, fontSize: normalize(16) }}>NY012345</Text>
+            <Text style={{ fontSize: normalize(16), color: Colors.black }}>Numero Pedido</Text>
+            <Text style={{ color: Colors.gray, fontSize: normalize(16) }}>CTE012345</Text>
           </View>
           <LineDivider
-          // lineStyle={{
-          //   // marginHorizontal: SIZES.padding,
-          //   backgroundColor: 'red',
-          //   marginLeft: SIZES.padding,
-          //   marginRight: SIZES.padding,
-          //   width: '86%',
-          // }}
+
           />
           {/* Status */}
           <View
@@ -130,7 +127,7 @@ import { normalize } from '../../../FontNormalize';
                         height: 40,
                         tintColor:
                           index <= currentStep
-                            ? Colors.primaryItemCard
+                            ? Colors.statusColor
                             : Colors.lightGray1,
                       }}
                     />
@@ -151,7 +148,7 @@ import { normalize } from '../../../FontNormalize';
                             height: 50,
                             width: 3,
                             marginLeft: 18,
-                            backgroundColor: Colors.primaryItemCard,
+                            backgroundColor: Colors.statusColor,
                             zIndex: -1,
                           }}
                         />
@@ -214,7 +211,7 @@ import { normalize } from '../../../FontNormalize';
           {currentStep === status.length - 1 && (
             <TextButton
               buttonContainerStyle={{ height: 55, borderRadius: 12 }}
-              label="DONE"
+              label="CALIFICAR PEDIDO"
               onPress={() => navigation.navigate('Home')}
             />
           )}
@@ -250,7 +247,7 @@ import { normalize } from '../../../FontNormalize';
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
-      borderRadius: 12,
+      borderRadius: 20,
       borderColor: Colors.gray2,
     },
   });

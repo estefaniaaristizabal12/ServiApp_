@@ -1,28 +1,28 @@
 const status = [
     {
       id: 1,
-      title: 'Order Confirmed',
-      sub_title: 'Your order has been received',
+      title: 'Orden Confirmada',
+      sub_title: 'Tu orden ha sido recibida y confirmada',
     },
     {
       id: 2,
-      title: 'Order Prepared',
-      sub_title: 'Your order has been prepared',
+      title: 'Preparando Orden',
+      sub_title: 'Tu pedido esta siendo preparado',
     },
     {
       id: 3,
-      title: 'Delivery in Progress',
-      sub_title: 'Hang on! Your food is on the way',
+      title: 'Orden Recogida',
+      sub_title: 'Tu pedido fue recogido por el repartidor',
     },
     {
       id: 4,
-      title: 'Delivered',
-      sub_title: 'Enjoy your meal!',
+      title: 'Orden en Camino',
+      sub_title: 'Tu pedido esta en camino!',
     },
     {
       id: 5,
-      title: 'Rate Us',
-      sub_title: 'Help us improve our service',
+      title: 'Pedido Entregado',
+      sub_title: 'Muchas gracias por tu compra!',
     },
   ];
 

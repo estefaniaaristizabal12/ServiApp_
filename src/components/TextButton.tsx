@@ -36,7 +36,7 @@ const TextButton: FunctionComponent<TextButtonProps> = ({
       style={{
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.primaryItemCard,
+        backgroundColor: Colors.primary,
         ...buttonContainerStyle,
       }}>
       <Text style={{ color: Colors.white,  fontSize: 16 , ...labelStyle }}>

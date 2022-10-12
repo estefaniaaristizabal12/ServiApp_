@@ -43,10 +43,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+   
+  
   },
   titleStyle: {
-    //tamaño 16
+
     fontSize: normalize(16),
     color: 'black',
+    fontWeight: 'bold',
+    
+    
   },
 });

@@ -156,7 +156,7 @@ export const Checkout = ({ navigation , route}) => {
           </View>
 
           <View style={styles.btnPedido}>
-            <TouchableOpacity onPress={() => { navigation.navigate('Cart') }}>
+            <TouchableOpacity onPress={() => { navigation.navigate('StatusOrder') }}>
               <Text style={styles.textPedido}> Realizar pedido </Text>
             </TouchableOpacity>
           </View>
