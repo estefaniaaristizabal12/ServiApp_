@@ -36,8 +36,8 @@ export async function getCart(uid: any) {
 
 export async function addProdCart(prodId: any, cant: any, restId: any, uid: any) {
   const res = await fetch(`${url}/addcart/${prodId}/${cant}/${restId}/?uid=${uid}`, { method: 'POST' })
-  const data = res.json()
-  AsyncStorage.addProdCart(data)
+      // const data = res.json()
+      // AsyncStorage.addProdCart(data)
   return res.json()
 }
 

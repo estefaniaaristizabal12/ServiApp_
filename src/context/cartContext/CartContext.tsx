@@ -1,6 +1,6 @@
 
 import React, { createContext, useReducer } from 'react';
-import { cartReducer } from './cartReducer';
+import { cartReducer } from './CartReducer';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../screens/firebaseConfig';
 import * as UserService from '../../services/UserService'

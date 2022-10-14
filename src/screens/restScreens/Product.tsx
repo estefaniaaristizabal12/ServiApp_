@@ -22,9 +22,6 @@ const auth = getAuth(app);
 
 
 
-
-
-
 export const Product = ({ navigation, route }) => {
 
     
@@ -37,7 +34,7 @@ export const Product = ({ navigation, route }) => {
     const [selectedProduct, setSelectedProduct] = React.useState<any>(null);
     const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>(null);
 
-    const {cambioNombre} = useContext(CartContext);
+    // const {cambioNombre} = useContext(CartContext);
 
 
 
@@ -141,7 +138,12 @@ export const Product = ({ navigation, route }) => {
                     <TouchableOpacity onPress={() => {
                         // cambioNombre
                         addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, auth.currentUser.uid)
-                        navigation.navigate('CartStack')
+                        setTimeout(() => {
+                           
+                            console.log("Delayed for 1 second.");
+                            navigation.navigate('Cart')
+                          }, 1)
+                       
                     }
                     }>
                         <Text style={styles.textBtnCarro}>Agregar ${selectedProduct?.Precio} </Text>

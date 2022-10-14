@@ -37,7 +37,9 @@ export const Cart = ({ navigation }) => {
   React.useEffect(() => {
     console.log('EJECUTANDO USEFFECT CARRITO');
     if (isFocused) {
-      getCart();
+      getCart().then(elemento => {
+        console.log("estefania", cart)
+      })
     }
   }, [isFocused]);
 
@@ -46,9 +48,9 @@ export const Cart = ({ navigation }) => {
     return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
 
-  const getTotal = (cart:any) => {
+  const getTotal = (cart: any) => {
     const total = cart?.Productos?.reduce((acum: number, element: any) => {
-      return acum + (element?.Precio * element?.Cantidad) 
+      return acum + (element?.Precio * element?.Cantidad)
     }, 0);
     return total;
   }
@@ -56,7 +58,7 @@ export const Cart = ({ navigation }) => {
   const getCart = async () => {
     UserService.getCart(auth.currentUser.uid)
       .then(data => {
-        setCart({...data});
+        setCart({ ...data });
         setTotal(getTotal(data));
         setVacio(false);
       })
@@ -77,31 +79,23 @@ export const Cart = ({ navigation }) => {
   }
 
 
-  const {cartState} = useContext(CartContext);
 
- 
 
 
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
       <View style={styles.superior}>
-        <View style={{ flex: 0.8, marginBottom: 30 }}>
-
-        <Text >{ JSON.stringify(cartState, null,2)} </Text>
-
-          {/* <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
+        <View style={{ flex: 0.3, marginBottom: 30 }}>
+          <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
             <Ionicons name="arrow-back" size={25} color={Colors.grey} />
-          </TouchableOpacity> */}
-
-
-
+          </TouchableOpacity>
 
         </View>
-        {/* <View style={{ flex: 0.6, alignItems: "center", marginBottom: 30 }}>
-          <Text style={styles.textCarrito} > Tu  Carrito </Text>
+        <View style={{ flex: 0.7, alignItems: "center", marginBottom: 30 }}>
+          <Text style={styles.textCarrito} >Tu  Carrito </Text>
 
-        </View> */}
+        </View>
         <View style={{ flex: 0.3, alignItems: "flex-end", marginBottom: 30, marginRight: 20, }}>
           {!vacio ?
             <TouchableOpacity onPress={() => { clearCart() }}>
@@ -143,16 +137,15 @@ export const Cart = ({ navigation }) => {
                   cantidad={item.Cantidad}
                 />
 
-
               )}
 
             /> :
-            <View style={{alignItems:'center'}}>
+            <View style={{ alignItems: 'center' }}>
               <Image
                 style={{ width: 230, height: 230, marginTop: 35, borderRadius: 5 }}
                 source={require('../../../assets/vacio.png')}
               />
-              <Text style={{ fontSize: normalize(20), fontWeight: 'bold',color: Colors.grey1}}> Carro de compras vacío </Text>
+              <Text style={{ fontSize: normalize(20), fontWeight: 'bold', color: Colors.grey1 }}> Carro de compras vacío </Text>
             </View>
           }
 
@@ -168,7 +161,7 @@ export const Cart = ({ navigation }) => {
           <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
 
             {!vacio ?
-              <TouchableOpacity onPress={() => navigation.navigate('Checkout', {cart: cart, total: total})} style={styles.btnIrPago}>
+              <TouchableOpacity onPress={() => navigation.navigate('Checkout', { cart: cart, total: total })} style={styles.btnIrPago}>
                 <Text style={styles.textBtnPago}>Ir a pagar</Text>
               </TouchableOpacity>
               : <TouchableOpacity style={styles.btnIrPagoV}>
