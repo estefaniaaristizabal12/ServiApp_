@@ -5,6 +5,9 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { RestProfile } from '../../screens/restScreens/RestProfile';
 import { ReviewRest } from '../../screens/restProfileScreens/ReviewRest';
 import { OrdersRest } from '../../screens/restProfileScreens/OrdersRest';
+import { ProductsRest } from '../../screens/restProfileScreens/ProductsRest';
+import { ReviewRestStack } from './ReviewRestStack';
+import { OrderRestStack } from './OrderRestStack';
 
 const BtTap = createMaterialBottomTabNavigator();
 
@@ -32,7 +35,7 @@ export const BottomTabRP = () => {
                             iconName = "home"
                             break;
 
-                        case 'Review':
+                        case 'ReviewRestStack':
                             iconName = 'clipboard-list'
                             break;
 
@@ -46,8 +49,8 @@ export const BottomTabRP = () => {
                 }
             })}>
 
-            <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={OrdersRest} />
-            <BtTap.Screen name="Review" options={{ title: 'Historial pedidos' }} component={ReviewRest} />
+            <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={OrderRestStack} />
+            <BtTap.Screen name="ReviewRestStack" options={{ title: 'Pedidos finalizados' }} component={ReviewRestStack} />
             <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={RestProfile} />
 
 

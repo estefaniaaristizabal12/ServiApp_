@@ -102,7 +102,6 @@ export const Restaurant = ({ navigation, route }) => {
                         </TouchableOpacity>
                     </View>
 
-
                 </View>
 
 

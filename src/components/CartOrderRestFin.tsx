@@ -7,7 +7,7 @@ import { Ionicons, MaterialCommunityIcons, MaterialIcons, FontAwesome, FontAweso
 const { width, height } = Dimensions.get("screen");
 
 // { numeroOrden, fecha, modalidad, total, estado }
-export const CartOrderRest = () => {
+export const CartOrderRestFin = () => {
 
   let servicio = 1;
   return (
@@ -48,32 +48,26 @@ export const CartOrderRest = () => {
           </View>
 
           <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-            <Text style={{ padding: 5, fontSize: normalize(20), fontWeight: "bold" }}>Total:</Text>
-            <Text style={{ padding: 5, fontSize: normalize(19), fontWeight: "bold" }}>$5000 </Text>
+            <View style={{ flexDirection: "row", flex: 0.5 }}>
+              <Text style={{ padding: 5, fontSize: normalize(20), fontWeight: "bold" }}>Total:</Text>
+              <Text style={{ padding: 5, fontSize: normalize(19), fontWeight: "bold" }}>$5000 </Text>
+            </View>
+            <View style={{ flexDirection: "row", flex: 0.5, alignItems:"center"}}>
+              <FontAwesome name="circle" size={15} color="#d20728" />
+              <Text style={{ padding: 5, fontSize: normalize(18), fontWeight: "bold" }}>Finalizado</Text>
+
+            </View>
+
 
           </View>
 
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent:"center", marginTop: 5, backgroundColor: Colors.grey, borderRadius: 20, marginHorizontal:20}}>
-            <FontAwesome5 name="info-circle" size={22} color="white" />
-            <Text style={{ padding: 5, fontSize: normalize(18), fontWeight: "bold", color:"white", marginVertical:3}}>Finalizar pedido</Text>
+          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginTop: 5, backgroundColor: Colors.grey, borderRadius: 20, marginHorizontal: 20 }}>
+            <FontAwesome name="star-half-empty" size={22} color="white" />
+            <Text style={{ padding: 5, fontSize: normalize(18), fontWeight: "bold", color: "white", marginVertical: 3 }}>Ver calificación </Text>
 
           </TouchableOpacity>
 
-
-
-
         </View>
-        {/* <View style={{ flexDirection: "row" }}>
-          <View style={style.cardImage}>
-
-          </View>
-          <View style={{ flex: 0.6, marginHorizontal: 12, overflow: "hidden" }}>
-            <Text style={style.cardTitle}>Hola</Text>
-            <Text style={style.cardLocation}>ke</Text>
-            <Text numberOfLines={2} ellipsizeMode="tail" style={style.cardDescription}>no</Text>
-          </View>
-        </View> */}
-
       </View>
 
     </View>
@@ -129,4 +123,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default CartOrderRest;
+export default CartOrderRestFin;
