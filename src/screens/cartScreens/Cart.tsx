@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Colors } from '../../constants/colors'
 
@@ -21,6 +21,7 @@ const auth = getAuth(app);
 import { useIsFocused } from "@react-navigation/native";
 import { normalize } from '../../../FontNormalize'
 // import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CartContext } from '../../context/cartContext/CartContext';
 
 
 
@@ -84,6 +85,8 @@ export const Cart = ({ navigation }) => {
   }
 
 
+  const {cartState} = useContext(CartContext);
+
  
 
 
@@ -91,10 +94,16 @@ export const Cart = ({ navigation }) => {
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
       <View style={styles.superior}>
-        <View style={{ flex: 0.3, marginBottom: 30 }}>
+        <View style={{ flex: 0.8, marginBottom: 30 }}>
+
+        {/* <Text >{ JSON.stringify(cartState, null,4)} </Text> */}
+
           <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
             <Ionicons name="arrow-back" size={25} color={Colors.grey} />
           </TouchableOpacity>
+
+
+
 
         </View>
         <View style={{ flex: 0.6, alignItems: "center", marginBottom: 30 }}>

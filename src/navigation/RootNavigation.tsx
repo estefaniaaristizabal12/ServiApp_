@@ -6,8 +6,8 @@ import { BottomTabRP } from './RestProfileStack/BottomTabRP';
 export const RootNavigation = () => {
   return (
     <NavigationContainer> 
-        {/* <AuthStack/> */}
-        <BottomTabRP/>
+        <AuthStack/>
+        {/* <BottomTabRP/> */}
     </NavigationContainer>
   )
 }

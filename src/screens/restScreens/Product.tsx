@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Dimensions, Image, SectionList, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList, Button } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AcompProd from '../../components/AcompProd';
@@ -12,6 +12,7 @@ import { firebaseConfig } from '../firebaseConfig';
 import * as UserService from '../../services/UserService'
 import categories from '../../constants/categories';
 import { normalize } from '../../../FontNormalize';
+import { CartContext } from '../../context/cartContext/CartContext';
 
 
 const app = initializeApp(firebaseConfig);
@@ -35,6 +36,8 @@ export const Product = ({ navigation, route }) => {
 
     const [selectedProduct, setSelectedProduct] = React.useState<any>(null);
     const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>(null);
+
+    const {cambioNombre} = useContext(CartContext);
 
 
 
@@ -62,6 +65,7 @@ export const Product = ({ navigation, route }) => {
         <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
             <View style={{ flex: 0.08, alignItems: 'center' }}>
+                {/* <Button title="cambioNombre" onPress={cambioNombre}/> */}
 
 
                 <View style={{ flex: 1, flexDirection: "row" }}>
@@ -135,6 +139,7 @@ export const Product = ({ navigation, route }) => {
                 </View>
                 <View style={styles.btnACarro}>
                     <TouchableOpacity onPress={() => {
+                        // cambioNombre
                         addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, auth.currentUser.uid)
                         navigation.navigate('CartStack')
                     }
