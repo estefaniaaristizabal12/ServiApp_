@@ -10,6 +10,8 @@ import MyCard from '../screens/MyCard';
 import Confirmation from '../screens/Confirmation';
 import Delivery from '../screens/Delivery';
 import { CartStack } from './CartStack';
+import Account from '../screens/userScreens/Account';
+import EditProfile from '../screens/userScreens/EditProfile';
 
 const StackRest = createStackNavigator();
 export const RestStack = () => {
@@ -26,6 +28,8 @@ export const RestStack = () => {
             <StackRest.Screen name="Product" component={Product} />
             {/* <StackRest.Screen name="Cart" component={Cart} /> */}
             <StackRest.Screen name="Profile" component={RestProfile} />
+            <StackRest.Screen name="Account" component={Account} />
+
         </StackRest.Navigator>
     )
 }

@@ -6,25 +6,46 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons, FontAwesome5, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { useIsFocused } from "@react-navigation/native";
 import { normalize } from '../../../FontNormalize';
+import * as UserService from '../../services/UserService'
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from '../firebaseConfig';
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 export const Checkout = ({ navigation , route}) => {
   const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets();
 
   const [selectedCard, setSelectedCard] = React.useState<any>({});
+  const [selectedIdCard, setSelectedIdCard] = React.useState<any>({});
   const [cart, setCart] = React.useState<any>({});
   const [total, setTotal] = React.useState<any>(0);
+  const [order, setOrder] = React.useState<any>(null);
 
   function currencyFormat(num: number) {
     if (!num) return '$0,00'
     return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
 
+  const payCart = () => {
+    UserService.payCart(true, selectedCard?.id , auth.currentUser.uid)
+      .then(data => {
+        setOrder(data);
+        console.log('checkout pay cart', data);
+        navigation.navigate('StatusOrder', {order: data});
+      })
+      .catch(err => {
+        console.log('ERROR AL PAGAR', err);
+      })
+  }
+
+
   React.useEffect(() => {
     isFocused && route.params["card"] && setSelectedCard(route.params["card"]);
     isFocused && route.params["cart"] && setCart(route.params["cart"]);
     isFocused && route.params["total"] && setTotal(route.params["total"]);
-    console.log("checkout selectedcCard", selectedCard);
   }, [isFocused]);
 
   let condicion = 1;
@@ -159,7 +180,9 @@ export const Checkout = ({ navigation , route}) => {
           </View>
 
           <View style={styles.btnPedido}>
-            <TouchableOpacity onPress={() => { navigation.navigate('StatusOrder') }}>
+            <TouchableOpacity onPress={() => { 
+              payCart() 
+              }}>
               <Text style={styles.textPedido}> Realizar pedido </Text>
             </TouchableOpacity>
           </View>

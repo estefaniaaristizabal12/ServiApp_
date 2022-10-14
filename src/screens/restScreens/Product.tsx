@@ -52,7 +52,7 @@ export const Product = ({ navigation, route }) => {
 
     const addProdCart = (prodId: any, cant: any, restId: any, uid: any) => {
         UserService.addProdCart(prodId, cant, restId, uid)
-            .then(res => console.log(res))
+            .then(res => navigation.navigate('CartStack'))
             .catch(error => console.error(error))
     }
 
@@ -138,12 +138,16 @@ export const Product = ({ navigation, route }) => {
                     <TouchableOpacity onPress={() => {
                         // cambioNombre
                         addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, auth.currentUser.uid)
+<<<<<<< Updated upstream
                         setTimeout(() => {
                            
                             console.log("Delayed for 1 second.");
                             navigation.navigate('Cart')
                           }, 1)
                        
+=======
+                        // navigation.navigate('CartStack')
+>>>>>>> Stashed changes
                     }
                     }>
                         <Text style={styles.textBtnCarro}>Agregar ${selectedProduct?.Precio} </Text>

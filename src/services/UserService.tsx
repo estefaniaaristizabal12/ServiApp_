@@ -36,8 +36,13 @@ export async function getCart(uid: any) {
 
 export async function addProdCart(prodId: any, cant: any, restId: any, uid: any) {
   const res = await fetch(`${url}/addcart/${prodId}/${cant}/${restId}/?uid=${uid}`, { method: 'POST' })
+<<<<<<< Updated upstream
       // const data = res.json()
       // AsyncStorage.addProdCart(data)
+=======
+  // const data = res.json()
+  // AsyncStorage.addProdCart(data)
+>>>>>>> Stashed changes
   return res.json()
 }
 
@@ -51,11 +56,9 @@ export async function clearCart(uid: any) {
   return res.json()
 }
 
-export async function payCart(cart: any, delivery: boolean, rest: any, card: any, uid: any) {
+export async function payCart(delivery: boolean, card: any, uid: any) {
   const data = {
-    Carro: cart,
     Domicilio: delivery,
-    Restaruante: rest,
     Tarjeta: card
   }
   const res = await fetch(`${url}/pay/?uid=${uid}`, {

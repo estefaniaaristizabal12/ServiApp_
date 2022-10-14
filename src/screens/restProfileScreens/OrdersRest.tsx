@@ -8,6 +8,7 @@ import { normalize } from '../../../FontNormalize';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { white } from 'react-native-paper/lib/typescript/styles/colors';
 import CartOrderRest from '../../components/CartOrderRest';
+import { ProductsOrderRest } from '../../components/ProductsOrderRest';
 export const OrdersRest = () => {
 
     const { top: paddingTop } = useSafeAreaInsets();
@@ -35,6 +36,7 @@ export const OrdersRest = () => {
 
             <View style={{backgroundColor: Colors.white1, flex:0.85, borderTopLeftRadius: 30, borderTopRightRadius: 30}}>
                 <CartOrderRest></CartOrderRest>
+                {/* <ProductsOrderRest></ProductsOrderRest> */}
                 {/* <FlatList
                 data={filteredData}
                 renderItem={({ item }) => (

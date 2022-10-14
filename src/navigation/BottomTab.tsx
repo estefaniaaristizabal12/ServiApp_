@@ -61,7 +61,7 @@ export default function BottomTab() {
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={RestStack} />
             <BtTap.Screen name="CartStack" options={{ title: 'Carrito' }} component={CartStack} />
             <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={OrderStack} />
-            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Account} />
+            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
 
 
         </BtTap.Navigator>

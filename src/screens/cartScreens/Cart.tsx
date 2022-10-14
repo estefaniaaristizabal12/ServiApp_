@@ -79,6 +79,10 @@ export const Cart = ({ navigation }) => {
   }
 
 
+<<<<<<< Updated upstream
+=======
+  // const {cartState} = useContext(CartContext);
+>>>>>>> Stashed changes
 
 
 
@@ -86,6 +90,7 @@ export const Cart = ({ navigation }) => {
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
       <View style={styles.superior}>
+<<<<<<< Updated upstream
         <View style={{ flex: 0.3, marginBottom: 30 }}>
           <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
             <Ionicons name="arrow-back" size={25} color={Colors.grey} />
@@ -94,6 +99,22 @@ export const Cart = ({ navigation }) => {
         </View>
         <View style={{ flex: 0.7, alignItems: "center", marginBottom: 30 }}>
           <Text style={styles.textCarrito} >Tu  Carrito </Text>
+=======
+        <View style={{ flex: 0.8, marginBottom: 30 }}>
+
+        {/* <Text >{ JSON.stringify(cartState, null,2)} </Text> */}
+
+          <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
+            <Ionicons name="arrow-back" size={25} color={Colors.grey} />
+          </TouchableOpacity>
+
+
+
+
+        </View>
+        <View style={{ flex: 0.6, alignItems: "center", marginBottom: 30 }}>
+          <Text style={styles.textCarrito} > Tu  Carrito </Text>
+>>>>>>> Stashed changes
 
         </View>
         <View style={{ flex: 0.3, alignItems: "flex-end", marginBottom: 30, marginRight: 20, }}>

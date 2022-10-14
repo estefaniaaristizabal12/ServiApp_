@@ -7,6 +7,9 @@ import * as UserService from "../../services/UserService";
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseConfig';
+import HeaderNavigation from "../../components/HeaderNavigation";
+import IconButton from "../../components/IconButton";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 
@@ -17,8 +20,9 @@ const auth = getAuth(app);
 
 
 
-export const Account = () => {
+export const Account = ({navigation}) => {
     const [user, setUser] = React.useState<any>({});
+    const insets = useSafeAreaInsets();
     
     React.useEffect(() => {
         getUser();
@@ -40,14 +44,67 @@ export const Account = () => {
             });
     }
 
+    const editUser = async () => {
+        UserService.update(user?.nombrecliente, user?.direccion1, user?.e_mail, user?.telefono, auth.currentUser.uid)
+            .then((data) => {
+                console.log("editUser", data)
+            })
+            .catch((error) => {
+                console.error(error)
+            });
+    }
+
+    const renderHeader = () => {
+
+        return (
+          <HeaderNavigation
+            title="MI PERFIL"
+            containerStyle={{
+              height: 50,
+              // marginHorizontal: SIZES.padding,
+              marginTop: insets.top,
+              marginLeft: -5,
+    
+            }}
+            titleStyle={{
+              marginLeft: -30,
+            }}
+            leftComponent={
+              <IconButton
+                icon={require('../../../assets/back.png')}
+                containerStyle={styles.leftIconButton}
+                iconStyle={{
+                  width: 16,
+                  height: 20,
+                  tintColor: Colors.gray2,
+                }}
+                onPress={() => navigation.goBack()}
+              />
+            }
+            rightComponent
+            ={
+                <IconButton
+                  icon={require('../../../assets/back.png')}
+                  containerStyle={styles.leftIconButton}
+                  iconStyle={{
+                    width: 16,
+                    height: 20,
+                    tintColor: Colors.gray2,
+                  }}
+                  onPress={() => editUser()}
+                />
+              }
+    
+          />
+        );
+      };
+    
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ paddingTop: 0, paddingHorizontal: 22 }}>
+            {renderHeader()}
                 <ScrollView showsVerticalScrollIndicator={false}>
-
-                    <View style={styles.titleBar}>
-                        <Ionicons name="ios-arrow-back" size={24} color="#52575D"></Ionicons>
-                    </View>
 
                     <View style={{ alignSelf: "center" }}>
                         <View style={styles.profileImage}>
@@ -205,6 +262,15 @@ const styles = StyleSheet.create({
         marginBottom: 6,
         fontSize: 10
     },
+    leftIconButton: {
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderRadius: 20,
+        borderColor: Colors.gray2,
+      },
     recentItem: {
         flexDirection: "row",
         alignItems: "flex-start",
