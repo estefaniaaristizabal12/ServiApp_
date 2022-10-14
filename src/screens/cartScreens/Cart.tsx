@@ -13,12 +13,14 @@ import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseConfig';
 import restaurant from '../../constants/restaurant';
 import * as UserService from '../../services/UserService'
+import * as AsyncStorage from '../../services/AsyncStorage'
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 import { useIsFocused } from "@react-navigation/native";
 import { normalize } from '../../../FontNormalize'
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -26,7 +28,7 @@ export const Cart = ({ navigation }) => {
   const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets();
 
-  const [cart, setCart] = React.useState<any>({});
+  const [cart, setCart] = React.useState<any>(null);
   const [total, setTotal] = React.useState(0);
   const [vacio, setVacio] = React.useState(true);
 
@@ -40,20 +42,34 @@ export const Cart = ({ navigation }) => {
 
   function currencyFormat(num: number) {
     if (!num) return '$0,00'
-    return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
+
+  const getTotal = (cart:any) => {
+    const total = cart?.Productos?.reduce((acum: number, element: any) => {
+      return acum + (element?.Precio * element?.Cantidad) 
+    }, 0);
+    return total;
   }
 
   const getCart = async () => {
     UserService.getCart(auth.currentUser.uid)
       .then(data => {
-        const sum = data?.Productos?.reduce((a, b) => { return a + b?.Precio }, 0);
         setCart({...data});
-        setTotal(sum);
+        setTotal(getTotal(data));
         setVacio(false);
       })
       .catch(error => {
         console.error("getCart: ", error)
       });
+    // UserService.getCart(auth.currentUser.uid)
+    //   .then(data => {
+    //     // console.log(data)
+    //     setCart({...data});
+    //     setTotal(getTotal(data));
+    //     setVacio(false);
+    //   });
+    // AsyncStorage.getCart().then(data => console.log(data))
   };
 
   const clearCart = async () => {
@@ -151,7 +167,7 @@ export const Cart = ({ navigation }) => {
           <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
 
             {!vacio ?
-              <TouchableOpacity onPress={() => navigation.navigate('Checkout')} style={styles.btnIrPago}>
+              <TouchableOpacity onPress={() => navigation.navigate('Checkout', {cart: cart, total: total})} style={styles.btnIrPago}>
                 <Text style={styles.textBtnPago}>Ir a pagar</Text>
               </TouchableOpacity>
               : <TouchableOpacity style={styles.btnIrPagoV}>

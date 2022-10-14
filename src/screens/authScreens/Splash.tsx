@@ -6,8 +6,21 @@ import { Colors } from '../../constants/colors';
 import { StackScreenProps } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native';
 import { normalize } from '../../../FontNormalize';
+import * as AsyncStorage from '../../services/AsyncStorage';
 
 export const Splash = ({navigation}) => {
+    const [user, setUser] = React.useState<{}>(null)
+
+    React.useEffect(() => {
+      getUserAS();
+    }, []);
+
+    const getUserAS = async () => {
+      AsyncStorage.getUser()
+        .then(data => {
+          setUser(data)
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -24,7 +37,7 @@ export const Splash = ({navigation}) => {
                 <Text style={[styles.title, {}]}>Pide tu comida</Text>
                 <Text style={[styles.title, {}]}>favorita Online</Text>
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('LogIn')}>
+                    <TouchableOpacity onPress={()=>user?navigation.navigate('BottomTab'):navigation.navigate('LogIn')}>
 
                         <LinearGradient
                             colors={[Colors.primary, Colors.secondary]}

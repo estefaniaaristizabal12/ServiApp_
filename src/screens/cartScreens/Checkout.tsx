@@ -5,22 +5,25 @@ import { Colors } from '../../constants/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons, FontAwesome5, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { useIsFocused } from "@react-navigation/native";
+import { normalize } from '../../../FontNormalize';
 
 export const Checkout = ({ navigation , route}) => {
   const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets();
 
   const [selectedCard, setSelectedCard] = React.useState<any>({});
+  const [cart, setCart] = React.useState<any>({});
+  const [total, setTotal] = React.useState<any>(0);
 
-
+  function currencyFormat(num: number) {
+    if (!num) return '$0,00'
+    return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
 
   React.useEffect(() => {
-    if(isFocused && route.params && route.params.selectedCard){
-      let { selectedCard } = route.params;
-      setSelectedCard(selectedCard);
-
-      console.log("test:", "*****" + selectedCard?.NumeroTarjeta?.substring(selectedCard?.NumeroTarjeta?.length-3));
-    }
+    isFocused && route.params["card"] && setSelectedCard(route.params["card"]);
+    isFocused && route.params["cart"] && setCart(route.params["cart"]);
+    isFocused && route.params["total"] && setTotal(route.params["total"]);
     console.log("checkout selectedcCard", selectedCard);
   }, [isFocused]);
 
@@ -132,7 +135,7 @@ export const Checkout = ({ navigation , route}) => {
 
             </View>
             <View style={{ flex: 0.3, marginLeft: 10, justifyContent: "center", alignItems: "flex-end", paddingRight: 30 }}>
-              <Text style={styles.valores}>$17.000</Text>
+              <Text style={styles.valores}>{currencyFormat(total)}</Text>
             </View>
           </View>
 
@@ -142,7 +145,7 @@ export const Checkout = ({ navigation , route}) => {
 
             </View>
             <View style={{ flex: 0.3, marginLeft: 10, justifyContent: "center", alignItems: "flex-end", paddingRight: 30 }}>
-              <Text style={styles.valores}>$3.000</Text>
+              <Text style={styles.valores}>$0.00</Text>
             </View>
           </View>
 
@@ -152,7 +155,7 @@ export const Checkout = ({ navigation , route}) => {
 
           <View style={{ flex: 0.60, flexDirection: "column", justifyContent: 'center' }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 20, color: Colors.grey1 }}>Total a pagar</Text>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 22, marginTop: 2 }}>$18.000</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 22, marginTop: 2 }}>{currencyFormat(total)}</Text>
           </View>
 
           <View style={styles.btnPedido}>
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
 
   },
   costos: {
-    fontSize: 17,
+    fontSize: normalize(17),
     color: "black",
     padding: 10,
   },

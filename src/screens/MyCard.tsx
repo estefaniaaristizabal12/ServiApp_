@@ -27,7 +27,7 @@ const MyCard = ({ navigation, route }) => {
   const isFocused = useIsFocused()
 
   const insets = useSafeAreaInsets();
-  const [selectedCard, setSelectedCard] = useState<any>(null);
+  const [selectedCard, setSelectedCard] = useState<any>({});
   const [cards, setCards] = useState<any>([]);
 
   React.useEffect(() => {
@@ -70,7 +70,7 @@ const MyCard = ({ navigation, route }) => {
             }}
             //onPress={() => navigation.goBack()}
 
-            onPress={() => navigation.navigate('Checkout')}
+            onPress={() => navigation.navigate('Checkout', {card: selectedCard})}
           />
         }
         rightComponent={<View style={{ width: 40 }} />}
@@ -143,7 +143,7 @@ const MyCard = ({ navigation, route }) => {
                 selectedCard,
               });
             } else {
-              navigation.navigate('Checkout', { selectedCard });
+              navigation.navigate('Checkout', { card: selectedCard });
 
             }
           }}
