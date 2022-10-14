@@ -63,14 +63,6 @@ export const Cart = ({ navigation }) => {
       .catch(error => {
         console.error("getCart: ", error)
       });
-    // UserService.getCart(auth.currentUser.uid)
-    //   .then(data => {
-    //     // console.log(data)
-    //     setCart({...data});
-    //     setTotal(getTotal(data));
-    //     setVacio(false);
-    //   });
-    // AsyncStorage.getCart().then(data => console.log(data))
   };
 
   const clearCart = async () => {
@@ -96,20 +88,20 @@ export const Cart = ({ navigation }) => {
       <View style={styles.superior}>
         <View style={{ flex: 0.8, marginBottom: 30 }}>
 
-        {/* <Text >{ JSON.stringify(cartState, null,4)} </Text> */}
+        <Text >{ JSON.stringify(cartState, null,2)} </Text>
 
-          <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
             <Ionicons name="arrow-back" size={25} color={Colors.grey} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
 
 
 
         </View>
-        <View style={{ flex: 0.6, alignItems: "center", marginBottom: 30 }}>
+        {/* <View style={{ flex: 0.6, alignItems: "center", marginBottom: 30 }}>
           <Text style={styles.textCarrito} > Tu  Carrito </Text>
 
-        </View>
+        </View> */}
         <View style={{ flex: 0.3, alignItems: "flex-end", marginBottom: 30, marginRight: 20, }}>
           {!vacio ?
             <TouchableOpacity onPress={() => { clearCart() }}>

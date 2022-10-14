@@ -1,20 +1,39 @@
 
 import React, { createContext, useReducer } from 'react';
 import { cartReducer } from './cartReducer';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../screens/firebaseConfig';
+import * as UserService from '../../services/UserService'
+import { getAuth } from 'firebase/auth';
 
-
-
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 
 
 // Definir cómo luce, qué información tendré aquí
 export interface CartState {
     nombreRestaurante: string;
+    productos: any [];
+
 }
+
+let carrito: any;
+const getCart = async () => {
+    UserService.getCart(auth.currentUser.uid)
+      .then(data => {
+        carrito: data;
+      })
+      .catch(error => {
+        console.error("getCart: ", error)
+      });
+  };
 
 // Estado inicial
 export const cartInitialState: CartState = {
-    nombreRestaurante:"perrito"
+    nombreRestaurante:"perrito",
+    productos: carrito
+
 }
 
 
