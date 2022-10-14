@@ -1,4 +1,5 @@
 import { ipApi } from "./ApiConfig"
+import * as AsyncStorage from "./AsyncStorage"
 
 const url = `${ipApi}/usuarios`;
 
@@ -8,12 +9,35 @@ export async function getUser(uid: any) {
 }
 
 export async function getCart(uid: any) {
+  // const cart = AsyncStorage.getCart()
+  //   .then(async data => {
+  //     if (!data) {
+  //       const cart = await fetch(`${url}/cart/?uid=${uid}`, { method: 'GET' })
+  //         // .then(data => AsyncStorage.saveCart(data.json()))
+  //       AsyncStorage.saveCart(cart.json())
+  //     }
+  //   })
+  //   .catch(error => {
+  //     console.error("getCartAS: ", error)
+  //   });
+  // if(!cart){
+    // const cart = await fetch(`${url}/cart/?uid=${uid}`, { method: 'GET' })
+    //   .then(data => AsyncStorage.saveCart(data.json()))
+    // AsyncStorage.saveCart(cart.json())
+  // }
+
+  // const res = AsyncStorage.getCart()
+  // return res;
+
   const res = await fetch(`${url}/cart/?uid=${uid}`, { method: 'GET' })
   return res.json()
+  // return AsyncStorage.getCart().then(data => {return data})
 }
 
 export async function addProdCart(prodId: any, cant: any, restId: any, uid: any) {
   const res = await fetch(`${url}/addcart/${prodId}/${cant}/${restId}/?uid=${uid}`, { method: 'POST' })
+  const data = res.json()
+  AsyncStorage.addProdCart(data)
   return res.json()
 }
 
@@ -27,11 +51,10 @@ export async function clearCart(uid: any) {
   return res.json()
 }
 
-export async function payCart(cart: any, delivery: boolean, state: any, rest: any, card: any, uid: any) {
+export async function payCart(cart: any, delivery: boolean, rest: any, card: any, uid: any) {
   const data = {
     Carro: cart,
     Domicilio: delivery,
-    Estado: state,
     Restaruante: rest,
     Tarjeta: card
   }

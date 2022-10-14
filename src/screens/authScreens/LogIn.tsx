@@ -7,8 +7,9 @@ import { Colors } from '../../constants/colors';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as AsyncStorage from '../../services/AsyncStorage';
 import Loader from '../../components/Loader';
+import NotificationsService from '../../services/NotificationService'
 
 
 
@@ -17,6 +18,7 @@ export const LogIn = ({ navigation }) => {
 
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [user, setUser] = React.useState({})
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -72,24 +74,24 @@ export const LogIn = ({ navigation }) => {
     }
   };
 
-
   const login = () => {
     setLoading(true);
-
     setTimeout(async () => {
-          setLoading(false);
-
-          signInWithEmailAndPassword(auth, inputs.email, inputs.password)
+      setLoading(false);
+        signInWithEmailAndPassword(auth, inputs.email, inputs.password)
           .then((userCredential) => {
+            NotificationsService(userCredential.user.uid)
+            AsyncStorage.saveUser(userCredential.user)
             console.log('Signed in!')
             const user = userCredential.user;
             console.log(user)
-            navigation.navigate('BottomTab');
           })
           .catch(error => {
-            console.log(error)
+            console.error(error)
           })
-
+      console.log('Signed in!')
+      console.log(user)
+      navigation.navigate('BottomTab');
     }, 3000);
   };
   
