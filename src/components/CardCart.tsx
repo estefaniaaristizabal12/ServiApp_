@@ -28,8 +28,11 @@ export const CardCart = ({ title, precio, cantidad, image }) => {
                             <Text style={style.titulo}>{title}</Text>
                             <Text style={style.precio}>${precio}</Text>
                         </View>
-                        <View style={{ marginVertical: 5, alignItems: "center", justifyContent:"center", flex: 0.2, backgroundColor:Colors.secondary1, borderRadius:50 }}>
-                            <FontAwesome style={{marginVertical:8}} name="trash" size={25} color={Colors.primary1} />
+                        <View style={{ marginVertical: 5, alignItems: "center", justifyContent: "center", flex: 0.2, backgroundColor: Colors.secondary1, borderRadius: 50 }}>
+                            <TouchableOpacity>
+                                <FontAwesome style={{ marginVertical: 8 }} name="trash" size={25} color={Colors.primary1} />
+                            </TouchableOpacity>
+
                         </View>
 
                     </View>
