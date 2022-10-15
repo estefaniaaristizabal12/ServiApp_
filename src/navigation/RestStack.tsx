@@ -11,7 +11,7 @@ import Confirmation from '../screens/Confirmation';
 import Delivery from '../screens/Delivery';
 import { CartStack } from './CartStack';
 import Account from '../screens/userScreens/Account';
-import EditProfile from '../screens/userScreens/EditProfile';
+// import EditProfile from '../screens/userScreens/EditProfile';
 
 const StackRest = createStackNavigator();
 export const RestStack = () => {

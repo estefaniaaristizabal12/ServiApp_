@@ -4,10 +4,20 @@ import { Text, Image, View, StyleSheet, Dimensions } from "react-native";
 import { normalize } from '../../FontNormalize';
 import { FontAwesome } from '@expo/vector-icons';
 import { Colors } from '../constants/colors';
+import * as UserService from '../services/UserService'
 
 const { width, height } = Dimensions.get("screen");
 
-export const CardCart = ({ title, precio, cantidad, image }) => {
+export const CardCart = ({ title, precio, cantidad, image, id, uid}) => {
+    console.log("id", id)
+    console.log("uid", uid)
+    const removeProdCart = async () => {
+        UserService.removeProdCart(id, uid)
+          .then(data => {
+            console.log("clearCart:", data)
+          })
+          .catch(error => console.error("removeCart:", error))
+      }
     return (
         <View style={style.card}>
             <View style={{ flexDirection: "row" }}>
@@ -30,7 +40,7 @@ export const CardCart = ({ title, precio, cantidad, image }) => {
                             <Text style={style.precio}>Cantidad: {cantidad}</Text>
                         </View>
                         <View style={{ marginVertical: 5, alignItems: "center", justifyContent: "center", flex: 0.2, backgroundColor: Colors.secondary1, borderRadius: 50 }}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {removeProdCart()}}>
                                 <FontAwesome style={{ marginVertical: 8 }} name="trash" size={25} color={Colors.primary1} />
                             </TouchableOpacity>
 

@@ -132,6 +132,8 @@ export const Cart = ({ navigation }) => {
                   precio={item.Precio}
                   image={item.Imagen}
                   cantidad={item.Cantidad}
+                  id={item.id}
+                  uid={auth.currentUser.uid}
                 />
 
               )}
