@@ -27,6 +27,7 @@ export const CardCart = ({ title, precio, cantidad, image }) => {
                         <View style={{ flexDirection: "column", flex: 0.8 }}>
                             <Text style={style.titulo}>{title}</Text>
                             <Text style={style.precio}>${precio}</Text>
+                            <Text style={style.precio}>Cantidad: {cantidad}</Text>
                         </View>
                         <View style={{ marginVertical: 5, alignItems: "center", justifyContent: "center", flex: 0.2, backgroundColor: Colors.secondary1, borderRadius: 50 }}>
                             <TouchableOpacity>
