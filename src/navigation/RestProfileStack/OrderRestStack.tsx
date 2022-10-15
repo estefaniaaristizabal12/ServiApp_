@@ -1,11 +1,11 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { OrdersRest } from '../../screens/restProfileScreens/OrdersRest';
-import { ProductsRest } from '../../screens/restProfileScreens/ProductsRest';
+import OrdersRest from '../../screens/restProfileScreens/OrdersRest';
+import ProductsRest from '../../screens/restProfileScreens/ProductsRest';
 
 
 const StackOrderRest = createStackNavigator();
-export const OrderRestStack = () => {
+export default function OrderRestStack (){
     return (
         <StackOrderRest.Navigator
             screenOptions={{

@@ -1,12 +1,13 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { ReviewRest } from '../../screens/restProfileScreens/ReviewRest';
-import { ReviewOrder } from '../../screens/restProfileScreens/ReviewOrder';
-import { ProductsRest } from '../../screens/restProfileScreens/ProductsRest';
+import ReviewRest from '../../screens/restProfileScreens/ReviewRest';
+import ReviewOrder from '../../screens/restProfileScreens/ReviewOrder';
+import ProductsRest from '../../screens/restProfileScreens/ProductsRest';
+
 
 
 const  StackReviewRest= createStackNavigator();
-export const ReviewRestStack = () => {
+export default function ReviewRestStack  ()  {
     return (
         <StackReviewRest.Navigator
             screenOptions={{

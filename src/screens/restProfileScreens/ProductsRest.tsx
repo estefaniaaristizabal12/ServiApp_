@@ -8,7 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ProductsOrderRest } from '../../components/ProductsOrderRest';
 import CartOrderRest from '../../components/CartOrderRest';
 
-export const ProductsRest = ({ navigation }) => {
+export default function ProductsRest ({ navigation })  {
     const { top: paddingTop } = useSafeAreaInsets();
     return (
         <View style={{ flex: 1, backgroundColor: Colors.grey, paddingTop }}>

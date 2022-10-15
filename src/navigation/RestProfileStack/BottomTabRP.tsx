@@ -2,16 +2,13 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import React from 'react'
 import { Colors } from '../../constants/colors';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { RestProfile } from '../../screens/restScreens/RestProfile';
-import { ReviewRest } from '../../screens/restProfileScreens/ReviewRest';
-import { OrdersRest } from '../../screens/restProfileScreens/OrdersRest';
-import { ProductsRest } from '../../screens/restProfileScreens/ProductsRest';
-import { ReviewRestStack } from './ReviewRestStack';
-import { OrderRestStack } from './OrderRestStack';
+import ReviewRestStack from './ReviewRestStack';
+import OrderRestStack from './OrderRestStack';
+import RestProfile from '../../screens/restProfileScreens/RestProfile';
 
 const BtTap = createMaterialBottomTabNavigator();
 
-export const BottomTabRP = () => {
+export default function BottomTabRP() {
     return (
 
         <BtTap.Navigator

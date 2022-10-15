@@ -9,7 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { white } from 'react-native-paper/lib/typescript/styles/colors';
 import CartOrderRest from '../../components/CartOrderRest';
 import { ProductsOrderRest } from '../../components/ProductsOrderRest';
-export const OrdersRest = () => {
+export default function OrdersRest ()  {
 
     const { top: paddingTop } = useSafeAreaInsets();
     return (

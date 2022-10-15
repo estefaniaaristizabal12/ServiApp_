@@ -8,7 +8,7 @@ import { Colors } from '../../constants/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
-export const ReviewRest = () => {
+export default function ReviewRest () {
   const { top: paddingTop } = useSafeAreaInsets();
   return (
     <View style={{ flex: 1, backgroundColor: Colors.grey, paddingTop }}>

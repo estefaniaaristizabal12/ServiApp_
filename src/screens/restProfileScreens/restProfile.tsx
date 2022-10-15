@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from 'react-native'
 
-export const RestProfile = () => {
+export default function RestProfile () {
   return (
     <Text> </Text>
   )
