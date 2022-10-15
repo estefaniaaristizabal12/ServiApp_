@@ -10,6 +10,7 @@ import { firebaseConfig } from '../firebaseConfig';
 import * as AsyncStorage from '../../services/AsyncStorage';
 import Loader from '../../components/Loader';
 import NotificationsService from '../../services/NotificationService'
+import * as UserService from "../../services/UserService";
 
 
 
@@ -18,38 +19,34 @@ export const LogIn = ({ navigation }) => {
 
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-  const [user, setUser] = React.useState({})
+  const [user, setUser] = React.useState<any>(null)
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  const handleCreateAccount = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log('Account created!')
-      const user = userCredential.user;
-      console.log(user)
-      navigation.navigate('BottomTab');
 
-    })
-    .catch(error => {
-      console.log(error)
-      Alert.alert(error.message)
-    })
+  React.useEffect(() => {
+    if(JSON.stringify(user) === '{}') getUser();
+   }, []);
+
+  const getUser = async () => {
+    UserService.getUser(auth.currentUser.uid)
+      .then((data) => {
+          const name_words = data?.nombrecliente.toLowerCase().split(" ");
+          const name_normalized = name_words.map((word:any) => { 
+               return word[0].toUpperCase() + word.substring(1) 
+          }).join(" ");
+          data.nombrecliente = name_normalized
+          setUser(data);
+          console.log("getUser", user)
+      })
+      .catch((error) => {
+         console.error(error)
+      });
   }
 
-  const handleSignIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log('Signed in!')
-      const user = userCredential.user;
-      console.log(user)
-      navigation.navigate('BottomTab');
-    })
-    .catch(error => {
-      console.log(error)
-    })
-  }
+
+
 
   
 
@@ -81,7 +78,7 @@ export const LogIn = ({ navigation }) => {
         signInWithEmailAndPassword(auth, inputs.email, inputs.password)
           .then((userCredential) => {
             NotificationsService(userCredential.user.uid)
-            AsyncStorage.saveUser(userCredential.user)
+            // AsyncStorage.saveUser(userCredential.user)
             console.log('Signed in!')
             const user = userCredential.user;
             console.log(user)
@@ -91,6 +88,9 @@ export const LogIn = ({ navigation }) => {
           })
       console.log('Signed in!')
       console.log(user)
+      if (user?.Rol === 'Domiciliario') {
+        navigation.navigate('Home');
+      }
       navigation.navigate('BottomTab');
     }, 3000);
   };
