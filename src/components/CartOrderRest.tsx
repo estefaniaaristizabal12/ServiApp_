@@ -13,13 +13,13 @@ export const CartOrderRest = () => {
   return (
     <View style={style.card}>
 
-      <View style={{ flexDirection: "column" }}>
-        <View style={{ alignItems: 'center', borderBottomColor: Colors.gray, borderBottomWidth: 0.5 }}>
+      <View style={{ flexDirection: "column", flex:1 }}>
+        <View style={{ alignItems: 'center', borderBottomColor: Colors.gray, borderBottomWidth: 0.5, flex:0.2  }}>
           <Text style={{ padding: 5, fontSize: normalize(22), fontWeight: "bold" }}> Órden #2222</Text>
         </View>
 
-        <View style={{ flexDirection: "column" }}>
-          <View style={{ flexDirection: "row", alignItems: "center", marginTop: 10 }}>
+        <View style={{ flexDirection: "column", flex: 0.8 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", marginTop: 10 ,flex:0.3}}>
             <View style={{ flexDirection: "row", flex: 0.6 }}>
               <MaterialCommunityIcons name="calendar-clock" size={20} color={Colors.grey1} />
               <Text style={{ padding: 5, fontSize: normalize(18), color: Colors.grey1 }}>13/10/2022  15:20</Text>
@@ -31,7 +31,7 @@ export const CartOrderRest = () => {
 
           </View>
 
-          <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5,flex:0.2 }}>
             <Text style={{ padding: 5, fontSize: normalize(20), fontWeight: "bold" }}>Modalidad:  </Text>
 
             {servicio == 1 ?
@@ -47,13 +47,13 @@ export const CartOrderRest = () => {
 
           </View>
 
-          <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5,flex:0.2 }}>
             <Text style={{ padding: 5, fontSize: normalize(20), fontWeight: "bold" }}>Total:</Text>
             <Text style={{ padding: 5, fontSize: normalize(19), fontWeight: "bold" }}>$5000 </Text>
 
           </View>
 
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent:"center", marginTop: 5, backgroundColor: Colors.grey, borderRadius: 20, marginHorizontal:20}}>
+          <TouchableOpacity style={{ flexDirection: "row",flex:0.3, alignItems: "center", justifyContent:"center", marginTop: 5, backgroundColor: Colors.grey, borderRadius: 20, marginHorizontal:20}}>
             <FontAwesome5 name="info-circle" size={22} color="white" />
             <Text style={{ padding: 5, fontSize: normalize(18), fontWeight: "bold", color:"white", marginVertical:3}}>Finalizar pedido</Text>
 
