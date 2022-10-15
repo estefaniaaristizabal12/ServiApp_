@@ -25,9 +25,7 @@ export const LogIn = ({ navigation }) => {
   const auth = getAuth(app);
 
 
-  React.useEffect(() => {
-    if(JSON.stringify(user) === '{}') getUser();
-   }, []);
+
 
   const getUser = async () => {
     UserService.getUser(auth.currentUser.uid)
@@ -38,7 +36,7 @@ export const LogIn = ({ navigation }) => {
           }).join(" ");
           data.nombrecliente = name_normalized
           setUser(data);
-          console.log("getUser", user)
+          // console.log("getUser", data)
       })
       .catch((error) => {
          console.error(error)
@@ -79,19 +77,23 @@ export const LogIn = ({ navigation }) => {
           .then((userCredential) => {
             NotificationsService(userCredential.user.uid)
             // AsyncStorage.saveUser(userCredential.user)
-            console.log('Signed in!')
+            // console.log('Signed in!')
             const user = userCredential.user;
-            console.log(user)
+            // console.log(user)
           })
           .catch(error => {
             console.error(error)
           })
       console.log('Signed in!')
-      console.log(user)
-      if (user?.Rol === 'Domiciliario') {
-        navigation.navigate('Home');
+      getUser();
+
+      if (user?.Rol == 'Domiciliario') {
+        console.log("fljsadñfjsakjfklsdjf")
+        navigation.navigate('BottomTabDP');
       }
+      else {
       navigation.navigate('BottomTab');
+      }
     }, 3000);
   };
   

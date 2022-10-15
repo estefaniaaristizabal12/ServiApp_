@@ -10,7 +10,8 @@ import { Colors } from '../../../constants/colors';
 import CartOrdersDeliv from '../../../components/CartOrdersDeliv';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
-export const CurrentOrder = () => {
+
+export default function CurrentOrder() {
 
     const { top: paddingTop } = useSafeAreaInsets();
     return (

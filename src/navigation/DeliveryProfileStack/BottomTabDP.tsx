@@ -7,14 +7,15 @@ import { RestProfile } from '../../screens/restScreens/RestProfile';
 import { ReviewRest } from '../../screens/restProfileScreens/ReviewRest';
 import { OrdersRest } from '../../screens/restProfileScreens/OrdersRest';
 import { ProductsRest } from '../../screens/restProfileScreens/ProductsRest';
-import { DeliveryStack } from './DeliveryStack';
-import { OrdersDelivStack } from './OrdersDelivStack';
-import { ProfileDeliv } from '../../screens/delivProfileScreens/ProfileDeliv';
+import  DeliveryStack  from './DeliveryStack';
+import  OrdersDelivStack from './OrdersDelivStack';
+import  ProfileDeliv  from '../../screens/delivProfileScreens/ProfileDeliv';
+
 
 
 
 const BtTap = createMaterialBottomTabNavigator();
-export const BottomTabDP = () => {
+export default function BottomTabDP() {
     return (
         <BtTap.Navigator
             initialRouteName="TopTab" //OJO

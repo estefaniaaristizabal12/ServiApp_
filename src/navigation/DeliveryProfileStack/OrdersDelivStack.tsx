@@ -1,13 +1,14 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { OrdersDeliv } from '../../screens/delivProfileScreens/ordersDelivery/OrdersDeliv';
-import { InfoOrdersDeliv } from '../../screens/delivProfileScreens/ordersDelivery/InfoOrdersDeliv';
+import  OrdersDeliv  from '../../screens/delivProfileScreens/ordersDelivery/OrdersDeliv';
+import  InfoOrdersDeliv  from '../../screens/delivProfileScreens/ordersDelivery/InfoOrdersDeliv';
+
 
 
 
 const StackOrderD = createStackNavigator();
 
-export const OrdersDelivStack = () => {
+export default function OrdersDelivStack() {
     return (
         <StackOrderD.Navigator
             screenOptions={{

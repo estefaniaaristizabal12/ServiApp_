@@ -11,7 +11,8 @@ import { Colors } from '../../../constants/colors';
 import CartOrdersDeliv from '../../../components/CartOrdersDeliv';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
-export const OrderList = () => {
+
+export default function OrderList() {
 
     const { top: paddingTop } = useSafeAreaInsets();
     return (

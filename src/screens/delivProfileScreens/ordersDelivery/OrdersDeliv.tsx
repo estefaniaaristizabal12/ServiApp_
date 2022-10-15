@@ -1,7 +1,8 @@
 import React from 'react'
 import { Text } from 'react-native';
 
-export const OrdersDeliv = () => {
+
+export default function OrdersDeliv() {
   return (
     <Text>OrdersDeliv</Text>
   )

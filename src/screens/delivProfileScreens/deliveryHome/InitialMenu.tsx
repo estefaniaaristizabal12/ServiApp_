@@ -11,9 +11,10 @@ import { Colors } from '../../../constants/colors';
 import { FontAwesome } from '@expo/vector-icons';
 
 
+
 const { width, height } = Dimensions.get("screen");
 
-export const InitialMenu = ({ navigation }) => {
+export default function InitialMenu  ({navigation})  {
   const { top: paddingTop } = useSafeAreaInsets();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.grey, paddingTop }}>
