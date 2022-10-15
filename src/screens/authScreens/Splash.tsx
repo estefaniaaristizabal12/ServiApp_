@@ -20,6 +20,7 @@ export const Splash = ({navigation}) => {
         .then(data => {
           setUser(data)
         })
+                    // <TouchableOpacity onPress={()=>navigation.navigate('LogIn')}>
     }
 
     return (
@@ -37,8 +38,7 @@ export const Splash = ({navigation}) => {
                 <Text style={[styles.title, {}]}>Pide tu comida</Text>
                 <Text style={[styles.title, {}]}>favorita Online</Text>
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('LogIn')}>
-                    {/* <TouchableOpacity onPress={()=>user?navigation.navigate('BottomTab'):navigation.navigate('LogIn')}> */}
+                    <TouchableOpacity onPress={()=>user?navigation.navigate('BottomTab'):navigation.navigate('LogIn')}> 
 
                         <LinearGradient
                             colors={[Colors.primary, Colors.secondary]}

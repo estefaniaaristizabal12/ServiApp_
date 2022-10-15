@@ -24,6 +24,9 @@ import status from '../../constants/status';
 import { normalize } from '../../../FontNormalize';
 import { useIsFocused } from "@react-navigation/native";
 
+import database from '@react-native-firebase/database'
+import firebase from 'firebase/app';
+import { firebaseConfig } from '../firebaseConfig';
 
 const StatusOrder = ({ navigation, route }) => {
   const isFocused = useIsFocused()
@@ -36,6 +39,14 @@ const StatusOrder = ({ navigation, route }) => {
 
     isFocused && route.params["order"] && setOrder(route.params["order"]);
     isFocused && route.params["order"] && setCurrentStep(route.params["order"].Estado);
+
+    // const reference = database().ref('/estadoOrdenes/pFTohGpUQCuzdlsN6jeO');
+    // console.log(reference)
+    // const reference = database().ref(`/estadoOrdenes/${order?.id}`);
+    // reference.on('value', snapshot =>{
+    //     console.log('order state:', snapshot.val());
+    //     setCurrentStep(snapshot.val())
+    // })
 
   }, [isFocused]);
 
