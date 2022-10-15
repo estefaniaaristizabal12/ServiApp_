@@ -40,14 +40,15 @@ export const LogIn = ({ navigation }) => {
         console.log("rol", data?.Rol)
           if (data?.Rol == 'Domiciliario') {
             console.log("Entro Domiciliario")
-            navigation.navigate('BottomTabDP');
+            navigation.navigate('BottomTabDP', {user: data});
           }
           else if (data?.Rol == 'Restaurante') {
             console.log("Entro Restaurante")
-            navigation.navigate('BottomTabDP');
+            navigation.navigate('BottomTabRP', {user: data});
           }
           else {
             navigation.navigate('BottomTab');
+            // navigation.navigate('BottomTab', {user: data});
           }
       })
       .catch((error) => {

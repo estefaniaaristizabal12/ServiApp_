@@ -4,7 +4,7 @@ import { Restaurant } from '../screens/restScreens/Restaurant';
 import { Product } from '../screens/restScreens/Product';
 import { TopTab } from './TopTab';
 import  {Cart}  from '../screens/cartScreens/Cart';
-import { RestProfile } from '../screens/restScreens/RestProfile';
+import  RestProfile  from '../screens/restScreens/RestProfile';
 import AddCard from '../screens/cartScreens/AddCard';
 import MyCard from '../screens/MyCard';
 import Confirmation from '../screens/Confirmation';

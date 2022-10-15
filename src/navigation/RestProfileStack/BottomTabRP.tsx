@@ -4,11 +4,15 @@ import { Colors } from '../../constants/colors';
 import { FontAwesome5 } from '@expo/vector-icons';
 import ReviewRestStack from './ReviewRestStack';
 import OrderRestStack from './OrderRestStack';
-import RestProfile from '../../screens/restProfileScreens/RestProfile';
+import RestProfile from '../../screens/restProfileScreens/restProfile';
+
+
 
 const BtTap = createMaterialBottomTabNavigator();
 
-export default function BottomTabRP() {
+export default function BottomTabRP({route, navigation}) {
+    const user = route.params.user;
+
     return (
 
         <BtTap.Navigator
@@ -46,9 +50,9 @@ export default function BottomTabRP() {
                 }
             })}>
 
-            <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={OrderRestStack} />
-            <BtTap.Screen name="ReviewRestStack" options={{ title: 'Pedidos finalizados' }} component={ReviewRestStack} />
-            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={RestProfile} />
+            <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={OrderRestStack} initialParams={{user: user}}/>
+            <BtTap.Screen name="ReviewRestStack" options={{ title: 'Pedidos finalizados' }} component={ReviewRestStack} initialParams={{user: user}}/>
+            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={RestProfile} initialParams={{user: user}}/>
 
 
         </BtTap.Navigator>

@@ -6,6 +6,7 @@ import { Splash } from '../screens/authScreens/Splash';
 import BottomTab from './BottomTab';
 import RecoverPassword from '../screens/authScreens/RecoverPassword';
 import BottomTabDP from './DeliveryProfileStack/BottomTabDP';
+import BottomTabRP from './RestProfileStack/BottomTabRP';
 
 
 
@@ -24,6 +25,7 @@ export const AuthStack = () => {
             <Stack.Screen name="RecoverPassword" component={RecoverPassword} />
             <Stack.Screen name="BottomTab" component={BottomTab} />
             <Stack.Screen name="BottomTabDP" component={BottomTabDP} />
+            <Stack.Screen name="BottomTabRP" component={BottomTabRP} />
         </Stack.Navigator>
     )
 }

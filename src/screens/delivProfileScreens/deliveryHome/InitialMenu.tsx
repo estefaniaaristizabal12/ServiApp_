@@ -14,8 +14,17 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get("screen");
 
-export default function InitialMenu  ({navigation})  {
-  const { top: paddingTop } = useSafeAreaInsets();
+export default function InitialMenu  ({navigation, route})  {
+  
+  const [user, setUser] = React.useState<any>({});
+
+  React.useEffect(() => {
+    console.log(route.params);
+     route.params.user && setUser(route.params.user);
+}, []);
+
+
+  const { top: paddingTop } = useSafeAreaInsets();  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.grey, paddingTop }}>
       <StatusBar backgroundColor="#BABBC3" barStyle='dark-content' hidden={false} />
@@ -24,7 +33,7 @@ export default function InitialMenu  ({navigation})  {
           <View style={{ flexDirection: 'row', marginTop: 20 }}>
             <Text style={{ fontSize: normalize(28) }}>Hola,</Text>
             <Text style={{ fontSize: normalize(28), fontWeight: 'bold', marginLeft: 10 }}>
-              Domiciliario
+              {user?.nombrecliente ? user.nombrecliente.split(" ")[0]: ""} 
               {/* {auth.currentUser?.uid}  */}
             </Text>
           </View>

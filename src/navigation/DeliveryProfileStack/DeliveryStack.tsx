@@ -9,7 +9,8 @@ import  OrderList  from '../../screens/delivProfileScreens/deliveryHome/OrderLis
 
 const StackDelivery = createStackNavigator();
 
-export default function DeliveryStack() {
+export default function DeliveryStack({route, navigation}) {
+    const user = route.params.user;
     return (
         <StackDelivery.Navigator
             screenOptions={{
@@ -17,9 +18,9 @@ export default function DeliveryStack() {
                 animationTypeForReplace: 'pop',
             }}>
 
-            <StackDelivery.Screen name="InitialMenu" component={InitialMenu} />
-            <StackDelivery.Screen name="CurrentOrder" component={CurrentOrder} />
-            <StackDelivery.Screen name="OrderList" component={OrderList} />
+            <StackDelivery.Screen name="InitialMenu" component={InitialMenu} initialParams={{user: user}}/>
+            <StackDelivery.Screen name="CurrentOrder" component={CurrentOrder} initialParams={{user: user}}/>
+            <StackDelivery.Screen name="OrderList" component={OrderList} initialParams={{user: user}}/>
 
         </StackDelivery.Navigator>
     )
