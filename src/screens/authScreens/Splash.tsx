@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: 'black',
-        fontSize: normalize(32),
+        fontSize: 32,
         fontWeight: 'bold',
         textAlign: 'center'
 
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     },
     textSign: {
         color: 'white',
-        fontSize: normalize(21),
+        fontSize: 21,
         fontWeight: 'bold'
     }
 });

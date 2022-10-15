@@ -15,7 +15,10 @@ import  ProfileDeliv  from '../../screens/delivProfileScreens/ProfileDeliv';
 
 
 const BtTap = createMaterialBottomTabNavigator();
-export default function BottomTabDP() {
+export default function BottomTabDP({route, navigation}) {
+    const user = route.params.user;
+    // console.log(user);
+
     return (
         <BtTap.Navigator
             initialRouteName="TopTab" //OJO
@@ -52,9 +55,9 @@ export default function BottomTabDP() {
                 }
             })}>
 
-            <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={DeliveryStack} />
-            <BtTap.Screen name="OrdersDelivStack" options={{ title: 'Domicilios finalizados' }} component={OrdersDelivStack} />
-            <BtTap.Screen name="ProfileDeliv" options={{ title: 'Perfil' }} component={ProfileDeliv} />
+            <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={DeliveryStack} initialParams={{user: user}}/>
+            <BtTap.Screen name="OrdersDelivStack" options={{ title: 'Domicilios finalizados' }} component={OrdersDelivStack} initialParams={{user: user}}/>
+            <BtTap.Screen name="ProfileDeliv" options={{ title: 'Perfil' }} component={ProfileDeliv} initialParams={{user: user}}/>
 
 
         </BtTap.Navigator>

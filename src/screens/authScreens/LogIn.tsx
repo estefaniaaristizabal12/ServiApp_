@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View , Alert,Keyboard } from 'react-native';
+import { Text, View, Alert, Keyboard } from 'react-native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Input from '../../components/Input';
@@ -30,23 +30,36 @@ export const LogIn = ({ navigation }) => {
   const getUser = async () => {
     UserService.getUser(auth.currentUser.uid)
       .then((data) => {
-          const name_words = data?.nombrecliente.toLowerCase().split(" ");
-          const name_normalized = name_words.map((word:any) => { 
-               return word[0].toUpperCase() + word.substring(1) 
-          }).join(" ");
-          data.nombrecliente = name_normalized
-          setUser(data);
-          // console.log("getUser", data)
+        const name_words = data?.nombrecliente.toLowerCase().split(" ");
+        const name_normalized = name_words.map((word: any) => {
+          return word[0].toUpperCase() + word.substring(1)
+        }).join(" ");
+        data.nombrecliente = name_normalized
+        setUser(data);
+        // console.log("getUser", data)
+        console.log("rol", data?.Rol)
+          if (data?.Rol == 'Domiciliario') {
+            console.log("Entro Domiciliario")
+            navigation.navigate('BottomTabDP', {user: data});
+          }
+          else if (data?.Rol == 'Restaurante') {
+            console.log("Entro Restaurante")
+            navigation.navigate('BottomTabRP', {user: data});
+          }
+          else {
+            navigation.navigate('BottomTab');
+            // navigation.navigate('BottomTab', {user: data});
+          }
       })
       .catch((error) => {
-         console.error(error)
+        console.error(error)
       });
   }
 
 
 
 
-  
+
 
   const [inputs, setInputs] = React.useState({ email: '', password: '' });
   const [errors, setErrors] = React.useState({});
@@ -73,36 +86,31 @@ export const LogIn = ({ navigation }) => {
     setLoading(true);
     setTimeout(async () => {
       setLoading(false);
-        signInWithEmailAndPassword(auth, inputs.email, inputs.password)
-          .then((userCredential) => {
-            NotificationsService(userCredential.user.uid)
-            // AsyncStorage.saveUser(userCredential.user)
-            // console.log('Signed in!')
-            const user = userCredential.user;
-            // console.log(user)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      console.log('Signed in!')
-      getUser();
+      signInWithEmailAndPassword(auth, inputs.email, inputs.password)
+        .then((userCredential) => {
+          NotificationsService(userCredential.user.uid)
+          // AsyncStorage.saveUser(userCredential.user)
+          // console.log('Signed in!')
+          const userAuth = userCredential.user;
+          // console.log(user)
+          getUser();
 
-      if (user?.Rol == 'Domiciliario') {
-        console.log("fljsadñfjsakjfklsdjf")
-        navigation.navigate('BottomTabDP');
-      }
-      else {
-      navigation.navigate('BottomTab');
-      }
+          
+        })
+        .catch(error => {
+          console.error(error)
+        })
+      console.log('Signed in!')
+
     }, 3000);
   };
-  
+
   const handleOnchange = (text, input) => {
-    setInputs(prevState => ({...prevState, [input]: text})) ;
+    setInputs(prevState => ({ ...prevState, [input]: text }));
   };
 
   const handleError = (error, input) => {
-    setErrors(prevState => ({...prevState, [input]: error}));
+    setErrors(prevState => ({ ...prevState, [input]: error }));
   };
 
 
@@ -110,7 +118,7 @@ export const LogIn = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.white, flex: 1 }}>
-     <Loader visible={loading} />
+      <Loader visible={loading} />
       <View style={{ paddingTop: 50, paddingHorizontal: 22 }}>
         <Text style={{ color: Colors.black, fontSize: 40, marginVertical: 40, fontWeight: 'bold', textAlign: 'center' }}>
           Bienvenido
@@ -140,10 +148,10 @@ export const LogIn = ({ navigation }) => {
             error={errors.password}
             password
           />
-          <Button title="Iniciar sesión" 
-          //  onPress={handleCreateAccount}  
-          onPress={validate}
-            />
+          <Button title="Iniciar sesión"
+            //  onPress={handleCreateAccount}  
+            onPress={validate}
+          />
           <Text
             onPress={() => navigation.navigate('SignIn')}
             style={{
@@ -162,7 +170,7 @@ export const LogIn = ({ navigation }) => {
               textAlign: 'center',
               fontSize: 16,
               marginTop: 9,
-              
+
             }}>
             Olvidaste tu Contrasela? Recupérala
           </Text>
