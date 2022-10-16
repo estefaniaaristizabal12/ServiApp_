@@ -70,13 +70,33 @@ export const Cart = ({ navigation }) => {
     UserService.clearCart(auth.currentUser.uid)
       .then(data => {
         console.log("clearCart:", data)
-        setCart({})
-        setTotal(0)
-        setVacio(true);
       })
       .catch(error => console.error("clearCart:", error))
+    setCart({})
+    setTotal(0)
+    setVacio(true);
   }
 
+  const removeProdCart = async (id: any) => {
+    UserService.removeProdCart(id, auth.currentUser.uid)
+      .then(data => {
+        console.log("removeProdCart:", data)
+      })
+      .catch(error => console.error("removeProdCart:", error))
+
+    const newCartProducts = cart.Productos.filter((p:any) => {
+      return p.id != id
+    })
+    const newCart = {...cart, ...{Productos: newCartProducts}}
+    if(newCart.Productos.length == 0){
+      setVacio(true)
+      setCart({})
+      setTotal(0)
+      return
+    } 
+    setTotal(getTotal(newCart))
+    setCart(newCart)
+    }
 
 
 
@@ -133,7 +153,7 @@ export const Cart = ({ navigation }) => {
                   image={item.Imagen}
                   cantidad={item.Cantidad}
                   id={item.id}
-                  uid={auth.currentUser.uid}
+                  removeProdCart={removeProdCart}
                 />
 
               )}

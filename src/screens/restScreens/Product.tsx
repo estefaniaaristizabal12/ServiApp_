@@ -52,7 +52,7 @@ export const Product = ({ navigation, route }) => {
 
     const addProdCart = (prodId: any, cant: any, restId: any, delivery:boolean, uid: any) => {
         UserService.addProdCart(prodId, cant, restId, delivery, uid)
-            .then(res => navigation.navigate('CartStack'))
+            .then(res => navigation.navigate('Cart'))
             .catch(error => console.error(error))
     }
 
