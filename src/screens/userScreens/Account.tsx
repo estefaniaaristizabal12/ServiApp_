@@ -10,6 +10,9 @@ import { firebaseConfig } from '../firebaseConfig';
 import HeaderNavigation from "../../components/HeaderNavigation";
 import IconButton from "../../components/IconButton";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import TextButton from "../../components/TextButton";
+import TextIconButton from "../../components/TextIconButton";
+
 
 
 
@@ -21,7 +24,11 @@ const auth = getAuth(app);
 
 
 export const Account = ({navigation}) => {
+
     const [user, setUser] = React.useState<any>({});
+    const [statusOrder, setStatusOrder] = React.useState(1);
+
+  
     const insets = useSafeAreaInsets();
     
     React.useEffect(() => {
@@ -62,7 +69,7 @@ export const Account = ({navigation}) => {
             containerStyle={{
               height: 50,
               // marginHorizontal: SIZES.padding,
-              marginTop: insets.top,
+              marginTop: insets.top-30,
               marginLeft: -5,
     
             }}
@@ -81,21 +88,64 @@ export const Account = ({navigation}) => {
                 onPress={() => navigation.goBack()}
               />
             }
-            rightComponent
-            ={
-                <IconButton
-                  icon={require('../../../assets/back.png')}
-                  containerStyle={styles.leftIconButton}
-                  iconStyle={{
-                    width: 16,
-                    height: 20,
-                    tintColor: Colors.gray2,
-                  }}
-                  onPress={() => editUser()}
-                />
-              }
+
     
           />
+        );
+      };
+    
+    
+      const renderFooter = () => {
+        
+        return (
+          <View style={{ marginTop: 12, marginBottom: 24 }}>
+           
+            {statusOrder > 0 && (
+              <View style={{ flexDirection: 'row', height: 55 }}>
+                {/* Cancel */}
+              
+                <TextButton
+                  buttonContainerStyle={{
+                    width: '40%',
+                    borderRadius: 8,
+                    backgroundColor: Colors.lightGray2,
+                  }}
+                  label="Cancel"
+                  labelStyle={{ color: Colors.primaryItemCard }}
+                  onPress={() => navigation.navigate('FoodDetail')}
+                  
+
+                />
+                {/* MapView*/}
+                <TextIconButton
+                  containerStyle={{
+                    flex: 1,
+                    marginLeft: 12,
+                    borderRadius: 12,
+                    backgroundColor: Colors.primaryItemCard,
+                  }}
+                  label="Map View"
+                  labelStyle={{ color: Colors.white, fontSize:16 }}
+                  icon={require('../../../assets/map.png')}
+                  iconPosition="LEFT"
+                  iconStyle={{
+                    width: 25,
+                    height: 25,
+                    marginRight: 8,
+                    tintColor: Colors.white,
+                  }}
+                  onPress={() => navigation.navigate('Map')}
+                />
+              </View>
+            )}
+            {statusOrder < 0 && (
+              <TextButton
+                buttonContainerStyle={{ height: 55, borderRadius: 12 }}
+                label="CALIFICAR PEDIDO"
+                onPress={() => navigation.navigate('Home')}
+              />
+            )}
+          </View>
         );
       };
     
@@ -125,7 +175,7 @@ export const Account = ({navigation}) => {
                             label="Correo Electrónico"
                             placeholder={user?.e_mail}
                             error
-                            password
+                            password = {false}
                         />
 
                         <Input2
@@ -134,7 +184,7 @@ export const Account = ({navigation}) => {
                             label="Nombre"
                             placeholder={user?.nombrecliente}
                             error
-                            password
+                            password = {false}
                         />
 
                         <Input2
@@ -143,7 +193,7 @@ export const Account = ({navigation}) => {
                             label="Dirección"
                             placeholder={user?.direccion1}
                             error
-                            password
+                            password = {false}
                         />
 
                         <Input2
@@ -159,7 +209,9 @@ export const Account = ({navigation}) => {
 
 
                 </ScrollView>
+            {renderFooter()}
             </View>
+        
         </SafeAreaView>
     );
 }
