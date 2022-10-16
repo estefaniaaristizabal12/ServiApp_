@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, ImageBackground, View, Text, ScrollView, StyleSheet } from "react-native";
+import { Image, ImageBackground, View, Text, ScrollView, StyleSheet, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { normalize } from "../../../FontNormalize";
 import DrawerItem from "../../components/DrawerItem";
@@ -29,6 +29,7 @@ const Profile = ({navigation}) => {
         signOut(auth).then(() => {
             // Sign-out successful.
             console.log("salio");
+            Alert.alert('Se ha cerrado su sesion') 
             navigation.navigate("LogIn");
     
         }).catch((error) => {
