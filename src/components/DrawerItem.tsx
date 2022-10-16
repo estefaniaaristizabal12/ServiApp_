@@ -6,13 +6,13 @@ import { StyleSheet } from "react-native";
 
 const DrawerItem = (props) => {
 
-    const { iconName, text, pro, notification } = props;
+    const { iconName, text, pro, notification , onPress} = props;
 
     const [isEnable, setIsEnable] = useState(false);
     const toggleSwitch = () => setIsEnable((state) => !state);
 
     return(
-        <TouchableOpacity disabled={notification} onPress={() => {}}>
+        <TouchableOpacity disabled={notification} onPress={onPress}>
             <View style={styles.container}>
                 <View style={styles.row}>
                     <View style={[styles.iconContainer, { backgroundColor: pro ? Colors.primaryLigth : Colors.primaryLigth} ]}>
