@@ -91,7 +91,7 @@ export const Restaurant = ({ navigation, route }) => {
 
                 <View style={{ flex: 1, flexDirection: "row" }}>
                     <View style={{ flex: 0.5 }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Delivery')} style={styles.btnAtas}>
                             <Ionicons name="arrow-back" size={25} color={Colors.gray} />
                         </TouchableOpacity>
                     </View>
