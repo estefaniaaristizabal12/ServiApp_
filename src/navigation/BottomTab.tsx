@@ -10,6 +10,7 @@ import { OrderStack } from './OrderStack';
 import { Colors } from '../constants/colors';
 import { CartStack } from './CartStack';
 import Account from '../screens/userScreens/Account';
+import { ProfileStack } from './ProfileStack';
 
 
 const BtTap = createMaterialBottomTabNavigator();
@@ -48,7 +49,7 @@ export default function BottomTab() {
                             iconName = 'clipboard-list'
                             break;
 
-                        case 'Profile':
+                        case 'ProfileStack':
                             iconName = 'user'
                             break;
                     }
@@ -61,7 +62,7 @@ export default function BottomTab() {
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={RestStack} />
             <BtTap.Screen name="CartStack" options={{ title: 'Carrito' }} component={CartStack} />
             <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={OrderStack} />
-            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
+            <BtTap.Screen name="ProfileStack" options={{ title: 'Perfil' }} component={ProfileStack} />
 
 
         </BtTap.Navigator>
