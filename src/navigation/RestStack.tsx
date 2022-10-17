@@ -22,7 +22,7 @@ export const RestStack = () => {
                 animationTypeForReplace: 'pop',
             }}>
 
-            <StackRest.Screen name="TopTab" component={TopTab} />
+            {/* <StackRest.Screen name="TopTab" component={TopTab} /> */}
             <StackRest.Screen name="Delivery" component={Delivery} />
             <StackRest.Screen name="Restaurant" component={Restaurant} />
             <StackRest.Screen name="Product" component={Product} />

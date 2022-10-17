@@ -28,6 +28,7 @@ import * as RestService from '../services/RestaurantService'
 import * as UserService from "../services/UserService";
 import { normalize } from '../../FontNormalize';
 import * as AsyncStorage from '../services/AsyncStorage';
+import HeaderMode from '../components/HeaderMode';
 
 
 const app = initializeApp(firebaseConfig);
@@ -45,7 +46,8 @@ const Delivery = ({navigation}) => {
   const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>({});
   const [filteredData, setFilteredData] = React.useState([]);
   const [user, setUser] = React.useState<any>({});
-
+  const [activeTab, setActiveTab] = React.useState("Delivery");
+  
   const searchFilterFunction = (text:any) => {
     if(text){  
       const newData = restaurant.filter(item => {
@@ -159,6 +161,7 @@ const Delivery = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.white1}}>
         <StatusBar backgroundColor="#BABBC3" barStyle='dark-content' hidden={false} />
+        <HeaderMode activeTab={activeTab} setActiveTab={setActiveTab} />
       <View style={style.header}>
         <View>
           <View style={{flexDirection: 'row', marginTop: 6}}>

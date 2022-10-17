@@ -65,7 +65,7 @@ export const Account = ({navigation}) => {
             containerStyle={{
               height: 50,
               // marginHorizontal: SIZES.padding,
-              marginTop: insets.top-30,
+              marginTop: insets.top,
               marginLeft: -5,
     
             }}
@@ -96,7 +96,7 @@ export const Account = ({navigation}) => {
         return (
           <View style={{ marginTop: 12, marginBottom: 24 }}>
            
-            {statusOrder > 0 && (
+            {statusOrder == 0 && (
               <View style={{ flexDirection: 'row', height: 55 }}>
                 {/* Cancel */}
               
@@ -106,9 +106,9 @@ export const Account = ({navigation}) => {
                     borderRadius: 8,
                     backgroundColor: Colors.lightGray2,
                   }}
-                  label="Cancel"
-                  labelStyle={{ color: Colors.primaryItemCard }}
-                  onPress={() => navigation.navigate('FoodDetail')}
+                  label="Cancelar"
+                  labelStyle={{ color: Colors.primary }}
+                  onPress={() => setStatusOrder(1)}
                   
 
                 />
@@ -118,27 +118,27 @@ export const Account = ({navigation}) => {
                     flex: 1,
                     marginLeft: 12,
                     borderRadius: 12,
-                    backgroundColor: Colors.primaryItemCard,
+                    backgroundColor: Colors.primary,
                   }}
-                  label="Map View"
+                  label="Guardar"
                   labelStyle={{ color: Colors.white, fontSize:16 }}
-                  icon={require('../../../assets/map.png')}
+                  icon={require('../../../assets/guardar.png')}
                   iconPosition="LEFT"
                   iconStyle={{
-                    width: 25,
-                    height: 25,
+                    width: 20,
+                    height: 20,
                     marginRight: 8,
                     tintColor: Colors.white,
                   }}
-                  onPress={() => navigation.navigate('Map')}
+                  onPress={() => setStatusOrder(1)}
                 />
               </View>
             )}
-            {statusOrder < 0 && (
+            {statusOrder > 0 && (
               <TextButton
                 buttonContainerStyle={{ height: 55, borderRadius: 12 }}
-                label="CALIFICAR PEDIDO"
-                onPress={() => navigation.navigate('Home')}
+                label="Editar información"
+                onPress={() => setStatusOrder(0)}
               />
             )}
           </View>
@@ -146,78 +146,80 @@ export const Account = ({navigation}) => {
       };
     
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={{ paddingTop: 0, paddingHorizontal: 22 }}>
-            {renderHeader()}
-                <ScrollView showsVerticalScrollIndicator={false}>
-
-                    <View style={{ alignSelf: "center" }}>
-                        <View style={styles.profileImage}>
-                            <Image source={require('../../../assets/robot.png')} style={styles.image} resizeMode="center"></Image>
-                        </View>
-                    </View>
-
-                    <View style={styles.infoContainer}>
-                        <Text style={[styles.text, { fontWeight: "200", fontSize: 30, textAlign:'center' }]}>{user?.nombrecliente}</Text>
-                        <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Universidad Javeriana</Text>
-                    </View>
-
-
-                    <View style={{ marginVertical: 80, marginTop: 50 }}>
-                        <Input2
-
-                            iconName="email-outline"
-                            label="Correo Electrónico"
-                            placeholder={user?.e_mail}
-                            error
-                            password = {false}
-                        />
-
-                        <Input2
-
-                            iconName="account-outline"
-                            label="Nombre"
-                            placeholder={user?.nombrecliente}
-                            error
-                            password = {false}
-                        />
-
-                        <Input2
-
-                            iconName="account-outline"
-                            label="Dirección"
-                            placeholder={user?.direccion1}
-                            error
-                            password = {false}
-                        />
-
-                        <Input2
-
-                            iconName="lock-outline"
-                            label="Contraseña"
-                            placeholder="***********"
-                            error //OJO ACA
-                            password
-                        />
-
-                    </View>
-
-
-                </ScrollView>
-            {renderFooter()}
-            </View>
-        
-        </SafeAreaView>
-    );
+      return (
+      
+        <View style={styles.container}>
+                  
+                  {renderHeader()}
+               
+                      <View style={{ alignSelf: "center" }}>
+                          <View style={styles.profileImage}>
+                              <Image source={require('../../../assets/robot.png')} style={styles.image} resizeMode="center"></Image>
+                          </View>
+                      </View>
+  
+                      <View style={styles.infoContainer}>
+                          <Text style={[styles.text, { fontWeight: "200", fontSize: 30, textAlign:'center' }]}>{user?.nombrecliente}</Text>
+                          <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Universidad Javeriana</Text>
+                      </View>
+  
+                      <ScrollView showsVerticalScrollIndicator={false}>
+  
+                      <View style={{ marginVertical: 80, marginTop: 50 }}>
+                          <Input2
+  
+                              iconName="email-outline"
+                              label="Correo Electrónico"
+                              placeholder={user?.e_mail}
+                              error
+                              password = {false}
+                          />
+  
+                          <Input2
+  
+                              iconName="account-outline"
+                              label="Nombre"
+                              placeholder={user?.nombrecliente}
+                              error
+                              password = {false}
+                          />
+  
+                          <Input2
+  
+                              iconName="account-outline"
+                              label="Dirección"
+                              placeholder={user?.direccion1}
+                              error
+                              password = {false}
+                          />
+  
+                          <Input2
+  
+                              iconName="lock-outline"
+                              label="Contraseña"
+                              placeholder="***********"
+                              error //OJO ACA
+                              password
+                          />
+  
+                      </View>
+  
+  
+                  </ScrollView>
+              {renderFooter()}
+         </View>
+          
+  
+      );
 }
 
 
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#FFF"
+      flex: 1,
+      backgroundColor: Colors.white,
+      paddingHorizontal: 24,
     },
     text: {
         fontFamily: "HelveticaNeue",
