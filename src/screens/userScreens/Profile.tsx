@@ -56,6 +56,41 @@ const Profile = ({navigation, route}) => {
         });
     }
 
+    //create function delete user account firebase
+    const deleteUser = () => {
+        auth.currentUser.delete().then(() => {
+            // User deleted.
+            AsyncStorage.clearUser().catch(error => console.error(error))
+            console.log("borro");
+            Alert.alert('Se ha eliminado su cuenta')
+            navigation.navigate("LogIn");
+        }).catch((error) => {
+            // An error happened.
+            console.error(error);
+        });
+    }
+
+      //create function delete user account firebase con alerta de confirmacion
+        const deleteUserAlert = () => {
+            Alert.alert(
+                "Eliminar cuenta",
+                "¿Está seguro que desea eliminar su cuenta?",
+                [
+                    {
+                        text: "Cancelar",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                    },
+                    { text: "OK", onPress: () => deleteUser() }
+                ],
+                { cancelable: false }
+            );
+        }
+
+
+
+
+
    return(
     <View style={styles.container}>
             <View style={styles.topContainer}>
@@ -79,14 +114,16 @@ const Profile = ({navigation, route}) => {
                 <DrawerItem iconName="swap-horizontal" text="Transacciones" />
                 <DrawerItem iconName="credit-card-check" text="Datos De Facturación" />
                 <DrawerItem iconName="account-multiple" text="Cerrar Sesión" 
-                    //crrar sesion y ir a login
+                    //cerrar sesion y ir a login
                     onPress={() => cerrarSesion()}
-
 
                 />
                 <View style={styles.line} />
                 <DrawerItem iconName="bell-ring" text="Notificación" notification />
-                <DrawerItem iconName="shield-link-variant" text="Privacidad " />
+                <DrawerItem iconName="delete" text="Eliminar Cuenta " 
+                    //eliminar cuenta y ir a login
+                    onPress={() => deleteUserAlert()}
+                />
                 <DrawerItem iconName="information" text="Sobre Nuestra App" />
             </View>
         </ScrollView>

@@ -127,9 +127,9 @@ export const Restaurant = ({ navigation, route }) => {
 
                 <View style={styles.infoRest}>
                     <View style={styles.itemsRestInfo}>
-                        <Text style={styles.tituloItemRest}>Entrega</Text>
-                        <Text style={styles.contItemRest}>{selectedRestaurant?.TiempoEntrega}</Text>
-
+                        <Text style={styles.tituloItemRest}>Aforo</Text>
+                        {/* <Text style={styles.contItemRest}>{selectedRestaurant?.TiempoEntrega}</Text> */}
+                        <Text style={styles.contItemRest}>30 personas</Text>
                     </View>
                     <View style={styles.itemsRestInfo}>
                         <Text style={styles.tituloItemRest}>Envío</Text>
