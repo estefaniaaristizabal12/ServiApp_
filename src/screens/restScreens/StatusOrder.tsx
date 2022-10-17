@@ -27,6 +27,9 @@ import { useIsFocused } from "@react-navigation/native";
 import database from '@react-native-firebase/database'
 import firebase from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
+import app from '../firebaseConfig';
+import { getDatabase, onValue, ref } from 'firebase/database'
+const db = getDatabase(app);
 
 const StatusOrder = ({ navigation, route }) => {
   const isFocused = useIsFocused()
@@ -36,18 +39,15 @@ const StatusOrder = ({ navigation, route }) => {
   const [order, setOrder] = useState<any>(null);
 
   React.useEffect(() => {
+    if(!route.params["order"]) return
+    isFocused && setOrder(route.params["order"]);
+    // isFocused && route.params["order"] && setCurrentStep(route.params["order"].Estado);
 
-    isFocused && route.params["order"] && setOrder(route.params["order"]);
-    isFocused && route.params["order"] && setCurrentStep(route.params["order"].Estado);
-
-    // const reference = database().ref('/estadoOrdenes/pFTohGpUQCuzdlsN6jeO');
-    // console.log(reference)
-    // const reference = database().ref(`/estadoOrdenes/${order?.id}`);
-    // reference.on('value', snapshot =>{
-    //     console.log('order state:', snapshot.val());
-    //     setCurrentStep(snapshot.val())
-    // })
-
+    const statusRef = ref(db, 'ordenes/' + route.params["order"].id);
+    onValue(statusRef, (snapshot) => {
+      const data = snapshot.val();
+      setCurrentStep(data.estado);
+    });
   }, [isFocused]);
 
   const renderHeader = () => {

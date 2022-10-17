@@ -50,7 +50,7 @@ export const Product = ({ navigation, route }) => {
 
     }, []);
 
-    const addProdCart = (prodId: any, cant: any, restId: any, delivery:boolean, uid: any) => {
+    const addProdCart = (prodId: any, cant: any, restId: any, delivery:any, uid: any) => {
         UserService.addProdCart(prodId, cant, restId, delivery, uid)
             .then(res => navigation.navigate('Cart'))
             .catch(error => console.error(error))
@@ -137,7 +137,7 @@ export const Product = ({ navigation, route }) => {
                 <View style={styles.btnACarro}>
                     <TouchableOpacity onPress={() => {
                         // cambioNombre
-                        addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, false, auth.currentUser.uid)
+                        addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, 0, auth.currentUser.uid)
                         // setTimeout(() => {
                         //     console.log("Delayed for 1 second.");
                         //     navigation.navigate('Cart')

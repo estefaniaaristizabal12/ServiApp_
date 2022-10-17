@@ -27,6 +27,7 @@ import { firebaseConfig } from './firebaseConfig';
 import * as RestService from '../services/RestaurantService'
 import * as UserService from "../services/UserService";
 import { normalize } from '../../FontNormalize';
+import * as AsyncStorage from '../services/AsyncStorage';
 
 
 const app = initializeApp(firebaseConfig);
@@ -39,19 +40,31 @@ const cardWidth = width / 2 - 20;
 
 const Delivery = ({navigation}) => {
 
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState("-1");
   const [restaurant, setRestaurant] = React.useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>({});
   const [filteredData, setFilteredData] = React.useState([]);
   const [user, setUser] = React.useState<any>({});
 
-  const searchFilterFunction = (text) => {
+  const searchFilterFunction = (text:any) => {
     if(text){  
       const newData = restaurant.filter(item => {
           const itemData = item.Nombre ? item.Nombre.toUpperCase() : ''.toUpperCase();
           const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
           })
+      setFilteredData(newData);
+    } else {
+      setFilteredData(restaurant);
+    }
+  }
+
+  const categoryFilterFunction = (indexCategory:any) => {
+    setSelectedCategoryIndex(indexCategory)
+    if(indexCategory != -1){  
+      const newData = restaurant.filter(item => {
+        return item.Categoria.includes(indexCategory)
+      })
       setFilteredData(newData);
     } else {
       setFilteredData(restaurant);
@@ -65,13 +78,21 @@ const Delivery = ({navigation}) => {
 
     
   const getUser = async () => {
-    UserService.getUser(auth.currentUser.uid)
-      .then((data) => {
-          const name_words = data?.nombrecliente.toLowerCase().split(" ");
-          const name_normalized = name_words.map((word:any) => { 
-               return word[0].toUpperCase() + word.substring(1) 
-          }).join(" ");
-          data.nombrecliente = name_normalized
+    // UserService.getUser(auth.currentUser.uid)
+    //   .then((data) => {
+    //       const name_words = data?.nombrecliente.toLowerCase().split(" ");
+    //       const name_normalized = name_words.map((word:any) => { 
+    //            return word[0].toUpperCase() + word.substring(1) 
+    //       }).join(" ");
+    //       data.nombrecliente = name_normalized
+    //       setUser(data);
+    //       console.log("getUser", user)
+    //   })
+    //   .catch((error) => {
+    //      console.error(error)
+    //   });
+    AsyncStorage.getUser()
+      .then(data => {
           setUser(data);
           console.log("getUser", user)
       })
@@ -100,12 +121,12 @@ const Delivery = ({navigation}) => {
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
-            onPress={() => setSelectedCategoryIndex(index)}
+            onPress={() => selectedCategoryIndex != category.id ? categoryFilterFunction(category.id) : categoryFilterFunction("-1")}
             >
             <View
               style={{
                 backgroundColor:
-                  selectedCategoryIndex == index
+                  selectedCategoryIndex == category.id
                     ? Colors.primary1
                     : Colors.secondary1,
                 ...style.categoryBtn,
@@ -122,7 +143,7 @@ const Delivery = ({navigation}) => {
                   fontWeight: 'bold',
                   marginLeft: 10,
                   color:
-                    selectedCategoryIndex == index
+                    selectedCategoryIndex == category.id
                       ? Colors.white1
                       : Colors.primary1,
                 }}>

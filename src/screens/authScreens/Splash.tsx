@@ -9,9 +9,10 @@ import { normalize } from '../../../FontNormalize';
 import * as AsyncStorage from '../../services/AsyncStorage';
 
 export const Splash = ({navigation}) => {
-    const [user, setUser] = React.useState<{}>(null)
+    const [user, setUser] = React.useState<any>(null)
 
     React.useEffect(() => {
+      // AsyncStorage.clearUser().then(() => getUserAS());
       getUserAS();
     }, []);
 
@@ -20,6 +21,22 @@ export const Splash = ({navigation}) => {
         .then(data => {
           setUser(data)
         })
+    }
+
+    const loggedNavigation = async () => {
+      console.log("rol", user?.Rol)
+      if (user?.Rol == 'Domiciliario') {
+        console.log("Entro Domiciliario")
+        navigation.navigate('BottomTabDP', {user: user});
+      }
+      else if (user?.Rol == 'Restaurante') {
+        console.log("Entro Restaurante")
+        navigation.navigate('BottomTabRP', {user: user});
+      }
+      else {
+        navigation.navigate('BottomTab');
+        // navigation.navigate('BottomTab', {user: data});
+      }
     }
 
     return (
@@ -37,8 +54,8 @@ export const Splash = ({navigation}) => {
                 <Text style={[styles.title, {}]}>Pide tu comida</Text>
                 <Text style={[styles.title, {}]}>favorita Online</Text>
                 <View style={styles.button}>
-                    {/* <TouchableOpacity onPress={()=>user?navigation.navigate('BottomTab'):navigation.navigate('LogIn')}>  */}
-                    <TouchableOpacity onPress={()=>navigation.navigate('LogIn')}>
+                    <TouchableOpacity onPress={()=>user?loggedNavigation():navigation.navigate('LogIn')}> 
+                    {/* <TouchableOpacity onPress={()=>navigation.navigate('LogIn')}> */}
 
                         <LinearGradient
                             colors={[Colors.primary, Colors.secondary]}

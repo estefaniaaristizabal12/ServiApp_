@@ -17,8 +17,8 @@ import * as UserService from "../../services/UserService";
 export const LogIn = ({ navigation }) => {
 
 
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [email, setEmail] = React.useState<any>('')
+  const [password, setPassword] = React.useState<any>('')
   const [user, setUser] = React.useState<any>(null)
 
   const app = initializeApp(firebaseConfig);
@@ -27,7 +27,7 @@ export const LogIn = ({ navigation }) => {
 
 
 
-  const getUser = async () => {
+  const getUser = async (authData: any) => {
     UserService.getUser(auth.currentUser.uid)
       .then((data) => {
         const name_words = data?.nombrecliente.toLowerCase().split(" ");
@@ -35,6 +35,7 @@ export const LogIn = ({ navigation }) => {
           return word[0].toUpperCase() + word.substring(1)
         }).join(" ");
         data.nombrecliente = name_normalized
+        AsyncStorage.saveUser({...data, ...authData})
         setUser(data);
         // console.log("getUser", data)
         console.log("rol", data?.Rol)
@@ -50,6 +51,7 @@ export const LogIn = ({ navigation }) => {
             navigation.navigate('BottomTab');
             // navigation.navigate('BottomTab', {user: data});
           }
+        setLoading(false)
       })
       .catch((error) => {
         console.error(error)
@@ -61,9 +63,9 @@ export const LogIn = ({ navigation }) => {
 
 
 
-  const [inputs, setInputs] = React.useState({ email: '', password: '' });
-  const [errors, setErrors] = React.useState({});
-  const [loading, setLoading] = React.useState(false);
+  const [inputs, setInputs] = React.useState<any>({ email: '', password: '' });
+  const [errors, setErrors] = React.useState<any>({});
+  const [loading, setLoading] = React.useState<any>(false);
 
 
   const validate = async () => {
@@ -84,25 +86,25 @@ export const LogIn = ({ navigation }) => {
 
   const login = () => {
     setLoading(true);
-    setTimeout(async () => {
-      setLoading(false);
+    // setTimeout(async () => {
+      // setLoading(false);
       signInWithEmailAndPassword(auth, inputs.email, inputs.password)
         .then((userCredential) => {
           NotificationsService(userCredential.user.uid)
-          // AsyncStorage.saveUser(userCredential.user)
+          // AsyncStorage.saveUser(userCredential.user).catch(error => console.error(error))
           // console.log('Signed in!')
           const userAuth = userCredential.user;
           // console.log(user)
-          getUser();
-
-          
+          getUser(userAuth);
         })
         .catch(error => {
           console.error(error)
+          Alert.alert("Algo salio mal...") 
+          setLoading(false)
         })
       console.log('Signed in!')
 
-    }, 3000);
+    // }, 3000);
   };
 
   const handleOnchange = (text, input) => {

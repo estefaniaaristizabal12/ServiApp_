@@ -13,7 +13,7 @@ export async function getCart(uid: any) {
   return res.json()
 }
 
-export async function addProdCart(prodId: any, cant: any, restId: any, delivery:boolean, uid: any) {
+export async function addProdCart(prodId: any, cant: any, restId: any, delivery:any, uid: any) {
   const res = await fetch(`${url}/addcart/${prodId}/${cant}/${restId}/${delivery}/?uid=${uid}`, { method: 'POST' })
   return res.json()
 }

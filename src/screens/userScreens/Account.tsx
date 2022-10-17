@@ -12,6 +12,7 @@ import IconButton from "../../components/IconButton";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TextButton from "../../components/TextButton";
 import TextIconButton from "../../components/TextIconButton";
+import * as AsyncStorage from '../../services/AsyncStorage';
 
 
 
@@ -36,19 +37,14 @@ export const Account = ({navigation}) => {
     }, []);
 
     const getUser = async () => {
-        UserService.getUser(auth.currentUser.uid)
-            .then((data) => {
-                const name_words = data?.nombrecliente.toLowerCase().split(" ");
-                const name_normalized = name_words.map((word:any) => { 
-                  return word[0].toUpperCase() + word.substring(1) 
-                }).join(" ");
-                data.nombrecliente = name_normalized
-                setUser(data);
-                console.log("getUser", user)
-            })
-            .catch((error) => {
-                console.error(error)
-            });
+      AsyncStorage.getUser()
+        .then(data => {
+            setUser(data);
+            console.log("getUser", user)
+        })
+        .catch((error) => {
+           console.error(error)
+        });
     }
 
     const editUser = async () => {

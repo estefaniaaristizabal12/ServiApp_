@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Image, ImageBackground, View, Text, ScrollView, StyleSheet, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { normalize } from "../../../FontNormalize";
@@ -8,6 +8,7 @@ import { Colors } from "../../constants/colors";
 import { getAuth, signOut } from "firebase/auth";
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
+import * as AsyncStorage from '../../services/AsyncStorage';
 
 
 const app = initializeApp(firebaseConfig);
@@ -22,18 +23,36 @@ const { width, height } = Dimensions.get('window');
 
 
 
-const Profile = ({navigation}) => {
+const Profile = ({navigation, route}) => {
 
+    const [user, setUser] = React.useState<any>(null);
+
+    useEffect(() => {
+      getUser();
+    }, []);
+
+  const getUser = async () => {
+    AsyncStorage.getUser()
+      .then(data => {
+          setUser(data);
+          console.log("getUser", user)
+      })
+      .catch((error) => {
+         console.error(error)
+      });
+  }
 
     const cerrarSesion = () => {
         signOut(auth).then(() => {
             // Sign-out successful.
+            auth.signOut().catch(error => console.error(error))
+            AsyncStorage.clearUser().catch(error => console.error(error))
             console.log("salio");
             Alert.alert('Se ha cerrado su sesion') 
             navigation.navigate("LogIn");
-    
         }).catch((error) => {
             // An error happened.
+            console.error(error);
         });
     }
 
@@ -43,7 +62,7 @@ const Profile = ({navigation}) => {
                 <View style={styles.topDetails}>
                     <Image style={styles.profile} source={require('../../../assets/robot.png')} />
                     <View>
-                        <Text style={styles.name}>Estefania Aristizabal</Text>
+                        <Text style={styles.name}>{user?.nombrecliente}</Text>
                         <View style={styles.row}>
                             <Icon name="map-marker"  size={15} style={styles.icon} />
                             <Text style={styles.locationText}>Universidad Javeriana, Bogota</Text>
