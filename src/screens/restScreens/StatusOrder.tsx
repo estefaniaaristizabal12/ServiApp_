@@ -202,8 +202,8 @@ const StatusOrder = ({ navigation, route }) => {
                 borderRadius: 8,
                 backgroundColor: Colors.lightGray2,
               }}
-              label="Cancel"
-              labelStyle={{ color: Colors.primaryItemCard }}
+              label="Cancelar"
+              labelStyle={{ color: Colors.primary }}
               onPress={() => navigation.navigate('FoodDetail')}
             />
             {/* MapView*/}
@@ -212,9 +212,9 @@ const StatusOrder = ({ navigation, route }) => {
                 flex: 1,
                 marginLeft: 12,
                 borderRadius: 12,
-                backgroundColor: Colors.primaryItemCard,
+                backgroundColor: Colors.primary ,
               }}
-              label="Map View"
+              label="Mapa"
               labelStyle={{ color: Colors.white, fontSize: normalize(16) }}
               icon={require('../../../assets/map.png')}
               iconPosition="LEFT"
