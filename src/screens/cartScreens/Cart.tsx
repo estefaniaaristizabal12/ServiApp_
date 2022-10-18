@@ -35,13 +35,12 @@ export const Cart = ({ navigation }) => {
 
 
   React.useEffect(() => {
-    console.log('EJECUTANDO USEFFECT CARRITO');
     if (isFocused) {
       getCart();
     }
   }, [isFocused]);
 
-  function currencyFormat(num: number) {
+  const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
     return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
@@ -96,7 +95,7 @@ export const Cart = ({ navigation }) => {
     } 
     setTotal(getTotal(newCart))
     setCart(newCart)
-    }
+  }
 
 
 

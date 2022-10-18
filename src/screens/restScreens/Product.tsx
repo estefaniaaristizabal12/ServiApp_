@@ -33,6 +33,7 @@ export const Product = ({ navigation, route }) => {
 
     const [selectedProduct, setSelectedProduct] = React.useState<any>(null);
     const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>(null);
+    const [additions, setAdditions] = React.useState<any>(null);
 
     // const {cambioNombre} = useContext(CartContext);
 
@@ -40,20 +41,16 @@ export const Product = ({ navigation, route }) => {
 
 
     useEffect(() => {
-        let { selectedProduct, selectedRestaurant } = route.params;
-        setSelectedProduct(selectedProduct);
-
-        setSelectedRestaurant(selectedRestaurant);
-
-        console.log(selectedProduct);
-
-
+        let { selectedProduct, selectedRestaurant, additions } = route.params;
+        selectedProduct && setSelectedProduct(selectedProduct);
+        selectedRestaurant && setSelectedRestaurant(selectedRestaurant);
+        additions && setAdditions(additions);
     }, []);
 
     const addProdCart = (prodId: any, cant: any, restId: any, delivery:any, uid: any) => {
-        UserService.addProdCart(prodId, cant, restId, delivery, uid)
-            .then(res => navigation.navigate('Cart'))
-            .catch(error => console.error(error))
+      UserService.addProdCart(prodId, cant, restId, delivery, uid)
+        .then(res => navigation.navigate('Cart'))
+        .catch(error => console.error(error))
     }
 
 
@@ -110,11 +107,11 @@ export const Product = ({ navigation, route }) => {
 
                 <View style={{ flex: 3.5, backgroundColor: "white" }}>
                     <FlatList
-                        data={acompanamientos}
+                        data={additions}
                         renderItem={({ item }) => (
                             <AcompProd
-                                title={item.title}
-                                precio={item.precio}
+                                title={item.Nombre}
+                                precio={item.Precio}
                                 navigation={navigation}
                             />
                         )}
