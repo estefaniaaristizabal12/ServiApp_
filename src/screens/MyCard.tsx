@@ -27,7 +27,7 @@ const MyCard = ({ navigation, route }) => {
   const isFocused = useIsFocused()
 
   const insets = useSafeAreaInsets();
-  const [selectedCard, setSelectedCard] = useState<any>({});
+  const [selectedCard, setSelectedCard] = useState<any>(null);
   const [cards, setCards] = useState<any>([]);
 
   React.useEffect(() => {

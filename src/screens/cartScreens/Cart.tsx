@@ -81,7 +81,10 @@ export const Cart = ({ navigation }) => {
       .then(data => {
         console.log("removeProdCart:", data)
       })
-      .catch(error => console.error("removeProdCart:", error))
+      .catch(error => {
+        // alert("No se pudo eliminar el producto")
+        console.error("removeProdCart:", error)
+      })
 
     const newCartProducts = cart.Productos.filter((p:any) => {
       return p.id != id

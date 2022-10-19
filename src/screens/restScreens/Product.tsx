@@ -13,6 +13,7 @@ import * as UserService from '../../services/UserService'
 import categories from '../../constants/categories';
 import { normalize } from '../../../FontNormalize';
 import { CartContext } from '../../context/cartContext/CartContext';
+import { StackActions, NavigationAction } from '@react-navigation/native';
 
 
 const app = initializeApp(firebaseConfig);
@@ -49,7 +50,10 @@ export const Product = ({ navigation, route }) => {
 
     const addProdCart = (prodId: any, cant: any, restId: any, delivery:any, uid: any) => {
       UserService.addProdCart(prodId, cant, restId, delivery, uid)
-        .then(res => navigation.navigate('Cart'))
+        .then(res => {
+          navigation.navigate('CartStack', {screen : 'Cart'})
+          // navigation.navigate('Cart')
+        })
         .catch(error => console.error(error))
     }
 
@@ -133,13 +137,7 @@ export const Product = ({ navigation, route }) => {
                 </View>
                 <View style={styles.btnACarro}>
                     <TouchableOpacity onPress={() => {
-                        // cambioNombre
                         addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, 0, auth.currentUser.uid)
-                        // setTimeout(() => {
-                        //     console.log("Delayed for 1 second.");
-                        //     navigation.navigate('Cart')
-                        //   }, 1)
-                        // navigation.navigate('CartStack')
                     }
                     }>
                         <Text style={styles.textBtnCarro}>Agregar ${selectedProduct?.Precio} </Text>

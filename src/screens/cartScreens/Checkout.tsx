@@ -18,13 +18,13 @@ export const Checkout = ({ navigation , route}) => {
   const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets();
 
-  const [selectedCard, setSelectedCard] = React.useState<any>({});
+  const [selectedCard, setSelectedCard] = React.useState<any>(null);
   const [selectedIdCard, setSelectedIdCard] = React.useState<any>({});
   const [cart, setCart] = React.useState<any>({});
   const [total, setTotal] = React.useState<any>(0);
   const [order, setOrder] = React.useState<any>(null);
 
-  function currencyFormat(num: number) {
+  const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
     return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
@@ -41,9 +41,8 @@ export const Checkout = ({ navigation , route}) => {
       })
   }
 
-
   React.useEffect(() => {
-    isFocused && route.params["card"] && setSelectedCard(route.params["card"]);
+    isFocused && setSelectedCard(route.params["card"]);
     isFocused && route.params["cart"] && setCart(route.params["cart"]);
     isFocused && route.params["total"] && setTotal(route.params["total"]);
   }, [isFocused]);
@@ -179,6 +178,7 @@ export const Checkout = ({ navigation , route}) => {
             <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 22, marginTop: 2 }}>{currencyFormat(total)}</Text>
           </View>
 
+            {selectedCard ?
           <View style={styles.btnPedido}>
             <TouchableOpacity onPress={() => { 
               payCart() 
@@ -186,6 +186,11 @@ export const Checkout = ({ navigation , route}) => {
               <Text style={styles.textPedido}> Realizar pedido </Text>
             </TouchableOpacity>
           </View>
+              : 
+          <View style={styles.btnPedidoV}>
+              <Text style={styles.textPedido}> Realizar pedido </Text>
+          </View>
+            }
 
         </View>
 
@@ -256,6 +261,14 @@ const styles = StyleSheet.create({
   },
   btnPedido: {
     backgroundColor: Colors.primary1,
+    borderRadius: 30,
+    margin: 15,
+    flex: 0.4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  btnPedidoV: {
+    backgroundColor: Colors.grey1,
     borderRadius: 30,
     margin: 15,
     flex: 0.4,

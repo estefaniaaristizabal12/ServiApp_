@@ -54,7 +54,7 @@ const Delivery = ({navigation}) => {
           const itemData = item.Nombre ? item.Nombre.toUpperCase() : ''.toUpperCase();
           const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
-          })
+      })
       setFilteredData(newData);
     } else {
       setFilteredData(restaurant);
