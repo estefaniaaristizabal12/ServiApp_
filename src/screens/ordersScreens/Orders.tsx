@@ -2,14 +2,42 @@ import React from 'react'
 import { Text, View, FlatList, StyleSheet } from 'react-native';
 import CardOrder from '../../components/CardOrder'
 import { Colors } from '../../constants/colors'
-import orders from '../../constants/orders'
+// import orders from '../../constants/orders'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { normalize } from '../../../FontNormalize';
+import { useIsFocused } from "@react-navigation/native";
+import * as UserService from '../../services/UserService'
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from '../firebaseConfig';
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 export const Orders = ({ navigation }) => {
+  const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets();
+
+  const [orders, setOrders] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    if (isFocused) {
+      getOrders();
+    }
+  }, [isFocused]);
+
+  const getOrders = async () => {
+    UserService.getOrders("Usuario", auth.currentUser.uid)
+      .then(data => {
+        setOrders({ ...data });
+      })
+      .catch(error => {
+        console.error("getOrders: ", error)
+      });
+  };
+
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
 
@@ -26,9 +54,9 @@ export const Orders = ({ navigation }) => {
           data={orders}
           renderItem={({ item }) => (
             <CardOrder
-              title={item.title}
-              fecha={item.fecha}
-              image={item.image}
+              title={item.Restaurante.Nombre}
+              fecha={item.Fecha}
+              image={item.Restaurante.Imagen}
               navigation={navigation}
             />
           )}

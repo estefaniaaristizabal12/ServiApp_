@@ -51,8 +51,8 @@ const AddCard = ({ navigation, route }) => {
     console.log('selectedCard to add: ', selectedCard);
   }, []);
 
-  const addCard = async (nameCard: any, numCard: any, fecha: any, csv: any,type:any, uid: any) => {
-    UserService.addCard(nameCard, numCard, fecha, csv, type, uid)
+  const addCard = async (nameCard: any, numCard: any, fecha: any, cvv: any,type:any, uid: any) => {
+    UserService.addCard(nameCard, numCard, fecha, cvv, type, uid)
       .then(res => console.log("addcard", res))
       .catch(error => console.error(error))
   }

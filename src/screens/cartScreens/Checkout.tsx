@@ -30,7 +30,7 @@ export const Checkout = ({ navigation , route}) => {
   }
 
   const payCart = () => {
-    UserService.payCart(true, selectedCard?.id , auth.currentUser.uid)
+    UserService.payCart(true, selectedCard?.id, total, auth.currentUser.uid)
       .then(data => {
         setOrder(data);
         console.log('checkout pay cart', data);

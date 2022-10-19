@@ -13,7 +13,7 @@ export async function getCart(uid: any) {
   return res.json()
 }
 
-export async function addProdCart(prodId: any, cant: any, restId: any, delivery:any, uid: any) {
+export async function addProdCart(prodId: any, cant: any, restId: any, delivery: any, uid: any) {
   const res = await fetch(`${url}/addcart/${prodId}/${cant}/${restId}/${delivery}/?uid=${uid}`, { method: 'POST' })
   return res.json()
 }
@@ -28,10 +28,11 @@ export async function clearCart(uid: any) {
   return res.json()
 }
 
-export async function payCart(delivery: boolean, card: any, uid: any) {
+export async function payCart(delivery: boolean, card: any, total: any, uid: any) {
   const data = {
     Domicilio: delivery,
-    Tarjeta: card
+    Tarjeta: card,
+    Total: total
   }
   const res = await fetch(`${url}/pay/?uid=${uid}`, {
     method: 'POST',
@@ -49,12 +50,12 @@ export async function getCards(uid: any) {
   return res.json()
 }
 
-export async function addCard(nameCard: any, numCard: any, date: any, csv: any, type: any, uid: any) {
+export async function addCard(nameCard: any, numCard: any, date: any, cvv: any, type: any, uid: any) {
   const data = {
     Nombre: nameCard,
     NumeroTarjeta: numCard,
     Fecha: date,
-    csv: csv,
+    cvv: cvv,
     Tipo: type
   }
   const res = await fetch(`${url}/addcard/?uid=${uid}`, {
@@ -146,3 +147,22 @@ export async function updateDeviceToken(deviceToken: any, uid: any) {
   return res.json()
 }
 
+export async function getOrders(role: any, uid: any) {
+  const res = await fetch(`${url}/orders/${role}/?uid=${uid}`, { method: 'GET' })
+  return res.json()
+}
+
+export async function rateOrder(idOrder: any, rate: any, uid: any) {
+  const data = {
+    id: idOrder,
+    Calificacion: rate
+  }
+  const res = await fetch(`${url}/rateorder/?uid=${uid}`, {
+    method: 'POST', body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+  return res.json()
+}

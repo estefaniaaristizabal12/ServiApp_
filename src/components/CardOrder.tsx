@@ -16,7 +16,7 @@ const CardOrder = ({ title, fecha, image, navigation }) => {
           <View style={style.cardImage}>
             <Image
               style={{ width: "100%", height: 70, borderRadius: 2 }}
-              source={image}
+              source={{uri: image}}
             />
           </View>
           <View style={{ flex: 0.6, marginHorizontal: 12, overflow: "hidden" }}>
