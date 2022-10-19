@@ -105,7 +105,7 @@ export const Cart = ({ navigation }) => {
 
       <View style={styles.superior}>
         <View style={{ flex: 0.3, marginBottom: 30 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('TopTab')} style={styles.btnAtas}>
+          <TouchableOpacity   onPress={() => navigation.goBack()} style={styles.btnAtas}>
             <Ionicons name="arrow-back" size={25} color={Colors.grey} />
           </TouchableOpacity>
         </View>
