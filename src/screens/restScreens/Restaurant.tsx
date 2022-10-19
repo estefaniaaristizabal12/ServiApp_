@@ -20,23 +20,50 @@ import { normalize } from '../../../FontNormalize';
 
 export const Restaurant = ({ navigation, route }) => {
 
-    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState("-1");
     const [selectedRestaurant, setSelectedRestaurant] = useState<any>(null);
     const [selectedProducts, setSelectedProducts] = useState<any>(null);
+    const [filteredData, setFilteredData] = React.useState([]);
 
     const [selectedProduct, setSelectedProduct] = React.useState<any>(null);
+    const [additions, setAdditions] = React.useState<any>(null);
+
+
+    const categoryFilterFunction = (indexCategory:any) => {
+      setSelectedCategoryIndex(indexCategory)
+      if(indexCategory != "-1"){  
+        const newData = selectedProducts.filter((item:any) => {
+          return item.Categoria == indexCategory
+        })
+        setFilteredData(newData);
+      } else {
+        setFilteredData(selectedProducts);
+      }
+    }
+
+    const getProducts = async (restaurantId:any) => {
+        prodService.getProductsRest(restaurantId)
+          .then(data => {
+            setSelectedProducts(data)
+            setFilteredData(data)
+            getAdditions(data)
+          })
+          .catch(error => console.error(error))
+    };
+
+    const getAdditions = (prods:any) => {
+        const newData = prods.filter((item:any) => {
+          return ["3","6"].includes(item.Categoria)
+        })
+        setAdditions(newData);
+    };
 
     useEffect(() => {
         let { selectedRestaurant } = route.params;
-        setSelectedRestaurant(selectedRestaurant);
-        getProducts(selectedRestaurant?.id);
+        selectedRestaurant && setSelectedRestaurant(selectedRestaurant);
+        getProducts(selectedRestaurant.id);
     }, []);
 
-    const getProducts = async (restaurantId) => {
-        prodService.getProductsRest(restaurantId)
-            .then(data => setSelectedProducts(data))
-            .catch(error => console.error(error))
-    };
 
     const { top: paddingTop } = useSafeAreaInsets();
 
@@ -50,12 +77,12 @@ export const Restaurant = ({ navigation, route }) => {
                     <TouchableOpacity
                         key={index}
                         activeOpacity={0.8}
-                        onPress={() => setSelectedCategoryIndex(index)}
+                        onPress={() => selectedCategoryIndex != category.id ? categoryFilterFunction(category.id) : categoryFilterFunction("-1")}
                     >
                         <View
                             style={{
                                 backgroundColor:
-                                    selectedCategoryIndex == index
+                                    selectedCategoryIndex == category.id 
                                         ? Colors.primary1
                                         : Colors.grey,
                                 ...styles.categoryBtn,
@@ -68,11 +95,11 @@ export const Restaurant = ({ navigation, route }) => {
                                     fontWeight: 'bold',
                                     marginLeft: 5,
                                     color:
-                                        selectedCategoryIndex == index
+                                        selectedCategoryIndex == category.id
                                             ? Colors.white1
                                             : Colors.grey1,
                                 }}>
-                                {selectedCategoryIndex == index ? "• "+category.name:  category.name } 
+                                {selectedCategoryIndex == category.id ? "• "+category.name:  category.name } 
                             </Text>
                         
                         </View>
@@ -156,7 +183,7 @@ export const Restaurant = ({ navigation, route }) => {
             <View style={{ flex: 3.5, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
 
                 <FlatList
-                    data={selectedProducts}
+                    data={filteredData}
                     renderItem={({ item }) => (
                         <CardRest
                             title={item.Nombre}
@@ -166,8 +193,7 @@ export const Restaurant = ({ navigation, route }) => {
                             navigation={navigation}
                             onPress={() => {
                                 setSelectedProduct(item);
-
-                                navigation.navigate('Product', { selectedProduct: item, selectedRestaurant: selectedRestaurant });
+                                navigation.navigate('Product', { selectedProduct: item, selectedRestaurant: selectedRestaurant, additions: additions });
                             }
                             }
                         />

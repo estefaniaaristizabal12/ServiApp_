@@ -50,7 +50,7 @@ const Delivery = ({navigation}) => {
   
   const searchFilterFunction = (text:any) => {
     if(text){  
-      const newData = restaurant.filter(item => {
+      const newData = restaurant.filter((item:any) => {
           const itemData = item.Nombre ? item.Nombre.toUpperCase() : ''.toUpperCase();
           const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
@@ -63,7 +63,7 @@ const Delivery = ({navigation}) => {
 
   const categoryFilterFunction = (indexCategory:any) => {
     setSelectedCategoryIndex(indexCategory)
-    if(indexCategory != -1){  
+    if(indexCategory != "-1"){  
       const newData = restaurant.filter(item => {
         return item.Categoria.includes(indexCategory)
       })
@@ -80,19 +80,6 @@ const Delivery = ({navigation}) => {
 
     
   const getUser = async () => {
-    // UserService.getUser(auth.currentUser.uid)
-    //   .then((data) => {
-    //       const name_words = data?.nombrecliente.toLowerCase().split(" ");
-    //       const name_normalized = name_words.map((word:any) => { 
-    //            return word[0].toUpperCase() + word.substring(1) 
-    //       }).join(" ");
-    //       data.nombrecliente = name_normalized
-    //       setUser(data);
-    //       console.log("getUser", user)
-    //   })
-    //   .catch((error) => {
-    //      console.error(error)
-    //   });
     AsyncStorage.getUser()
       .then(data => {
           setUser(data);
@@ -160,8 +147,8 @@ const Delivery = ({navigation}) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.white1}}>
-        <StatusBar backgroundColor="#BABBC3" barStyle='dark-content' hidden={false} />
-        <HeaderMode activeTab={activeTab} setActiveTab={setActiveTab} />
+      <StatusBar backgroundColor={Colors.white1} barStyle='dark-content' hidden={false} />
+      <HeaderMode activeTab={activeTab} setActiveTab={setActiveTab} />
       <View style={style.header}>
         <View>
           <View style={{flexDirection: 'row', marginTop: 6}}>
