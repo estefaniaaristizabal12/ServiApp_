@@ -1,153 +1,119 @@
-import React from 'react'
-import { Text, SafeAreaView, StatusBar, View, TextInput, StyleSheet, Dimensions } from 'react-native';
-import { Image } from 'react-native-animatable';
-import { Icon } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { white } from 'react-native-paper/lib/typescript/styles/colors';
-
-import { normalize } from '../../../../FontNormalize';
+import {
+  View,
+  Text,
+  BackHandler,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 import { Colors } from '../../../constants/colors';
-import { FontAwesome } from '@expo/vector-icons';
+// import { Ionicons } from '@expo/vector-icons';
+import * as React from 'react';
+import SegmentedControl from '@react-native-segmented-control/segmented-control';
+import { CardOrderDelivery } from '../../../components/CardOrderDelivery';
 
 
 
-const { width, height } = Dimensions.get("screen");
 
-export default function InitialMenu  ({navigation, route})  {
-  
-  const [user, setUser] = React.useState<any>({});
+const InitialMenu = ({ navigation }) => {
 
-  React.useEffect(() => {
-    console.log(route.params);
-     route.params.user && setUser(route.params.user);
-}, []);
+  const [tabIndex, setTabIndex] = React.useState(0);
 
+  const CRYPTOCURRENCIES = [
+    {
+      id:1,
+      name:"Processed",
+      cryptobalance:"3.5290123123 BTC",
+      actualbalance:"$19.53",
+      percentage:"+ 4.32%",
+      difference:"$ 5.44",
+      decreased:true,
+      imgsrc: require('../../../../assets/salad.png'),
+    },
+    {
+      id:2,
+      name:"Active",
+      cryptobalance:"3.5290123123 ETH",
+      actualbalance:"$19.53",
+      percentage:"+ 4.32%",
+      difference:"$ 5.44",
+      decreased:false,
+      imgsrc: require('../../../../assets/salad.png'),
+    },
+  ];
 
-  const { top: paddingTop } = useSafeAreaInsets();  
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.grey, paddingTop }}>
-      <StatusBar backgroundColor="#BABBC3" barStyle='dark-content' hidden={false} />
-      <View style={styles.header}>
-        <View>
-          <View style={{ flexDirection: 'row', marginTop: 20 }}>
-            <Text style={{ fontSize: normalize(28) }}>Hola,</Text>
-            <Text style={{ fontSize: normalize(28), fontWeight: 'bold', marginLeft: 10 }}>
-              {user?.nombrecliente ? user.nombrecliente.split(" ")[0]: ""} 
-              {/* {auth.currentUser?.uid}  */}
-            </Text>
-          </View>
-          <Text style={{ marginTop: 6, fontSize: normalize(18), color: Colors.grey1 }}>
-            Acá puedes ver la lista de domicilios actuales
-          </Text>
-        </View>
-        <Image
-          source={require('../../../../assets/italiano.jpg')}
-          style={{ height: 55, width: 55, borderRadius: 25, marginRight: 9 }}
+  const renderHeader = () => {
+    return (
+      <View style={styles.headerbar}>
+        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black }}>Hola</Text>
+        <Text style={{ fontSize: 30, fontWeight: "700", color: Colors.black }}>Julian Rizo</Text>
+      </View>
+    );
+  };
+
+  const SegmentedCont = () => {
+    return (
+      <View style={styles.box}>
+        <SegmentedControl
+          values={['Recogida', 'Domiciliario']}
+          selectedIndex={0}
+          style={{ height: 38 }}
         />
       </View>
+    );
+  };
 
-      <View style={{ backgroundColor: Colors.white1, flex: 0.8, borderTopLeftRadius: 30, borderTopRightRadius: 30 }}>
-
-        <View style={{ flex: 0.5, justifyContent: "flex-end" }}>
-
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('OrderList')}>
-
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ flex: 0.3, height: "100%", alignItems: "center", justifyContent: "center" }}>
-                <Image
-                  source={require('../../../../assets/entrega-rapida.png')}
-                  style={{ height: 100, width: 100, borderRadius: 25, marginRight: 9 }}
-                />
-              </View>
-              <View style={{ flex: 0.6, justifyContent: "center" }}>
-
-                <Text style={styles.cardTitle}>Pedidos a domicilio actuales</Text>
-                <Text style={styles.cardDescription}>Acá encontrarás las solicitudes a domicilio actuales de los clientes</Text>
-
-              </View >
-              <View style={{ flex: 0.1, justifyContent: "center", alignItems:"center" }}>
-                <FontAwesome name="angle-double-right" size={40} color={Colors.grey1} />
-              </View>
-
-            </View>
-
-          </TouchableOpacity>
-
-
-        </View>
-
-        <View style={{ flex: 0.5 }}>
-
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('CurrentOrder')}>
-
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ flex: 0.3, height: "100%", alignItems: "center", justifyContent: "center" }}>
-                <Image
-                  source={require('../../../../assets/entrega-de-paquetes.png')}
-                  style={{ height: 100, width: 100, borderRadius: 25, marginRight: 9 }}
-                />
-              </View>
-              <View style={{ flex: 0.6, justifyContent: "center" }}>
-                <Text style={styles.cardTitle}>Tus domicilios en curso</Text>
-                <Text style={styles.cardDescription}>Acá encontrarás los pedidos a domicilio que están a cargo tuyo</Text>
-
-              </View >
-              <View style={{ flex: 0.1,  justifyContent: "center", alignItems:"center"}}>
-                <FontAwesome name="angle-double-right" size={40} color={Colors.grey1} />
-
-              </View>
-
-            </View>
-
-          </TouchableOpacity>
-
-        </View>
-
+  const renderBody = () => {
+    return(
+      <View style={{marginTop:10,backgroundColor:"#F5F8FF",overflow:"hidden",marginBottom:100}}>
+        <FlatList
+          data={CRYPTOCURRENCIES}
+          style={{height:(Dimensions.get('window').height/2)+60}}
+          ItemSeparatorComponent = {()=><View style={{marginVertical:8}}></View>}
+          renderItem={({item})=><CardOrderDelivery item={item} onPress={()=>navigation.navigate("walletdetails",item)}/>}
+          keyExtractor={(item) => item.id}
+       />
       </View>
+    );
+  };
 
 
-    </SafeAreaView>
-  )
-}
-
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      {renderHeader()}
+      <View style={{ marginHorizontal: 20 }}>
+        {/* SegmentedControl */}
+        {SegmentedCont()}
+        {/* Body */}
+        {renderBody()}
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  header: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    flex: 0.2
+  container: {
+    height: "100%",
+    backgroundColor: '#F5F8FF',
   },
-  card: {
-    marginVertical: 10,
+  headerbar: {
+    paddingTop: 80,
+    paddingBottom: 20,
+    paddingHorizontal: 30,
+    flexDirection: "column",
     backgroundColor: "#fff",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    width: width / 1.1,
-    marginHorizontal: 20,
-    borderRadius: 20,
-
-    height: "75%",
-
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 1.5,
+    marginBottom: 20
   },
-  cardTitle: {
-    fontWeight: "bold",
-    fontSize: normalize(20),
-    marginLeft: 10,
+  box: {
+    marginHorizontal: 16,
+    marginVertical: 16,
   },
-  cardDescription: {
-    fontSize: normalize(18),
-    marginVertical: 8,
-    marginLeft: 10,
-  },
-
 });
+
+
+
+export default InitialMenu;
