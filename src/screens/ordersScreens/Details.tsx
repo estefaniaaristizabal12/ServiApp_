@@ -5,7 +5,15 @@ import { Colors } from '../../constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export const Details = ({ navigation }) => {
+export const Details = ({ navigation, route }) => {
+
+  const [order, setOrder] = React.useState<any>(null);
+
+  React.useEffect(() => {
+      let { orderP } = route.params;
+      orderP && setOrder(orderP);
+  }, []);
+  
   const { top: paddingTop } = useSafeAreaInsets();
   return (
     <View style={{ flex: 1, paddingTop,flexDirection: "column", backgroundColor: Colors.grey }}>
@@ -16,8 +24,8 @@ export const Details = ({ navigation }) => {
           <Ionicons name="arrow-back" size={25} color={Colors.gray} />
         </TouchableOpacity>
 
-        <Text style={styles.textoInicio}>La Central Cafetería</Text>
-        <Text style={styles.textoFecha}>05/02/2022</Text>
+        <Text style={styles.textoInicio}>{order?.Restaurante?.Nombre}</Text>
+        <Text style={styles.textoFecha}>{order?.Fecha}</Text>
 
       </View>
       <View style={{ flex: 0.80, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white", padding: 10 }}>
@@ -25,7 +33,7 @@ export const Details = ({ navigation }) => {
         <Text style={styles.titulo}>Califica tu pedido </Text>
 
         <View style={{ flex: 0.15, marginTop: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#E7E7E7', paddingBottom: 10 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('ServiceOrder')} >
+          <TouchableOpacity onPress={() => navigation.navigate('ServiceOrder', {order: order})} >
             <View style={{ flexDirection: "row" }}>
               <View style={{ flex: 0.2, alignItems: "center", justifyContent: "center" }}>
                 <Image
@@ -34,7 +42,7 @@ export const Details = ({ navigation }) => {
                 />
               </View>
               <View style={{ flex: 0.7, marginLeft: 10, justifyContent: "center" }}>
-                <Text style={styles.experiencia}>Cuéntanos por favor cómo fue tu experiencia con La Central Cafetería</Text>
+                <Text style={styles.experiencia}>Cuéntanos por favor cómo fue tu experiencia con {order?.Restaurante?.Nombre} Cafetería</Text>
               </View>
 
               <View style={{ flex: 0.1, alignItems: "center", justifyContent: "center" }}>
@@ -81,7 +89,7 @@ export const Details = ({ navigation }) => {
 
             </View>
             <View style={{ flex: 0.3, marginLeft: 10, justifyContent: "center", alignItems: "flex-end", paddingRight: 30 }}>
-              <Text style={styles.valores}>$17.000</Text>
+              <Text style={styles.valores}>${order?.Total}</Text>
             </View>
           </View>
 
@@ -91,17 +99,17 @@ export const Details = ({ navigation }) => {
 
             </View>
             <View style={{ flex: 0.3, marginLeft: 10, justifyContent: "center", alignItems: "flex-end", paddingRight: 30 }}>
-              <Text style={styles.valores}>$3.000</Text>
+              <Text style={styles.valores}>$0</Text>
             </View>
           </View>
 
           <View style={{ flexDirection: "row", marginTop: 10, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#E7E7E7', paddingTop: 10 }}>
             <View style={{ flex: 0.7, justifyContent: "center" }}>
-              <Text style={styles.valores}>Total pagado</Text>
+              <Text style={styles.valores}>Total pagar</Text>
 
             </View>
             <View style={{ flex: 0.3, marginLeft: 10, justifyContent: "center", alignItems: "flex-end", paddingRight: 30 }}>
-              <Text style={styles.valores}>$21.000</Text>
+              <Text style={styles.valores}>${order?.Total}</Text>
             </View>
           </View>
 

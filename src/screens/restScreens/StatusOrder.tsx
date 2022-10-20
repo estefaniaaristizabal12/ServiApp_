@@ -35,7 +35,7 @@ const StatusOrder = ({ navigation, route }) => {
   const isFocused = useIsFocused()
   const insets = useSafeAreaInsets();
 
-  const [currentStep, setCurrentStep] = useState();
+  const [currentStep, setCurrentStep] = useState(0);
   const [order, setOrder] = useState<any>(null);
 
   React.useEffect(() => {

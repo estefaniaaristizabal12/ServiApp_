@@ -4,10 +4,13 @@ import { Text, Image, View, StyleSheet, Dimensions } from "react-native";
 import { Colors } from '../constants/colors';
 import { normalize } from "../../FontNormalize";
 
+
 const { width, height } = Dimensions.get("screen");
 
-const CardOrder = ({ title, fecha, image, navigation }) => {
+const CardOrder = ({item, navigation}) => {
   return (
+
+    // navigation.navigate('Checkout', { card: selectedCard });
 
     // onPress={() => navigation.navigate('Product')}
     <View style={style.card}>
@@ -16,18 +19,18 @@ const CardOrder = ({ title, fecha, image, navigation }) => {
           <View style={style.cardImage}>
             <Image
               style={{ width: "100%", height: 70, borderRadius: 2 }}
-              source={{uri: image}}
+              source={{uri: item.Restaurante.Imagen}}
             />
           </View>
           <View style={{ flex: 0.6, marginHorizontal: 12, overflow: "hidden" }}>
-            <Text style={style.cardTitle}>{title}</Text>
-            <Text style={style.cardFecha}>{fecha}</Text>
+            <Text style={style.cardTitle}>{item.Restaurante.Nombre}</Text>
+            <Text style={style.cardFecha}>{item.Fecha}</Text>
           </View>
         </View>
 
         <View style={{flex: 0.3, flexDirection: "row" }}>
           <View style={style.btnOrdenes}>
-            <TouchableOpacity onPress={() => navigation.navigate('Details')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Details', {orderP: item})}>
               <Text style={style.textDetalle}>Detalle</Text>
             </TouchableOpacity>
           </View>

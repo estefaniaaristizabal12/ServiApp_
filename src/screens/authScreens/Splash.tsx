@@ -12,7 +12,7 @@ export const Splash = ({navigation}) => {
     const [user, setUser] = React.useState<any>(null)
 
     React.useEffect(() => {
-      // AsyncStorage.clearUser().then(() => getUserAS());
+    //   AsyncStorage.clearUser().then(() => getUserAS());
       getUserAS();
     }, []);
 
