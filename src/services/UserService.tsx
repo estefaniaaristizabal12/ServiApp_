@@ -147,8 +147,8 @@ export async function updateDeviceToken(deviceToken: any, uid: any) {
   return res.json()
 }
 
-export async function getOrders(role: any, uid: any) {
-  const res = await fetch(`${url}/orders/${role}/?uid=${uid}`, { method: 'GET' })
+export async function getOrders(role: any, delivery: number, uid: any) {
+  const res = await fetch(`${url}/orders/${role}/${delivery}/?uid=${uid}`, { method: 'GET' })
   return res.json()
 }
 

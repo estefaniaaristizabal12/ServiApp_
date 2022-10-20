@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, View, FlatList, StyleSheet } from 'react-native';
 import CardOrder from '../../components/CardOrder'
 import { Colors } from '../../constants/colors'
-// import orders from '../../constants/orders'
+import orders from '../../constants/orders'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -20,7 +20,7 @@ export const Orders = ({ navigation }) => {
   const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets();
 
-  const [orders, setOrders] = React.useState<any>(null);
+  const [orders2, setOrders2] = React.useState<any>(null);
 
   React.useEffect(() => {
     if (isFocused) {
@@ -29,9 +29,12 @@ export const Orders = ({ navigation }) => {
   }, [isFocused]);
 
   const getOrders = async () => {
-    UserService.getOrders("Usuario", auth.currentUser.uid)
+    UserService.getOrders("Usuario", 2, auth.currentUser.uid)
       .then(data => {
-        setOrders({ ...data });
+        console.log("getOrders", data[0].Restaurante.Nombre)
+        console.log("getOrders", data[0].Fecha)
+        console.log("getOrders", data[0].Restaurante.Imagen)
+        setOrders2({ data });
       })
       .catch(error => {
         console.error("getOrders: ", error)
@@ -51,12 +54,15 @@ export const Orders = ({ navigation }) => {
       <View style={{ flex: 0.8, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white" }}>
 
         <FlatList
-          data={orders}
+          data={orders2}
           renderItem={({ item }) => (
             <CardOrder
               title={item.Restaurante.Nombre}
               fecha={item.Fecha}
               image={item.Restaurante.Imagen}
+              // title={item.title}
+              // fecha={item.fecha}
+              // image={item.image}
               navigation={navigation}
             />
           )}
