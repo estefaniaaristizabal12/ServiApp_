@@ -27,7 +27,7 @@ const CardProductOrder = ({ title, precio, description, image, cantidad}) => {
                 <View style={{ flex: 0.3}}>
                     <Image
                         style={{ width: "100%", height: "100%", borderRadius: 20 }}
-                        source={image}
+                        source={{uri: image}}
                     />
                 </View>
 

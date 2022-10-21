@@ -24,7 +24,6 @@ import status from '../../constants/status';
 import { normalize } from '../../../FontNormalize';
 import { useIsFocused } from "@react-navigation/native";
 
-import database from '@react-native-firebase/database'
 import firebase from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
 import app from '../firebaseConfig';

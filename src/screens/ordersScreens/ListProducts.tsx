@@ -7,10 +7,19 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CardProductOrder from '../../components/CardProductOrder';
 import products from '../../constants/products';
 
-export const ListProducts = ({ navigation }) => {
+export const ListProducts = ({ navigation, route }) => {
   const { top: paddingTop } = useSafeAreaInsets();
   const [selectedProducts, setSelectedProducts] = useState<null>(null);
   
+  const [order, setOrder] = React.useState<any>(null);
+  const [products, setProducts] = React.useState<any>(null);
+
+  React.useEffect(() => {
+      let { order } = route.params;
+      // console.log("order", Object.values(order.Carro))
+      order && setOrder(order);
+      order && setProducts(Object.values(order.Carro));
+  }, []);
 
   return (
     <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
@@ -21,7 +30,7 @@ export const ListProducts = ({ navigation }) => {
           <Ionicons name="arrow-back" size={25} color={Colors.gray} />
         </TouchableOpacity>
 
-        <Text style={styles.textoInicio}>La Central Cafetería</Text>
+        <Text style={styles.textoInicio}>{order?.Restaurante?.Nombre}</Text>
         <Text style={styles.textoFecha}>Esta es la lista de productos que pediste: </Text>
 
       </View>
@@ -30,11 +39,11 @@ export const ListProducts = ({ navigation }) => {
           data={products}
             renderItem={({ item }) => (
               <CardProductOrder
-                title={item.name}
-                description={item.description}
-                precio={item.price}
-                image={item.image}
-                cantidad={5}
+                title={item.Nombre}
+                description={item.Descripcion}
+                precio={item.Precio}
+                image={item.Imagen}
+                cantidad={item.Cantidad}
               />
             )}
         />

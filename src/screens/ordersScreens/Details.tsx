@@ -60,7 +60,7 @@ export const Details = ({ navigation, route }) => {
               <Text style={styles.titulo}>Productos</Text>
             </View>
             <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }}>
-              <TouchableOpacity style={styles.btnVerLista} onPress={() => navigation.navigate('ListProducts')}>
+              <TouchableOpacity style={styles.btnVerLista} onPress={() => navigation.navigate('ListProducts', {order: order})}>
                 <Text style={styles.verLista}>Ver lista</Text>
               </TouchableOpacity>
             </View>
@@ -75,7 +75,7 @@ export const Details = ({ navigation, route }) => {
               <Ionicons name="location" size={25} color={Colors.primary} />
             </View>
             <View style={{ flex: 0.9, marginLeft: 10, justifyContent: "center" }}>
-              <Text style={styles.experiencia}>Edificio Ingeniería - piso 5</Text>
+              <Text style={styles.experiencia}>{order?.Direccion}</Text>
             </View>
           </View>
 

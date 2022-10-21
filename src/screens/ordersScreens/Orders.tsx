@@ -31,7 +31,11 @@ export const Orders = ({ navigation }) => {
   const getOrders = async () => {
     UserService.getOrders("Usuario", 2, auth.currentUser.uid)
       .then(data => {
-        setOrders(data)
+        const newData = data.map((order: any)=> {
+          order.Fecha = new Date(order.Fecha).toLocaleString('es-ES')
+          return order
+        })
+        setOrders(newData)
       })
       .catch(error => {
         console.error("getOrders: ", error)

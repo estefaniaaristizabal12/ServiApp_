@@ -36,7 +36,7 @@ export const ServiceOrder = ({ navigation, route}) => {
 
     React.useEffect(() => {
         let { order } = route.params;
-        console.log("order id", order.id)
+        order.Fecha = new Date(order.Fecha).toLocaleString('es-ES')
         order && setOrder(order);
     }, []);
 
@@ -62,7 +62,7 @@ export const ServiceOrder = ({ navigation, route}) => {
                 <AirbnbRating
                     count={5}
                     reviews={["Terrible", "Malo", "Regular", "Bueno", "Excelente"]}
-                    defaultRating={5}
+                    defaultRating={order?.Calificacion? order?.Calificacion: 0}
                     size={30}
                     ratingContainerStyle={styles.estrella}
                     onFinishRating={rateOrder}
