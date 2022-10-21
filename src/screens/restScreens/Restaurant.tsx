@@ -16,6 +16,7 @@ import restaurant from '../../constants/restaurant';
 import * as prodService from '../../services/ProductService'
 import productCategories from '../../constants/productCategories';
 import { normalize } from '../../../FontNormalize';
+import Delivery from '../Delivery';
 
 
 export const Restaurant = ({ navigation, route }) => {
@@ -27,6 +28,7 @@ export const Restaurant = ({ navigation, route }) => {
 
     const [selectedProduct, setSelectedProduct] = React.useState<any>(null);
     const [additions, setAdditions] = React.useState<any>(null);
+    const [delivery, setDelivery] = React.useState<any>(null);
 
 
     const categoryFilterFunction = (indexCategory:any) => {
@@ -51,6 +53,16 @@ export const Restaurant = ({ navigation, route }) => {
           .catch(error => console.error(error))
     };
 
+    const getProductsDelivery = async (restaurantId:any) => {
+        prodService.getProductsRestDelivery(restaurantId)
+          .then(data => {
+            setSelectedProducts(data)
+            setFilteredData(data)
+            getAdditions(data)
+          })
+          .catch(error => console.error(error))
+    };
+
     const getAdditions = (prods:any) => {
         const newData = prods.filter((item:any) => {
           return ["3","6"].includes(item.Categoria)
@@ -59,9 +71,11 @@ export const Restaurant = ({ navigation, route }) => {
     };
 
     useEffect(() => {
+        console.log(route.params.delivery)
         let { selectedRestaurant } = route.params;
         selectedRestaurant && setSelectedRestaurant(selectedRestaurant);
-        getProducts(selectedRestaurant.id);
+        setDelivery(route.params.delivery)
+        route.params.delivery? getProductsDelivery(selectedRestaurant.id): getProducts(selectedRestaurant.id);
     }, []);
 
 
@@ -193,7 +207,7 @@ export const Restaurant = ({ navigation, route }) => {
                             navigation={navigation}
                             onPress={() => {
                                 setSelectedProduct(item);
-                                navigation.navigate('Product', { selectedProduct: item, selectedRestaurant: selectedRestaurant, additions: additions });
+                                navigation.navigate('Product', { selectedProduct: item, selectedRestaurant: selectedRestaurant, additions: additions, delivery: delivery});
                             }
                             }
                         />

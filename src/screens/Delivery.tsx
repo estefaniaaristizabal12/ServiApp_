@@ -211,7 +211,7 @@ const Delivery = ({navigation, route}) => {
                 description={item.Descripcion}
                 onPress={() => {
                   setSelectedRestaurant(item);
-                  navigation.navigate('Restaurant', {selectedRestaurant: item});
+                  navigation.navigate('Restaurant', {selectedRestaurant: item, delivery: activeTab == "Delivery"});
                   }
                 } 
               />

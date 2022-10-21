@@ -25,6 +25,7 @@ export const Checkout = ({ navigation , route}) => {
   const [total, setTotal] = React.useState<any>(0);
   const [order, setOrder] = React.useState<any>(null);
   const [user, setUser] = React.useState<any>(null);
+  const [delivery, setDelivery] = React.useState<any>(null);
 
   const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
@@ -52,12 +53,13 @@ export const Checkout = ({ navigation , route}) => {
         console.log('ERROR AL PAGAR', err);
       })
   }
-
+  
   React.useEffect(() => {
     isFocused && getUser();
     isFocused && setSelectedCard(route.params["card"]);
     isFocused && route.params["cart"] && setCart(route.params["cart"]);
     isFocused && route.params["total"] && setTotal(route.params["total"]);
+    isFocused && route.params["delivery"] && setDelivery(route.params["delivery"]);
   }, [isFocused]);
 
   let condicion = 1;
@@ -83,7 +85,7 @@ export const Checkout = ({ navigation , route}) => {
             {condicion == 1 ?
               <View style={{ flex: 0.65, flexDirection: "row", alignItems: 'center' }}>
                 <MaterialIcons name="delivery-dining" size={24} color="black" />
-                <Text style={{ fontSize: 17, marginLeft: 5 }}> |   Servicio a domicilio</Text>
+                <Text style={{ fontSize: 17, marginLeft: 5 }}> |   Servicio a {user?.DomicilioCarro?"domicilio":"recoger"}</Text>
               </View>
               : <View style={{ flex: 0.65, flexDirection: "row", alignItems: 'center' }}>
                 <FontAwesome5 name="store-alt" size={20} color="black" />

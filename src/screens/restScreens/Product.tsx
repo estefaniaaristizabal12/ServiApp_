@@ -35,17 +35,19 @@ export const Product = ({ navigation, route }) => {
     const [selectedProduct, setSelectedProduct] = React.useState<any>(null);
     const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>(null);
     const [additions, setAdditions] = React.useState<any>(null);
+    const [delivery, setDelivery] = React.useState<any>(null);
 
     // const {cambioNombre} = useContext(CartContext);
 
 
 
-
     useEffect(() => {
-        let { selectedProduct, selectedRestaurant, additions } = route.params;
+        let { selectedProduct, selectedRestaurant, additions, delivery } = route.params;
+        console.log("sdfsdaf", delivery)
         selectedProduct && setSelectedProduct(selectedProduct);
         selectedRestaurant && setSelectedRestaurant(selectedRestaurant);
         additions && setAdditions(additions);
+        delivery && setDelivery(delivery);
     }, []);
 
     const addProdCart = (prodId: any, cant: any, restId: any, delivery:any, uid: any) => {
@@ -137,7 +139,7 @@ export const Product = ({ navigation, route }) => {
                 </View>
                 <View style={styles.btnACarro}>
                     <TouchableOpacity onPress={() => {
-                        addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, 0, auth.currentUser.uid)
+                        addProdCart(selectedProduct?.id, count, selectedRestaurant?.id, delivery , auth.currentUser.uid)
                     }
                     }>
                         <Text style={styles.textBtnCarro}>Agregar ${selectedProduct?.Precio} </Text>
