@@ -116,7 +116,7 @@ const OrdersDeliv = ({ navigation }) => {
         {SegmentedCont()}
 
         {/* Body */}
-        {renderBody()}
+        {/* {renderBody()} */}
 
         <Button title="Present Modal" onPress={handlePresentModal} />
         <StatusBar style="auto" />
