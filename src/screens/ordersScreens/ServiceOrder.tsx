@@ -1,13 +1,19 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { Colors } from '../../constants/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AirbnbRating, Rating } from 'react-native-ratings';
 import { normalize } from '../../../FontNormalize';
+import { useState } from 'react';
+import { Image } from 'react-native-animatable';
 
 export const ServiceOrder = ({ navigation }) => {
+
+    const [defaultRating, setDefaultRating] = useState(5);
+    const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
+
     const { top: paddingTop } = useSafeAreaInsets();
     return (
         <View style={{ flex: 1, paddingTop, flexDirection: "column", backgroundColor: Colors.grey }}>
@@ -24,15 +30,177 @@ export const ServiceOrder = ({ navigation }) => {
             </View>
             <View style={{ flex: 0.80, borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: "white", padding: 10 }}>
 
+                <View style={{ flex: 0.1, justifyContent: "center", }}>
+                    <Text style={styles.titServicio}>¿Cómo te pareció el servicio?</Text>
+                </View>
 
-                <Text style={styles.titServicio}>¿Cómo te pareció el servicio?</Text>
-                <AirbnbRating
-                    count={5}
-                    reviews={["Terrible", "Malo", "Regular", "Bueno", "Excelente"]}
-                    defaultRating={5}
-                    size={30}
-                    ratingContainerStyle={styles.estrella}
-                />
+
+
+                <View style={styles.calification}>
+
+                    {
+                        maxRating.map((item, key) => {
+                            return (
+                                <TouchableOpacity
+                                    activeOpacity={0.7}
+                                    key={item}
+                                    onPress={() => setDefaultRating(item)}>
+
+                                    {
+                                        item <= defaultRating ?
+                                            <AntDesign style={{ marginHorizontal: 3 }} name="star" size={40} color={
+                                                ((defaultRating == 5 || defaultRating == 4) && "#7ED957") ||
+                                                ((defaultRating == 3) && "#FFBD59") ||
+                                                ((defaultRating == 2 || defaultRating == 1) && "red")
+
+                                            } />
+                                            : <AntDesign style={{ marginHorizontal: 3 }} name="staro" size={40} color={
+                                                ((defaultRating == 5 || defaultRating == 4) && "#7ED957") ||
+                                                ((defaultRating == 3) && "#FFBD59") ||
+                                                ((defaultRating == 2 || defaultRating == 1) && "red")
+
+                                            } />
+                                    }
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
+
+                </View>
+
+
+
+                <View style={styles.calification2}>
+                    {defaultRating == 1 &&
+
+                        <View style={{ flex: 1, flexDirection: "column" }}>
+
+                            <View style={{ flex: 0.2 }}>
+                                <Text style={styles.tituloRese}>¡Oh no!, ¿Algo salió mal?</Text>
+                            </View>
+
+                            <View style={{ flex: 0.8, flexDirection: "row" }}>
+
+                                <View style={{ flex: 0.33, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                        <Image
+                                            style={{ height: 50, width: 50 }}
+                                            source={require('../../../assets/tiempoT.png')} />
+
+
+                                        <Text style={styles.descripcionRese}>Tardó mucho en llegar</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 0.33, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                        <Image
+                                            style={{ height: 50, width: 50 }}
+                                            source={require('../../../assets/productMal.png')} />
+                                        <Text style={styles.descripcionRese}>Producto en pésimo estado</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 0.33, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                        <Image
+                                            style={{ height: 50, width: 50 }}
+                                            source={require('../../../assets/incompleto.png')} />
+                                        <Text style={styles.descripcionRese}>Producto incompleto</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            </View>
+
+                        </View>
+                    }
+
+                    {(defaultRating == 2 || defaultRating == 3) &&
+
+                        <View style={{ flex: 1, flexDirection: "column" }}>
+
+                            <View style={{ flex: 0.2 }}>
+                                <Text style={styles.tituloRese}>¡Oh!, ¿Algo salió mal?</Text>
+                            </View>
+
+                            <View style={{ flex: 0.8, flexDirection: "row" }}>
+
+                                <View style={{ flex: 0.33, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                        <Image
+                                            style={{ height: 50, width: 50 }}
+                                            source={require('../../../assets/tiempoT.png')} />
+
+                                        <Text style={styles.descripcionRese}>Tardó en llegar</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 0.33, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                        <Image
+                                            style={{ height: 50, width: 50 }}
+                                            source={require('../../../assets/productRegular.png')} />
+                                        <Text style={styles.descripcionRese}>Producto en mal estado</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 0.33, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                        <Image
+                                            style={{ height: 50, width: 50 }}
+                                            source={require('../../../assets/incompletoR.png')} />
+                                        <Text style={styles.descripcionRese}>Producto incompleto</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            </View>
+
+                        </View>
+                    }
+                    {defaultRating == 4 &&
+
+                        <View style={{ flex: 1, flexDirection: "column" }}>
+
+                            <View style={{ flex: 0.2 }}>
+                                <Text style={styles.tituloRese}>¡Bien! Pero aún falta una estrella...</Text>
+                            </View>
+                            {/* <Text>Recomendación:</Text> */}
+                            <View style={{ flex: 0.8, flexDirection: "row" }}>
+
+
+
+                                <View style={{ flex: 0.5, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                        <Image
+                                            style={{ height: 50, width: 50 }}
+                                            source={require('../../../assets/rapidez.png')} />
+                                        <Text style={styles.descripcionRese}>Ser más rápidos</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 0.5, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center" }}>
+                                        <Image
+                                            style={{ height: 50, width: 50 }}
+                                            source={require('../../../assets/cuidadosos.png')} />
+                                        <Text style={styles.descripcionRese}>Ser más cuidadosos con los productos</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            </View>
+
+                        </View>
+                    }
+                    {defaultRating == 5 &&
+                        <Text style={styles.tituloRese}>¡Excelente! Tuviste un gran servicio</Text>
+                    }
+
+
+                </View>
+
+                <View style={{ flex: 0.2, justifyContent:"center" }}>
+                    <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor:Colors.primary1, borderRadius:50}}>
+                        <Text style={{fontSize: normalize(22),fontWeight: 'bold',color: 'white', padding:15}}>Enviar reseña</Text>
+                    </TouchableOpacity>
+
+
+                </View>
+
 
             </View>
         </View>
@@ -62,16 +230,44 @@ const styles = StyleSheet.create({
         height: 30,
         width: 30
     },
-    estrella:{
-       marginHorizontal:10,
-       fontSize:normalize(10)
+    estrella: {
+        marginHorizontal: 10,
+        fontSize: normalize(10)
     },
-    titServicio:{
-        fontSize: normalize(18),
+    titServicio: {
+        fontSize: normalize(22),
         fontWeight: 'bold',
         color: 'black',
-        marginTop: 30,
+        marginLeft: 20,
+    },
+    calification: {
+        justifyContent: "flex-start",
+        flexDirection: 'row',
+        flex: 0.15,
+        alignItems: "center",
         marginLeft: 20
+    },
+    calification2: {
+        justifyContent: "flex-start",
+        flexDirection: 'column',
+        borderTopColor: Colors.grey1,
+        borderTopWidth: 0.3,
+        flex: 0.55,
+    },
+    tituloRese: {
+        fontSize: normalize(20),
+        fontWeight: 'bold',
+        color: 'black',
+        marginTop: 20,
+        marginLeft: 20,
+
+
+
+    },
+    descripcionRese: {
+        fontSize: normalize(18),
+        color: 'black',
+        marginTop: 10,
     }
 
 });

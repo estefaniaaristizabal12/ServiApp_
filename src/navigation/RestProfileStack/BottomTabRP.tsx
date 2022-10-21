@@ -4,7 +4,7 @@ import { Colors } from '../../constants/colors';
 import { FontAwesome5 } from '@expo/vector-icons';
 import ReviewRestStack from './ReviewRestStack';
 import OrderRestStack from './OrderRestStack';
-import RestProfile from '../../screens/restProfileScreens/restProfile';
+import RestProfile from '../../screens/restProfileScreens/RestProfile';
 
 
 

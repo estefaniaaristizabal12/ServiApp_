@@ -11,6 +11,7 @@ import { Colors } from '../constants/colors';
 import { CartStack } from './CartStack';
 import Account from '../screens/userScreens/Account';
 import { ProfileStack } from './ProfileStack';
+import { ServiceOrder } from '../screens/ordersScreens/ServiceOrder';
 
 
 const BtTap = createMaterialBottomTabNavigator();
@@ -61,7 +62,8 @@ export default function BottomTab() {
 
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={RestStack} />
             <BtTap.Screen name="CartStack" options={{ title: 'Carrito' }} component={CartStack} />
-            <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={OrderStack} />
+            <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={ServiceOrder} />
+            {/* <BtTap.Screen name="OrdersStack" options={{ title: 'Ordenes' }} component={OrderStack} /> */}
             <BtTap.Screen name="ProfileStack" options={{ title: 'Perfil' }} component={ProfileStack} />
 
 
