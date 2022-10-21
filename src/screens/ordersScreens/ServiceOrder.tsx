@@ -10,7 +10,7 @@ import * as UserService from '../../services/UserService';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseConfig';
-import {useState} from 'react';
+import { useState } from 'react';
 
 
 
@@ -18,17 +18,17 @@ import {useState} from 'react';
 
 
 
-export const ServiceOrder = ({ navigation, route}) => {
+export const ServiceOrder = ({ navigation }) => {
 
     const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+    const auth = getAuth(app);
 
     const [defaultRating, setDefaultRating] = useState(5);
     const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
 
     const [order, setOrder] = React.useState<any>(null);
 
-    const rateOrder = async (rate:any) => {
+    const rateOrder = async (rate: any) => {
 
         UserService.rateOrder(order.id, rate, auth.currentUser.uid)
             .then(data => {
@@ -36,15 +36,15 @@ const auth = getAuth(app);
             })
             .catch(error => console.error(error))
     }
-    
 
 
 
-    React.useEffect(() => {
-        let { order } = route.params;
-        order.Fecha = new Date(order.Fecha).toLocaleString('es-ES')
-        order && setOrder(order);
-    }, []);
+
+    // React.useEffect(() => {
+    //     let { order } = route.params;
+    //     order.Fecha = new Date(order.Fecha).toLocaleString('es-ES')
+    //     order && setOrder(order);
+    // }, []);
 
     const { top: paddingTop } = useSafeAreaInsets();
     return (
@@ -225,10 +225,18 @@ const auth = getAuth(app);
 
                 </View>
 
-                <View style={{ flex: 0.2, justifyContent:"center" }}>
-                    <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor:Colors.primary1, borderRadius:50}}>
-                        <Text style={{fontSize: normalize(22),fontWeight: 'bold',color: 'white', padding:15}}>Enviar reseña</Text>
-                    </TouchableOpacity>
+                <View style={{ flex: 0.2, justifyContent: "center", alignContent: "center" }}>
+
+                    {(defaultRating == 1 || defaultRating == 2) ?
+                        <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.primary1, borderRadius: 50 }}>
+                            <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>Reportar inconveniente</Text>
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.primary1, borderRadius: 50 }}>
+                            <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>Enviar reseña</Text>
+                        </TouchableOpacity>
+
+                    }
 
 
                 </View>
@@ -236,7 +244,7 @@ const auth = getAuth(app);
 
 
             </View>
-            
+
             {/* <Button title="Calificar" onPress={() => rateOrder(count)} /> */}
         </View>
     )

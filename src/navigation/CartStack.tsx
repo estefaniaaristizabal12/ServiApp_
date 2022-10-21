@@ -5,6 +5,7 @@ import { Cart } from '../screens/cartScreens/Cart';
 import { Checkout } from '../screens/cartScreens/Checkout';
 import MyCard from '../screens/MyCard';
 import StatusOrder from '../screens/restScreens/StatusOrder';
+import { ChangeLocation } from '../screens/cartScreens/ChangeLocation';
 
 const StackCart = createStackNavigator();
 export const CartStack = () => {
@@ -19,6 +20,7 @@ export const CartStack = () => {
             <StackCart.Screen name="MyCard" component={MyCard} />
             <StackCart.Screen name="AddCard" component={AddCard} />
             <StackCart.Screen name="StatusOrder" component={StatusOrder} />
+            <StackCart.Screen name="ChangeLocation" component={ChangeLocation} />
 
         </StackCart.Navigator>
     )

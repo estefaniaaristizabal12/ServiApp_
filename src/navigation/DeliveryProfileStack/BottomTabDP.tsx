@@ -10,6 +10,7 @@ import { ProductsRest } from '../../screens/restProfileScreens/ProductsRest';
 import  DeliveryStack  from './DeliveryStack';
 import  OrdersDelivStack from './OrdersDelivStack';
 import  ProfileDeliv  from '../../screens/delivProfileScreens/ProfileDeliv';
+import ProfileDStack from './ProfileDStack';
 
 
 
@@ -57,7 +58,7 @@ export default function BottomTabDP({route, navigation}) {
 
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={DeliveryStack} initialParams={{user: user}}/>
             <BtTap.Screen name="OrdersDelivStack" options={{ title: 'Domicilios finalizados' }} component={OrdersDelivStack} initialParams={{user: user}}/>
-            <BtTap.Screen name="ProfileDeliv" options={{ title: 'Perfil' }} component={ProfileDeliv} initialParams={{user: user}}/>
+            <BtTap.Screen name="ProfileDStack" options={{ title: 'Perfil' }} component={ProfileDStack} initialParams={{user: user}}/>
 
 
         </BtTap.Navigator>

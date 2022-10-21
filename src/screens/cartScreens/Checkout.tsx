@@ -109,7 +109,7 @@ export const Checkout = ({ navigation , route}) => {
                 <View style={{ flexDirection: "column", marginLeft: 15 }}>
                   <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Información</Text>
                   <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5 }}>Edificio de ingeniería, piso 2</Text>
-                  <TouchableOpacity onPress={() => navigation.navigate('CartStack')} style={styles.btnCambioUbi}>
+                  <TouchableOpacity onPress={() => navigation.navigate('ChangeLocation')} style={styles.btnCambioUbi}>
                     <Text style={{ fontSize: 15, marginLeft: 12, marginRight: 12, fontWeight: 'bold', color: "white", }}>Cambiar ubicación</Text>
                   </TouchableOpacity>
 

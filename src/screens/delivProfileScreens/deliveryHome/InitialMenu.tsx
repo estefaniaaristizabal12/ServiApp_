@@ -48,7 +48,7 @@ const InitialMenu = ({ navigation }) => {
   const renderHeader = () => {
     return (
       <View style={styles.headerbar}>
-        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black }}>Hola</Text>
+        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black }}>Hola,</Text>
         <Text style={{ fontSize: 30, fontWeight: "700", color: Colors.black }}>Julian Rizo</Text>
       </View>
     );
