@@ -1,14 +1,11 @@
 import React from 'react'
 import { Alert, Text, View, Image, ScrollView, StyleSheet } from 'react-native';
 import { useEffect } from 'react';
-
-
-
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { getAuth, signOut } from "firebase/auth";
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
 import * as AsyncStorage from '../../services/AsyncStorage';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import DrawerItem from '../../components/DrawerItem';
 import { Colors } from '../../constants/colors';
 import { normalize } from '../../../FontNormalize';
@@ -74,7 +71,7 @@ const ProfileDeliv = ({ navigation, route }) => {
       <ScrollView>
         <View style={styles.itemContainer}>
           <DrawerItem iconName="account" text="Mi Cuenta" pro
-            onPress={() => navigation.navigate('Account')}
+            onPress={() => navigation.navigate('AccountDeliv')}
           />
 
           <DrawerItem iconName="account-multiple" text="Cerrar Sesión"

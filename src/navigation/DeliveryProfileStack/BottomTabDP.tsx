@@ -3,13 +3,8 @@ import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Colors } from '../../constants/colors';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { RestProfile } from '../../screens/restScreens/RestProfile';
-import { ReviewRest } from '../../screens/restProfileScreens/ReviewRest';
-import { OrdersRest } from '../../screens/restProfileScreens/OrdersRest';
-import { ProductsRest } from '../../screens/restProfileScreens/ProductsRest';
 import  DeliveryStack  from './DeliveryStack';
 import  OrdersDelivStack from './OrdersDelivStack';
-import  ProfileDeliv  from '../../screens/delivProfileScreens/ProfileDeliv';
 import ProfileDStack from './ProfileDStack';
 
 
@@ -46,7 +41,7 @@ export default function BottomTabDP({route, navigation}) {
                             iconName = 'clipboard-list'
                             break;
 
-                        case 'ProfileDeliv':
+                        case 'ProfileDStack':
                             iconName = 'user'
                             break;
                     }
