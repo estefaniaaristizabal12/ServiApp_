@@ -24,7 +24,6 @@ import status from '../../constants/status';
 import { normalize } from '../../../FontNormalize';
 import { useIsFocused } from "@react-navigation/native";
 
-import database from '@react-native-firebase/database'
 import firebase from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
 import app from '../firebaseConfig';
@@ -35,7 +34,7 @@ const StatusOrder = ({ navigation, route }) => {
   const isFocused = useIsFocused()
   const insets = useSafeAreaInsets();
 
-  const [currentStep, setCurrentStep] = useState();
+  const [currentStep, setCurrentStep] = useState(0);
   const [order, setOrder] = useState<any>(null);
 
   React.useEffect(() => {

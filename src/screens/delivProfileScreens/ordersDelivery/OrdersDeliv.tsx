@@ -19,6 +19,7 @@ import { CardOrderNew } from '../../../components/CardOrderNew';
 
 
 
+
 const OrdersDeliv = ({ navigation }) => {
 
   const [tabIndex, setTabIndex] = React.useState(0);
@@ -70,13 +71,14 @@ const OrdersDeliv = ({ navigation }) => {
   const renderBody = () => {
     return(
       <View style={{marginTop:10,backgroundColor:"#F5F8FF",overflow:"hidden",marginBottom:100}}>
-        <FlatList
+        {/* <FlatList
           data={CRYPTOCURRENCIES}
           style={{height:(Dimensions.get('window').height/2)+60}}
           ItemSeparatorComponent = {()=><View style={{marginVertical:8}}></View>}
           renderItem={({item})=><CardOrderNew item={item} onPress={()=>navigation.navigate("walletdetails",item)}/>}
           keyExtractor={(item) => item.id}
-       />
+       /> */}
+       
       </View>
     );
   };
