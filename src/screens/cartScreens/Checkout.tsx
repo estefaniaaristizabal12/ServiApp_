@@ -10,6 +10,7 @@ import * as UserService from '../../services/UserService'
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../firebaseConfig';
+import * as AsyncStorage from '../../services/AsyncStorage';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -23,14 +24,25 @@ export const Checkout = ({ navigation , route}) => {
   const [cart, setCart] = React.useState<any>({});
   const [total, setTotal] = React.useState<any>(0);
   const [order, setOrder] = React.useState<any>(null);
+  const [user, setUser] = React.useState<any>(null);
 
   const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
     return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
 
+  const getUser = async () => {
+    AsyncStorage.getUser()
+      .then(data => {
+          setUser(data);
+      })
+      .catch((error) => {
+         console.error(error)
+      });
+  }
+
   const payCart = () => {
-    UserService.payCart(true, selectedCard?.id, total, auth.currentUser.uid)
+    UserService.payCart(true, selectedCard?.id, total, user?.direccion1, auth.currentUser.uid)
       .then(data => {
         setOrder(data);
         console.log('checkout pay cart', data);
@@ -42,6 +54,7 @@ export const Checkout = ({ navigation , route}) => {
   }
 
   React.useEffect(() => {
+    isFocused && getUser();
     isFocused && setSelectedCard(route.params["card"]);
     isFocused && route.params["cart"] && setCart(route.params["cart"]);
     isFocused && route.params["total"] && setTotal(route.params["total"]);
