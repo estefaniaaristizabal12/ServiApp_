@@ -39,7 +39,7 @@ const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
 
-const Delivery = ({navigation}) => {
+const Delivery = ({navigation, route}) => {
 
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState("-1");
   const [restaurant, setRestaurant] = React.useState([]);
@@ -74,9 +74,16 @@ const Delivery = ({navigation}) => {
   }
 
   React.useEffect(() => {
-      if(!restaurant.length) getRestaurantes();
+    setFilteredData(null)
+    setRestaurant(null)
+        if(activeTab == "Delivery"){
+          getRestaurantesDelivery();
+        } 
+        else{
+          getRestaurantes();
+        }
       if(JSON.stringify(user) === '{}') getUser();
-  }, []);
+  }, [activeTab]);
 
     
   const getUser = async () => {
@@ -99,6 +106,14 @@ const Delivery = ({navigation}) => {
       .catch(error => console.error(error))
   };
 
+  const getRestaurantesDelivery = async () => {
+    RestService.getRestaurantsDelivery().
+      then(data => {
+        setFilteredData(data)
+        setRestaurant(data)
+      })
+      .catch(error => console.error(error))
+  };
 
   const ListCategories = () => {
     return (
@@ -148,7 +163,7 @@ const Delivery = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.white1}}>
       <StatusBar backgroundColor={Colors.white1} barStyle='dark-content' hidden={false} />
-      <HeaderMode activeTab={activeTab} setActiveTab={setActiveTab} />
+      <HeaderMode activeTab={activeTab} setActiveTab={setActiveTab} navigation={navigation}/>
       <View style={style.header}>
         <View>
           <View style={{flexDirection: 'row', marginTop: 6}}>

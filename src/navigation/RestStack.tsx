@@ -23,7 +23,7 @@ export const RestStack = () => {
             }}>
 
             {/* <StackRest.Screen name="TopTab" component={TopTab} /> */}
-            <StackRest.Screen name="Delivery" component={Delivery} />
+            <StackRest.Screen name="Delivery" component={Delivery} initialParams={{delivery: true}} />
             <StackRest.Screen name="Restaurant" component={Restaurant} />
             <StackRest.Screen name="Product" component={Product} />
             <StackRest.Screen name="Cart" component={Cart} />

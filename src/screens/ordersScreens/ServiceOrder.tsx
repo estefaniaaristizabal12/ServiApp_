@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, Button, Image } from 'react-native';
+import { Text, View, StyleSheet, Button, Image , Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { Colors } from '../../constants/colors';
@@ -18,12 +18,12 @@ import { useState } from 'react';
 
 
 
-export const ServiceOrder = ({ navigation }) => {
+export const ServiceOrder = ({ navigation, route }) => {
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const [defaultRating, setDefaultRating] = useState(5);
+    const [defaultRating, setDefaultRating] = useState(0);
     const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
 
     const [order, setOrder] = React.useState<any>(null);
@@ -40,11 +40,12 @@ export const ServiceOrder = ({ navigation }) => {
 
 
 
-    // React.useEffect(() => {
-    //     let { order } = route.params;
-    //     order.Fecha = new Date(order.Fecha).toLocaleString('es-ES')
-    //     order && setOrder(order);
-    // }, []);
+    React.useEffect(() => {
+        let { order } = route.params;
+        order.Fecha = new Date(order.Fecha).toLocaleString('es-ES')
+        order && setOrder(order);
+        setDefaultRating(order.Calificacion)
+    }, []);
 
     const { top: paddingTop } = useSafeAreaInsets();
     return (
@@ -76,7 +77,12 @@ export const ServiceOrder = ({ navigation }) => {
                                 <TouchableOpacity
                                     activeOpacity={0.7}
                                     key={item}
-                                    onPress={() => setDefaultRating(item)}>
+                                    onPress={() => 
+                                        { 
+                                            rateOrder(item);
+                                            setDefaultRating(item)
+                                        }
+                                    }>
 
                                     {
                                         item <= defaultRating ?
@@ -235,7 +241,7 @@ export const ServiceOrder = ({ navigation }) => {
                         <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.primary1, borderRadius: 50 }}>
                             <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>Enviar reseña</Text>
                         </TouchableOpacity>
-
+            
                     }
 
 
