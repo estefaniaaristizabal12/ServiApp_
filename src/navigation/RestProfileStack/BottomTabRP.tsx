@@ -4,7 +4,7 @@ import { Colors } from '../../constants/colors';
 import { FontAwesome5 } from '@expo/vector-icons';
 import ReviewRestStack from './ReviewRestStack';
 import OrderRestStack from './OrderRestStack';
-import RestProfile from '../../screens/restProfileScreens/RestProfile';
+// import RestProfile from '../../screens/restProfileScreens/RestProfile';
 
 
 
@@ -52,7 +52,7 @@ export default function BottomTabRP({route, navigation}) {
 
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={OrderRestStack} initialParams={{user: user}}/>
             <BtTap.Screen name="ReviewRestStack" options={{ title: 'Pedidos finalizados' }} component={ReviewRestStack} initialParams={{user: user}}/>
-            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={RestProfile} initialParams={{user: user}}/>
+            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={OrderRestStack} initialParams={{user: user}}/>
 
 
         </BtTap.Navigator>
