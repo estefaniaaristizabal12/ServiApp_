@@ -4,8 +4,7 @@ import { Colors } from '../constants/colors';
 import { CustomCardNew } from './CustomCardNew';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-
-export const CardOrderBottom = (props) => {
+export const CardOrderBottom = (props) =>{
 
   let { name, cryptobalance, actualbalance, decreased, percentage, difference, imgsrc } = props.item;
 
@@ -29,6 +28,8 @@ export const CardOrderBottom = (props) => {
       </CustomCardNew>
     </Pressable>);
 }
+
+
 
 const styles = StyleSheet.create({
   icon:

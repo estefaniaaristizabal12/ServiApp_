@@ -17,8 +17,8 @@ import SegmentedControl from '@react-native-segmented-control/segmented-control'
 import { CardOrderNew } from '../../../components/CardOrderNew';
 // import { BottomSheetModal, BottomSheetModalProvider, BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { StatusBar } from "expo-status-bar";
-import { BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import { CardOrderBottom } from '../../../components/CardOrderbottom';
+import { BottomSheetModal, BottomSheetModalProvider, BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import { CardOrderBottom } from '../../../components/CardOrderBottom';
 
 
 
@@ -81,14 +81,14 @@ const OrdersDeliv = ({ navigation }) => {
       decreased: false,
       imgsrc: require('../../../../assets/salad.png'),
     },
-    
+
   ];
 
   const renderHeader = () => {
     return (
       <View style={styles.headerbar}>
-        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black, letterSpacing: 0.5}}>Pedidos</Text>
-        <Text style={{ fontSize: 30, fontWeight: "900", color: Colors.black , letterSpacing: 0.5}}>Disponibles</Text>
+        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black, letterSpacing: 0.5 }}>Pedidos</Text>
+        <Text style={{ fontSize: 30, fontWeight: "900", color: Colors.black, letterSpacing: 0.5 }}>Disponibles</Text>
       </View>
     );
   };
@@ -96,47 +96,48 @@ const OrdersDeliv = ({ navigation }) => {
   const SegmentedCont = () => {
     return (
       <View style={styles.box}>
-        <View style={{flexDirection: "column", alignItems: "center"}}>
-        <Text style={{ color:'#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10}}>Pedidos</Text>
-        <Text style={{ color:'#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10}}>10</Text>
+        <View style={{ flexDirection: "column", alignItems: "center" }}>
+          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10 }}>Pedidos</Text>
+          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10 }}>10</Text>
         </View>
-        <View style={{flexDirection: "column", alignItems: "center"}}>
-        <Text style={{ color:'#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10}}>Domiciliario</Text>
-        <Text style={{ color:'#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10,}}>10</Text>
+        <View style={{ flexDirection: "column", alignItems: "center" }}>
+          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10 }}>Domiciliario</Text>
+          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>10</Text>
         </View>
-        <View style={{flexDirection: "column", alignItems: "center"}}>
-        <Text style={{ color:'#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10}}>Recogida</Text>
-        <Text style={{ color:'#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10,}}>10</Text>
+        <View style={{ flexDirection: "column", alignItems: "center" }}>
+          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10 }}>Recogida</Text>
+          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>10</Text>
         </View>
       </View>
     );
   };
 
   const renderBody = () => {
-    return(
-      <View style={{marginTop:20,overflow:"hidden",marginBottom: 10, marginHorizontal: 5}}>
+    return (
+      <View style={{ marginTop: 20, overflow: "hidden", marginBottom: 10, marginHorizontal: 5 }}>
         <FlatList
           data={CRYPTOCURRENCIES}
-          style={{height:(Dimensions.get('window').height/2)+80}}
-          ItemSeparatorComponent = {()=><View style={{marginVertical:-5}}></View>}
-          renderItem={({item})=><CardOrderNew item={item}  onPress={handlePresentModal}/>}
+          style={{ height: (Dimensions.get('window').height / 2) + 80 }}
+          ItemSeparatorComponent={() => <View style={{ marginVertical: -5 }}></View>}
+          renderItem={({ item }) => <CardOrderNew item={item} onPress={handlePresentModal} />}
           keyExtractor={(item) => item.id}
-       />
+        />
       </View>
     );
   };
 
 
   const renderBodyBotton = () => {
-    return(
-      <View style={{marginTop:20,overflow:"hidden",marginBottom: 10, marginHorizontal: 5, width: "100%"}}>
+    return (
+      <View style={{ marginTop: 20, overflow: "hidden", marginBottom: 10, marginHorizontal: 5, width: "100%" }}>
         <FlatList
           data={CRYPTOCURRENCIES}
-          style={{height:(Dimensions.get('window').height/2)}}
-          ItemSeparatorComponent = {()=><View style={{marginVertical:-5}}></View>}
-          renderItem={({item})=><CardOrderBottom item={item}  onPress={handlePresentModal}/>}
+          style={{ height: (Dimensions.get('window').height / 2) }}
+          ItemSeparatorComponent={() => <View style={{ marginVertical: -5 }}></View>}
+          renderItem={({ item }) =>
+            <CardOrderBottom item={item} onPress={handlePresentModal} />}
           keyExtractor={(item) => item.id}
-       />
+        />
       </View>
     );
   };
@@ -169,13 +170,9 @@ const OrdersDeliv = ({ navigation }) => {
           <View style={styles.contentContainer}>
             <Text style={[styles.title, { marginBottom: 20, marginTop: 10 }]}>Pedido #12321</Text>
             <Text style={styles.description}>
-                  Pedido Domicilio    |   Edificio Ingenieria
+              Pedido Domicilio    |   Edificio Ingenieria
             </Text>
             {renderBodyBotton()}
-
-            
-
-
 
           </View>
         </BottomSheetModal>
