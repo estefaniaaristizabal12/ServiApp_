@@ -24,17 +24,18 @@ export const ServiceOrder = ({ navigation, route }) => {
     const auth = getAuth(app);
 
     const [defaultRating, setDefaultRating] = useState(0);
+    const [comment, setComment] = useState("");
     const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
 
     const [order, setOrder] = React.useState<any>(null);
 
-    const rateOrder = async (rate: any) => {
-
-        UserService.rateOrder(order.id, rate, auth.currentUser.uid)
-            .then(data => {
-                console.log(data)
-            })
-            .catch(error => console.error(error))
+    const rateOrder = async () => {
+      navigation.navigate('OrdersStack', {screen : 'Orders'})
+      UserService.rateOrder(order.id, defaultRating, comment, auth.currentUser.uid)
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => console.error(error))
     }
 
 
@@ -46,6 +47,27 @@ export const ServiceOrder = ({ navigation, route }) => {
         order && setOrder(order);
         setDefaultRating(order.Calificacion)
     }, []);
+
+    const renderSendRateButton = () => {
+      if(defaultRating == 0 || comment == "" && defaultRating != 5){
+          return (
+            <View style={{ flex: 0.2, justifyContent: "center", alignContent: "center" }}>
+                    <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.grey, borderRadius: 50 }}>
+                        <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>{defaultRating == 1 || defaultRating == 2?"Reportar inconveniente":"Enviar reseña"}</Text>
+                    </TouchableOpacity>
+            </View>
+          );
+      }
+      else{
+          return (
+            <View style={{ flex: 0.2, justifyContent: "center", alignContent: "center" }}>
+                    <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.primary1, borderRadius: 50 }}onPress= {() => {rateOrder()}}>
+                        <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>{defaultRating == 1 || defaultRating == 2?"Reportar inconveniente":"Enviar reseña"}</Text>
+                    </TouchableOpacity>
+            </View>
+          );
+      }
+    }
 
     const { top: paddingTop } = useSafeAreaInsets();
     return (
@@ -79,8 +101,8 @@ export const ServiceOrder = ({ navigation, route }) => {
                                     key={item}
                                     onPress={() => 
                                         { 
-                                            rateOrder(item);
                                             setDefaultRating(item)
+                                            setComment("")
                                         }
                                     }>
 
@@ -120,17 +142,15 @@ export const ServiceOrder = ({ navigation, route }) => {
                             <View style={{ flex: 0.8, flexDirection: "row" }}>
 
                                 <View style={{ flex: 0.33, alignItems: "center" }}>
-                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}onPress= {() => {setComment("Tardó mucho en llegar")}}>
                                         <Image
                                             style={{ height: 50, width: 50 }}
                                             source={require('../../../assets/tiempoT.png')} />
-
-
                                         <Text style={styles.descripcionRese}>Tardó mucho en llegar</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ flex: 0.33, alignItems: "center" }}>
-                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}onPress= {() => {setComment("Producto en pésimo estado")}}>
                                         <Image
                                             style={{ height: 50, width: 50 }}
                                             source={require('../../../assets/productMal.png')} />
@@ -138,7 +158,7 @@ export const ServiceOrder = ({ navigation, route }) => {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ flex: 0.33, alignItems: "center" }}>
-                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}onPress= {() => {setComment("Producto incompleto")}}>
                                         <Image
                                             style={{ height: 50, width: 50 }}
                                             source={require('../../../assets/incompleto.png')} />
@@ -162,7 +182,7 @@ export const ServiceOrder = ({ navigation, route }) => {
                             <View style={{ flex: 0.8, flexDirection: "row" }}>
 
                                 <View style={{ flex: 0.33, alignItems: "center" }}>
-                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}onPress= {() => {setComment("Tardó en llegar")}}>
                                         <Image
                                             style={{ height: 50, width: 50 }}
                                             source={require('../../../assets/tiempoT.png')} />
@@ -171,7 +191,7 @@ export const ServiceOrder = ({ navigation, route }) => {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ flex: 0.33, alignItems: "center" }}>
-                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}onPress= {() => {setComment("Producto en mal estado")}}>
                                         <Image
                                             style={{ height: 50, width: 50 }}
                                             source={require('../../../assets/productRegular.png')} />
@@ -179,7 +199,7 @@ export const ServiceOrder = ({ navigation, route }) => {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ flex: 0.33, alignItems: "center" }}>
-                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}onPress= {() => {setComment("Producto incompleto")}}>
                                         <Image
                                             style={{ height: 50, width: 50 }}
                                             source={require('../../../assets/incompletoR.png')} />
@@ -204,7 +224,7 @@ export const ServiceOrder = ({ navigation, route }) => {
 
 
                                 <View style={{ flex: 0.5, alignItems: "center" }}>
-                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, alignItems: "center" }} onPress= {() => {setComment("Ser más rápidos")}}>
                                         <Image
                                             style={{ height: 50, width: 50 }}
                                             source={require('../../../assets/rapidez.png')} />
@@ -212,7 +232,7 @@ export const ServiceOrder = ({ navigation, route }) => {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ flex: 0.5, alignItems: "center" }}>
-                                    <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center" }}>
+                                    <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center" }}onPress= {() => {setComment("Ser más cuidadosos con los productos")}}>
                                         <Image
                                             style={{ height: 50, width: 50 }}
                                             source={require('../../../assets/cuidadosos.png')} />
@@ -231,23 +251,7 @@ export const ServiceOrder = ({ navigation, route }) => {
 
                 </View>
 
-                <View style={{ flex: 0.2, justifyContent: "center", alignContent: "center" }}>
-
-                    {(defaultRating == 1 || defaultRating == 2) ?
-                        <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.primary1, borderRadius: 50 }}>
-                            <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>Reportar inconveniente</Text>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.primary1, borderRadius: 50 }}>
-                            <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>Enviar reseña</Text>
-                        </TouchableOpacity>
-            
-                    }
-
-
-                </View>
-
-
+            {renderSendRateButton()}
 
             </View>
 

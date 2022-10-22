@@ -32,7 +32,7 @@ export const Orders = ({ navigation }) => {
     UserService.getOrders("Usuario", 2, auth.currentUser.uid)
       .then(data => {
         const newData = data.map((order: any)=> {
-          order.Fecha = new Date(order.Fecha).toLocaleString('es-ES')
+          order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
           return order
         })
         setOrders(newData)

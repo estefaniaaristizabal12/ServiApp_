@@ -153,10 +153,13 @@ export async function getOrders(role: any, delivery: number, uid: any) {
   return res.json()
 }
 
-export async function rateOrder(idOrder: any, rate: any, uid: any) {
+export async function rateOrder(idOrder: any, rate: any, comment:any, uid: any) {
   const data = {
     id: idOrder,
-    Calificacion: rate
+    Resena: {
+      Calificacion: rate,
+      Comentario: comment
+    }
   }
   const res = await fetch(`${url}/rateorder/?uid=${uid}`, {
     method: 'POST', body: JSON.stringify(data),
