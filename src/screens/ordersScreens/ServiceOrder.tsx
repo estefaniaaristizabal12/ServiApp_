@@ -30,11 +30,12 @@ export const ServiceOrder = ({ navigation, route }) => {
     const [order, setOrder] = React.useState<any>(null);
 
     const rateOrder = async () => {
-        UserService.rateOrder(order.id, defaultRating, comment, auth.currentUser.uid)
-            .then(data => {
-                console.log(data)
-            })
-            .catch(error => console.error(error))
+      navigation.navigate('OrdersStack', {screen : 'Orders'})
+      UserService.rateOrder(order.id, defaultRating, comment, auth.currentUser.uid)
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => console.error(error))
     }
 
 
@@ -48,33 +49,21 @@ export const ServiceOrder = ({ navigation, route }) => {
     }, []);
 
     const renderSendRateButton = () => {
-      if(defaultRating == 0 || comment == ""){
+      if(defaultRating == 0 || comment == "" && defaultRating != 5){
           return (
             <View style={{ flex: 0.2, justifyContent: "center", alignContent: "center" }}>
-                {(defaultRating == 1 || defaultRating == 2) ?
                     <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.grey, borderRadius: 50 }}>
-                        <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>Reportar inconveniente</Text>
+                        <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>{defaultRating == 1 || defaultRating == 2?"Reportar inconveniente":"Enviar reseña"}</Text>
                     </TouchableOpacity>
-                    :
-                    <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.grey, borderRadius: 50 }}>
-                        <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>Enviar reseña</Text>
-                    </TouchableOpacity>
-                }
             </View>
           );
       }
       else{
           return (
             <View style={{ flex: 0.2, justifyContent: "center", alignContent: "center" }}>
-                {(defaultRating == 1 || defaultRating == 2) ?
                     <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.primary1, borderRadius: 50 }}onPress= {() => {rateOrder()}}>
-                        <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>Reportar inconveniente</Text>
+                        <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>{defaultRating == 1 || defaultRating == 2?"Reportar inconveniente":"Enviar reseña"}</Text>
                     </TouchableOpacity>
-                    :
-                    <TouchableOpacity style={{ marginHorizontal: 2, marginRight: 3, alignItems: "center", backgroundColor: Colors.primary1, borderRadius: 50 }}onPress= {() => {rateOrder()}}>
-                        <Text style={{ fontSize: normalize(22), fontWeight: 'bold', color: 'white', padding: 15 }}>Enviar reseña</Text>
-                    </TouchableOpacity>
-                }
             </View>
           );
       }
@@ -113,6 +102,7 @@ export const ServiceOrder = ({ navigation, route }) => {
                                     onPress={() => 
                                         { 
                                             setDefaultRating(item)
+                                            setComment("")
                                         }
                                     }>
 
@@ -261,7 +251,7 @@ export const ServiceOrder = ({ navigation, route }) => {
 
                 </View>
 
-            {{renderSendRateButton}}
+            {renderSendRateButton()}
 
             </View>
 

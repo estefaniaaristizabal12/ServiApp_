@@ -156,7 +156,7 @@ export async function getOrders(role: any, delivery: number, uid: any) {
 export async function rateOrder(idOrder: any, rate: any, comment:any, uid: any) {
   const data = {
     id: idOrder,
-    Reseña: {
+    Resena: {
       Calificacion: rate,
       Comentario: comment
     }

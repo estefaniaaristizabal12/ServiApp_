@@ -10,7 +10,7 @@ export const Details = ({ navigation, route }) => {
   const [order, setOrder] = React.useState<any>(null);
 
   React.useEffect(() => {
-      let { orderP } = route.params;
+      const orderP = route.params.orderP;
       orderP && setOrder(orderP);
   }, []);
   
@@ -20,7 +20,7 @@ export const Details = ({ navigation, route }) => {
 
       <View style={{ flex: 0.20 }}>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Orders')} style={styles.btnAtas}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btnAtas}>
           <Ionicons name="arrow-back" size={25} color={Colors.gray} />
         </TouchableOpacity>
 
@@ -42,7 +42,7 @@ export const Details = ({ navigation, route }) => {
                 />
               </View>
               <View style={{ flex: 0.7, marginLeft: 10, justifyContent: "center" }}>
-                <Text style={styles.experiencia}>Cuéntanos por favor cómo fue tu experiencia con {order?.Restaurante?.Nombre} Cafetería</Text>
+                <Text style={styles.experiencia}>Cuéntanos por favor cómo fue tu experiencia con {order?.Restaurante?.Nombre}</Text>
               </View>
 
               <View style={{ flex: 0.1, alignItems: "center", justifyContent: "center" }}>

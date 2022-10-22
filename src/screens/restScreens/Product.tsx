@@ -43,7 +43,6 @@ export const Product = ({ navigation, route }) => {
 
     useEffect(() => {
         let { selectedProduct, selectedRestaurant, additions, delivery } = route.params;
-        console.log("sdfsdaf", delivery)
         selectedProduct && setSelectedProduct(selectedProduct);
         selectedRestaurant && setSelectedRestaurant(selectedRestaurant);
         additions && setAdditions(additions);

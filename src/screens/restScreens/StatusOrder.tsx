@@ -231,7 +231,8 @@ const StatusOrder = ({ navigation, route }) => {
           <TextButton
             buttonContainerStyle={{ height: 55, borderRadius: 12 }}
             label="CALIFICAR PEDIDO"
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('OrdersStack', {screen:'ServiceOrder', params: {order: order}})}
+            // onPress={() => navigation.navigate('OrdersStack', {order: order})}
           />
         )}
       </View>
