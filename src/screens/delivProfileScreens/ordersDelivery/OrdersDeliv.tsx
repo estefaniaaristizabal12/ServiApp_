@@ -19,19 +19,75 @@ import { CardOrderNew } from '../../../components/CardOrderNew';
 import { StatusBar } from "expo-status-bar";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { CardOrderBottom } from '../../../components/CardOrderBottom';
+import { useIsFocused } from "@react-navigation/native";
+import * as UserService from '../../../services/UserService';
+import * as AsyncStorage from '../../../services/AsyncStorage';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from '../../firebaseConfig';
 
-
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 
 
 const OrdersDeliv = ({ navigation }) => {
 
 
+
+
+  const isFocused = useIsFocused()
   const [tabIndex, setTabIndex] = React.useState(0);
   const bottomSheetModalRef = React.useRef(null);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [orders, setOrders] = React.useState<any>([]);
+  const [user, setUser] = React.useState<any>(null);
+  const [totales, setTotales] = React.useState<any>(null);
 
   const snapPoints = ["80%"];
+
+
+
+
+  React.useEffect(() => {
+    if (isFocused) {
+      getOrders();
+      getUser();
+    }
+  }, [isFocused]);
+
+  const getOrders = async () => {
+    UserService.getOrders("Domiciliario", 2, "-1")
+      .then(data => {
+        let pick = 0;
+        let del = 0;
+        let total = data.length
+        const newData = data.map((order: any) => {
+          order.Domicilio? del++ : pick++
+          order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
+          return order
+        })
+        setTotales({total: total, pick: pick, del: del})
+        setOrders(newData)
+      })
+      .catch(error => {
+        console.error("getOrders: ", error)
+      });
+  };
+
+
+  const getUser = async () => {
+    AsyncStorage.getUser()
+      .then(data => {
+          setUser(data);
+          // console.log("sdklñfja getUser", user)
+      })
+      .catch((error) => {
+         console.error(error)
+      });
+  }
+
+
 
   function handlePresentModal() {
     bottomSheetModalRef.current?.present();
@@ -98,15 +154,15 @@ const OrdersDeliv = ({ navigation }) => {
       <View style={styles.box}>
         <View style={{ flexDirection: "column", alignItems: "center" }}>
           <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10 }}>Pedidos</Text>
-          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10 }}>10</Text>
+          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10 }}>{totales?.total}</Text>
         </View>
         <View style={{ flexDirection: "column", alignItems: "center" }}>
           <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10 }}>Domiciliario</Text>
-          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>10</Text>
+          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>{totales?.del}</Text>
         </View>
         <View style={{ flexDirection: "column", alignItems: "center" }}>
           <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10 }}>Recogida</Text>
-          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>10</Text>
+          <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>{totales?.pick}</Text>
         </View>
       </View>
     );
@@ -116,10 +172,10 @@ const OrdersDeliv = ({ navigation }) => {
     return (
       <View style={{ marginTop: 20, overflow: "hidden", marginBottom: 10, marginHorizontal: 5 }}>
         <FlatList
-          data={CRYPTOCURRENCIES}
+          data={orders}
           style={{ height: (Dimensions.get('window').height / 2) + 80 }}
           ItemSeparatorComponent={() => <View style={{ marginVertical: -5 }}></View>}
-          renderItem={({ item }) => <CardOrderNew item={item} onPress={handlePresentModal} />}
+          renderItem={({ item }) => <CardOrderNew item={item} user={user!} onPress={handlePresentModal} />}
           keyExtractor={(item) => item.id}
         />
       </View>
