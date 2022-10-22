@@ -5,6 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import ReviewRestStack from './ReviewRestStack';
 import OrderRestStack from './OrderRestStack';
 // import RestProfile from '../../screens/restProfileScreens/RestProfile';
+import ProfileDeliv from '../../screens/delivProfileScreens/ProfileDeliv';
 
 
 
@@ -52,7 +53,8 @@ export default function BottomTabRP({route, navigation}) {
 
             <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={OrderRestStack} initialParams={{user: user}}/>
             <BtTap.Screen name="ReviewRestStack" options={{ title: 'Pedidos finalizados' }} component={ReviewRestStack} initialParams={{user: user}}/>
-            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={OrderRestStack} initialParams={{user: user}}/>
+            {/* <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={OrderRestStack} initialParams={{user: user}}/> */}
+            <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={ProfileDeliv} />
 
 
         </BtTap.Navigator>
