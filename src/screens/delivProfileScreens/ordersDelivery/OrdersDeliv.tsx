@@ -117,7 +117,7 @@ const OrdersDeliv = ({ navigation }) => {
       <View style={{marginTop:20,overflow:"hidden",marginBottom: 10, marginHorizontal: 5}}>
         <FlatList
           data={CRYPTOCURRENCIES}
-          style={{height:(Dimensions.get('window').height/2)}}
+          style={{height:(Dimensions.get('window').height/2)+80}}
           ItemSeparatorComponent = {()=><View style={{marginVertical:-5}}></View>}
           renderItem={({item})=><CardOrderNew item={item}  onPress={handlePresentModal}/>}
           keyExtractor={(item) => item.id}
@@ -156,7 +156,7 @@ const OrdersDeliv = ({ navigation }) => {
         {/* Body */}
         {renderBody()}
 
-        <Button title="Present Modal" onPress={handlePresentModal} />
+        {/* <Button title="Present Modal" onPress={handlePresentModal} /> */}
         <StatusBar style="auto" />
 
         <BottomSheetModal
