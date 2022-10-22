@@ -48,8 +48,8 @@ const InitialMenu = ({ navigation }) => {
   const renderHeader = () => {
     return (
       <View style={styles.headerbar}>
-        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black }}>Hola,</Text>
-        <Text style={{ fontSize: 30, fontWeight: "700", color: Colors.black }}>Julian Rizo</Text>
+        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black , letterSpacing: 0.5}}>Hola,</Text>
+        <Text style={{ fontSize: 30, fontWeight: "900", color: Colors.black,letterSpacing: 0.5 }}>Estefania</Text>
       </View>
     );
   };

@@ -15,8 +15,10 @@ import { Colors } from '../../../constants/colors';
 import * as React from 'react';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import { CardOrderNew } from '../../../components/CardOrderNew';
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetFlatList } from "@gorhom/bottom-sheet";
+// import { BottomSheetModal, BottomSheetModalProvider, BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { StatusBar } from "expo-status-bar";
+import { BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import { CardOrderBottom } from '../../../components/CardOrderbottom';
 
 
 
@@ -29,7 +31,7 @@ const OrdersDeliv = ({ navigation }) => {
   const bottomSheetModalRef = React.useRef(null);
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const snapPoints = ["25%", "48%", "75%"];
+  const snapPoints = ["80%"];
 
   function handlePresentModal() {
     bottomSheetModalRef.current?.present();
@@ -59,13 +61,34 @@ const OrdersDeliv = ({ navigation }) => {
       decreased: false,
       imgsrc: require('../../../../assets/salad.png'),
     },
+    {
+      id: 3,
+      name: "Processed",
+      cryptobalance: "3.5290123123 BTC",
+      actualbalance: "$19.53",
+      percentage: "+ 4.32%",
+      difference: "$ 5.44",
+      decreased: true,
+      imgsrc: require('../../../../assets/salad.png'),
+    },
+    {
+      id: 4,
+      name: "Active",
+      cryptobalance: "3.5290123123 ETH",
+      actualbalance: "$19.53",
+      percentage: "+ 4.32%",
+      difference: "$ 5.44",
+      decreased: false,
+      imgsrc: require('../../../../assets/salad.png'),
+    },
+    
   ];
 
   const renderHeader = () => {
     return (
       <View style={styles.headerbar}>
-        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black }}>Pedidos</Text>
-        <Text style={{ fontSize: 30, fontWeight: "700", color: Colors.black }}>Disponibles</Text>
+        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black, letterSpacing: 0.5}}>Pedidos</Text>
+        <Text style={{ fontSize: 30, fontWeight: "900", color: Colors.black , letterSpacing: 0.5}}>Disponibles</Text>
       </View>
     );
   };
@@ -91,12 +114,27 @@ const OrdersDeliv = ({ navigation }) => {
 
   const renderBody = () => {
     return(
-      <View style={{marginTop:10,backgroundColor:"#F5F8FF",overflow:"hidden",marginBottom:100, marginHorizontal: 20}}>
+      <View style={{marginTop:20,overflow:"hidden",marginBottom: 10, marginHorizontal: 5}}>
         <FlatList
           data={CRYPTOCURRENCIES}
-          style={{height:(Dimensions.get('window').height/2)+60}}
-          ItemSeparatorComponent = {()=><View style={{marginVertical:8}}></View>}
-          renderItem={({item})=><CardOrderNew item={item} onPress={()=>navigation.navigate("walletdetails",item)}/>}
+          style={{height:(Dimensions.get('window').height/2)}}
+          ItemSeparatorComponent = {()=><View style={{marginVertical:-5}}></View>}
+          renderItem={({item})=><CardOrderNew item={item}  onPress={handlePresentModal}/>}
+          keyExtractor={(item) => item.id}
+       />
+      </View>
+    );
+  };
+
+
+  const renderBodyBotton = () => {
+    return(
+      <View style={{marginTop:20,overflow:"hidden",marginBottom: 10, marginHorizontal: 5, width: "100%"}}>
+        <FlatList
+          data={CRYPTOCURRENCIES}
+          style={{height:(Dimensions.get('window').height/2)}}
+          ItemSeparatorComponent = {()=><View style={{marginVertical:-5}}></View>}
+          renderItem={({item})=><CardOrderBottom item={item}  onPress={handlePresentModal}/>}
           keyExtractor={(item) => item.id}
        />
       </View>
@@ -116,27 +154,27 @@ const OrdersDeliv = ({ navigation }) => {
         {SegmentedCont()}
 
         {/* Body */}
-        {/* {renderBody()} */}
+        {renderBody()}
 
         <Button title="Present Modal" onPress={handlePresentModal} />
         <StatusBar style="auto" />
 
-
-
-
         <BottomSheetModal
           ref={bottomSheetModalRef}
-          index={1}
+          index={0}
           snapPoints={snapPoints}
           backgroundStyle={{ borderRadius: 50 }}
           onDismiss={() => setIsOpen(false)}
         >
           <View style={styles.contentContainer}>
-            <Text style={[styles.title, { marginBottom: 20 }]}>Dark mode</Text>
+            <Text style={[styles.title, { marginBottom: 20, marginTop: 10 }]}>Pedido #12321</Text>
             <Text style={styles.description}>
-              Set Dark mode to use the Light or Dark selection located in your
-              device Display and Brightness settings.
+                  Pedido Domicilio    |   Edificio Ingenieria
             </Text>
+            {renderBodyBotton()}
+
+            
+
 
 
           </View>
@@ -177,13 +215,14 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "900",
     letterSpacing: 0.5,
-    fontSize: 16,
+    fontSize: 18,
   },
   description: {
     color: "#56636F",
     fontSize: 13,
     fontWeight: "normal",
     width: "100%",
+    textAlign: "center",
   },
 });
 
