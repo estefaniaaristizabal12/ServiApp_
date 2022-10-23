@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -13,7 +13,10 @@ import { firebaseConfig } from '../firebaseConfig';
 import * as AsyncStorage from '../../services/AsyncStorage';
 import { StatusBar } from "expo-status-bar";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetFlatList } from '@gorhom/bottom-sheet';
-import SelectDropdown from 'react-native-select-dropdown'
+import SelectDropdown from 'react-native-select-dropdown';
+
+
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -22,7 +25,16 @@ export const Checkout = ({ navigation, route }) => {
   const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets();
   const snapPoints = ["90%"];
-  const countries = ["Egypt", "Canada", "Australia", "Ireland"]
+  const edificios = ["Casa Navarro", "Ed. Fernando Barón", "Ed. Gabriel Giraldo", "Ed. Gerardo Arango Puerta",
+    "Talleres de Diseño Industrial", "Ed. Lorenzo Uribe", "Ed. Ático", "Ed. Julio Carrizosa", "Ed. José Gabriel Maldonado",
+    "Ed. Luis Felipe Silva Garativo", "Ed. Leopoldo Rother", "Ed. Carlos Arbeláez Camacho", "Capilla Nuestra Señora del Camino",
+    "Talleres de Arquitectura", "Ed. Jorge Hoyos Vásquez", "Ed. Emilio Arango", "Cafetería Central", "Hospital Universitario San Ignacio",
+    "Facultad de Educación", "Facultad de Odontología", "Ed. José del Carmen Acosta", "Ed. Jesús María Fernandez",
+    "Urgencias HUSI", "Ed. Néstor Santacoloma", "Ed. Rafael Barrientos Conto", "Instituto de Genética Humana", "Auditorio Alejandro Novoa",
+    "Central de Vigilancia", "Ed. Pavlo VI", "Facultad de Artes Ala Oriental", "Ed. Catalán", "Salones Carrera de Estudios Musicales", "Capilla San Francisco Javier",
+    "Ed. Cataluña", "Ed. Quindío", "Ed. Juniorado, Bienestar", "Auditorio Félix Restrepo", "Ed. Ángel Valtierra", "Ed. Carlos Ortiz", "Ed. Jesús Emilio Ramírez",
+    "Ed. Bioterio", "Ed. José Rafael Arboleda", "Cancha de Fútbol", "Centro Javeriano de Formación Deportiva", "Ed. Pedro Arrupe",
+    "Ed. Manuel Briceño Jáuregui", "Ed. Don Guillermo Castro", "Ed. Hernando Arellano Ángel"]
 
 
   const [selectedCard, setSelectedCard] = React.useState<any>(null);
@@ -134,24 +146,60 @@ export const Checkout = ({ navigation, route }) => {
                       onDismiss={() => setIsOpen(false)}
                     >
                       <View style={styles.contentContainer}>
-                        <Text style={[styles.title, { marginBottom: 20, marginTop: 10 }]}>Cambia tu ubicación</Text>
-                        {/* <Text style={styles.description}>
-                          Pedido Domicilio    |   Edificio Ingenieria
-                        </Text> */}
-                        {/* {renderBodyBotton()} */}
+
+                        <Text style={[styles.title, { marginBottom: 20, marginTop: 10, alignSelf: "center" }]}>Cambia tu ubicación</Text>
+
+                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 20, marginLeft: 15 }}>
+                          <FontAwesome5 name="building" size={15} color={Colors.grey1} />
+                          <Text style={{ marginLeft: 5, fontSize: normalize(20), color: Colors.grey1 }}>Edificio</Text>
+                        </View>
+
+
 
                         <SelectDropdown
-                          data={countries}
-                          dropdownStyle={styles.contenedorDrop}
+                          data={edificios}
                           onSelect={(selectedItem, index) => {
-                            console.log(selectedItem, index)
-                          }} 
+                            console.log(selectedItem, index);
+                          }}
+                          defaultButtonText={'Selecciona un edificio'}
                           buttonTextAfterSelection={(selectedItem, index) => {
-                            return selectedItem
+                            return selectedItem;
                           }}
                           rowTextForSelection={(item, index) => {
-                            return item
-                          }}/>
+                            return item;
+                          }}
+                          buttonStyle={styles.dropdown1BtnStyle}
+                          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                          renderDropdownIcon={isOpened => {
+                            return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={Colors.darkBlue} size={18} />;
+                          }}
+                          dropdownIconPosition={'right'}
+                          dropdownStyle={styles.dropdown1DropdownStyle}
+                          rowStyle={styles.dropdown1RowStyle}
+                          rowTextStyle={styles.dropdown1RowTxtStyle}
+                          selectedRowStyle={styles.dropdown1SelectedRowStyle}
+                          search
+                          searchInputStyle={styles.dropdown1searchInputStyleStyle}
+                          searchPlaceHolder={'Busca aquí'}
+                          searchPlaceHolderColor={'darkgrey'}
+                          renderSearchInputLeftIcon={() => {
+                            return <FontAwesome name={'search'} color={Colors.darkBlue} size={18} />;
+                          }}
+                        />
+
+                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 20, marginLeft: 15 }}>
+                          <MaterialIcons name="description" size={15} color={Colors.grey1} />
+                          <Text style={{ marginLeft: 5, fontSize: normalize(20), color: Colors.grey1 }}>Descripción</Text>
+                        </View>
+
+                        <TextInput
+                          placeholder="Ingresa una descripción"
+                          style={styles.textDescription}
+                        />
+
+                        <TouchableOpacity style={styles.btnCambioUbi2}>
+                          <Text style={{ fontSize: normalize(18), fontWeight: 'bold', color: "white", textAlign: "center", padding: 10 }}>Guardar Cambios</Text>
+                        </TouchableOpacity>
 
                       </View>
                     </BottomSheetModal>
@@ -342,7 +390,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    alignItems: "center",
     paddingHorizontal: 15,
   },
   title: {
@@ -350,9 +397,52 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     fontSize: 18,
   },
-  contenedorDrop:{
-    borderRadius:50
+  contenedorDrop: {
+    borderRadius: 50
 
-  }
+  },
+  dropdown1BtnStyle: {
+    width: '95%',
+    height: 50,
+    backgroundColor: Colors.light,
+    borderRadius: 15,
+    marginTop: 10,
+    alignSelf: "center"
+
+  },
+  dropdown1BtnTxtStyle: { color: Colors.grey, textAlign: 'left', fontSize: normalize(16) },
+  dropdown1DropdownStyle: { backgroundColor: '#EFEFEF', borderRadius: 15, marginTop: 15, height: 300 },
+  dropdown1RowStyle: { backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5' },
+  dropdown1RowTxtStyle: { color: '#444', textAlign: 'left', fontSize: normalize(16) },
+  dropdown1SelectedRowStyle: { backgroundColor: 'rgba(0,0,0,0.1)' },
+  dropdown1searchInputStyleStyle: {
+    backgroundColor: '#EFEFEF',
+    borderRadius: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#444',
+  },
+  textDescription: {
+    width: '95%',
+    height: 50,
+    backgroundColor: Colors.light,
+    borderRadius: 15,
+    marginTop: 10,
+    alignSelf: "center",
+    fontSize: normalize(18),
+    textAlign: 'left',
+    padding: 15,
+    color: Colors.grey
+  },
+  btnCambioUbi2: {
+    backgroundColor: Colors.primary,
+    borderRadius: 15,
+    padding: 4,
+    marginTop: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    width: '95%',
+    alignSelf: "center"
+  },
+
 
 });
