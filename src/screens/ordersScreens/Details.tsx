@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Colors } from '../../constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { normalize } from '../../../FontNormalize';
 
 export const Details = ({ navigation, route }) => {
 
@@ -127,33 +128,32 @@ export const Details = ({ navigation, route }) => {
 }
 const styles = StyleSheet.create({
   textoInicio: {
-    fontSize: 30,
+    fontSize: normalize(30),
     fontWeight: 'bold',
     color: 'white',
     marginTop: 30,
     marginLeft: 20
   },
   textoFecha: {
-    fontSize: 18,
+    fontSize: normalize(18),
     color: 'white',
     marginTop: 10,
     marginLeft: 20,
     fontStyle:"italic"
   },
   titulo: {
-    fontSize: 23,
+    fontSize: normalize(20),
     color: "black",
     fontWeight: 'bold',
     padding: 10
   },
   experiencia: {
-    fontSize: 18,
+    fontSize: normalize(18),
     color: "black"
   },
   verLista: {
-    fontSize: 18,
+    fontSize: normalize(18),
     color: "white",
-    fontStyle: "italic"
   },
   btnVerLista: {
     backgroundColor: Colors.primary1,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   subtitulos: {
-    fontSize: 18,
+    fontSize: normalize(18),
     color: "black",
     fontWeight: 'bold',
     padding: 10,
@@ -174,12 +174,12 @@ const styles = StyleSheet.create({
     paddingBottom: 5
   },
   costos: {
-    fontSize: 18,
+    fontSize: normalize(18),
     color: "black",
     padding: 10,
   },
   valores: {
-    fontSize: 18,
+    fontSize: normalize(18),
     color: "black",
     padding: 10,
     fontWeight: 'bold',
