@@ -25,7 +25,8 @@ import * as AsyncStorage from '../../../services/AsyncStorage';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../../firebaseConfig';
-
+import { CustomCardNew } from '../../../components/CustomCardNew';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
@@ -63,11 +64,11 @@ const OrdersDeliv = ({ navigation }) => {
         let del = 0;
         let total = data.length
         const newData = data.map((order: any) => {
-          order.Domicilio? del++ : pick++
+          order.Domicilio ? del++ : pick++
           order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
           return order
         })
-        setTotales({total: total, pick: pick, del: del})
+        setTotales({ total: total, pick: pick, del: del })
         setOrders(newData)
       })
       .catch(error => {
@@ -79,11 +80,11 @@ const OrdersDeliv = ({ navigation }) => {
   const getUser = async () => {
     AsyncStorage.getUser()
       .then(data => {
-          setUser(data);
-          // console.log("sdklñfja getUser", user)
+        setUser(data);
+        // console.log("sdklñfja getUser", user)
       })
       .catch((error) => {
-         console.error(error)
+        console.error(error)
       });
   }
 
@@ -185,7 +186,7 @@ const OrdersDeliv = ({ navigation }) => {
 
   const renderBodyBotton = () => {
     return (
-      <View style={{ marginTop: 20, overflow: "hidden", marginBottom: 10, marginHorizontal: 5, width: "100%" }}>
+      <View style={{ marginTop: 20, overflow: "hidden", marginBottom: -20, marginHorizontal: 5, width: "100%" }}>
         <FlatList
           data={CRYPTOCURRENCIES}
           style={{ height: (Dimensions.get('window').height / 2) }}
@@ -197,6 +198,30 @@ const OrdersDeliv = ({ navigation }) => {
       </View>
     );
   };
+
+
+  const renderBodyProfile = () => {
+    return (
+      <View style={{ overflow: "hidden", marginBottom: 30, marginHorizontal: 5, width: "100%" }}>
+        <CustomCardNew style={{ backgroundColor: "#fff", borderRadius: 10 }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={{ flex: 2, marginLeft: 15, marginRight: 8, marginTop: 20 }}>
+              <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 25 }}>
+                <Image source={require('../../../../assets/robot.png')} style={{ width: 50, height: 50, borderRadius: 50, marginBottom: 30 }} />
+                <View style={{ flexDirection: "column" }}>
+                  <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK, marginBottom: 5 }}>Estefania Aristizabal</Text>
+                  <Text style={{ color: Colors.LIGHTGREY, fontWeight: "600" }}>Edificio Ingenieria</Text>
+                </View>
+                <Ionicons name="checkmark-circle-sharp" size={40} style={styles.iconAceptar}></Ionicons>
+                <Ionicons name="close-circle-sharp" size={40} style={styles.iconRechazar}></Ionicons>
+              </View>
+            </View>
+          </View >
+        </CustomCardNew >
+      </View >
+    );
+  };
+
 
 
   return (
@@ -229,6 +254,7 @@ const OrdersDeliv = ({ navigation }) => {
               Pedido Domicilio    |   Edificio Ingenieria
             </Text>
             {renderBodyBotton()}
+            {renderBodyProfile()}
 
           </View>
         </BottomSheetModal>
@@ -277,6 +303,16 @@ const styles = StyleSheet.create({
     width: "100%",
     textAlign: "center",
   },
+  iconAceptar: 
+  {
+    borderRadius: 50,
+    color: "#C2FBB7",
+  },
+  iconRechazar: 
+    {
+      borderRadius: 50,
+      color: "#FE9186",
+    },
 });
 
 
