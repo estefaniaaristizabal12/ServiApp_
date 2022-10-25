@@ -90,7 +90,9 @@ export const SignIn = ({ navigation }) => {
         // })
 
         create(inputs.fullname, inputs.phone, inputs.email, inputs.password, 'token', inputs.phone)
-        navigation.navigate('BottomTab');
+        // navigation.navigate('BottomTab');
+        navigation.navigate('LogIn');
+
 
       } catch (error) {
         Alert.alert('Error', 'Something went wrong');

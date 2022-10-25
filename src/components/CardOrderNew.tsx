@@ -9,7 +9,7 @@ export const CardOrderNew = (props) => {
 
   // let { name, cryptobalance, actualbalance, decreased, imgsrc } = props.item;
   let order = props.item;
-  let user = props.user;
+  // let user = props.user;
 
   return (
     <Pressable onPress={props.onPress}>
@@ -27,7 +27,7 @@ export const CardOrderNew = (props) => {
           </View>
           <View style={{ flex: 2, marginLeft: 15, marginRight: 8 }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK }}>Pedido {order?.Usuario}</Text>
+              <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK }}>Pedido {order?.Usuario?.nombrecliente?.substring(0,10)}</Text>
               <Text>No. {order?.id?.substring(0,5)}</Text>
             </View>
             <View style={{ flexDirection: "row", marginTop: 5, justifyContent: "space-between" }}>

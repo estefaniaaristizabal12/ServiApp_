@@ -54,7 +54,7 @@ const Confirmation = ({ navigation, route }) => {
           borderRadius: 12,
           backgroundColor: Colors.primary,
         }}
-        onPress={() => navigation.navigate('DeliveryStatus')}
+        onPress={() => navigation.navigate('StatusOrder', { order: route.params.order })}
       />
     </View>
   );

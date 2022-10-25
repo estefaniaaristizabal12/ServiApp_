@@ -44,6 +44,7 @@ const OrdersDeliv = ({ navigation }) => {
   const [orders, setOrders] = React.useState<any>([]);
   const [user, setUser] = React.useState<any>(null);
   const [totales, setTotales] = React.useState<any>(null);
+  const [selectedOrder, setSelectedOrder] = React.useState<any>(null);
 
   const snapPoints = ["80%"];
 
@@ -63,6 +64,7 @@ const OrdersDeliv = ({ navigation }) => {
         let pick = 0;
         let del = 0;
         let total = data.length
+        // console.log("asdfsda", data[0].Usuario)
         const newData = data.map((order: any) => {
           order.Domicilio ? del++ : pick++
           order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
@@ -176,7 +178,7 @@ const OrdersDeliv = ({ navigation }) => {
           data={orders}
           style={{ height: (Dimensions.get('window').height / 2) + 80 }}
           ItemSeparatorComponent={() => <View style={{ marginVertical: -5 }}></View>}
-          renderItem={({ item }) => <CardOrderNew item={item} user={user!} onPress={handlePresentModal} />}
+          renderItem={({ item }) => <CardOrderNew item={item} onPress={() => {setSelectedOrder(item); handlePresentModal()}}/>}
           keyExtractor={(item) => item.id}
         />
       </View>
@@ -188,7 +190,10 @@ const OrdersDeliv = ({ navigation }) => {
     return (
       <View style={{ marginTop: 20, overflow: "hidden", marginBottom: -20, marginHorizontal: 5, width: "100%" }}>
         <FlatList
-          data={CRYPTOCURRENCIES}
+          // data={CRYPTOCURRENCIES}
+          // data={selectedOrder? Object.keys(selectedOrder?.Carro).map((key) => {[(key), selectedOrder?.Carro[key]]}): []}
+          data={selectedOrder? Object.values(selectedOrder?.Carro): []}
+
           style={{ height: (Dimensions.get('window').height / 2) }}
           ItemSeparatorComponent={() => <View style={{ marginVertical: -5 }}></View>}
           renderItem={({ item }) =>
@@ -206,11 +211,11 @@ const OrdersDeliv = ({ navigation }) => {
         <CustomCardNew style={{ backgroundColor: "#fff", borderRadius: 10 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View style={{ flex: 2, marginLeft: 15, marginRight: 8, marginTop: 20 }}>
-              <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 25 }}>
+              <View style={{ flexDirection: "row", justifyContent: "space-between"}}>
                 <Image source={require('../../../../assets/robot.png')} style={{ width: 50, height: 50, borderRadius: 50, marginBottom: 30 }} />
-                <View style={{ flexDirection: "column" }}>
-                  <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK, marginBottom: 5 }}>Estefania Aristizabal</Text>
-                  <Text style={{ color: Colors.LIGHTGREY, fontWeight: "600" }}>Edificio Ingenieria</Text>
+                <View style={{ flexDirection: "column", marginTop: 3}}>
+                  <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK, marginBottom: 5 }}>{selectedOrder?.Usuario.nombrecliente}</Text>
+                  <Text style={{ color: Colors.LIGHTGREY, fontWeight: "600" }}>{selectedOrder?.Direccion}</Text>
                 </View>
                 <Ionicons name="checkmark-circle-sharp" size={40} style={styles.iconAceptar}></Ionicons>
                 <Ionicons name="close-circle-sharp" size={40} style={styles.iconRechazar}></Ionicons>
@@ -249,7 +254,7 @@ const OrdersDeliv = ({ navigation }) => {
           onDismiss={() => setIsOpen(false)}
         >
           <View style={styles.contentContainer}>
-            <Text style={[styles.title, { marginBottom: 20, marginTop: 10 }]}>Pedido #12321</Text>
+            <Text style={[styles.title, { marginBottom: 20, marginTop: 10 }]}>Pedido #{selectedOrder?.id.substring(0,5)}</Text>
             <Text style={styles.description}>
               Pedido Domicilio    |   Edificio Ingenieria
             </Text>

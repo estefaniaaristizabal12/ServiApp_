@@ -67,7 +67,8 @@ export const Checkout = ({ navigation, route }) => {
       .then(data => {
         setOrder(data);
         console.log('checkout pay cart', data);
-        navigation.navigate('StatusOrder', { order: data });
+        navigation.navigate('Confirmation', { order: data });
+        // navigation.navigate('StatusOrder', { order: data });
       })
       .catch(err => {
         console.log('ERROR AL PAGAR', err);

@@ -51,8 +51,8 @@ export default function BottomTabDP({route, navigation}) {
                 }
             })}>
 
-            <BtTap.Screen name="Home" options={{ title: 'Inicio' }} component={DeliveryStack} initialParams={{user: user}}/>
-            <BtTap.Screen name="OrdersDelivStack" options={{ title: 'Domicilios finalizados' }} component={OrdersDelivStack} initialParams={{user: user}}/>
+            <BtTap.Screen name="Home" options={{ title: 'Domicilios' }} component={DeliveryStack} initialParams={{user: user}}/>
+            <BtTap.Screen name="OrdersDelivStack" options={{ title: 'Solicitudes' }} component={OrdersDelivStack} initialParams={{user: user}}/>
             <BtTap.Screen name="ProfileDStack" options={{ title: 'Perfil' }} component={ProfileDStack} initialParams={{user: user}}/>
 
 
