@@ -191,14 +191,14 @@ const OrdersDeliv = ({ navigation }) => {
       <View style={{ marginTop: 20, overflow: "hidden", marginBottom: -20, marginHorizontal: 5, width: "100%" }}>
         <FlatList
           // data={CRYPTOCURRENCIES}
-          // data={selectedOrder? Object.keys(selectedOrder?.Carro).map((key) => {[(key), selectedOrder?.Carro[key]]}): []}
-          data={selectedOrder? Object.values(selectedOrder?.Carro): []}
+          data={selectedOrder? Object.keys(selectedOrder?.Carro).map((key) => {return {id: key, ...selectedOrder?.Carro[key]}}): []}
+          // data={selectedOrder? Object.values(selectedOrder?.Carro): []}
 
           style={{ height: (Dimensions.get('window').height / 2) }}
           ItemSeparatorComponent={() => <View style={{ marginVertical: -5 }}></View>}
           renderItem={({ item }) =>
             <CardOrderBottom item={item} onPress={handlePresentModal} />}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item:any) => item.id}
         />
       </View>
     );

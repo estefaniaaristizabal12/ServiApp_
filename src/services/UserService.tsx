@@ -134,9 +134,8 @@ export async function clearCart(uid: any) {
   return res.json()
 }
 
-export async function payCart(delivery: boolean, card: any, total: any, address:any, uid: any) {
+export async function payCart(card: any, total: any, address:any, uid: any) {
   const data = {
-    Domicilio: delivery,
     Tarjeta: card,
     Total: total,
     Direccion: address

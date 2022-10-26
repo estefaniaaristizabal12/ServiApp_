@@ -63,7 +63,7 @@ export const Checkout = ({ navigation, route }) => {
   }
 
   const payCart = () => {
-    UserService.payCart(true, selectedCard?.id, total, user?.direccion1, auth.currentUser.uid)
+    UserService.payCart(selectedCard?.id, total, user?.direccion1, auth.currentUser.uid)
       .then(data => {
         setOrder(data);
         console.log('checkout pay cart', data);
@@ -116,7 +116,7 @@ export const Checkout = ({ navigation, route }) => {
               {condicion == 1 ?
                 <View style={{ flexDirection: "row", alignItems: 'center' }}>
                   <MaterialIcons name="delivery-dining" size={24} color="black" />
-                  <Text style={{ fontSize: 17, marginLeft: 5 }}> |   Servicio a {user?.DomicilioCarro ? "domicilio" : "recoger"}</Text>
+                  <Text style={{ fontSize: 17, marginLeft: 5 }}> |   Servicio a {user?.DomicilioCarro == "1" ? "domicilio" : "recoger"}</Text>
                 </View>
                 : <View style={{ flexDirection: "row", alignItems: 'center' }}>
                   <FontAwesome5 name="store-alt" size={20} color="black" />

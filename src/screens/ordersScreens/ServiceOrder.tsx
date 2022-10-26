@@ -45,7 +45,7 @@ export const ServiceOrder = ({ navigation, route }) => {
         let { order } = route.params;
         order.Fecha = new Date(order.Fecha).toLocaleString('es-ES')
         order && setOrder(order);
-        setDefaultRating(order.Calificacion)
+        if(order.Resena?.Calificacion) setDefaultRating(order.Resena.Calificacion)
     }, []);
 
     const renderSendRateButton = () => {

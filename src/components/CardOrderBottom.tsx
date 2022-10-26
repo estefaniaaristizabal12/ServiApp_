@@ -4,9 +4,9 @@ import { Colors } from '../constants/colors';
 import { CustomCardNew } from './CustomCardNew';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-export const CardOrderBottom = (props) =>{
+export const CardOrderBottom = (props: any) =>{
 
-  let order = props.item;
+  let product = props.item;
 
   return (
     <Pressable onPress={props.onPress}>
@@ -16,12 +16,12 @@ export const CardOrderBottom = (props) =>{
 
           <View style={{ flex: 2, marginLeft: 15, marginRight: 8, marginTop: 10 }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK }}>{order.Nombre}</Text>
-              <Text>No. {order.Categoria}</Text>
+              <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK }}>{product.Nombre}</Text>
+              <Text>No. {product.id}</Text>
             </View>
             <View style={{ flexDirection: "row", marginTop: 5, justifyContent: "space-between", marginBottom: 10 }}>
-              <Text style={{ color: Colors.LIGHTGREY, fontWeight: "600" }}>${order.Precio}</Text>
-              <Text style={{ color:  Colors.GREEN, fontWeight: "600" }}>x {order.Categoria}</Text>
+              <Text style={{ color: Colors.LIGHTGREY, fontWeight: "600" }}>${product.Precio}</Text>
+              <Text style={{ color:  Colors.GREEN, fontWeight: "600" }}>x {product.Cantidad}</Text>
             </View>
           </View>
         </View>
