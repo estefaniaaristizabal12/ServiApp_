@@ -55,7 +55,12 @@ export const Cart = ({ navigation }) => {
   const getCart = async () => {
     UserService.getCart(auth.currentUser.uid)
       .then(data => {
-        if(JSON.stringify(data) === '{}') return 
+        if(JSON.stringify(data) === '{}') {
+          setCart(null)
+          setTotal(0);
+          setVacio(true);
+          return
+        }
         setCart({ ...data });
         setTotal(getTotal(data));
         setVacio(false);

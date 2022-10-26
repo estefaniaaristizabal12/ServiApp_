@@ -14,13 +14,72 @@ import { Colors } from '../../../constants/colors';
 import * as React from 'react';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import { CardOrderDelivery } from '../../../components/CardOrderDelivery';
-
+import { useIsFocused } from "@react-navigation/native";
+import * as UserService from '../../../services/UserService';
+import * as AsyncStorage from '../../../services/AsyncStorage';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../firebaseConfig';
+const app = initializeApp(firebaseConfig);
+import { getDatabase, onValue, ref, update } from 'firebase/database'
+const db = getDatabase(app);
 
 
 
 const InitialMenu = ({ navigation }) => {
 
   const [tabIndex, setTabIndex] = React.useState(0);
+  const isFocused = useIsFocused()
+  const [orders, setOrders] = React.useState<any>([]);
+  const [delivery, setDelivery] = React.useState<any>([]);
+  const [user, setUser] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    if (isFocused) {
+      getOrders();
+      getUser();
+    }
+  }, [isFocused]);
+
+  const getOrders = async () => {
+    UserService.getOrders("Restaurante", 2, "-1")
+      .then(data => {
+        let orders = []
+        let delivery = []
+        data.map((order: any) => {
+          order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
+          const statusRef = ref(db, 'ordenes/' + order.id);
+          onValue(statusRef, (snapshot) => {
+            const data = snapshot.val();
+            order.Estado = (data.estado);
+          });
+          if (order.Estado == -1) {
+            return
+          }
+          if (order.Domicilio == "1") {
+            delivery.push(order)
+          } else {
+            orders.push(order)
+          }
+        })
+        // console.log(delivery.length)
+        setOrders(orders)
+        setDelivery(delivery)
+      })
+      .catch(error => {
+        console.error("getOrders: ", error)
+      });
+  };
+
+
+  const getUser = async () => {
+    AsyncStorage.getUser()
+      .then(data => {
+        setUser(data);
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+  }
 
   const CRYPTOCURRENCIES = [
     {
@@ -49,7 +108,7 @@ const InitialMenu = ({ navigation }) => {
     return (
       <View style={styles.headerbar}>
         <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black , letterSpacing: 0.5}}>Hola,</Text>
-        <Text style={{ fontSize: 30, fontWeight: "900", color: Colors.black,letterSpacing: 0.5 }}>Estefania</Text>
+        <Text style={{ fontSize: 30, fontWeight: "900", color: Colors.black,letterSpacing: 0.5 }}>{user?.nombrecliente}</Text>
       </View>
     );
   };
@@ -61,6 +120,9 @@ const InitialMenu = ({ navigation }) => {
           values={['Recogida', 'Domiciliario']}
           selectedIndex={0}
           style={{ height: 38 }}
+          onChange={(event) => {
+            setTabIndex(event.nativeEvent.selectedSegmentIndex);
+          }}
         />
       </View>
     );
@@ -70,11 +132,14 @@ const InitialMenu = ({ navigation }) => {
     return(
       <View style={{marginTop:10,backgroundColor:"#F5F8FF",overflow:"hidden",marginBottom:100}}>
         <FlatList
-          data={CRYPTOCURRENCIES}
+          data={tabIndex == 1 ? delivery : orders}
           style={{height:(Dimensions.get('window').height/2)+60}}
           ItemSeparatorComponent = {()=><View style={{marginVertical:8}}></View>}
-          renderItem={({item})=><CardOrderDelivery item={item} onPress={()=>navigation.navigate("walletdetails",item)}/>}
+          renderItem={({item})=> <CardOrderDelivery item={item} /> }
           keyExtractor={(item) => item.id}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          
        />
       </View>
     );

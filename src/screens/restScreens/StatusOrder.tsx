@@ -28,13 +28,14 @@ import firebase from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
 import app from '../firebaseConfig';
 import { getDatabase, onValue, ref } from 'firebase/database'
+import { Alert } from 'react-native';
 const db = getDatabase(app);
 
 const StatusOrder = ({ navigation, route }) => {
   const isFocused = useIsFocused()
   const insets = useSafeAreaInsets();
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(-1);
   const [order, setOrder] = useState<any>(null);
 
   React.useEffect(() => {
@@ -179,6 +180,7 @@ const StatusOrder = ({ navigation, route }) => {
                         resizeMode="cover"
                       />
                     )}
+                  
                   </View>
                 )}
               </View>
@@ -192,7 +194,7 @@ const StatusOrder = ({ navigation, route }) => {
   const renderFooter = () => {
     return (
       <View style={{ marginTop: 12, marginBottom: 24 }}>
-        {currentStep < status.length - 1 && (
+        {currentStep < status.length - 1 && currentStep != -2 && (
           <View style={{ flexDirection: 'row', height: 55 }}>
             {/* Cancel */}
             <TextButton
@@ -232,6 +234,18 @@ const StatusOrder = ({ navigation, route }) => {
             buttonContainerStyle={{ height: 55, borderRadius: 12 }}
             label="CALIFICAR PEDIDO"
             onPress={() => navigation.navigate('OrdersStack', {screen:'ServiceOrder', params: {order: order}})}
+            // onPress={() => navigation.navigate('OrdersStack', {order: order})}
+          />
+        )}
+        {currentStep === -2 && (
+          <TextButton
+            buttonContainerStyle={{ height: 55, borderRadius: 12 }}
+            label="Pedido Cancelado"
+            onPress={() => {
+              navigation.navigate('Cart'); 
+              navigation.navigate('Delivery')
+              Alert.alert('El restaurante no tiene el producto en stock')
+            }}
             // onPress={() => navigation.navigate('OrdersStack', {order: order})}
           />
         )}

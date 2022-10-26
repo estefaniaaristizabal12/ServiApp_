@@ -29,6 +29,9 @@ import { CustomCardNew } from '../../../components/CustomCardNew';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+import { getDatabase, onValue, ref, update } from 'firebase/database'
+import { Alert } from 'react-native';
+const db = getDatabase(app);
 
 
 
@@ -38,7 +41,6 @@ const OrdersDeliv = ({ navigation }) => {
 
 
   const isFocused = useIsFocused()
-  const [tabIndex, setTabIndex] = React.useState(0);
   const bottomSheetModalRef = React.useRef(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [orders, setOrders] = React.useState<any>([]);
@@ -59,19 +61,29 @@ const OrdersDeliv = ({ navigation }) => {
   }, [isFocused]);
 
   const getOrders = async () => {
-    UserService.getOrders("Domiciliario", 2, "-1")
+    UserService.getOrders("Restaurante", 2, "-1")
       .then(data => {
-        let pick = 0;
-        let del = 0;
-        let total = data.length
         // console.log("asdfsda", data[0].Usuario)
         const newData = data.map((order: any) => {
-          order.Domicilio ? del++ : pick++
+          if (order.Estado == -2) {
+            return
+          }
           order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
+          const statusRef = ref(db, 'ordenes/' + order.id);
+          onValue(statusRef, (snapshot) => {
+            const data = snapshot.val();
+            order.Estado = (data.estado);
+          });
           return order
         })
+        const newOrders = newData.filter((order: any) => order.Estado == -1)
+        // const newOrders = newData.filter((order: any) => order)
+        let pick = 0;
+        let del = 0;
+        let total = newOrders.length
+        newOrders.map((order: any) => order.Domicilio=="1" ? del++ : pick++)
         setTotales({ total: total, pick: pick, del: del })
-        setOrders(newData)
+        setOrders(newOrders)
       })
       .catch(error => {
         console.error("getOrders: ", error)
@@ -90,7 +102,43 @@ const OrdersDeliv = ({ navigation }) => {
       });
   }
 
+  const acceptOrder =  () => {
+    const statusRef = ref(db, 'ordenes/' + selectedOrder?.id);
+    update(statusRef, {
+      estado: 0,
+    });
+    const newOrders = orders.filter((order: any) => order.id !== selectedOrder?.id)
+    let pick = totales.pick;
+    let del = totales.del;
+    let total = totales.total - 1;
+    selectedOrder?.Domicilio == "1" ? del-- : pick--
+    setTotales({ total: total, pick: pick, del: del })
+    setOrders(newOrders)
+    setSelectedOrder(null)
+    setIsOpen(false)
+    Alert.alert("Orden aceptada")
+    bottomSheetModalRef.current.close()
+    // navigation.navigate("InitialMenu")
+  }
 
+  const rejectOrder = () => {
+    const statusRef = ref(db, 'ordenes/' + selectedOrder?.id);
+    update(statusRef, {
+      estado: -2,
+    });
+    const newOrders = orders.filter((order: any) => order.id !== selectedOrder?.id)
+    let pick = totales.pick;
+    let del = totales.del;
+    let total = totales.total - 1;
+    selectedOrder?.Domicilio == "1" ? del-- : pick--
+    setTotales({ total: total, pick: pick, del: del })
+    setOrders(newOrders)
+    setSelectedOrder(null)
+    setIsOpen(false)
+    Alert.alert("Orden rechazada")
+    bottomSheetModalRef.current.close()
+    // navigation.navigate("InitialMenu")
+  }
 
   function handlePresentModal() {
     bottomSheetModalRef.current?.present();
@@ -217,8 +265,8 @@ const OrdersDeliv = ({ navigation }) => {
                   <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK, marginBottom: 5 }}>{selectedOrder?.Usuario.nombrecliente}</Text>
                   <Text style={{ color: Colors.LIGHTGREY, fontWeight: "600" }}>{selectedOrder?.Direccion}</Text>
                 </View>
-                <Ionicons name="checkmark-circle-sharp" size={40} style={styles.iconAceptar}></Ionicons>
-                <Ionicons name="close-circle-sharp" size={40} style={styles.iconRechazar}></Ionicons>
+                <Ionicons name="checkmark-circle-sharp" size={40} style={styles.iconAceptar} onPress={()=>{acceptOrder()}}></Ionicons>
+                <Ionicons name="close-circle-sharp" size={40} style={styles.iconRechazar}  onPress={()=>{rejectOrder()}}></Ionicons>
               </View>
             </View>
           </View >
