@@ -153,8 +153,13 @@ export async function payCart(card: any, total: any, address:any, uid: any) {
 
 
 //Orders
-export async function getOrders(role: any, delivery: number, uid: any) {
+export async function getOrders(role: any, delivery: any, uid: any) {
   const res = await fetch(`${urlOrder}/${role}/${delivery}/?uid=${uid}`, { method: 'GET' })
+  return res.json()
+}
+
+export async function getDeliveries(uid: any) {
+  const res = await fetch(`${urlOrder}/delivery/?uid=${uid}`, { method: 'GET' })
   return res.json()
 }
 

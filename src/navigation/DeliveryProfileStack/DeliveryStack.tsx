@@ -3,6 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import  InitialMenu  from '../../screens/delivProfileScreens/deliveryHome/InitialMenu';
 import  CurrentOrder  from '../../screens/delivProfileScreens/deliveryHome/CurrentOrder';
 import  OrderList  from '../../screens/delivProfileScreens/deliveryHome/OrderList';
+import ChangeStatusOrder from '../../screens/delivProfileScreens/deliveryHome/ChangeStatusOrder';
+
+
 
 
 
@@ -19,6 +22,7 @@ export default function DeliveryStack({route, navigation}) {
             }}>
 
             <StackDelivery.Screen name="InitialMenu" component={InitialMenu} initialParams={{user: user}}/>
+            <StackDelivery.Screen name="ChangeStatusOrder" component={ChangeStatusOrder} initialParams={{user: user}}/>
             <StackDelivery.Screen name="CurrentOrder" component={CurrentOrder} initialParams={{user: user}}/>
             <StackDelivery.Screen name="OrderList" component={OrderList} initialParams={{user: user}}/>
 

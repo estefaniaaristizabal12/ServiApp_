@@ -61,9 +61,10 @@ const OrdersDeliv = ({ navigation }) => {
   }, [isFocused]);
 
   const getOrders = async () => {
-    UserService.getOrders("Restaurante", 2, "-1")
+    UserService.getOrders("Restaurante", "2", "-1")
       .then(data => {
         // console.log("asdfsda", data[0].Usuario)
+        console.log(data.lenght)
         const newData = data.map((order: any) => {
           if (order.Estado == -2) {
             return

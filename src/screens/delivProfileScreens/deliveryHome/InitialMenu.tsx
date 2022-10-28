@@ -135,7 +135,7 @@ const InitialMenu = ({ navigation }) => {
           data={tabIndex == 1 ? delivery : orders}
           style={{height:(Dimensions.get('window').height/2)+60}}
           ItemSeparatorComponent = {()=><View style={{marginVertical:8}}></View>}
-          renderItem={({item})=> <CardOrderDelivery item={item} /> }
+          renderItem={({item})=> <CardOrderDelivery item={item} onPress={()=> {navigation.navigate("ChangeStatusOrder", {order: item})}} /> }
           keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
