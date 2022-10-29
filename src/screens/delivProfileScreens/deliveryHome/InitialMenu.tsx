@@ -36,9 +36,10 @@ const InitialMenu = ({ navigation }) => {
 
   React.useEffect(() => {
     if (isFocused) {
+      console.log("InitialMenu")
       AsyncStorage.getUser()
       .then(user => {
-        console.log(Object.keys(user))
+        // console.log(Object.keys(user))
         setUser(user)
         getOrders(user)
       })
@@ -73,6 +74,13 @@ const InitialMenu = ({ navigation }) => {
         });
     };
 
+    const goToChangeStatusOrder = (order: any) => {
+      UserService.getOrder(order.id)
+      .then((data:any) => {
+        navigation.navigate("ChangeStatusOrder", {order: data})
+      })
+    }
+
 
   const CRYPTOCURRENCIES = [
     {
@@ -100,7 +108,7 @@ const InitialMenu = ({ navigation }) => {
   const renderHeader = () => {
     return (
       <View style={styles.headerbar}>
-        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black , letterSpacing: 0.5}}>Hola domi,</Text>
+        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black , letterSpacing: 0.5}}>Hola rest,</Text>
         <Text style={{ fontSize: 30, fontWeight: "900", color: Colors.black,letterSpacing: 0.5 }}>{user?.nombrecliente}</Text>
       </View>
     );
@@ -128,7 +136,7 @@ const InitialMenu = ({ navigation }) => {
           data={tabIndex == 1 ? delivery : orders}
           style={{height:(Dimensions.get('window').height/2)+60}}
           ItemSeparatorComponent = {()=><View style={{marginVertical:8}}></View>}
-          renderItem={({item})=> <CardOrderDelivery item={item} onPress={()=> {navigation.navigate("ChangeStatusOrder", {order: item})}} /> }
+          renderItem={({item})=> <CardOrderDelivery item={item} onPress={()=> {goToChangeStatusOrder(item)}} /> }
           keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

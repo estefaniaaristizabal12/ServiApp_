@@ -74,6 +74,7 @@ const Delivery = ({navigation, route}) => {
   }
 
   React.useEffect(() => {
+    console.log("Delivery")
     setFilteredData(null)
     setRestaurant(null)
         if(activeTab == "Delivery"){

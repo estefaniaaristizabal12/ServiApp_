@@ -186,11 +186,11 @@ export async function rateOrder(idOrder: any, rate: any, comment: any, uid: any)
   return res.json()
 }
 
-export async function acceptDelivery(idOrder: any, uid: any) {
+export async function acceptOrder(idOrder: any, uid: any) {
   const data = {
     id: idOrder,
   }
-  const res = await fetch(`${urlOrder}/acceptdelivery/?uid=${uid}`, {
+  const res = await fetch(`${urlOrder}/accept/?uid=${uid}`, {
     method: 'POST', body: JSON.stringify(data),
     headers: {
       'Accept': 'application/json',
@@ -200,11 +200,11 @@ export async function acceptDelivery(idOrder: any, uid: any) {
   return res.json()
 }
 
-export async function rejectDelivery(idOrder: any, uid: any) {
+export async function rejectOrder(idOrder: any, uid: any) {
   const data = {
     id: idOrder,
   }
-  const res = await fetch(`${urlOrder}/rejectdelivery/?uid=${uid}`, {
+  const res = await fetch(`${urlOrder}/reject/?uid=${uid}`, {
     method: 'POST', body: JSON.stringify(data),
     headers: {
       'Accept': 'application/json',
@@ -214,7 +214,12 @@ export async function rejectDelivery(idOrder: any, uid: any) {
   return res.json()
 }
 
-export async function getRejectedDeliveries(uid: any) {
-  const res = await fetch(`${urlOrder}/rejecteddeliveries/?uid=${uid}`, { method: 'GET' })
+export async function getAcceptedOrders(uid: any) {
+  const res = await fetch(`${urlOrder}/accepted/?uid=${uid}`, { method: 'GET' })
+  return res.json()
+}
+
+export async function getRejectedOrders(uid: any) {
+  const res = await fetch(`${urlOrder}/rejected/?uid=${uid}`, { method: 'GET' })
   return res.json()
 }

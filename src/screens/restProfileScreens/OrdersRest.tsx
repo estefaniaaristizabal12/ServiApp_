@@ -35,6 +35,7 @@ import {
   
     React.useEffect(() => {
       if (isFocused) {
+      console.log("OrdersRest")
         AsyncStorage.getUser()
         .then(user => {
           setUser(user)
@@ -92,7 +93,7 @@ import {
     const renderHeader = () => {
       return (
         <View style={styles.headerbar}>
-          <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black , letterSpacing: 0.5}}>Hola,</Text>
+          <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black , letterSpacing: 0.5}}>Hola domi,</Text>
           <Text style={{ fontSize: 30, fontWeight: "900", color: Colors.black,letterSpacing: 0.5 }}>{user?.nombrecliente}</Text>
         </View>
       );

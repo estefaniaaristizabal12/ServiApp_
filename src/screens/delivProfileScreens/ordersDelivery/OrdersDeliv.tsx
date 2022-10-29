@@ -50,6 +50,7 @@ const OrdersDeliv = ({ navigation }) => {
 
   React.useEffect(() => {
     if (isFocused) {
+      console.log("OrdersDeliv")
       AsyncStorage.getUser()
       .then(user => {
         setUser(user)
@@ -60,35 +61,35 @@ const OrdersDeliv = ({ navigation }) => {
   }, [isFocused]);
 
   const getNotAcceptedOrders = async (user: any) => {
-    UserService.getRejectedDeliveries(user?.uid)
-    .then((data:any) => {
-      const rejected = new Set(data);
-      const dbRef = ref(db, 'Ordenes/');
-      let ordersRt = {}
-      onChildAdded(dbRef, (order) => {
-        const newOrder = {id: order.key, ...order.val()}
-        // La orden rechazada la guarda el usuario no el restaurante, otro usu del mismo rest lo va a ver.
-        if(newOrder.Estado != -1 || rejected.has(newOrder.id)) return
-        ordersRt[order.key] = newOrder
-        setOrders(ordersRt)
-        countOrders(ordersRt)
-      });
-      onChildChanged(dbRef, (order) => {
-        const newOrder = {id: order.key, ...order.val()}
-        if(newOrder.Estado != -1 || rejected.has(newOrder.id))
-          delete ordersRt[order.key]
-        else
+    UserService.getRejectedOrders(user?.uid)
+      .then((data:any) => {
+        const rejected = new Set(data);
+        const dbRef = query(ref(db, 'Ordenes/'), orderByChild("timestamp"));
+        let ordersRt = {}
+        onChildAdded(dbRef, (order) => {
+          const newOrder = {id: order.key, ...order.val()}
+          // La orden rechazada la guarda el usuario no el restaurante, otro usu del mismo rest lo va a ver.
+          if(newOrder.Estado != -1 || rejected.has(newOrder.id) || newOrder.IdRestaurante != user.Restaurante) return
           ordersRt[order.key] = newOrder
-        setOrders(ordersRt)
+          setOrders(ordersRt)
+          countOrders(ordersRt)
+        });
+        onChildChanged(dbRef, (order) => {
+          const newOrder = {id: order.key, ...order.val()}
+          if(newOrder.Estado != -1 || rejected.has(newOrder.id) || newOrder.IdRestaurante != user.restaurante)
+            delete ordersRt[order.key]
+          else
+            ordersRt[order.key] = newOrder
+          setOrders(ordersRt)
+          countOrders(ordersRt)
+        });
+        onChildRemoved(dbRef, (order) => {
+          delete ordersRt[order.key]
+          setOrders(ordersRt)
+          countOrders(ordersRt)
+        });
         countOrders(ordersRt)
-      });
-      onChildRemoved(dbRef, (order) => {
-        delete ordersRt[order.key]
-        setOrders(ordersRt)
-        countOrders(ordersRt)
-      });
-      countOrders(ordersRt)
-    })
+      })
   };
 
   const countOrders = (orders:any) => {
@@ -115,17 +116,17 @@ const OrdersDeliv = ({ navigation }) => {
   }
 
   const acceptOrder =  () => {
-    const statusRef = ref(db, 'Ordenes/' + selectedOrder?.id);
-    update(statusRef, {
-      Estado: 0,
-    });
-    // UserService.acceptDelivery(selectedOrder?.id, user.uid)
-    // .then((data:any) => {
-    //   console.log(data)
-    // })
-    // .catch((error:any) => {
-    //   console.error(error)
-    // })
+    UserService.acceptOrder(selectedOrder?.id, user.uid)
+      .then((data:any) => {
+        console.log(data)
+        const statusRef = ref(db, 'Ordenes/' + selectedOrder?.id);
+        update(statusRef, {
+          Estado: 0,
+        });
+      })
+      .catch((error:any) => {
+        console.error(error)
+      })
     setSelectedOrder(null)
     setIsOpen(false)
     Alert.alert("Orden aceptada")
@@ -133,7 +134,7 @@ const OrdersDeliv = ({ navigation }) => {
   }
 
   const rejectOrder = () => {
-    UserService.rejectDelivery(selectedOrder?.id, user.uid)
+    UserService.rejectOrder(selectedOrder?.id, user.uid)
     .then((data:any) => {
       console.log(data)
     })
@@ -202,7 +203,7 @@ const OrdersDeliv = ({ navigation }) => {
   const renderHeader = () => {
     return (
       <View style={styles.headerbar}>
-        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black, letterSpacing: 0.5 }}>Pedidos</Text>
+        <Text style={{ fontSize: 25, fontWeight: "300", color: Colors.black, letterSpacing: 0.5 }}>Pedidos rest</Text>
         <Text style={{ fontSize: 30, fontWeight: "900", color: Colors.black, letterSpacing: 0.5 }}>Disponibles</Text>
       </View>
     );
@@ -231,10 +232,10 @@ const OrdersDeliv = ({ navigation }) => {
     return (
       <View style={{ marginTop: 20, overflow: "hidden", marginBottom: 10, marginHorizontal: 5 }}>
         <FlatList
-          data={orders}
+          data={Object.values(orders)}
           style={{ height: (Dimensions.get('window').height / 2) + 80 }}
           ItemSeparatorComponent={() => <View style={{ marginVertical: -5 }}></View>}
-          renderItem={({ item }) => <CardOrderNew item={item} onPress={() => {setSelectedOrder(item); handlePresentModal()}}/>}
+          renderItem={({ item }) => <CardOrderNew item={item} onPress={() => {selectOrder(item); handlePresentModal()}}/>}
           keyExtractor={(item) => item.id}
         />
       </View>
@@ -270,7 +271,7 @@ const OrdersDeliv = ({ navigation }) => {
               <View style={{ flexDirection: "row", justifyContent: "space-between"}}>
                 <Image source={require('../../../../assets/robot.png')} style={{ width: 50, height: 50, borderRadius: 50, marginBottom: 30 }} />
                 <View style={{ flexDirection: "column", marginTop: 3}}>
-                  <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK, marginBottom: 5 }}>{selectedOrder?.Usuario.nombrecliente}</Text>
+                  <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK, marginBottom: 5 }}>{selectedOrder?.UsuarioInfo.nombrecliente}</Text>
                   <Text style={{ color: Colors.LIGHTGREY, fontWeight: "600" }}>{selectedOrder?.Direccion}</Text>
                 </View>
                 <Ionicons name="checkmark-circle-sharp" size={40} style={styles.iconAceptar} onPress={()=>{acceptOrder()}}></Ionicons>

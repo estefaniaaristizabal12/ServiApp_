@@ -26,6 +26,7 @@ const ProfileDeliv = ({ navigation, route }) => {
   const [user, setUser] = React.useState<any>(null);
 
   useEffect(() => {
+    console.log("ProfileDeliv")
     getUser();
   }, []);
 
@@ -33,7 +34,7 @@ const ProfileDeliv = ({ navigation, route }) => {
     AsyncStorage.getUser()
       .then(data => {
         setUser(data);
-        console.log("getUser", user)
+        console.log("getUser", data)
       })
       .catch((error) => {
         console.error(error)

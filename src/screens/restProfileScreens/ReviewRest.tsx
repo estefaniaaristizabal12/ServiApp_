@@ -50,6 +50,7 @@ import {
   
     React.useEffect(() => {
       if (isFocused) {
+        console.log("ReviewRest")
         AsyncStorage.getUser()
         .then(user => {
           setUser(user)
@@ -60,10 +61,10 @@ import {
     }, [isFocused]);
   
     const getNotAcceptedOrders = async (user: any) => {
-      UserService.getRejectedDeliveries(user?.uid)
+      UserService.getRejectedOrders(user?.uid)
       .then((data:any) => {
         const rejected = new Set(data);
-        const dbRef = ref(db, 'Ordenes/');
+        const dbRef = query(ref(db, 'Ordenes/'), orderByChild("timestamp"));
         let ordersRt = {}
         onChildAdded(dbRef, (order) => {
           const newOrder = {id: order.key, ...order.val()}
@@ -114,17 +115,17 @@ import {
     }
   
     const acceptOrder =  () => {
-      const statusRef = ref(db, 'Ordenes/' + selectedOrder?.id);
-      update(statusRef, {
-        Estado: 1,
-      });
-      UserService.acceptDelivery(selectedOrder?.id, user.uid)
-      .then((data:any) => {
-        console.log(data)
-      })
-      .catch((error:any) => {
-        console.error(error)
-      })
+      UserService.acceptOrder(selectedOrder?.id, user.uid)
+        .then((data:any) => {
+          console.log(data)
+          const statusRef = ref(db, 'Ordenes/' + selectedOrder?.id);
+          update(statusRef, {
+            Estado: 1,
+          });
+        })
+        .catch((error:any) => {
+          console.error(error)
+        })
       setSelectedOrder(null)
       setIsOpen(false)
       Alert.alert("Orden aceptada")
@@ -132,13 +133,13 @@ import {
     }
   
     const rejectOrder = () => {
-      UserService.rejectDelivery(selectedOrder?.id, user.uid)
-      .then((data:any) => {
-        console.log(data)
-      })
-      .catch((error:any) => {
-        console.error(error)
-      })
+      UserService.rejectOrder(selectedOrder?.id, user.uid)
+        .then((data:any) => {
+          console.log(data)
+        })
+        .catch((error:any) => {
+          console.error(error)
+        })
       setSelectedOrder(null)
       setIsOpen(false)
       Alert.alert("Orden rechazada")

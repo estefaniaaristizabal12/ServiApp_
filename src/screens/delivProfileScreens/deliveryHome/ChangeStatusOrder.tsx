@@ -27,7 +27,7 @@ import {
   import firebase from 'firebase/app';
   import { firebaseConfig } from '../../firebaseConfig';
   import app from '../../firebaseConfig';
-  import { getDatabase, onValue, ref, set } from 'firebase/database'
+  import { getDatabase, onChildAdded, onChildChanged, onChildRemoved, onValue, orderByChild, query, ref, update } from 'firebase/database'
   import { Alert } from 'react-native';
   const db = getDatabase(app);
   
@@ -39,22 +39,24 @@ import {
     const [order, setOrder] = useState<any>(null);
   
     React.useEffect(() => {
-      if(!route.params["order"]) return
-      isFocused && setOrder(route.params["order"]);
-      // isFocused && route.params["order"] && setCurrentStep(route.params["order"].Estado);
-  
-      const statusRef = ref(db, 'ordenes/' + route.params["order"].id);
-      onValue(statusRef, (snapshot) => {
-        const data = snapshot.val();
-        setCurrentStep(data.estado);
-      });
+      if(isFocused){
+        console.log("ChangeStatusOrder")
+        if(!route.params["order"]) return
+        setOrder(route.params["order"]);
+        const statusRef = ref(db, 'Ordenes/' + route.params["order"].id);
+        onValue(statusRef, (snapshot) => {
+          const data = snapshot.val();
+          if(!data) return // return si se borro la orden en rt db
+          setCurrentStep(data.Estado);
+        });
+      }
     }, [isFocused]);
 
     const changeStatus = () => {
-        const statusRef = ref(db, 'ordenes/' + route.params["order"].id);
-        set(statusRef, {
-            estado: 2
-        });
+      const statusRef = ref(db, 'Ordenes/' + route.params["order"].id);
+      update(statusRef, {
+          Estado: 2
+      });
     }
 
   
@@ -100,7 +102,7 @@ import {
           </Text>
   
           <Text style={{ textAlign: 'center', fontSize: normalize(22), color: Colors.black }}>
-            27 Sep 2022 / 12:30PM
+            {new Date(new Date(order?.Fecha).getTime() + 15*60000).toUTCString()}
           </Text>
         </View>
       );
