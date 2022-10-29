@@ -134,7 +134,7 @@ export async function clearCart(uid: any) {
   return res.json()
 }
 
-export async function payCart(card: any, total: any, address:any, uid: any) {
+export async function payCart(card: any, total: any, address: any, uid: any) {
   const data = {
     Tarjeta: card,
     Total: total,
@@ -153,6 +153,11 @@ export async function payCart(card: any, total: any, address:any, uid: any) {
 
 
 //Orders
+export async function getOrder(id: any) {
+  const res = await fetch(`${urlOrder}/get/?id=${id}`, { method: 'GET' })
+  return res.json()
+}
+
 export async function getOrders(role: any, delivery: any, uid: any) {
   const res = await fetch(`${urlOrder}/${role}/${delivery}/?uid=${uid}`, { method: 'GET' })
   return res.json()
@@ -163,7 +168,7 @@ export async function getDeliveries(uid: any) {
   return res.json()
 }
 
-export async function rateOrder(idOrder: any, rate: any, comment:any, uid: any) {
+export async function rateOrder(idOrder: any, rate: any, comment: any, uid: any) {
   const data = {
     id: idOrder,
     Resena: {
@@ -178,5 +183,38 @@ export async function rateOrder(idOrder: any, rate: any, comment:any, uid: any) 
       'Content-Type': 'application/json'
     },
   })
+  return res.json()
+}
+
+export async function acceptDelivery(idOrder: any, uid: any) {
+  const data = {
+    id: idOrder,
+  }
+  const res = await fetch(`${urlOrder}/acceptdelivery/?uid=${uid}`, {
+    method: 'POST', body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+  return res.json()
+}
+
+export async function rejectDelivery(idOrder: any, uid: any) {
+  const data = {
+    id: idOrder,
+  }
+  const res = await fetch(`${urlOrder}/rejectdelivery/?uid=${uid}`, {
+    method: 'POST', body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+  return res.json()
+}
+
+export async function getRejectedDeliveries(uid: any) {
+  const res = await fetch(`${urlOrder}/rejecteddeliveries/?uid=${uid}`, { method: 'GET' })
   return res.json()
 }

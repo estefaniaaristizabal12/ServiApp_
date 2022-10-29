@@ -23,11 +23,11 @@ export const CardOrderNew = (props) => {
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <View>
-            <Image style={{ height: 60, width: 60 , marginLeft: 15}} source={{uri: order?.Restaurante?.Imagen}}></Image>
+            <Image style={{ height: 60, width: 60 , marginLeft: 15}} source={{uri: order?.RestauranteImagen}}></Image>
           </View>
           <View style={{ flex: 2, marginLeft: 15, marginRight: 8 }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK }}>Pedido {order?.Usuario?.nombrecliente?.substring(0,10)}</Text>
+              <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK }}>Pedido {order?.NombreCliente?.substring(0,10)}</Text>
               <Text>No. {order?.id?.substring(0,5)}</Text>
             </View>
             <View style={{ flexDirection: "row", marginTop: 5, justifyContent: "space-between" }}>

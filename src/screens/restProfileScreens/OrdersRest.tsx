@@ -25,61 +25,46 @@ import {
   
   
   
-  const InitialMenu = ({ navigation }) => {
+  const InitialMenu = ({ navigation, route }) => {
   
     const [tabIndex, setTabIndex] = React.useState(0);
     const isFocused = useIsFocused()
-    const [orders, setOrders] = React.useState<any>([]);
+    const [finished, setFinished] = React.useState<any>([]);
     const [delivery, setDelivery] = React.useState<any>([]);
     const [user, setUser] = React.useState<any>(null);
   
     React.useEffect(() => {
       if (isFocused) {
-        getOrders();
-        getUser();
+        AsyncStorage.getUser()
+        .then(user => {
+          setUser(user)
+          getOrders(user)
+        })
+        .catch(error => console.error(error))
       }
     }, [isFocused]);
   
-    const getOrders = async () => {
-      UserService.getOrders("Restaurante", 2, "-1")
+    const getOrders = async (user: any) => {
+      UserService.getOrders("Domiciliario", 1, user.uid)
         .then(data => {
-          let orders = []
           let delivery = []
-          data.map((order: any) => {
+          let finished = []
+          data.forEach((order: any) => {
             order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
-            const statusRef = ref(db, 'ordenes/' + order.id);
-            onValue(statusRef, (snapshot) => {
-              const data = snapshot.val();
-              order.Estado = (data.estado);
-            });
-            if (order.Estado == -1) {
-              return
-            }
-            if (order.Domicilio == "1") {
-              delivery.push(order)
-            } else {
-              orders.push(order)
-            }
+            // const statusRef = ref(db, 'Ordenes/' + order.id);
+            // onValue(statusRef, (snapshot) => {
+            //   const data = snapshot.val();
+            //   order.Estado = (data.estado);
+            // });
+            order.Finalizado? finished.push(order): delivery.push(order)
           })
-          // console.log(delivery.length)
-          setOrders(orders)
           setDelivery(delivery)
+          setFinished(finished)
         })
         .catch(error => {
           console.error("getOrders: ", error)
         });
     };
-  
-  
-    const getUser = async () => {
-      AsyncStorage.getUser()
-        .then(data => {
-          setUser(data);
-        })
-        .catch((error) => {
-          console.error(error)
-        });
-    }
   
     const CRYPTOCURRENCIES = [
       {
@@ -117,7 +102,7 @@ import {
       return (
         <View style={styles.box}>
           <SegmentedControl
-            values={['Recogida', 'Domiciliario']}
+            values={['Domicilios', 'Finalizados']}
             selectedIndex={0}
             style={{ height: 38 }}
             onChange={(event) => {
@@ -132,7 +117,7 @@ import {
       return(
         <View style={{marginTop:10,backgroundColor:"#F5F8FF",overflow:"hidden",marginBottom:100}}>
           <FlatList
-            data={tabIndex == 1 ? delivery : orders}
+            data={tabIndex == 0 ? delivery : finished}
             style={{height:(Dimensions.get('window').height/2)+60}}
             ItemSeparatorComponent = {()=><View style={{marginVertical:8}}></View>}
             renderItem={({item})=> <CardOrderDelivery item={item} /> }

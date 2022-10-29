@@ -38,9 +38,14 @@ export default async function NotificationService(uid: any) {
     });
   }
 
-  const token = (await Notifications.getExpoPushTokenAsync()).data;
-  /* const token = (await Notifications.getDevicePushTokenAsync()).data; */
+  try {
+    const token = (await Notifications.getExpoPushTokenAsync()).data;
+    // const token = (await Notifications.getDevicePushTokenAsync()).data;
+    console.log("deviceToken:", token);
+    UserService.updateDeviceToken(token, uid)
+  }
+  catch (error){
+    console.error("error getting expo push token", error)
+  }
 
-  console.log("deviceToken:", token);
-  UserService.updateDeviceToken(token, uid)
 }

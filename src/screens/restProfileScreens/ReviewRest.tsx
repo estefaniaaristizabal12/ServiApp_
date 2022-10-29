@@ -29,116 +29,122 @@ import {
   import { Ionicons, MaterialIcons } from '@expo/vector-icons';
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  import { getDatabase, onValue, ref, update } from 'firebase/database'
+  import { getDatabase, onChildAdded, onChildChanged, onChildRemoved, onValue, orderByChild, query, ref, update } from 'firebase/database'
   import { Alert } from 'react-native';
   const db = getDatabase(app);
   
   
   
   const ReviewRest = ({ navigation }) => {
-  
-  
-  
-  
+
     const isFocused = useIsFocused()
     const bottomSheetModalRef = React.useRef(null);
     const [isOpen, setIsOpen] = React.useState(false);
-    const [orders, setOrders] = React.useState<any>([]);
+    const [orders, setOrders] = React.useState<any>({});
+    const [ordersIds, setOrdersIds] = React.useState<any>(new Set());
     const [user, setUser] = React.useState<any>(null);
-    const [totales, setTotales] = React.useState<any>(null);
+    const [totals, setTotals] = React.useState<any>({total: 0, del: 0, pick: 0});
     const [selectedOrder, setSelectedOrder] = React.useState<any>(null);
   
     const snapPoints = ["80%"];
   
-  
-  
-  
     React.useEffect(() => {
       if (isFocused) {
-        getOrders();
-        getUser();
+        AsyncStorage.getUser()
+        .then(user => {
+          setUser(user)
+          getNotAcceptedOrders(user)
+        })
+        .catch(error => console.error(error))
       }
     }, [isFocused]);
   
-    const getOrders = async () => {
-      UserService.getOrders("Restaurante","2", user.uid)
-        .then(data => {
-          console.log("asdfsda getorders", data.length)
-          const newData = data.map((order: any) => {
-            if (order.Estado == -2) {
-              return
-            }
-            order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
-            const statusRef = ref(db, 'ordenes/' + order.id);
-            onValue(statusRef, (snapshot) => {
-              const data = snapshot.val();
-              order.Estado = (data.estado);
-            });
-            return order
-          })
-          const newOrders = newData.filter((order: any) => order.Estado == 0 && order.Domicilio == "1")
-          // const newOrders = newData.filter((order: any) => order)
-          let pick = 0;
-          let del = 0;
-          let total = newOrders.length
-          newOrders.map((order: any) => order.Domicilio=="1" ? del++ : pick++)
-          setTotales({ total: total, pick: pick, del: del })
-          setOrders(newOrders)
-        })
-        .catch(error => {
-          console.error("getOrders: ", error)
+    const getNotAcceptedOrders = async (user: any) => {
+      UserService.getRejectedDeliveries(user?.uid)
+      .then((data:any) => {
+        const rejected = new Set(data);
+        const dbRef = ref(db, 'Ordenes/');
+        let ordersRt = {}
+        onChildAdded(dbRef, (order) => {
+          const newOrder = {id: order.key, ...order.val()}
+          if(newOrder.Estado != 0 || !newOrder.Domicilio || rejected.has(newOrder.id)) return
+          ordersRt[order.key] = newOrder
+          setOrders(ordersRt)
+          countOrders(ordersRt)
         });
+        onChildChanged(dbRef, (order) => {
+          const newOrder = {id: order.key, ...order.val()}
+          if(newOrder.Estado != 0 || !newOrder.Domicilio || rejected.has(newOrder.id))
+            delete ordersRt[order.key]
+          else
+            ordersRt[order.key] = newOrder
+          setOrders(ordersRt)
+          countOrders(ordersRt)
+        });
+        onChildRemoved(dbRef, (order) => {
+          delete ordersRt[order.key]
+          setOrders(ordersRt)
+          countOrders(ordersRt)
+        });
+        countOrders(ordersRt)
+      })
     };
-  
-  
-    const getUser = async () => {
-      AsyncStorage.getUser()
-        .then(data => {
-          setUser(data);
-          console.log("sdklñfja getUser", data.uid)
+
+    const countOrders = (orders:any) => {
+      let newTotals = {total: 0, del: 0, pick: 0} 
+      if ('{}' == JSON.stringify(orders)){
+        setTotals(newTotals)
+        return
+      }
+      newTotals.total = Object.values(orders).length 
+      Object.values(orders).forEach((order:any) => {
+        order.Domicilio? newTotals.del++: newTotals.pick++
+      });
+      setTotals(newTotals)
+    }
+
+    const selectOrder = async (order: any) => {
+      UserService.getOrder(order.id)
+        .then((data:any) => {
+          setSelectedOrder(data)
         })
-        .catch((error) => {
+        .catch((error:any) => {
           console.error(error)
-        });
+        })
     }
   
     const acceptOrder =  () => {
-      const statusRef = ref(db, 'ordenes/' + selectedOrder?.id);
+      const statusRef = ref(db, 'Ordenes/' + selectedOrder?.id);
       update(statusRef, {
-        estado: 1,
+        Estado: 1,
       });
-      const newOrders = orders.filter((order: any) => order.id !== selectedOrder?.id)
-      let pick = totales.pick;
-      let del = totales.del;
-      let total = totales.total - 1;
-      selectedOrder?.Domicilio == "1" ? del-- : pick--
-      setTotales({ total: total, pick: pick, del: del })
-      setOrders(newOrders)
+      UserService.acceptDelivery(selectedOrder?.id, user.uid)
+      .then((data:any) => {
+        console.log(data)
+      })
+      .catch((error:any) => {
+        console.error(error)
+      })
       setSelectedOrder(null)
       setIsOpen(false)
       Alert.alert("Orden aceptada")
       bottomSheetModalRef.current.close()
-      // navigation.navigate("InitialMenu")
     }
   
     const rejectOrder = () => {
-        // todo
-    //   const statusRef = ref(db, 'ordenes/' + selectedOrder?.id);
-    //   update(statusRef, {
-    //     estado: -2,
-    //   });
-    //   const newOrders = orders.filter((order: any) => order.id !== selectedOrder?.id)
-    //   let pick = totales.pick;
-    //   let del = totales.del;
-    //   let total = totales.total - 1;
-    //   selectedOrder?.Domicilio == "1" ? del-- : pick--
-    //   setTotales({ total: total, pick: pick, del: del })
-    //   setOrders(newOrders)
+      UserService.rejectDelivery(selectedOrder?.id, user.uid)
+      .then((data:any) => {
+        console.log(data)
+      })
+      .catch((error:any) => {
+        console.error(error)
+      })
       setSelectedOrder(null)
       setIsOpen(false)
       Alert.alert("Orden rechazada")
       bottomSheetModalRef.current.close()
-      navigation.navigate("InitialMenu")
+// ERROR: 
+      navigation.navigate("OrdersRest")
     }
   
     function handlePresentModal() {
@@ -206,15 +212,15 @@ import {
         <View style={styles.box}>
           <View style={{ flexDirection: "column", alignItems: "center" }}>
             <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10 }}>Pedidos</Text>
-            <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10 }}>{totales?.total}</Text>
+            <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10 }}>{totals?.total}</Text>
           </View>
           <View style={{ flexDirection: "column", alignItems: "center" }}>
             <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10 }}>Domiciliario</Text>
-            <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>{totales?.del}</Text>
+            <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>{totals?.del}</Text>
           </View>
           <View style={{ flexDirection: "column", alignItems: "center" }}>
             <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 2, marginTop: 10 }}>Recogida</Text>
-            <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>{totales?.pick}</Text>
+            <Text style={{ color: '#4CAF50', fontWeight: "400", fontSize: 15, marginBottom: 10, }}>{totals?.pick}</Text>
           </View>
         </View>
       );
@@ -224,10 +230,10 @@ import {
       return (
         <View style={{ marginTop: 20, overflow: "hidden", marginBottom: 10, marginHorizontal: 5 }}>
           <FlatList
-            data={orders}
+            data={Object.values(orders)}
             style={{ height: (Dimensions.get('window').height / 2) + 80 }}
             ItemSeparatorComponent={() => <View style={{ marginVertical: -5 }}></View>}
-            renderItem={({ item }) => <CardOrderNew item={item} onPress={() => {setSelectedOrder(item); handlePresentModal()}}/>}
+            renderItem={({ item }) => <CardOrderNew item={item} onPress={() => {selectOrder(item); handlePresentModal()}}/>}
             keyExtractor={(item) => item.id}
           />
         </View>
@@ -241,6 +247,7 @@ import {
           <FlatList
             // data={CRYPTOCURRENCIES}
             data={selectedOrder? Object.keys(selectedOrder?.Carro).map((key) => {return {id: key, ...selectedOrder?.Carro[key]}}): []}
+            // data={selectedOrder!}
             // data={selectedOrder? Object.values(selectedOrder?.Carro): []}
   
             style={{ height: (Dimensions.get('window').height / 2) }}
@@ -263,7 +270,7 @@ import {
                 <View style={{ flexDirection: "row", justifyContent: "space-between"}}>
                   <Image source={require('../../../assets/robot.png')} style={{ width: 50, height: 50, borderRadius: 50, marginBottom: 30 }} />
                   <View style={{ flexDirection: "column", marginTop: 3}}>
-                    <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK, marginBottom: 5 }}>{selectedOrder?.Usuario.nombrecliente}</Text>
+                    <Text style={{ fontWeight: "600", color: Colors.LIGHTBLACK, marginBottom: 5 }}>{selectedOrder?.UsuarioInfo.nombrecliente}</Text>
                     <Text style={{ color: Colors.LIGHTGREY, fontWeight: "600" }}>{selectedOrder?.Direccion}</Text>
                   </View>
                   <Ionicons name="checkmark-circle-sharp" size={40} style={styles.iconAceptar} onPress={()=>{acceptOrder()}}></Ionicons>
