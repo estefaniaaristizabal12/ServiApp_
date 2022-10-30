@@ -29,6 +29,7 @@ import * as UserService from "../services/UserService";
 import { normalize } from '../../FontNormalize';
 import * as AsyncStorage from '../services/AsyncStorage';
 import HeaderMode from '../components/HeaderMode';
+import Loader from '../components/Loader';
 
 
 const app = initializeApp(firebaseConfig);
@@ -42,48 +43,28 @@ const cardWidth = width / 2 - 20;
 const Delivery = ({navigation, route}) => {
 
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState("-1");
-  const [restaurant, setRestaurant] = React.useState([]);
-  const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>({});
-  const [filteredData, setFilteredData] = React.useState([]);
+  const [restaurants, setRestaurants] = React.useState<any>(null);
+  const [filteredData, setFilteredData] = React.useState<any>(null);
   const [user, setUser] = React.useState<any>({});
   const [activeTab, setActiveTab] = React.useState("Delivery");
+  const [loading, setLoading] = React.useState<any>(false);
+  const [searchTextInput, setSearchTextInput] = React.useState<any>("");
   
-  const searchFilterFunction = (text:any) => {
-    if(text){  
-      const newData = restaurant.filter((item:any) => {
-          const itemData = item.Nombre ? item.Nombre.toUpperCase() : ''.toUpperCase();
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-      })
-      setFilteredData(newData);
-    } else {
-      setFilteredData(restaurant);
-    }
-  }
-
-  const categoryFilterFunction = (indexCategory:any) => {
-    setSelectedCategoryIndex(indexCategory)
-    if(indexCategory != "-1"){  
-      const newData = restaurant.filter(item => {
-        return item.Categoria.includes(indexCategory)
-      })
-      setFilteredData(newData);
-    } else {
-      setFilteredData(restaurant);
-    }
-  }
-
+  
   React.useEffect(() => {
     console.log("Delivery")
+    setSearchTextInput("")
+    setSelectedCategoryIndex("-1")
+    setLoading(true)
     setFilteredData(null)
-    setRestaurant(null)
-        if(activeTab == "Delivery"){
-          getRestaurantesDelivery();
-        } 
-        else{
-          getRestaurantes();
-        }
-      if(JSON.stringify(user) === '{}') getUser();
+    setRestaurants(null)
+    getUser()
+      .then(() => {
+        activeTab == "Delivery"? 
+          getRestaurantesDelivery(): 
+          getRestaurantes()
+      })
+      .then(() => setLoading(false))
   }, [activeTab]);
 
     
@@ -91,7 +72,6 @@ const Delivery = ({navigation, route}) => {
     AsyncStorage.getUser()
       .then(data => {
           setUser(data);
-          console.log("getUser", user)
       })
       .catch((error) => {
          console.error(error)
@@ -102,7 +82,7 @@ const Delivery = ({navigation, route}) => {
     RestService.getRestaurants().
       then(data => {
         setFilteredData(data)
-        setRestaurant(data)
+        setRestaurants(data)
       })
       .catch(error => console.error(error))
   };
@@ -111,10 +91,32 @@ const Delivery = ({navigation, route}) => {
     RestService.getRestaurantsDelivery().
       then(data => {
         setFilteredData(data)
-        setRestaurant(data)
+        setRestaurants(data)
       })
       .catch(error => console.error(error))
   };
+
+  const filterFunction = (text:any, indexCategory: any) => {
+    setSearchTextInput(text)
+    setSelectedCategoryIndex(indexCategory)
+    if(!text && indexCategory == "-1"){
+      setFilteredData(restaurants);
+      return
+    }
+    const newData = restaurants.filter((rest:any) => {
+      if(indexCategory != "-1" && !rest.Categoria.includes(indexCategory))
+        return false
+      const restName = rest.Nombre ? rest.Nombre.toUpperCase() : ''.toUpperCase();
+      const textData = text.toUpperCase();
+      const matchProds = rest.Productos.filter((prod:any) => {
+        const prodName = prod.Nombre ? prod.Nombre.toUpperCase() : ''.toUpperCase();
+        return prodName.indexOf(textData) > -1;
+      })
+      return restName.indexOf(textData) > -1 || matchProds.length > '';
+    })
+    setFilteredData(newData);
+  }
+
 
   const ListCategories = () => {
     return (
@@ -126,7 +128,7 @@ const Delivery = ({navigation, route}) => {
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
-            onPress={() => selectedCategoryIndex != category.id ? categoryFilterFunction(category.id) : categoryFilterFunction("-1")}
+            onPress={() => selectedCategoryIndex != category.id ? filterFunction(searchTextInput, category.id) : filterFunction(searchTextInput, "-1")}
             >
             <View
               style={{
@@ -163,6 +165,7 @@ const Delivery = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.white1}}>
+      <Loader visible={loading} />
       <StatusBar backgroundColor={Colors.white1} barStyle='dark-content' hidden={false} />
       <HeaderMode activeTab={activeTab} setActiveTab={setActiveTab} navigation={navigation}/>
       <View style={style.header}>
@@ -194,7 +197,8 @@ const Delivery = ({navigation, route}) => {
           <TextInput
             style={{flex: 1, fontSize: normalize(18)}}
             placeholder="Buscar un restaurante"
-            onChangeText={(text) => searchFilterFunction(text)}
+            onChangeText={(text) => filterFunction(text, selectedCategoryIndex)}
+            value={searchTextInput}
           />
         </View>
       </View>
@@ -211,8 +215,7 @@ const Delivery = ({navigation, route}) => {
                 location={item.Localizacion}
                 description={item.Descripcion}
                 onPress={() => {
-                  setSelectedRestaurant(item);
-                  navigation.navigate('Restaurant', {selectedRestaurant: item, delivery: activeTab == "Delivery"});
+                    navigation.navigate('Restaurant', {selectedRestaurant: item, delivery: activeTab == "Delivery"});
                   }
                 } 
               />

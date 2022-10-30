@@ -13,7 +13,6 @@ import ChangeStatusOrder from '../../screens/delivProfileScreens/deliveryHome/Ch
 const StackDelivery = createStackNavigator();
 
 export default function DeliveryStack({route, navigation}) {
-    const user = route.params.user;
     return (
         <StackDelivery.Navigator
             screenOptions={{
@@ -21,10 +20,10 @@ export default function DeliveryStack({route, navigation}) {
                 animationTypeForReplace: 'pop',
             }}>
 
-            <StackDelivery.Screen name="InitialMenu" component={InitialMenu} initialParams={{user: user}}/>
-            <StackDelivery.Screen name="ChangeStatusOrder" component={ChangeStatusOrder} initialParams={{user: user}}/>
-            <StackDelivery.Screen name="CurrentOrder" component={CurrentOrder} initialParams={{user: user}}/>
-            <StackDelivery.Screen name="OrderList" component={OrderList} initialParams={{user: user}}/>
+            <StackDelivery.Screen name="InitialMenu" component={InitialMenu} />
+            <StackDelivery.Screen name="ChangeStatusOrder" component={ChangeStatusOrder} />
+            <StackDelivery.Screen name="CurrentOrder" component={CurrentOrder} />
+            <StackDelivery.Screen name="OrderList" component={OrderList} />
 
         </StackDelivery.Navigator>
     )

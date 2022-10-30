@@ -12,7 +12,6 @@ export const Splash = ({navigation}) => {
     const [user, setUser] = React.useState<any>(null)
 
     React.useEffect(() => {
-    //   AsyncStorage.clearUser().then(() => getUserAS());
       getUserAS();
     }, []);
 
@@ -27,15 +26,15 @@ export const Splash = ({navigation}) => {
       console.log("rol", user?.Rol)
       if (user?.Rol == 'Domiciliario') {
         console.log("Entro Domiciliario")
-        navigation.navigate('BottomTabDP', {user: user});
+        navigation.navigate('BottomTabDP');
       }
       else if (user?.Rol == 'Restaurante') {
         console.log("Entro Restaurante")
-        navigation.navigate('BottomTabRP', {user: user});
+        navigation.navigate('BottomTabRP');
       }
       else {
+        console.log("Entro Usuario")
         navigation.navigate('BottomTab');
-        // navigation.navigate('BottomTab', {user: data});
       }
     }
 

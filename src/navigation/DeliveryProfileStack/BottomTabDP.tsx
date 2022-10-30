@@ -12,8 +12,6 @@ import ProfileDStack from './ProfileDStack';
 
 const BtTap = createMaterialBottomTabNavigator();
 export default function BottomTabDP({route, navigation}) {
-    const user = route.params.user;
-    // console.log(user);
 
     return (
         <BtTap.Navigator
@@ -51,9 +49,9 @@ export default function BottomTabDP({route, navigation}) {
                 }
             })}>
 
-            <BtTap.Screen name="Home" options={{ title: 'Domicilios' }} component={DeliveryStack} initialParams={{user: user}}/>
-            <BtTap.Screen name="OrdersDelivStack" options={{ title: 'Solicitudes' }} component={OrdersDelivStack} initialParams={{user: user}}/>
-            <BtTap.Screen name="ProfileDStack" options={{ title: 'Perfil' }} component={ProfileDStack} initialParams={{user: user}}/>
+            <BtTap.Screen name="Home" options={{ title: 'Domicilios' }} component={DeliveryStack} />
+            <BtTap.Screen name="OrdersDelivStack" options={{ title: 'Solicitudes' }} component={OrdersDelivStack} />
+            <BtTap.Screen name="ProfileDStack" options={{ title: 'Perfil' }} component={ProfileDStack} />
 
 
         </BtTap.Navigator>

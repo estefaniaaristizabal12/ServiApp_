@@ -35,21 +35,20 @@ export const LogIn = ({ navigation }) => {
           return word[0].toUpperCase() + word.substring(1)
         }).join(" ");
         data.nombrecliente = name_normalized
-        AsyncStorage.saveUser({...data, ...authData})
+        const newUser = {...data, ...authData}
+        AsyncStorage.saveUser(newUser)
         setUser(data);
-        // console.log("getUser", data)
-        console.log("rol", data?.Rol)
           if (data?.Rol == 'Domiciliario') {
             console.log("Entro Domiciliario")
-            navigation.navigate('BottomTabDP', {user: data});
+            navigation.navigate('BottomTabDP');
           }
           else if (data?.Rol == 'Restaurante') {
             console.log("Entro Restaurante")
-            navigation.navigate('BottomTabRP', {user: data});
+            navigation.navigate('BottomTabRP');
           }
           else {
+            console.log("Entro Usuario")
             navigation.navigate('BottomTab');
-            // navigation.navigate('BottomTab', {user: data});
           }
         setLoading(false)
       })
@@ -86,15 +85,10 @@ export const LogIn = ({ navigation }) => {
 
   const login = () => {
     setLoading(true);
-    // setTimeout(async () => {
-      // setLoading(false);
       signInWithEmailAndPassword(auth, inputs.email, inputs.password)
         .then((userCredential) => {
           NotificationsService(userCredential.user.uid)
-          // AsyncStorage.saveUser(userCredential.user).catch(error => console.error(error))
-          // console.log('Signed in!')
           const userAuth = userCredential.user;
-          // console.log(user)
           getUser(userAuth);
         })
         .catch(error => {
@@ -103,8 +97,6 @@ export const LogIn = ({ navigation }) => {
           setLoading(false)
         })
       console.log('Signed in!')
-
-    // }, 3000);
   };
 
   const handleOnchange = (text, input) => {

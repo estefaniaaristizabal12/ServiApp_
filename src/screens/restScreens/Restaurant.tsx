@@ -30,6 +30,19 @@ export const Restaurant = ({ navigation, route }) => {
     const [additions, setAdditions] = React.useState<any>(null);
     const [delivery, setDelivery] = React.useState<any>(null);
 
+    const { top: paddingTop } = useSafeAreaInsets();
+
+
+    useEffect(() => {
+        console.log("Restaurant")
+        let { selectedRestaurant } = route.params;
+        selectedRestaurant && setSelectedRestaurant(selectedRestaurant);
+        setDelivery(route.params.delivery)
+        const products = route.params.selectedRestaurant.Productos
+        setSelectedProducts(products)
+        setFilteredData(products)
+        getAdditions(products)
+    }, []);
 
     const categoryFilterFunction = (indexCategory:any) => {
       setSelectedCategoryIndex(indexCategory)
@@ -43,26 +56,6 @@ export const Restaurant = ({ navigation, route }) => {
       }
     }
 
-    const getProducts = async (restaurantId:any) => {
-        prodService.getProductsRest(restaurantId)
-          .then(data => {
-            setSelectedProducts(data)
-            setFilteredData(data)
-            getAdditions(data)
-          })
-          .catch(error => console.error(error))
-    };
-
-    const getProductsDelivery = async (restaurantId:any) => {
-        prodService.getProductsRestDelivery(restaurantId)
-          .then(data => {
-            setSelectedProducts(data)
-            setFilteredData(data)
-            getAdditions(data)
-          })
-          .catch(error => console.error(error))
-    };
-
     const getAdditions = (prods:any) => {
         const newData = prods.filter((item:any) => {
           return ["3","6"].includes(item.Categoria)
@@ -70,16 +63,6 @@ export const Restaurant = ({ navigation, route }) => {
         setAdditions(newData);
     };
 
-    useEffect(() => {
-        console.log(route.params.delivery)
-        let { selectedRestaurant } = route.params;
-        selectedRestaurant && setSelectedRestaurant(selectedRestaurant);
-        setDelivery(route.params.delivery)
-        route.params.delivery? getProductsDelivery(selectedRestaurant.id): getProducts(selectedRestaurant.id);
-    }, []);
-
-
-    const { top: paddingTop } = useSafeAreaInsets();
 
     const ListCategories = () => {
         return (
