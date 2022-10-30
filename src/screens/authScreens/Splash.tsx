@@ -7,6 +7,7 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native';
 import { normalize } from '../../../FontNormalize';
 import * as AsyncStorage from '../../services/AsyncStorage';
+import * as NotificationsService from '../../services/NotificationService'
 
 export const Splash = ({navigation}) => {
     const [user, setUser] = React.useState<any>(null)
@@ -24,6 +25,7 @@ export const Splash = ({navigation}) => {
 
     const loggedNavigation = async () => {
       console.log("rol", user?.Rol)
+      NotificationsService.updateToken(user.uid)
       if (user?.Rol == 'Domiciliario') {
         console.log("Entro Domiciliario")
         navigation.navigate('BottomTabDP');

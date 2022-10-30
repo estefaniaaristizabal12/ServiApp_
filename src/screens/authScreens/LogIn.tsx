@@ -9,7 +9,7 @@ import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebaseConfig';
 import * as AsyncStorage from '../../services/AsyncStorage';
 import Loader from '../../components/Loader';
-import NotificationsService from '../../services/NotificationService'
+import * as NotificationsService from '../../services/NotificationService'
 import * as UserService from "../../services/UserService";
 
 
@@ -87,7 +87,7 @@ export const LogIn = ({ navigation }) => {
     setLoading(true);
       signInWithEmailAndPassword(auth, inputs.email, inputs.password)
         .then((userCredential) => {
-          NotificationsService(userCredential.user.uid)
+          NotificationsService.updateToken(userCredential.user.uid)
           const userAuth = userCredential.user;
           getUser(userAuth);
         })

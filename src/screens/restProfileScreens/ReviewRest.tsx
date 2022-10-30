@@ -22,6 +22,7 @@ import {
   import { useIsFocused } from "@react-navigation/native";
   import * as UserService from '../../services/UserService';
   import * as AsyncStorage from '../../services/AsyncStorage';
+  import * as NotificationService from '../../services/NotificationService';
   import { initializeApp } from 'firebase/app';
   import { getAuth } from 'firebase/auth';
   import { firebaseConfig } from '../firebaseConfig';
@@ -122,6 +123,14 @@ import {
           update(statusRef, {
             Estado: 1,
           });
+          //send notification to user
+          UserService.getUser(selectedOrder?.Usuario)
+          .then((orderUser:any) => {
+            NotificationService.sendOrderStatusUpdate(
+              orderUser.DeviceToken,
+              "¡El domiciliario va a recoger tu pedido! 👌"
+            ).then(data=>console.log(data)).catch(error=>console.error(error))
+          })
         })
         .catch((error:any) => {
           console.error(error)

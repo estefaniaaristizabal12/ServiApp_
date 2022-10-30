@@ -2,7 +2,7 @@ import { Platform, Alert, Linking } from 'react-native'
 import * as Notifications from 'expo-notifications'
 import * as UserService from './UserService'
 
-export default async function NotificationService(uid: any) {
+export async function updateToken(uid: any) {
   console.log("Getting expo token for Notifications")
 
   Notifications.setNotificationHandler({
@@ -47,5 +47,25 @@ export default async function NotificationService(uid: any) {
   catch (error){
     console.error("error getting expo push token", error)
   }
-
 }
+
+const expoUrl = "https://exp.host/--/api/v2/push/send";
+
+export async function sendOrderStatusUpdate(token: any, msg: any) {
+  const data = {
+    to: token,
+    title: "Actualización de estado de tu pedido 😊",
+    body: msg
+  }
+  const res = await fetch(`${expoUrl}`, {
+    method: 'POST', body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+  return res.json()
+}
+
+
+

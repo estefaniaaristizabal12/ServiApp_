@@ -22,6 +22,7 @@ import { CardOrderBottom } from '../../../components/CardOrderBottom';
 import { useIsFocused } from "@react-navigation/native";
 import * as UserService from '../../../services/UserService';
 import * as AsyncStorage from '../../../services/AsyncStorage';
+import * as NotificationService from '../../../services/NotificationService';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { firebaseConfig } from '../../firebaseConfig';
@@ -123,6 +124,14 @@ const OrdersDeliv = ({ navigation }) => {
         update(statusRef, {
           Estado: 0,
         });
+        //send notification to user
+        UserService.getUser(selectedOrder?.Usuario)
+        .then((orderUser:any) => {
+          NotificationService.sendOrderStatusUpdate(
+            orderUser.DeviceToken,
+            "¡El restaurante aceptó tu pedido! 😁"
+          ).then(data=>console.log(data)).catch(error=>console.error(error))
+        })
       })
       .catch((error:any) => {
         console.error(error)
