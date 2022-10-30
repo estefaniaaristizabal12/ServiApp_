@@ -7,25 +7,24 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  View,
-} from "react-native";
+  View
+} from 'react-native'
 
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
-const SPACING = 10;
-const { height } = Dimensions.get("window");
-const { width } = Dimensions.get("window");
+const SPACING = 10
+const { height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
-import { BlurView } from "expo-blur";
-import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "../constants/colors";
-import Categories from "../components/Categories";
-import products from "../constants/products";
-import { normalize } from "../../FontNormalize";
+import { BlurView } from 'expo-blur'
+import { Ionicons } from '@expo/vector-icons'
+import { Colors } from '../constants/colors'
+import Categories from '../components/Categories'
+import products from '../constants/products'
+import { normalize } from '../../FontNormalize'
 
 const PickUp = ({}) => {
-
-  const [activeCategoryId, setActiveCategoryId] = useState(null);
+  const [activeCategoryId, setActiveCategoryId] = useState(null)
   return (
     <>
       <ScrollView>
@@ -35,20 +34,19 @@ const PickUp = ({}) => {
               height: height / 2.5,
               padding: SPACING * 2,
               paddingTop: SPACING * 4,
-              flexDirection: "row",
-              justifyContent: "space-between",
+              flexDirection: 'row',
+              justifyContent: 'space-between'
             }}
-            source= {require('../../assets/1.jpg')}
-           
+            source={require('../../assets/1.jpg')}
           >
             <TouchableOpacity
               style={{
                 height: SPACING * 4.5,
                 width: SPACING * 4.5,
                 backgroundColor: Colors.white,
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: SPACING * 2.5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: SPACING * 2.5
               }}
             >
               <Ionicons
@@ -62,9 +60,9 @@ const PickUp = ({}) => {
                 height: SPACING * 4.5,
                 width: SPACING * 4.5,
                 backgroundColor: Colors.white,
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: SPACING * 2.5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: SPACING * 2.5
               }}
             >
               <Ionicons name="cart" size={SPACING * 2.5} color={Colors.gray} />
@@ -72,30 +70,28 @@ const PickUp = ({}) => {
           </ImageBackground>
           <View
             style={{
-
-
-              padding: SPACING ,
+              padding: SPACING,
               paddingTop: SPACING * 3,
               marginTop: -SPACING * 12,
               borderTopLeftRadius: SPACING * 3,
               borderTopRightRadius: SPACING * 3,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white
             }}
           >
             <View
               style={{
-                flexDirection: "row",
+                flexDirection: 'row',
                 marginBottom: SPACING * 3,
-                alignItems: "center",
+                alignItems: 'center'
               }}
             >
-              <View style={{ width: "70%" }}>
+              <View style={{ width: '70%' }}>
                 <Text
                   style={{
                     fontSize: normalize(SPACING * 3),
                     marginLeft: 17,
                     color: Colors.black,
-                    fontWeight: "700",
+                    fontWeight: '700'
                   }}
                 >
                   El Italiano
@@ -106,10 +102,10 @@ const PickUp = ({}) => {
                   padding: SPACING,
                   paddingHorizontal: SPACING * 3,
                   backgroundColor: Colors.secondary1,
-                  flexDirection: "row",
+                  flexDirection: 'row',
                   borderRadius: SPACING,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  justifyContent: 'center',
+                  alignItems: 'center'
                 }}
               >
                 <Ionicons
@@ -120,9 +116,9 @@ const PickUp = ({}) => {
                 <Text
                   style={{
                     fontSize: normalize(SPACING * 1.6),
-                    fontWeight: "600",
+                    fontWeight: '600',
                     marginLeft: SPACING / 2,
-                    color: Colors.black,
+                    color: Colors.black
                   }}
                 >
                   4.7
@@ -130,17 +126,20 @@ const PickUp = ({}) => {
               </View>
             </View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+              }}
             >
               <View
                 style={{
                   padding: SPACING,
                   paddingHorizontal: SPACING * 2,
                   backgroundColor: Colors.light,
-                  flexDirection: "row",
+                  flexDirection: 'row',
                   borderRadius: SPACING,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  justifyContent: 'center',
+                  alignItems: 'center'
                 }}
               >
                 <Ionicons
@@ -151,12 +150,12 @@ const PickUp = ({}) => {
                 <Text
                   style={{
                     fontSize: normalize(SPACING * 1.6),
-                    fontWeight: "600",
+                    fontWeight: '600',
                     marginLeft: SPACING / 2,
-                    color: Colors.gray,
+                    color: Colors.gray
                   }}
                 >
-                   10min
+                  10min
                 </Text>
               </View>
               <View
@@ -164,10 +163,10 @@ const PickUp = ({}) => {
                   padding: SPACING,
                   paddingHorizontal: SPACING * 2,
                   backgroundColor: Colors.light,
-                  flexDirection: "row",
+                  flexDirection: 'row',
                   borderRadius: SPACING,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  justifyContent: 'center',
+                  alignItems: 'center'
                 }}
               >
                 <Ionicons
@@ -178,12 +177,12 @@ const PickUp = ({}) => {
                 <Text
                   style={{
                     fontSize: normalize(SPACING * 1.6),
-                    fontWeight: "600",
+                    fontWeight: '600',
                     marginLeft: SPACING / 2,
-                    color: Colors.gray,
+                    color: Colors.gray
                   }}
                 >
-                   $3.000
+                  $3.000
                 </Text>
               </View>
               <View
@@ -191,10 +190,10 @@ const PickUp = ({}) => {
                   padding: SPACING,
                   paddingHorizontal: SPACING * 2,
                   backgroundColor: Colors.light,
-                  flexDirection: "row",
+                  flexDirection: 'row',
                   borderRadius: SPACING,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  justifyContent: 'center',
+                  alignItems: 'center'
                 }}
               >
                 <Ionicons
@@ -205,9 +204,9 @@ const PickUp = ({}) => {
                 <Text
                   style={{
                     fontSize: normalize(SPACING * 1.6),
-                    fontWeight: "600",
+                    fontWeight: '600',
                     marginLeft: SPACING / 2,
-                    color: Colors.gray,
+                    color: Colors.gray
                   }}
                 >
                   9pm
@@ -216,171 +215,173 @@ const PickUp = ({}) => {
             </View>
 
             <SafeAreaView>
-            <ScrollView
-              style={{
-                padding: SPACING,
-                paddingHorizontal: 2 ,
-              }}
-            >
-              <Categories onChange={(id) => setActiveCategoryId(id)} />
-              <View
+              <ScrollView
                 style={{
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  justifyContent: "space-between",
+                  padding: SPACING,
+                  paddingHorizontal: 2
                 }}
               >
-                {products
-                  .filter((products) => {
-                    if (activeCategoryId === null) {
-                      return true;
-                    }
-                    return products.categoryId === activeCategoryId;
-                  })
-                  .map((products) => (
-                    <View
-                      key={products.id}
-                      style={{
-                        width: width / 2 - SPACING * 2,
-                        marginBottom: SPACING,
-                        borderRadius: SPACING * 2,
-                        overflow: "hidden",
-                      }}
-                    >
-                      <BlurView
-                        tint="dark"
-                        intensity={30}
+                <Categories onChange={id => setActiveCategoryId(id)} />
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  {products
+                    .filter(products => {
+                      if (activeCategoryId === null) {
+                        return true
+                      }
+                      return products.categoryId === activeCategoryId
+                    })
+                    .map(products => (
+                      <View
+                        key={products.id}
                         style={{
-                          padding: SPACING,
+                          width: width / 2 - SPACING * 2,
+                          marginBottom: SPACING,
+                          borderRadius: SPACING * 2,
+                          overflow: 'hidden'
                         }}
                       >
-                        <TouchableOpacity
+                        <BlurView
+                          tint="dark"
+                          intensity={30}
                           style={{
-                            height: 150,
-                            width: "100%",
+                            padding: SPACING
                           }}
                         >
-                          <Image
-                            source={products.image}
+                          <TouchableOpacity
                             style={{
-                              width: "100%",
-                              height: "100%",
-                              borderRadius: SPACING * 2,
-                            }}
-                          />
-                          <View
-                            style={{
-                              position: "absolute",
-                              right: 0,
-                              borderBottomStartRadius: SPACING * 3,
-                              borderTopEndRadius: SPACING * 2,
-                              overflow: "hidden",
+                              height: 150,
+                              width: '100%'
                             }}
                           >
-                            <BlurView
-                              tint="dark"
-                              intensity={45}
+                            <Image
+                              source={products.image}
                               style={{
-                                flexDirection: "row",
-                                padding: SPACING - 2,
+                                width: '100%',
+                                height: '100%',
+                                borderRadius: SPACING * 2
+                              }}
+                            />
+                            <View
+                              style={{
+                                position: 'absolute',
+                                right: 0,
+                                borderBottomStartRadius: SPACING * 3,
+                                borderTopEndRadius: SPACING * 2,
+                                overflow: 'hidden'
                               }}
                             >
-                              <Ionicons
+                              <BlurView
+                                tint="dark"
+                                intensity={45}
                                 style={{
-                                  marginLeft: SPACING / 2,
+                                  flexDirection: 'row',
+                                  padding: SPACING - 2
                                 }}
-                                name="star"
-                                color={Colors.primary}
-                                size={SPACING * 1.7}
-                              />
+                              >
+                                <Ionicons
+                                  style={{
+                                    marginLeft: SPACING / 2
+                                  }}
+                                  name="star"
+                                  color={Colors.primary}
+                                  size={SPACING * 1.7}
+                                />
+                                <Text
+                                  style={{
+                                    color: Colors.white,
+                                    marginLeft: SPACING / 2
+                                  }}
+                                >
+                                  {products.rating}
+                                </Text>
+                              </BlurView>
+                            </View>
+                          </TouchableOpacity>
+                          <Text
+                            numberOfLines={2}
+                            style={{
+                              color: Colors.white,
+                              fontWeight: '600',
+                              fontSize: normalize(SPACING * 1.7),
+                              marginTop: SPACING,
+                              marginBottom: SPACING / 2
+                            }}
+                          >
+                            {products.name}
+                          </Text>
+                          <Text
+                            numberOfLines={1}
+                            style={{
+                              color: Colors.primary1,
+                              fontSize: normalize(SPACING * 1.2)
+                            }}
+                          >
+                            {products.included}
+                          </Text>
+                          <View
+                            style={{
+                              marginVertical: SPACING / 2,
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                              alignItems: 'center'
+                            }}
+                          >
+                            <View
+                              style={{
+                                flexDirection: 'row'
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  color: Colors.primary,
+                                  marginRight: SPACING / 2,
+                                  fontSize: normalize(SPACING * 1.6)
+                                }}
+                              >
+                                $
+                              </Text>
                               <Text
                                 style={{
                                   color: Colors.white,
-                                  marginLeft: SPACING / 2,
+                                  fontSize: normalize(SPACING * 1.6)
                                 }}
                               >
-                                {products.rating}
+                                {products.price}
                               </Text>
-                            </BlurView>
-                          </View>
-                        </TouchableOpacity>
-                        <Text
-                          numberOfLines={2}
-                          style={{
-                            color: Colors.white,
-                            fontWeight: "600",
-                            fontSize: normalize(SPACING * 1.7),
-                            marginTop: SPACING,
-                            marginBottom: SPACING / 2,
-                          }}
-                        >
-                          {products.name}
-                        </Text>
-                        <Text
-                          numberOfLines={1}
-                          style={{ color: Colors.primary1, fontSize: normalize(SPACING * 1.2) }}
-                        >
-                          {products.included}
-                        </Text>
-                        <View
-                          style={{
-                            marginVertical: SPACING / 2,
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <View style={{ flexDirection: "row" }}>
-                            <Text
+                            </View>
+                            <TouchableOpacity
                               style={{
-                                color: Colors.primary,
-                                marginRight: SPACING / 2,
-                                fontSize: normalize(SPACING * 1.6),
+                                backgroundColor: Colors.primary,
+                                padding: SPACING / 2,
+                                borderRadius: SPACING
                               }}
                             >
-                              $
-                            </Text>
-                            <Text
-                              style={{ color: Colors.white, fontSize: normalize(SPACING * 1.6) }}
-                            >
-                              {products.price}
-                            </Text>
+                              <Ionicons
+                                name="add"
+                                size={SPACING * 2}
+                                color={Colors.white}
+                              />
+                            </TouchableOpacity>
                           </View>
-                          <TouchableOpacity
-                            style={{
-                              backgroundColor: Colors.primary,
-                              padding: SPACING / 2,
-                              borderRadius: SPACING,
-                            }}
-                          >
-                            <Ionicons
-                              name="add"
-                              size={SPACING * 2}
-                              color={Colors.white}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      </BlurView>
-                    </View>
-                  ))}
-              </View>
-            </ScrollView>
-
-           </SafeAreaView>
-
-
-
-  
-
-
+                        </BlurView>
+                      </View>
+                    ))}
+                </View>
+              </ScrollView>
+            </SafeAreaView>
           </View>
         </View>
       </ScrollView>
-
     </>
-  );
-};
+  )
+}
 
-export default PickUp;
+export default PickUp
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})

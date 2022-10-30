@@ -1,6 +1,6 @@
-import { ipApi } from "./ApiConfig"
+import { ipApi } from './ApiConfig'
 
-const url = `${ipApi}/restaurantes`;
+const url = `${ipApi}/restaurantes`
 
 export async function getRestaurants() {
   const res = await fetch(`${url}/`, { method: 'GET' })

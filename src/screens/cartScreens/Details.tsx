@@ -2,7 +2,5 @@ import React from 'react'
 import { Text } from 'react-native'
 
 export const Details = () => {
-  return (
-    <Text></Text>
-  )
+  return <Text></Text>
 }

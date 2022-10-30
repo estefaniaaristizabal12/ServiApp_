@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react'
 import {
   View,
   Text,
@@ -7,13 +7,10 @@ import {
   TextStyle,
   TouchableOpacity,
   Image,
-  Platform,
-} from 'react-native';
-import { normalize } from '../../FontNormalize';
-import { Colors } from '../constants/colors';
-
-
-
+  Platform
+} from 'react-native'
+import { normalize } from '../../FontNormalize'
+import { Colors } from '../constants/colors'
 
 // id: 1,
 //     name: 'Master Card',
@@ -22,28 +19,29 @@ import { Colors } from '../constants/colors';
 
 type CardItemProps = {
   item: {
-    name: string;
-    id: number;
-    icon: string;
-    card_no: string;
-  };
-  isSelected: boolean;
-  key: string;
-  onPress: () => void;
-};
+    name: string
+    id: number
+    icon: string
+    card_no: string
+  }
+  isSelected: boolean
+  key: string
+  onPress: () => void
+}
 
 const CardItem: FunctionComponent<CardItemProps> = ({
   item,
   isSelected,
-  onPress,
+  onPress
 }) => {
   return (
     <TouchableOpacity
       style={{
         ...styles.container,
-        borderColor: isSelected ? Colors.secondaryItemCard : Colors.lightGray2,
+        borderColor: isSelected ? Colors.secondaryItemCard : Colors.lightGray2
       }}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       {/* Card Image */}
       <View>
         <Image
@@ -51,7 +49,7 @@ const CardItem: FunctionComponent<CardItemProps> = ({
           resizeMode="center"
           style={{
             width: 35,
-            height: 35,
+            height: 35
           }}
         />
       </View>
@@ -59,17 +57,21 @@ const CardItem: FunctionComponent<CardItemProps> = ({
       <Text style={styles.name}>{item.name}</Text>
       {/* Radio Button */}
       <Image
-        source={isSelected ? require('../../assets/check.png') : require('../../assets/check_off.png') }
+        source={
+          isSelected
+            ? require('../../assets/check.png')
+            : require('../../assets/check_off.png')
+        }
         style={{
           width: 25,
-          height: 25,
+          height: 25
         }}
       />
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-export default CardItem;
+export default CardItem
 
 const styles = StyleSheet.create({
   container: {
@@ -79,15 +81,15 @@ const styles = StyleSheet.create({
     marginTop: 12,
     paddingHorizontal: 24,
     borderWidth: 2,
-    borderRadius: 12,
+    borderRadius: 12
   },
   imageContainer: {
-    width: 60,
+    width: 60
   },
   name: {
     flex: 1,
     marginLeft: 12,
     fontSize: normalize(16),
-    color: Colors.black,
-  },
-});
+    color: Colors.black
+  }
+})

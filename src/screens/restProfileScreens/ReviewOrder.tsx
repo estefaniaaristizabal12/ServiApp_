@@ -1,8 +1,6 @@
 import React from 'react'
-import { View } from 'react-native';
+import { View } from 'react-native'
 
-export default function ReviewOrder () {
-  return (
-    <View></View>
-  )
+export default function ReviewOrder() {
+  return <View></View>
 }

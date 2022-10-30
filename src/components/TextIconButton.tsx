@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react'
 import {
   ViewStyle,
   TouchableOpacity,
@@ -7,19 +7,19 @@ import {
   TextStyle,
   ImageStyle,
   ImageSourcePropType,
-  StyleSheet,
-} from 'react-native';
-import { Colors } from '../constants/colors';
+  StyleSheet
+} from 'react-native'
+import { Colors } from '../constants/colors'
 
 type TextIconButtonProps = {
-  containerStyle: ViewStyle;
-  icon: ImageSourcePropType;
-  iconStyle: ImageStyle;
-  onPress: () => void;
-  label: string;
-  labelStyle: TextStyle;
-  iconPosition: 'LEFT' | 'RIGHT';
-};
+  containerStyle: ViewStyle
+  icon: ImageSourcePropType
+  iconStyle: ImageStyle
+  onPress: () => void
+  label: string
+  labelStyle: TextStyle
+  iconPosition: 'LEFT' | 'RIGHT'
+}
 
 const TextIconButton: FunctionComponent<TextIconButtonProps> = ({
   containerStyle,
@@ -28,7 +28,7 @@ const TextIconButton: FunctionComponent<TextIconButtonProps> = ({
   label,
   labelStyle,
   onPress,
-  iconPosition,
+  iconPosition
 }) => {
   return (
     <TouchableOpacity
@@ -36,15 +36,16 @@ const TextIconButton: FunctionComponent<TextIconButtonProps> = ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        ...containerStyle,
+        ...containerStyle
       }}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       {iconPosition === 'LEFT' && (
         <Image
           source={icon}
           style={{
             ...styles.image,
-            ...iconStyle,
+            ...iconStyle
           }}
         />
       )}
@@ -60,21 +61,21 @@ const TextIconButton: FunctionComponent<TextIconButtonProps> = ({
           source={icon}
           style={{
             ...styles.image,
-            ...iconStyle,
+            ...iconStyle
           }}
         />
       )}
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   image: {
     width: 20,
     height: 20,
     tintColor: Colors.black,
-    marginLeft: 5,
-  },
-});
+    marginLeft: 5
+  }
+})
 
-export default TextIconButton;
+export default TextIconButton

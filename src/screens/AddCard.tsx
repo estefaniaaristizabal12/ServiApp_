@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import {
   View,
   Text,
@@ -6,42 +6,38 @@ import {
   StyleSheet,
   ScrollView,
   ImageBackground,
-  Platform,
-} from 'react-native';
-import { Colors } from '../constants/colors';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import HeaderNavigation from '../components/HeaderNavigation';
-import IconButton from '../components/IconButton';
-import TextButton from '../components/TextButton';
-import FormInput from '../components/FormInput';
-import FormInputCheck from '../components/FormInputCheck';
-import RadioButton from '../components/RadioButton';
+  Platform
+} from 'react-native'
+import { Colors } from '../constants/colors'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import HeaderNavigation from '../components/HeaderNavigation'
+import IconButton from '../components/IconButton'
+import TextButton from '../components/TextButton'
+import FormInput from '../components/FormInput'
+import FormInputCheck from '../components/FormInputCheck'
+import RadioButton from '../components/RadioButton'
 
-
-
-import utils from '../constants/Utils';
-
+import utils from '../constants/Utils'
 
 const AddCard = ({ navigation, route }) => {
-    
-  const insets = useSafeAreaInsets();
-  const [selectedCard, setSelectedCard] = useState<null>(null);
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardNumberError, setCardNumberError] = useState('');
-  const [cardName, setCardName] = useState('');
-  const [cardNameError, setCardNameError] = useState('');
-  const [expireDate, setExpireDate] = useState('');
-  const [expireDateError, setExpireDateError] = useState('');
-  const [cvv, setCvv] = useState('');
-  const [cvvError, setCvvError] = useState('');
-  const [isRemember, setIsRemember] = useState(false);
+  const insets = useSafeAreaInsets()
+  const [selectedCard, setSelectedCard] = useState<null>(null)
+  const [cardNumber, setCardNumber] = useState('')
+  const [cardNumberError, setCardNumberError] = useState('')
+  const [cardName, setCardName] = useState('')
+  const [cardNameError, setCardNameError] = useState('')
+  const [expireDate, setExpireDate] = useState('')
+  const [expireDateError, setExpireDateError] = useState('')
+  const [cvv, setCvv] = useState('')
+  const [cvvError, setCvvError] = useState('')
+  const [isRemember, setIsRemember] = useState(false)
 
   useEffect(() => {
-    let { selectedCard } = route.params;
-    setSelectedCard(selectedCard);
-    console.log('selectedCard: ', selectedCard);
-  }, []);
+    let { selectedCard } = route.params
+    setSelectedCard(selectedCard)
+    console.log('selectedCard: ', selectedCard)
+  }, [])
 
   const renderHeader = () => {
     return (
@@ -50,7 +46,7 @@ const AddCard = ({ navigation, route }) => {
         containerStyle={{
           height: 50,
           marginHorizontal: 24,
-          marginTop: insets.top,
+          marginTop: insets.top
         }}
         titleStyle={{}}
         leftComponent={
@@ -61,17 +57,17 @@ const AddCard = ({ navigation, route }) => {
               width: 16,
               height: 20,
               ...Platform.select({
-                android: { marginRight: 4 },
+                android: { marginRight: 4 }
               }),
-              tintColor: Colors.gray2,
+              tintColor: Colors.gray2
             }}
             onPress={() => navigation.goBack()}
           />
         }
         rightComponent={<View style={{ width: 40 }} />}
       />
-    );
-  };
+    )
+  }
 
   const renderCard = () => {
     return (
@@ -82,8 +78,9 @@ const AddCard = ({ navigation, route }) => {
           width: '100%',
           marginTop: 12,
           borderRadius: 12,
-          overflow: 'hidden',
-        }}>
+          overflow: 'hidden'
+        }}
+      >
         {/* Logo */}
         <Image
           source={selectedCard?.icon}
@@ -93,24 +90,30 @@ const AddCard = ({ navigation, route }) => {
             top: 20,
             right: 20,
             height: 40,
-            width: 80,
+            width: 80
           }}
         />
         {/* Details */}
         <View style={styles.details}>
           <Text style={{ fontSize: 16, color: Colors.white }}>{cardName}</Text>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={{ flex: 1, color: Colors.white, fontSize: 16}}>
+            <Text
+              style={{
+                flex: 1,
+                color: Colors.white,
+                fontSize: 16
+              }}
+            >
               {cardNumber}
             </Text>
-            <Text style={{ color: Colors.white, fontSize: 16}}>
+            <Text style={{ color: Colors.white, fontSize: 16 }}>
               {expireDate}
             </Text>
           </View>
         </View>
       </ImageBackground>
-    );
-  };
+    )
+  }
 
   const isEnableAddCard = () => {
     return Boolean(
@@ -121,9 +124,9 @@ const AddCard = ({ navigation, route }) => {
         cardNumberError === '' &&
         cardNameError === '' &&
         expireDateError === '' &&
-        cvvError === '',
-    );
-  };
+        cvvError === ''
+    )
+  }
 
   const renderFooter = () => {
     return (
@@ -131,8 +134,9 @@ const AddCard = ({ navigation, route }) => {
         style={{
           paddingTop: 12,
           paddingBottom: 24,
-          paddingHorizontal: 24,
-        }}>
+          paddingHorizontal: 24
+        }}
+      >
         <TextButton
           disabled={!isEnableAddCard()}
           buttonContainerStyle={{
@@ -140,18 +144,18 @@ const AddCard = ({ navigation, route }) => {
             borderRadius: 12,
             backgroundColor: isEnableAddCard()
               ? Colors.primary
-              : Colors.transparentPrimary,
+              : Colors.transparentPrimary
           }}
           label={'Agregar Tarjeta'}
           onPress={() => {
             // navigation.goBack();
             //navigation.navigate('Checkout', { selectedCard });
-            navigation.navigate('Confirmation');
+            navigation.navigate('Confirmation')
           }}
         />
       </View>
-    );
-  };
+    )
+  }
 
   const renderForms = () => {
     return (
@@ -166,13 +170,13 @@ const AddCard = ({ navigation, route }) => {
               value
                 .replace(/\s/g, '')
                 .replace(/(\d{4})/g, '$1 ')
-                .trim(),
-            );
+                .trim()
+            )
             utils.validateInput(
               value,
               Platform.OS === 'android' ? 16 : 19,
-              setCardNumberError,
-            );
+              setCardNumberError
+            )
           }}
           maxLength={Platform.OS === 'android' ? 16 : 19}
           errorMsg={cardNumberError}
@@ -186,8 +190,8 @@ const AddCard = ({ navigation, route }) => {
           value={cardName}
           containerStyle={{ marginTop: 12 }}
           onChange={value => {
-            utils.validateInput(value, 1, setCardNameError);
-            setCardName(value);
+            utils.validateInput(value, 1, setCardNameError)
+            setCardName(value)
           }}
           errorMsg={cardNameError}
           appendComponent={
@@ -202,11 +206,11 @@ const AddCard = ({ navigation, route }) => {
             placeholder={'MM/YY'}
             maxLength={5}
             containerStyle={{
-              flex: 1,
+              flex: 1
             }}
             onChange={value => {
-              utils.validateInput(value, 5, setExpireDateError);
-              setExpireDate(value);
+              utils.validateInput(value, 5, setExpireDateError)
+              setExpireDate(value)
             }}
             appendComponent={
               <FormInputCheck value={expireDate} error={expireDateError} />
@@ -220,11 +224,11 @@ const AddCard = ({ navigation, route }) => {
             maxLength={3}
             containerStyle={{
               flex: 1,
-              marginLeft: 12,
+              marginLeft: 12
             }}
             onChange={value => {
-              utils.validateInput(value, 3, setCvvError);
-              setCvv(value);
+              utils.validateInput(value, 3, setCvvError)
+              setCvv(value)
             }}
             appendComponent={<FormInputCheck value={cvv} error={cvvError} />}
           />
@@ -238,8 +242,8 @@ const AddCard = ({ navigation, route }) => {
           />
         </View>
       </View>
-    );
-  };
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -251,9 +255,10 @@ const AddCard = ({ navigation, route }) => {
         contentContainerStyle={{
           flexGrow: 1,
           // marginTop: SIZES.radius,
-          paddingHorizontal: 24,
+          paddingHorizontal: 24
           // paddingBottom: SIZES.radius,
-        }}>
+        }}
+      >
         {/* Card */}
         {renderCard()}
         {/* Forms */}
@@ -262,13 +267,13 @@ const AddCard = ({ navigation, route }) => {
       {/* Footer */}
       {renderFooter()}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.white
   },
   leftIconButton: {
     width: 40,
@@ -277,15 +282,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 12,
-    borderColor: Colors.gray2,
+    borderColor: Colors.gray2
   },
   details: {
     position: 'absolute',
     bottom: 10,
     left: 0,
     right: 0,
-    paddingHorizontal: 24,
-  },
-});
+    paddingHorizontal: 24
+  }
+})
 
-export default AddCard;
+export default AddCard

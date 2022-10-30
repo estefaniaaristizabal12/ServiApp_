@@ -1,27 +1,27 @@
-import React from 'react';
+import React from 'react'
 import {
   useWindowDimensions,
   View,
   Text,
   ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
+  StyleSheet
+} from 'react-native'
 
-import { Colors } from '../constants/colors';
+import { Colors } from '../constants/colors'
 
-const Loader = ({visible = false}) => {
-  const {width, height} = useWindowDimensions();
+const Loader = ({ visible = false }) => {
+  const { width, height } = useWindowDimensions()
   return (
     visible && (
-      <View style={[style.container, {height, width}]}>
+      <View style={[style.container, { height, width }]}>
         <View style={style.loader}>
           <ActivityIndicator size="large" color={Colors.primary} />
-          <Text style={{marginLeft: 10, fontSize: 16}}>Loading...</Text>
+          <Text style={{ marginLeft: 10, fontSize: 16 }}>Loading...</Text>
         </View>
       </View>
     )
-  );
-};
+  )
+}
 
 const style = StyleSheet.create({
   loader: {
@@ -31,14 +31,14 @@ const style = StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 20
   },
   container: {
     position: 'absolute',
     zIndex: 10,
     backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-  },
-});
+    justifyContent: 'center'
+  }
+})
 
-export default Loader;
+export default Loader

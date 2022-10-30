@@ -1,9 +1,9 @@
-import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
-import { normalize } from '../../FontNormalize';
-import { Colors } from '../constants/colors';
+import React from 'react'
+import { TouchableOpacity, Text } from 'react-native'
+import { normalize } from '../../FontNormalize'
+import { Colors } from '../constants/colors'
 
-const Button = ({title, onPress = () => {}}) => {
+const Button = ({ title, onPress = () => {} }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -15,13 +15,20 @@ const Button = ({title, onPress = () => {}}) => {
         backgroundColor: Colors.logo,
         marginVertical: 20,
         justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text style={{color: Colors.white, fontWeight: 'bold', fontSize: normalize(18)}}>
+        alignItems: 'center'
+      }}
+    >
+      <Text
+        style={{
+          color: Colors.white,
+          fontWeight: 'bold',
+          fontSize: normalize(18)
+        }}
+      >
         {title}
       </Text>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button

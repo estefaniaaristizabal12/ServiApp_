@@ -1,15 +1,14 @@
-
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 import {
   FlatList,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-} from 'react-native';
-import { Colors } from '../../constants/colors';
-import { normalize } from '../../../FontNormalize';
+  View
+} from 'react-native'
+import { Colors } from '../../constants/colors'
+import { normalize } from '../../../FontNormalize'
 
 const DATA = [
   {
@@ -20,7 +19,7 @@ const DATA = [
     cvv: '123',
     expireDate: '11/19',
     image: require('../../../assets/visa.png'),
-    bg_color:   Colors.primary1,
+    bg_color: Colors.primary1
   },
   {
     id: '2',
@@ -30,7 +29,7 @@ const DATA = [
     cvv: '123',
     expireDate: '11/19',
     image: require('../../../assets/masterCard.png'),
-    bg_color: '#8961EE',
+    bg_color: '#8961EE'
   },
   {
     id: '3',
@@ -40,19 +39,24 @@ const DATA = [
     cvv: '123',
     expireDate: '11/19',
     image: require('../../../assets/masterCard.png'),
-    bg_color: '#AC2DFE',
-  },
-];
+    bg_color: '#AC2DFE'
+  }
+]
 
 const AboutUs = () => {
-  
-  const [details, setDetails] = useState([]);
+  const [details, setDetails] = useState([])
 
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => setDetails(item)}>
-        <View style={[styles.card, {backgroundColor: item.bg_color}]}>
-          <Text style={{fontSize: normalize(18), fontWeight: 'bold', color: '#fff'}}>
+        <View style={[styles.card, { backgroundColor: item.bg_color }]}>
+          <Text
+            style={{
+              fontSize: normalize(18),
+              fontWeight: 'bold',
+              color: '#fff'
+            }}
+          >
             {item.bankName}
           </Text>
           <Text
@@ -60,32 +64,43 @@ const AboutUs = () => {
               fontSize: normalize(28),
               fontWeight: 'bold',
               color: '#fff',
-              marginVertical: 40,
-            }}>
+              marginVertical: 40
+            }}
+          >
             {item.cardNo}
           </Text>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text style={{fontSize: normalize(22), fontWeight: 'bold', color: '#fff'}}>
+              alignItems: 'center'
+            }}
+          >
+            <Text
+              style={{
+                fontSize: normalize(22),
+                fontWeight: 'bold',
+                color: '#fff'
+              }}
+            >
               {item.name}
             </Text>
             <Image
               source={item.image}
-              style={{height: 60, width: 120, resizeMode: 'contain'}}
+              style={{
+                height: 60,
+                width: 120,
+                resizeMode: 'contain'
+              }}
             />
           </View>
         </View>
       </TouchableOpacity>
-    );
-  };
+    )
+  }
   return (
     <View style={styles.container}>
-
-      <View style={{marginVertical: 40}}>
+      <View style={{ marginVertical: 40 }}>
         <FlatList
           horizontal
           data={DATA}
@@ -94,7 +109,7 @@ const AboutUs = () => {
         />
       </View>
 
-      <View style={{paddingHorizontal: 30}}>
+      <View style={{ paddingHorizontal: 30 }}>
         <Text style={styles.textLabel}>Número Tarjeta</Text>
         <View style={styles.textView}>
           <Text style={styles.text}>{details.cardNo}</Text>
@@ -103,14 +118,19 @@ const AboutUs = () => {
         <View style={styles.textView}>
           <Text style={styles.text}>{details.name}</Text>
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View style={{width:'40%'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+          }}
+        >
+          <View style={{ width: '40%' }}>
             <Text style={styles.textLabel}>Expedición</Text>
             <View style={[styles.textView]}>
               <Text style={styles.text}>{details.expireDate}</Text>
             </View>
           </View>
-          <View style={{width:'45%'}}>
+          <View style={{ width: '45%' }}>
             <Text style={styles.textLabel}>CVV</Text>
             <View style={[styles.textView]}>
               <Text style={styles.text}>{details.cvv}</Text>
@@ -118,32 +138,40 @@ const AboutUs = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={[styles.textView, {backgroundColor: Colors.primary1, alignItems:'center', marginVertical:18}]}>
-        <Text style={[styles.text, {color:'#fff'}]}>PAGAR</Text>
+        <TouchableOpacity
+          style={[
+            styles.textView,
+            {
+              backgroundColor: Colors.primary1,
+              alignItems: 'center',
+              marginVertical: 18
+            }
+          ]}
+        >
+          <Text style={[styles.text, { color: '#fff' }]}>PAGAR</Text>
         </TouchableOpacity>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default AboutUs;
+export default AboutUs
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FBFBFB',
-
+    backgroundColor: '#FBFBFB'
   },
   header: {
     paddingTop: 50,
     paddingHorizontal: 30,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   headerText: {
     fontSize: normalize(20),
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   card: {
     width: 400,
@@ -151,28 +179,28 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     borderRadius: 14,
     padding: 20,
-    marginTop: 20,
+    marginTop: 20
   },
   textLabel: {
     fontSize: normalize(20),
     fontWeight: 'bold',
-    color: '#ccc',
+    color: '#ccc'
   },
   textView: {
     width: '100%',
     height: 50,
     backgroundColor: '#fff',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1,
     borderRadius: 10,
     marginVertical: 20,
     paddingHorizontal: 20,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   text: {
     fontSize: normalize(15),
-    fontWeight: 'bold',
-  },
-});
+    fontWeight: 'bold'
+  }
+})

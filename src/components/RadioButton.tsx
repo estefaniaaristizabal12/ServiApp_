@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import { Colors } from '../constants/colors';
+import React, { FunctionComponent } from 'react'
+import { Colors } from '../constants/colors'
 import {
   ViewStyle,
   StyleSheet,
@@ -7,18 +7,17 @@ import {
   TextStyle,
   Image,
   Text,
-  TouchableOpacity,
-} from 'react-native';
-
+  TouchableOpacity
+} from 'react-native'
 
 type RadioButtonProps = {
-  containerStyle: ViewStyle;
-  label: string;
-  labelStyle: TextStyle;
-  iconStyle: ViewStyle;
-  isSelected: boolean;
-  onPress: () => void;
-};
+  containerStyle: ViewStyle
+  label: string
+  labelStyle: TextStyle
+  iconStyle: ViewStyle
+  isSelected: boolean
+  onPress: () => void
+}
 
 const RadioButton: FunctionComponent<RadioButtonProps> = ({
   containerStyle,
@@ -26,7 +25,7 @@ const RadioButton: FunctionComponent<RadioButtonProps> = ({
   labelStyle,
   iconStyle,
   isSelected,
-  onPress,
+  onPress
 }) => {
   return (
     <TouchableOpacity
@@ -34,33 +33,39 @@ const RadioButton: FunctionComponent<RadioButtonProps> = ({
         {
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'center'
         },
-        { ...containerStyle },
+        { ...containerStyle }
       ]}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <Image
-        source={isSelected ? require('../../assets/check.png'): require('../../assets/check_off.png')}
+        source={
+          isSelected
+            ? require('../../assets/check.png')
+            : require('../../assets/check_off.png')
+        }
         style={{ marginLeft: 5, width: 20, height: 20, ...iconStyle }}
       />
       <Text
         style={{
           marginLeft: 12,
           color: Colors.grayItemCard,
-          fontSize: 16,
-        }}>
+          fontSize: 16
+        }}
+      >
         {label}
       </Text>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     height: 2,
     width: '100%',
-    backgroundColor: Colors.lightGray2,
-  },
-});
+    backgroundColor: Colors.lightGray2
+  }
+})
 
-export default RadioButton;
+export default RadioButton

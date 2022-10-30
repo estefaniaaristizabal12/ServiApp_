@@ -1,7 +1,7 @@
-import { ipApi } from "./ApiConfig"
+import { ipApi } from './ApiConfig'
 // import * as AsyncStorage from "./AsyncStorage"
 
-const url = `${ipApi}/ordenes`;
+const url = `${ipApi}/ordenes`
 
 export async function list() {
   const res = await fetch(`${url}/`, { method: 'GET' })
@@ -14,7 +14,8 @@ export async function get(id: any) {
 }
 
 export async function update(state: any, id: any) {
-  const res = await fetch(`${url}/update/${state}/?uid=${id}`, { method: 'PUT' })
+  const res = await fetch(`${url}/update/${state}/?uid=${id}`, {
+    method: 'PUT'
+  })
   return res.json()
 }
-

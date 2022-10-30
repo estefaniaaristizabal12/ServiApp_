@@ -1,22 +1,21 @@
-import React, { FunctionComponent } from 'react';
-import { View, Text, ViewStyle, StyleSheet, TextStyle } from 'react-native';
-import { normalize } from '../../FontNormalize';
-
+import React, { FunctionComponent } from 'react'
+import { View, Text, ViewStyle, StyleSheet, TextStyle } from 'react-native'
+import { normalize } from '../../FontNormalize'
 
 type HeaderNavigationProps = {
-  title: string;
-  containerStyle: ViewStyle;
-  leftComponent: any;
-  rightComponent: any;
-  titleStyle: TextStyle;
-};
+  title: string
+  containerStyle: ViewStyle
+  leftComponent: any
+  rightComponent: any
+  titleStyle: TextStyle
+}
 
 const HeaderNavigation: FunctionComponent<HeaderNavigationProps> = ({
   title,
   containerStyle,
   leftComponent,
   rightComponent,
-  titleStyle,
+  titleStyle
 }) => {
   return (
     <View style={[styles.container, containerStyle]}>
@@ -29,29 +28,24 @@ const HeaderNavigation: FunctionComponent<HeaderNavigationProps> = ({
       {/* Right */}
       {rightComponent}
     </View>
-  );
-};
+  )
+}
 
-export default HeaderNavigation;
+export default HeaderNavigation
 
 const styles = StyleSheet.create({
   container: {
     height: 60,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   containerTitle: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-   
-  
+    justifyContent: 'center'
   },
   titleStyle: {
-
     fontSize: normalize(16),
     color: 'black',
-    fontWeight: 'bold',
-    
-    
-  },
-});
+    fontWeight: 'bold'
+  }
+})

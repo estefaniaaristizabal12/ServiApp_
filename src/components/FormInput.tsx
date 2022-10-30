@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import { Colors } from '../constants/colors';
+import React, { FunctionComponent } from 'react'
+import { Colors } from '../constants/colors'
 import {
   View,
   Text,
@@ -7,23 +7,23 @@ import {
   TextInput,
   ViewStyle,
   StyleSheet,
-  ViewComponent,
-} from 'react-native';
+  ViewComponent
+} from 'react-native'
 
-import { Dimensions } from 'react-native';
-import { normalize } from '../../FontNormalize';
-const { width, height } = Dimensions.get('window');
+import { Dimensions } from 'react-native'
+import { normalize } from '../../FontNormalize'
+const { width, height } = Dimensions.get('window')
 
 type FormInputProps = TextInputProps & {
-  containerStyle: ViewStyle;
-  label: string;
-  inputStyle: ViewStyle;
-  inputContainerStyle: ViewStyle;
-  prependComponent: any;
-  appendComponent: any;
-  errorMsg: string;
-  onChange: (text: string) => void;
-};
+  containerStyle: ViewStyle
+  label: string
+  inputStyle: ViewStyle
+  inputContainerStyle: ViewStyle
+  prependComponent: any
+  appendComponent: any
+  errorMsg: string
+  onChange: (text: string) => void
+}
 
 const FormInput: FunctionComponent<FormInputProps> = ({
   containerStyle,
@@ -39,14 +39,28 @@ const FormInput: FunctionComponent<FormInputProps> = ({
   autoCapitalize = 'none',
   errorMsg = '',
   maxLength,
-  inputContainerStyle,
+  inputContainerStyle
 }) => {
   return (
     <View style={{ ...containerStyle }}>
       {/* Label & Error msg */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text style={{ color: Colors.grayItemCard, fontSize:normalize(14) }}>{label}</Text>
-        <Text style={{ color: Colors.redError, fontSize:normalize(14) }}>{errorMsg}</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }}
+      >
+        <Text
+          style={{
+            color: Colors.grayItemCard,
+            fontSize: normalize(14)
+          }}
+        >
+          {label}
+        </Text>
+        <Text style={{ color: Colors.redError, fontSize: normalize(14) }}>
+          {errorMsg}
+        </Text>
       </View>
       {/* Text input */}
       <View style={[styles.containerInput, { ...inputContainerStyle }]}>
@@ -54,7 +68,7 @@ const FormInput: FunctionComponent<FormInputProps> = ({
         <TextInput
           style={{
             flex: 1,
-            ...inputStyle,
+            ...inputStyle
           }}
           placeholder={placeholder}
           placeholderTextColor={Colors.grayItemCard}
@@ -68,8 +82,8 @@ const FormInput: FunctionComponent<FormInputProps> = ({
         {appendComponent}
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   containerInput: {
@@ -78,8 +92,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginTop: height > 800 ? 8 : 0,
     borderRadius: 12,
-    backgroundColor: Colors.lightGray2,
-  },
-});
+    backgroundColor: Colors.lightGray2
+  }
+})
 
-export default FormInput;
+export default FormInput

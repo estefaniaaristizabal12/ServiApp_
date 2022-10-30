@@ -1,20 +1,13 @@
-
-
 type ProductosC = {
-    nombreProducto:"",
-    valor:0,
-    cantidad:0,
-    imagen:""
-
+  nombreProducto: ''
+  valor: 0
+  cantidad: 0
+  imagen: ''
 }
 
 const initialState = {
-    nombreRestaurante: "",
-    productos: []
+  nombreRestaurante: '',
+  productos: []
 }
 
-
-const getProducts = () => {
-
-}
-
+const getProducts = () => {}

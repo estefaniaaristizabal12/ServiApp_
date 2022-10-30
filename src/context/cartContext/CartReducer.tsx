@@ -1,24 +1,20 @@
-import { CartState } from "./CartContext";
+import { CartState } from './CartContext'
 
-
-
-type CartAction = 
-    | { type: 'cambioNombre' } ;
-
+type CartAction = { type: 'cambioNombre' }
 
 // generaEstado
-export const cartReducer = ( state: CartState, action: CartAction ): CartState => {
+export const cartReducer = (
+  state: CartState,
+  action: CartAction
+): CartState => {
+  switch (action.type) {
+    case 'cambioNombre':
+      return {
+        ...state,
+        nombreRestaurante: 'prueba'
+      }
 
-    switch ( action.type ) {
-        case 'cambioNombre':
-            return {
-                ...state,
-                nombreRestaurante:"prueba"
-            }
-
-
-        default:
-            return state;
-    }
-
+    default:
+      return state
+  }
 }
