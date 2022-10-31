@@ -21,6 +21,7 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { firebaseConfig } from '../firebaseConfig'
 import * as UserService from '../../services/UserService'
+import * as AsyncStorage from '../../services/AsyncStorage'
 import categories from '../../constants/categories'
 import { normalize } from '../../../FontNormalize'
 import { CartContext } from '../../context/cartContext/CartContext'
@@ -40,16 +41,20 @@ export const Product = ({ navigation, route }) => {
   const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>(null)
   const [additions, setAdditions] = React.useState<any>(null)
   const [delivery, setDelivery] = React.useState<any>(null)
-
+  const [user, setUser] = React.useState<any>(null)
+  
   // const {cambioNombre} = useContext(CartContext);
 
   useEffect(() => {
-    let { selectedProduct, selectedRestaurant, additions, delivery } =
-      route.params
-    selectedProduct && setSelectedProduct(selectedProduct)
-    selectedRestaurant && setSelectedRestaurant(selectedRestaurant)
-    additions && setAdditions(additions)
-    delivery && setDelivery(delivery)
+    AsyncStorage.getUser().then((user) => {
+      setUser(user)
+      let { selectedProduct, selectedRestaurant, additions, delivery } =
+        route.params
+      selectedProduct && setSelectedProduct(selectedProduct)
+      selectedRestaurant && setSelectedRestaurant(selectedRestaurant)
+      additions && setAdditions(additions)
+      delivery && setDelivery(delivery)
+  })
   }, [])
 
   const addProdCart = (
@@ -192,7 +197,7 @@ export const Product = ({ navigation, route }) => {
                 count,
                 selectedRestaurant?.id,
                 delivery ? 1 : 0,
-                auth.currentUser.uid
+                user?.uid
               )
             }}
           >

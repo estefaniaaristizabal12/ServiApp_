@@ -12,6 +12,7 @@ import * as UserService from '../../services/UserService'
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { firebaseConfig } from '../firebaseConfig'
+import * as AsyncStorage from '../../services/AsyncStorage'
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -21,15 +22,27 @@ export const Orders = ({ navigation }) => {
   const { top: paddingTop } = useSafeAreaInsets()
 
   const [orders, setOrders] = React.useState<any>([])
-
+  const [user, setUser] = React.useState<any>(null)
+  
   React.useEffect(() => {
+    getUser()
     if (isFocused) {
       getOrders()
     }
   }, [isFocused])
 
+  const getUser = async () => {
+    AsyncStorage.getUser()
+      .then(data => {
+        setUser(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
   const getOrders = async () => {
-    UserService.getOrders('Usuario', 2, auth.currentUser.uid)
+    UserService.getOrders('Usuario', 2, user?.uid)
       .then(data => {
         const newData = data.map((order: any) => {
           order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')

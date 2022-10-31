@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, View , Linking} from 'react-native'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Colors } from '../../constants/colors'
@@ -35,6 +35,10 @@ const StatusOrder = ({ navigation, route }) => {
       setCurrentStep(data.Estado)
     })
   }, [isFocused])
+
+  const callNumberWhitLinking = (number) => {
+   Linking.openURL(`tel:${number}`)
+  }
 
   const renderHeader = () => {
     return (
@@ -228,20 +232,22 @@ const StatusOrder = ({ navigation, route }) => {
                 borderRadius: 12,
                 backgroundColor: Colors.primary
               }}
-              label='Mapa'
+              label='Llamar'
               labelStyle={{
                 color: Colors.white,
-                fontSize: normalize(16)
+                alignItems: 'center',
+                marginTop: 3,
+                fontSize: normalize(20)
               }}
-              icon={require('../../../assets/map.png')}
+              icon={require('../../../assets/ring-phone.png')}
               iconPosition='LEFT'
               iconStyle={{
                 width: 25,
                 height: 25,
-                marginRight: 8,
+                marginRight: 5,
                 tintColor: Colors.white
               }}
-              onPress={() => navigation.navigate('Map')}
+              onPress={() => callNumberWhitLinking(3108543534)}
             />
           </View>
         )}

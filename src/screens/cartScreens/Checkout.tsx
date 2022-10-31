@@ -20,7 +20,9 @@ import { normalize } from '../../../FontNormalize'
 import { Colors } from '../../constants/colors'
 import * as AsyncStorage from '../../services/AsyncStorage'
 import * as UserService from '../../services/UserService'
+import * as RestaurantService from '../../services/RestaurantService'
 import { firebaseConfig } from '../firebaseConfig'
+import { RotateInDownLeft } from 'react-native-reanimated'
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -91,6 +93,7 @@ export const Checkout = ({ navigation, route }) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const [locationDescription, setLocationDescription] = React.useState("")
   const [locationBuilding, setLocationBuilding] = React.useState("")
+  const [rest, setRest] = React.useState<any>(null)
 
   const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
@@ -99,11 +102,20 @@ export const Checkout = ({ navigation, route }) => {
 
   const getUser = async () => {
     AsyncStorage.getUser()
-      .then(data => {
-        setUser(data)
-      })
-      .catch(error => {
-        console.error(error)
+      .then((user) => {
+        UserService.getUser(user.uid)
+          .then(data => {
+            setUser(data)
+            console.log(data.RestauranteCarro)
+            RestaurantService.getRestaurant(data.RestauranteCarro)
+              .then(data => {
+                setRest(data)
+                console.log(data)
+              })
+          })
+          .catch(error => {
+            console.error(error)
+          })
       })
   }
 
@@ -126,13 +138,22 @@ export const Checkout = ({ navigation, route }) => {
   }
 
   React.useEffect(() => {
-    isFocused && getUser()
-    isFocused && setSelectedCard(route.params['card'])
-    isFocused && route.params['cart'] && setCart(route.params['cart'])
-    isFocused && route.params['total'] && setTotal(route.params['total'])
-    isFocused &&
-      route.params['delivery'] &&
-      setDelivery(route.params['delivery'])
+    if (route.params["reorder"]){
+      route.params['order']
+      setUser(route.params['order'].UsuarioInfo)
+      setRest(route.params['order'].Restaurante)
+      setCart(route.params['order'].Carro)
+      setTotal(route.params['order'].Total)
+    }
+    else{
+      getUser()
+      isFocused && setSelectedCard(route.params['card'])
+      isFocused && route.params['cart'] && setCart(route.params['cart'])
+      isFocused && route.params['total'] && setTotal(route.params['total'])
+      isFocused &&
+        route.params['delivery'] &&
+        setDelivery(route.params['delivery'])
+    }
   }, [isFocused])
 
   function handlePresentModal() {
@@ -141,11 +162,19 @@ export const Checkout = ({ navigation, route }) => {
       setIsOpen(true)
     }, 100)
   }
-const changeUserDirection = () => {
-
+  const changeUserDirection = () => {
+    console.log("cangeUesrDirection")
+    UserService.update(user?.nombrecliente, locationBuilding + " " + locationDescription, user?.e_mail, user?.Telefono, user?.uid)
+      .then(data => {
+        console.log(data)
+        setLocationDescription("")
+        user.direccion1 = locationBuilding + " " + locationDescription
+        isOpen && bottomSheetModalRef.current?.close()
+      }
+      ).catch(err => console.error(err));
   }
 
-  let condicion = 1
+  // let condicion = 0
   return (
     <BottomSheetModalProvider>
       <View
@@ -203,6 +232,7 @@ const changeUserDirection = () => {
             >
               {' '}
               Modalidad del pedido{' '}
+
             </Text>
             <View
               style={{
@@ -211,7 +241,7 @@ const changeUserDirection = () => {
                 marginLeft: 8
               }}
             >
-              {condicion == 1 ? (
+              {user?.DomicilioCarro ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -225,8 +255,12 @@ const changeUserDirection = () => {
                   />
                   <Text style={{ fontSize: 17, marginLeft: 5 }}>
                     {' '}
+
+                  </Text>
+                  <Text style={{ fontSize: 17, marginLeft: 5 }}>
+                    {' '}
                     | Servicio a{' '}
-                    {user?.DomicilioCarro == '1' ? 'domicilio' : 'recoger'}
+                    {user?.DomicilioCarro ? 'domicilio' : 'recoger'}
                   </Text>
                 </View>
               ) : (
@@ -239,14 +273,19 @@ const changeUserDirection = () => {
                   <FontAwesome5 name='store-alt' size={20} color='black' />
                   <Text style={{ fontSize: 17, marginLeft: 5 }}>
                     {' '}
-                    | Recoger en tienda
+
+                  </Text>
+                  <Text style={{ fontSize: 17, marginLeft: 5 }}>
+                    {' '}
+                    | Servicio a{' '}
+                    {user?.DomicilioCarro ? 'domicilio' : 'recoger'}
                   </Text>
                 </View>
               )}
             </View>
 
             <View style={{ flex: 0.65, marginTop: 40, marginLeft: 8 }}>
-              {condicion == 1 ? (
+              {user?.DomicilioCarro ? (
                 <View
                   style={{
                     flex: 0.65,
@@ -263,7 +302,7 @@ const changeUserDirection = () => {
                       borderWidth: 0.5,
                       marginLeft: 5
                     }}
-                    source={require('../../../assets/mapa.jpg')}
+                    source={require('../../../assets/campus.jpg')}
                   />
                   <View
                     style={{
@@ -286,7 +325,7 @@ const changeUserDirection = () => {
                         marginTop: 5
                       }}
                     >
-                      Edificio de ingeniería, piso 2
+                      {user?.direccion1}
                     </Text>
                     <TouchableOpacity
                       onPress={handlePresentModal}
@@ -426,9 +465,10 @@ const changeUserDirection = () => {
                           placeholder='Ingresa una descripción'
                           style={styles.textDescription}
                           value={locationDescription}
+                          onChangeText={text => setLocationDescription(text)}
                         />
 
-                        <TouchableOpacity style={styles.btnCambioUbi2} onPress = {() => {changeUserDirection()}}>
+                        <TouchableOpacity style={styles.btnCambioUbi2} onPress={() => { changeUserDirection() }}>
                           <Text
                             style={{
                               fontSize: normalize(18),
@@ -462,7 +502,7 @@ const changeUserDirection = () => {
                       borderWidth: 0.5,
                       marginLeft: 5
                     }}
-                    source={require('../../../assets/frutera.png')}
+                    source={{ uri: rest?.Imagen}}
                   />
                   <View
                     style={{
@@ -476,7 +516,7 @@ const changeUserDirection = () => {
                         fontWeight: 'bold'
                       }}
                     >
-                      La Frutera
+                      {rest?.Nombre}
                     </Text>
                     <Text
                       style={{
@@ -485,7 +525,7 @@ const changeUserDirection = () => {
                         marginTop: 5
                       }}
                     >
-                      Edificio 54, ..
+                      {rest?.Localización}
                     </Text>
                   </View>
                 </View>
@@ -556,9 +596,9 @@ const changeUserDirection = () => {
                   >
                     {selectedCard?.NumeroTarjeta
                       ? '*****' +
-                        selectedCard?.NumeroTarjeta?.substring(
-                          selectedCard?.NumeroTarjeta?.length - 3
-                        )
+                      selectedCard?.NumeroTarjeta?.substring(
+                        selectedCard?.NumeroTarjeta?.length - 3
+                      )
                       : 'Seleccionar tarjeta'}
                   </Text>
                   {/* <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>{selectedCard?.NumeroTarjeta}</Text> */}

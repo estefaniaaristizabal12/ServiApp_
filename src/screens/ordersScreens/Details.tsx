@@ -5,6 +5,8 @@ import { Colors } from '../../constants/colors'
 import { Ionicons } from '@expo/vector-icons'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { normalize } from '../../../FontNormalize'
+import * as UserService from '../../services/UserService'
+import * as AsyncStorage from '../../services/AsyncStorage'
 
 export const Details = ({ navigation, route }) => {
   const [order, setOrder] = React.useState<any>(null)
@@ -13,6 +15,16 @@ export const Details = ({ navigation, route }) => {
     const orderP = route.params.orderP
     orderP && setOrder(orderP)
   }, [])
+
+  const reorder = () => {
+    AsyncStorage.getUser()
+      .then((user) => {
+        UserService.getOrder(order?.id)
+          .then((data) => {
+            navigation.navigate('CartStack', { screen: 'Checkout', params: { reorder: true, order: data } })
+          })
+      })
+  }
 
   const { top: paddingTop } = useSafeAreaInsets()
   return (
@@ -115,7 +127,8 @@ export const Details = ({ navigation, route }) => {
             marginTop: 10,
             borderBottomWidth: StyleSheet.hairlineWidth,
             borderBottomColor: '#E7E7E7',
-            paddingVertical: 5
+            paddingVertical: 30,
+
           }}
         >
           <View style={{ flexDirection: 'row' }}>
@@ -126,7 +139,8 @@ export const Details = ({ navigation, route }) => {
               style={{
                 flex: 0.5,
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+
               }}
             >
               <TouchableOpacity
@@ -138,6 +152,14 @@ export const Details = ({ navigation, route }) => {
                 }
               >
                 <Text style={styles.verLista}>Ver lista</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.btnVerLista}
+                onPress={() =>
+                  reorder()
+                }
+              >
+                <Text style={styles.verLista}>Repetir</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -267,7 +289,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary1,
     paddingHorizontal: 30,
     paddingVertical: 5,
-    borderRadius: 10
+    borderRadius: 10,
+    marginBottom: 10
   },
   subtitulos: {
     fontSize: normalize(18),

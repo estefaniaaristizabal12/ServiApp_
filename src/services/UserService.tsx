@@ -274,3 +274,20 @@ export async function getRejectedOrders(uid: any) {
   })
   return res.json()
 }
+
+export async function reorder(card: any, total: any, address: any, uid: any) {
+  const data = {
+    Tarjeta: card,
+    Total: total,
+    Direccion: address
+  }
+  const res = await fetch(`${urlOrder}/reorder/?uid=${uid}`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+  return res.json()
+}
