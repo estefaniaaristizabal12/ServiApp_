@@ -1,28 +1,26 @@
-import React from 'react'
-import { StyleSheet, Text, View, Button, Image, TextInput } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Colors } from '../../constants/colors'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import {
-  Ionicons,
-  FontAwesome5,
   FontAwesome,
+  FontAwesome5,
+  Ionicons,
   MaterialIcons
 } from '@expo/vector-icons'
-import { useIsFocused } from '@react-navigation/native'
-import { normalize } from '../../../FontNormalize'
-import * as UserService from '../../services/UserService'
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { firebaseConfig } from '../firebaseConfig'
-import * as AsyncStorage from '../../services/AsyncStorage'
-import { StatusBar } from 'expo-status-bar'
 import {
   BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetFlatList
+  BottomSheetModalProvider
 } from '@gorhom/bottom-sheet'
+import { useIsFocused } from '@react-navigation/native'
+import { initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import React from 'react'
+import { Image, StyleSheet, Text, TextInput, View } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import SelectDropdown from 'react-native-select-dropdown'
+import { normalize } from '../../../FontNormalize'
+import { Colors } from '../../constants/colors'
+import * as AsyncStorage from '../../services/AsyncStorage'
+import * as UserService from '../../services/UserService'
+import { firebaseConfig } from '../firebaseConfig'
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -91,6 +89,8 @@ export const Checkout = ({ navigation, route }) => {
   const [delivery, setDelivery] = React.useState<any>(null)
   const bottomSheetModalRef = React.useRef(null)
   const [isOpen, setIsOpen] = React.useState(false)
+  const [locationDescription, setLocationDescription] = React.useState("")
+  const [locationBuilding, setLocationBuilding] = React.useState("")
 
   const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
@@ -141,6 +141,9 @@ export const Checkout = ({ navigation, route }) => {
       setIsOpen(true)
     }, 100)
   }
+const changeUserDirection = () => {
+
+  }
 
   let condicion = 1
   return (
@@ -159,7 +162,7 @@ export const Checkout = ({ navigation, route }) => {
               onPress={() => navigation.navigate('Cart')}
               style={styles.btnAtas}
             >
-              <Ionicons name="arrow-back" size={25} color={Colors.grey} />
+              <Ionicons name='arrow-back' size={25} color={Colors.grey} />
             </TouchableOpacity>
           </View>
           <View
@@ -216,9 +219,9 @@ export const Checkout = ({ navigation, route }) => {
                   }}
                 >
                   <MaterialIcons
-                    name="delivery-dining"
+                    name='delivery-dining'
                     size={24}
-                    color="black"
+                    color='black'
                   />
                   <Text style={{ fontSize: 17, marginLeft: 5 }}>
                     {' '}
@@ -233,7 +236,7 @@ export const Checkout = ({ navigation, route }) => {
                     alignItems: 'center'
                   }}
                 >
-                  <FontAwesome5 name="store-alt" size={20} color="black" />
+                  <FontAwesome5 name='store-alt' size={20} color='black' />
                   <Text style={{ fontSize: 17, marginLeft: 5 }}>
                     {' '}
                     | Recoger en tienda
@@ -334,7 +337,7 @@ export const Checkout = ({ navigation, route }) => {
                           }}
                         >
                           <FontAwesome5
-                            name="building"
+                            name='building'
                             size={15}
                             color={Colors.grey1}
                           />
@@ -353,6 +356,7 @@ export const Checkout = ({ navigation, route }) => {
                           data={edificios}
                           onSelect={(selectedItem, index) => {
                             console.log(selectedItem, index)
+                            setLocationBuilding(selectedItem)
                           }}
                           defaultButtonText={'Selecciona un edificio'}
                           buttonTextAfterSelection={(selectedItem, index) => {
@@ -403,7 +407,7 @@ export const Checkout = ({ navigation, route }) => {
                           }}
                         >
                           <MaterialIcons
-                            name="description"
+                            name='description'
                             size={15}
                             color={Colors.grey1}
                           />
@@ -419,11 +423,12 @@ export const Checkout = ({ navigation, route }) => {
                         </View>
 
                         <TextInput
-                          placeholder="Ingresa una descripción"
+                          placeholder='Ingresa una descripción'
                           style={styles.textDescription}
+                          value={locationDescription}
                         />
 
-                        <TouchableOpacity style={styles.btnCambioUbi2}>
+                        <TouchableOpacity style={styles.btnCambioUbi2} onPress = {() => {changeUserDirection()}}>
                           <Text
                             style={{
                               fontSize: normalize(18),
@@ -562,9 +567,9 @@ export const Checkout = ({ navigation, route }) => {
               <View style={{ flex: 0.2, alignItems: 'center' }}>
                 <Ionicons
                   style={{ alignContent: 'flex-end' }}
-                  name="chevron-forward-outline"
+                  name='chevron-forward-outline'
                   size={25}
-                  color="black"
+                  color='black'
                 />
               </View>
             </TouchableOpacity>

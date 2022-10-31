@@ -1,32 +1,22 @@
-import {
-  View,
-  Text,
-  BackHandler,
-  Image,
-  StyleSheet,
-  ScrollView
-} from 'react-native'
-import React, { FunctionComponent, useState } from 'react'
-import { StackScreenProps } from '@react-navigation/stack'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import React, { useState } from 'react'
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Colors } from '../../constants/colors'
 
-import TextButton from '../../components/TextButton'
+import { useIsFocused } from '@react-navigation/native'
+import { normalize } from '../../../FontNormalize'
 import HeaderNavigation from '../../components/HeaderNavigation'
 import IconButton from '../../components/IconButton'
 import LineDivider from '../../components/LineDivider'
+import TextButton from '../../components/TextButton'
 import TextIconButton from '../../components/TextIconButton'
 import status from '../../constants/status'
-import { normalize } from '../../../FontNormalize'
-import { useIsFocused } from '@react-navigation/native'
 
-import firebase from 'firebase/app'
-import { firebaseConfig } from '../firebaseConfig'
-import app from '../firebaseConfig'
 import { getDatabase, onValue, ref } from 'firebase/database'
 import { Alert } from 'react-native'
+import app from '../firebaseConfig'
+
 const db = getDatabase(app)
 
 const StatusOrder = ({ navigation, route }) => {
@@ -39,19 +29,17 @@ const StatusOrder = ({ navigation, route }) => {
   React.useEffect(() => {
     if (!route.params['order']) return
     isFocused && setOrder(route.params['order'])
-    // isFocused && route.params["order"] && setCurrentStep(route.params["order"].Estado);
-
-    const statusRef = ref(db, 'ordenes/' + route.params['order'].id)
+    const statusRef = ref(db, 'Ordenes/' + route.params['order'].id)
     onValue(statusRef, snapshot => {
       const data = snapshot.val()
-      setCurrentStep(data.estado)
+      setCurrentStep(data.Estado)
     })
   }, [isFocused])
 
   const renderHeader = () => {
     return (
       <HeaderNavigation
-        title="ESTADO DE TU PEDIDO"
+        title='ESTADO DE TU PEDIDO'
         containerStyle={{
           height: 50,
           // marginHorizontal: SIZES.padding,
@@ -97,7 +85,9 @@ const StatusOrder = ({ navigation, route }) => {
             color: Colors.black
           }}
         >
-          27 Sep 2022 / 12:30PM
+          {new Date(
+            new Date(order?.Fecha).getTime() + 15 * 60000
+          ).toUTCString()}
         </Text>
       </View>
     )
@@ -201,7 +191,7 @@ const StatusOrder = ({ navigation, route }) => {
                           height: 50,
                           marginLeft: 17
                         }}
-                        resizeMode="cover"
+                        resizeMode='cover'
                       />
                     )}
                   </View>
@@ -226,7 +216,7 @@ const StatusOrder = ({ navigation, route }) => {
                 borderRadius: 8,
                 backgroundColor: Colors.lightGray2
               }}
-              label="Cancelar"
+              label='Cancelar'
               labelStyle={{ color: Colors.primary }}
               onPress={() => navigation.navigate('FoodDetail')}
             />
@@ -238,13 +228,13 @@ const StatusOrder = ({ navigation, route }) => {
                 borderRadius: 12,
                 backgroundColor: Colors.primary
               }}
-              label="Mapa"
+              label='Mapa'
               labelStyle={{
                 color: Colors.white,
                 fontSize: normalize(16)
               }}
               icon={require('../../../assets/map.png')}
-              iconPosition="LEFT"
+              iconPosition='LEFT'
               iconStyle={{
                 width: 25,
                 height: 25,
@@ -258,7 +248,7 @@ const StatusOrder = ({ navigation, route }) => {
         {currentStep === status.length - 1 && (
           <TextButton
             buttonContainerStyle={{ height: 55, borderRadius: 12 }}
-            label="CALIFICAR PEDIDO"
+            label='CALIFICAR PEDIDO'
             onPress={() =>
               navigation.navigate('OrdersStack', {
                 screen: 'ServiceOrder',
@@ -271,7 +261,7 @@ const StatusOrder = ({ navigation, route }) => {
         {currentStep === -2 && (
           <TextButton
             buttonContainerStyle={{ height: 55, borderRadius: 12 }}
-            label="Pedido Cancelado"
+            label='Pedido Cancelado'
             onPress={() => {
               navigation.navigate('Cart')
               navigation.navigate('Delivery')

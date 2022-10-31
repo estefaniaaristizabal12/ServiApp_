@@ -1,27 +1,17 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Colors } from '../../constants/colors'
 
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
-import { FontAwesome5, Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import { Image } from 'react-native-animatable'
-import carrito from '../../constants/carrito'
-import CardCart from '../../components/CardCart'
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { firebaseConfig } from '../firebaseConfig'
-import restaurant from '../../constants/restaurant'
-import * as UserService from '../../services/UserService'
+import CardCart from '../../components/CardCart'
 import * as AsyncStorage from '../../services/AsyncStorage'
-
-const app = initializeApp(firebaseConfig)
-const auth = getAuth(app)
 
 import { useIsFocused } from '@react-navigation/native'
 import { normalize } from '../../../FontNormalize'
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CartContext } from '../../context/cartContext/CartContext'
+import * as UserService from '../../services/UserService'
 
 export const Cart = ({ navigation }) => {
   const isFocused = useIsFocused()
@@ -30,12 +20,23 @@ export const Cart = ({ navigation }) => {
   const [cart, setCart] = React.useState<any>(null)
   const [total, setTotal] = React.useState(0)
   const [vacio, setVacio] = React.useState(true)
+  const [user, setUser] = React.useState<any>(null)
 
   React.useEffect(() => {
     if (isFocused) {
-      getCart()
+      getUser().then(() => getCart())
     }
   }, [isFocused])
+
+  const getUser = async () => {
+    AsyncStorage.getUser()
+      .then(data => {
+        setUser(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
 
   const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
@@ -50,7 +51,7 @@ export const Cart = ({ navigation }) => {
   }
 
   const getCart = async () => {
-    UserService.getCart(auth.currentUser.uid)
+    UserService.getCart(user?.uid)
       .then(data => {
         if (JSON.stringify(data) === '{}') {
           setCart(null)
@@ -68,7 +69,7 @@ export const Cart = ({ navigation }) => {
   }
 
   const clearCart = async () => {
-    UserService.clearCart(auth.currentUser.uid)
+    UserService.clearCart(user?.uid)
       .then(data => {
         console.log('clearCart:', data)
       })
@@ -79,7 +80,7 @@ export const Cart = ({ navigation }) => {
   }
 
   const removeProdCart = async (id: any) => {
-    UserService.removeProdCart(id, auth.currentUser.uid)
+    UserService.removeProdCart(id, user?.uid)
       .then(data => {
         console.log('removeProdCart:', data)
       })
@@ -117,7 +118,7 @@ export const Cart = ({ navigation }) => {
             onPress={() => navigation.goBack()}
             style={styles.btnAtas}
           >
-            <Ionicons name="arrow-back" size={25} color={Colors.grey} />
+            <Ionicons name='arrow-back' size={25} color={Colors.grey} />
           </TouchableOpacity>
         </View>
         <View

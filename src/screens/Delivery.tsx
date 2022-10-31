@@ -3,33 +3,30 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
-  View,
-  StatusBar
+  View
 } from 'react-native'
 import {
   FlatList,
   ScrollView,
   TextInput,
-  TouchableHighlight,
   TouchableOpacity
 } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { Colors } from '../constants/colors'
 import categories from '../constants/categories'
+import { Colors } from '../constants/colors'
 // import restaurant from '../constants/restaurant';
-import Card from '../components/Card'
-import useEffect from 'react'
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
-import { firebaseConfig } from './firebaseConfig'
-import * as RestService from '../services/RestaurantService'
-import * as UserService from '../services/UserService'
 import { normalize } from '../../FontNormalize'
-import * as AsyncStorage from '../services/AsyncStorage'
+import Card from '../components/Card'
 import HeaderMode from '../components/HeaderMode'
 import Loader from '../components/Loader'
+import * as AsyncStorage from '../services/AsyncStorage'
+import * as RestService from '../services/RestaurantService'
+import { firebaseConfig } from './firebaseConfig'
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -174,7 +171,7 @@ const Delivery = ({ navigation, route }) => {
       <Loader visible={loading} />
       <StatusBar
         backgroundColor={Colors.white1}
-        barStyle="dark-content"
+        barStyle='dark-content'
         hidden={false}
       />
       <HeaderMode
@@ -225,10 +222,10 @@ const Delivery = ({ navigation, route }) => {
         }}
       >
         <View style={style.inputContainer}>
-          <Icon name="search" size={28} />
+          <Icon name='search' size={28} />
           <TextInput
             style={{ flex: 1, fontSize: normalize(18) }}
-            placeholder="Buscar un restaurante"
+            placeholder='Buscar un restaurante'
             onChangeText={text => filterFunction(text, selectedCategoryIndex)}
             value={searchTextInput}
           />
