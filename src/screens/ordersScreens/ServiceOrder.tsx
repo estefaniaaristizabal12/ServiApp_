@@ -20,7 +20,29 @@ export const ServiceOrder = ({ navigation, route }) => {
   const [comment, setComment] = useState('')
   const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5])
 
+  //Botones de seleccion
+  const [click1, setClick1] = useState(false)
+  const [click2, setClick2] = useState(false)
+  const [click3, setClick3] = useState(false)
+  const [click4, setClick4] = useState(false)
+  const [click5, setClick5] = useState(false)
+  const [click6, setClick6] = useState(false)
+  const [click7, setClick7] = useState(false)
+  const [click8, setClick8] = useState(false)
+
+
   const [order, setOrder] = React.useState<any>(null)
+
+  const cambio = () =>{
+    setClick1(false);
+    setClick2(false);
+    setClick3(false);
+    setClick4(false);
+    setClick5(false);
+    setClick6(false);
+    setClick7(false);
+    setClick8(false);
+  }
 
   const rateOrder = async () => {
     navigation.navigate('OrdersStack', { screen: 'Orders' })
@@ -157,6 +179,7 @@ export const ServiceOrder = ({ navigation, route }) => {
                 activeOpacity={0.7}
                 key={item}
                 onPress={() => {
+                  cambio()
                   setDefaultRating(item)
                   setComment('')
                 }}
@@ -201,12 +224,12 @@ export const ServiceOrder = ({ navigation, route }) => {
               <View style={{ flex: 0.8, flexDirection: 'row' }}>
                 <View style={{ flex: 0.33, alignItems: 'center' }}>
                   <TouchableOpacity
-                    style={{
-                      marginHorizontal: 2,
-                      alignItems: 'center'
-                    }}
+                    style={click1?styles.background1:styles.background2}
                     onPress={() => {
+                      cambio()
+                      setClick1(true)
                       setComment('Tardó mucho en llegar')
+                      
                     }}
                   >
                     <Image
@@ -220,11 +243,10 @@ export const ServiceOrder = ({ navigation, route }) => {
                 </View>
                 <View style={{ flex: 0.33, alignItems: 'center' }}>
                   <TouchableOpacity
-                    style={{
-                      marginHorizontal: 2,
-                      alignItems: 'center'
-                    }}
+                    style={click2?styles.background1:styles.background2}
                     onPress={() => {
+                      cambio()
+                      setClick2(true)
                       setComment('Producto en pésimo estado')
                     }}
                   >
@@ -239,11 +261,10 @@ export const ServiceOrder = ({ navigation, route }) => {
                 </View>
                 <View style={{ flex: 0.33, alignItems: 'center' }}>
                   <TouchableOpacity
-                    style={{
-                      marginHorizontal: 2,
-                      alignItems: 'center'
-                    }}
+                    style={click3?styles.background1:styles.background2}
                     onPress={() => {
+                      cambio()
+                      setClick3(true)
                       setComment('Producto incompleto')
                     }}
                   >
@@ -269,11 +290,10 @@ export const ServiceOrder = ({ navigation, route }) => {
               <View style={{ flex: 0.8, flexDirection: 'row' }}>
                 <View style={{ flex: 0.33, alignItems: 'center' }}>
                   <TouchableOpacity
-                    style={{
-                      marginHorizontal: 2,
-                      alignItems: 'center'
-                    }}
+                    style={click4?styles.background1:styles.background2}
                     onPress={() => {
+                      cambio()
+                      setClick4(true)
                       setComment('Tardó en llegar')
                     }}
                   >
@@ -287,11 +307,10 @@ export const ServiceOrder = ({ navigation, route }) => {
                 </View>
                 <View style={{ flex: 0.33, alignItems: 'center' }}>
                   <TouchableOpacity
-                    style={{
-                      marginHorizontal: 2,
-                      alignItems: 'center'
-                    }}
+                    style={click5?styles.background1:styles.background2}
                     onPress={() => {
+                      cambio()
+                      setClick5(true)
                       setComment('Producto en mal estado')
                     }}
                   >
@@ -306,11 +325,10 @@ export const ServiceOrder = ({ navigation, route }) => {
                 </View>
                 <View style={{ flex: 0.33, alignItems: 'center' }}>
                   <TouchableOpacity
-                    style={{
-                      marginHorizontal: 2,
-                      alignItems: 'center'
-                    }}
+                    style={click6?styles.background1:styles.background2}
                     onPress={() => {
+                      cambio()
+                      setClick6(true)
                       setComment('Producto incompleto')
                     }}
                   >
@@ -337,11 +355,10 @@ export const ServiceOrder = ({ navigation, route }) => {
               <View style={{ flex: 0.8, flexDirection: 'row' }}>
                 <View style={{ flex: 0.5, alignItems: 'center' }}>
                   <TouchableOpacity
-                    style={{
-                      marginHorizontal: 2,
-                      alignItems: 'center'
-                    }}
+                    style={click7?styles.background1:styles.background2}
                     onPress={() => {
+                      cambio()
+                      setClick7(true)
                       setComment('Ser más rápidos')
                     }}
                   >
@@ -354,12 +371,10 @@ export const ServiceOrder = ({ navigation, route }) => {
                 </View>
                 <View style={{ flex: 0.5, alignItems: 'center' }}>
                   <TouchableOpacity
-                    style={{
-                      marginHorizontal: 2,
-                      marginRight: 3,
-                      alignItems: 'center'
-                    }}
+                    style={click8?styles.background1:styles.background2}
                     onPress={() => {
+                      cambio()
+                      setClick8(true)
                       setComment('Ser más cuidadosos con los productos')
                     }}
                   >
@@ -448,5 +463,20 @@ const styles = StyleSheet.create({
     fontSize: normalize(18),
     color: 'black',
     marginTop: 10
+  },
+  background1:{
+    backgroundColor:"#E6F1B9",
+    marginHorizontal: 2,
+    alignItems: 'center',
+    padding:10,
+    borderRadius:5
+  },
+  background2:{
+    backgroundColor:"white",
+    marginHorizontal: 2,
+    alignItems: 'center',
+    padding:10,
+    borderRadius:5
   }
+
 })
