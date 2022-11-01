@@ -21,10 +21,12 @@ export const Cart = ({ navigation }) => {
   const [total, setTotal] = React.useState(0)
   const [vacio, setVacio] = React.useState(true)
   const [user, setUser] = React.useState<any>(null)
+  const [delivery, setDelivery] = React.useState<any>(null)
+
 
   React.useEffect(() => {
     if (isFocused) {
-      getUser().then(() => getCart())
+      getUser()
     }
   }, [isFocused])
 
@@ -32,6 +34,11 @@ export const Cart = ({ navigation }) => {
     AsyncStorage.getUser()
       .then(data => {
         setUser(data)
+        getCart(data)
+        UserService.getUser(data.uid)
+          .then(uInf => {
+            setDelivery(uInf.DomicilioCarro)
+          })
       })
       .catch(error => {
         console.error(error)
@@ -50,7 +57,7 @@ export const Cart = ({ navigation }) => {
     return total
   }
 
-  const getCart = async () => {
+  const getCart = async (user: any) => {
     UserService.getCart(user?.uid)
       .then(data => {
         if (JSON.stringify(data) === '{}') {
@@ -77,6 +84,7 @@ export const Cart = ({ navigation }) => {
     setCart({})
     setTotal(0)
     setVacio(true)
+    setDelivery(null)
   }
 
   const removeProdCart = async (id: any) => {
@@ -205,6 +213,8 @@ export const Cart = ({ navigation }) => {
             >
               {' '}
               {cart?.Restaurante?.Nombre}
+              {' '}
+              {!vacio ? delivery ? " - (Domicilio)" : " - (Recoger en Tienda)" : ""}
             </Text>
           </View>
         </View>

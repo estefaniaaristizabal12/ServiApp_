@@ -25,9 +25,13 @@ export const Splash = ({ navigation }) => {
   }, [])
 
   const getUserAS = async () => {
-    AsyncStorage.getUser().then(data => {
-      setUser(data)
-    })
+    AsyncStorage.getUser()
+      .then(data => {
+        setUser(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   const loggedNavigation = async () => {
@@ -47,17 +51,17 @@ export const Splash = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#4F1A24" barStyle="light-content" />
+      <StatusBar backgroundColor='#4F1A24' barStyle='light-content' />
       <View style={styles.header}>
         <Animatable.Image
-          animation="bounceIn"
+          animation='bounceIn'
           duration={4500}
           source={require('../../../assets/logo.png')}
           style={styles.logo}
-          resizeMode="stretch"
+          resizeMode='stretch'
         />
       </View>
-      <Animatable.View style={[styles.footer, {}]} animation="fadeInUpBig">
+      <Animatable.View style={[styles.footer, {}]} animation='fadeInUpBig'>
         <Text style={[styles.title, {}]}>Pide tu comida</Text>
         <Text style={[styles.title, {}]}>favorita Online</Text>
         <View style={styles.button}>

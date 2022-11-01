@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, ScrollView, StyleSheet, Text, View , Linking} from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, View, Linking } from 'react-native'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Colors } from '../../constants/colors'
@@ -16,6 +16,8 @@ import status from '../../constants/status'
 import { getDatabase, onValue, ref } from 'firebase/database'
 import { Alert } from 'react-native'
 import app from '../firebaseConfig'
+import * as RestaurantService from '../../services/RestaurantService'
+import * as UserService from '../../services/UserService'
 
 const db = getDatabase(app)
 
@@ -25,19 +27,46 @@ const StatusOrder = ({ navigation, route }) => {
 
   const [currentStep, setCurrentStep] = useState(-1)
   const [order, setOrder] = useState<any>(null)
+  const [rest, setRest] = useState<any>(null)
+  const [del, setDel] = useState<any>(null)
 
   React.useEffect(() => {
     if (!route.params['order']) return
     isFocused && setOrder(route.params['order'])
+    getRest(route.params['order'])
     const statusRef = ref(db, 'Ordenes/' + route.params['order'].id)
     onValue(statusRef, snapshot => {
       const data = snapshot.val()
-      setCurrentStep(data.Estado)
+      data ? setCurrentStep(data.Estado) : setCurrentStep(-2)
+      data.IdDomiciliario?
+        getDel(data.IdDomiciliario):
+        setDel(null)
     })
   }, [isFocused])
 
-  const callNumberWhitLinking = (number) => {
-   Linking.openURL(`tel:${number}`)
+  const getDel = (id: any) => {
+    UserService.getUser(id)
+      .then(data => {
+        setDel(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  const getRest = (order: any) => {
+    RestaurantService.getRestaurant(order.Restaurante)
+      .then(data => {
+        setRest(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  const callNumberWhitLinking = (number: any) => {
+    Linking.openURL(`tel:${number}`)
+      .catch(error => console.error(error))
   }
 
   const renderHeader = () => {
@@ -232,7 +261,7 @@ const StatusOrder = ({ navigation, route }) => {
                 borderRadius: 12,
                 backgroundColor: Colors.primary
               }}
-              label='Llamar'
+              label={del ? 'Llamar domiciliario' : 'Llamar restaurante'}
               labelStyle={{
                 color: Colors.white,
                 alignItems: 'center',
@@ -247,7 +276,7 @@ const StatusOrder = ({ navigation, route }) => {
                 marginRight: 5,
                 tintColor: Colors.white
               }}
-              onPress={() => callNumberWhitLinking(3108543534)}
+              onPress={() => del ? callNumberWhitLinking(del?.Telefono) : callNumberWhitLinking(rest?.Telefono)}
             />
           </View>
         )}
@@ -261,7 +290,7 @@ const StatusOrder = ({ navigation, route }) => {
                 params: { order: order }
               })
             }
-            // onPress={() => navigation.navigate('OrdersStack', {order: order})}
+          // onPress={() => navigation.navigate('OrdersStack', {order: order})}
           />
         )}
         {currentStep === -2 && (
@@ -273,7 +302,7 @@ const StatusOrder = ({ navigation, route }) => {
               navigation.navigate('Delivery')
               Alert.alert('El restaurante no tiene el producto en stock')
             }}
-            // onPress={() => navigation.navigate('OrdersStack', {order: order})}
+          // onPress={() => navigation.navigate('OrdersStack', {order: order})}
           />
         )}
       </View>

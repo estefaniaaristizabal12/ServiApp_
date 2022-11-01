@@ -39,8 +39,8 @@ const MyCard = ({ navigation, route }) => {
 
   React.useEffect(() => {
     // if (isFocused) {
-      console.log('Ejecutando useeffect mycard...')
-      getUser()
+    console.log('Ejecutando useeffect mycard...')
+    getUser()
     // }
   }, [isFocused])
 
@@ -54,11 +54,11 @@ const MyCard = ({ navigation, route }) => {
         console.error(error)
       })
   }
-  const getCards = async (user:any) => {
+  const getCards = async (user: any) => {
     UserService.getCards(user?.uid)
       .then(data => {
         setCards(data)
-        console.log('getCards: ', data)
+        // console.log('getCards: ', data)
       })
       .catch(error => {
         console.error('getCards: ', error)

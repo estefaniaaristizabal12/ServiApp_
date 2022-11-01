@@ -19,10 +19,9 @@ import SelectDropdown from 'react-native-select-dropdown'
 import { normalize } from '../../../FontNormalize'
 import { Colors } from '../../constants/colors'
 import * as AsyncStorage from '../../services/AsyncStorage'
-import * as UserService from '../../services/UserService'
 import * as RestaurantService from '../../services/RestaurantService'
+import * as UserService from '../../services/UserService'
 import { firebaseConfig } from '../firebaseConfig'
-import { RotateInDownLeft } from 'react-native-reanimated'
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -91,8 +90,8 @@ export const Checkout = ({ navigation, route }) => {
   const [delivery, setDelivery] = React.useState<any>(null)
   const bottomSheetModalRef = React.useRef(null)
   const [isOpen, setIsOpen] = React.useState(false)
-  const [locationDescription, setLocationDescription] = React.useState("")
-  const [locationBuilding, setLocationBuilding] = React.useState("")
+  const [locationDescription, setLocationDescription] = React.useState('')
+  const [locationBuilding, setLocationBuilding] = React.useState('')
   const [rest, setRest] = React.useState<any>(null)
 
   const currencyFormat = (num: number) => {
@@ -101,36 +100,32 @@ export const Checkout = ({ navigation, route }) => {
   }
 
   const getUser = async () => {
-    AsyncStorage.getUser()
-      .then((user) => {
-        UserService.getUser(user.uid)
-          .then(data => {
-            setUser(data)
-            console.log(data.RestauranteCarro)
-            RestaurantService.getRestaurant(data.RestauranteCarro)
-              .then(data => {
-                setRest(data)
-                console.log(data)
-              })
+    AsyncStorage.getUser().then(user => {
+      UserService.getUser(user.uid)
+        .then(data => {
+          data.uid = user.uid
+          setUser(data)
+          RestaurantService.getRestaurant(data.RestauranteCarro).then(data => {
+            setRest(data)
           })
-          .catch(error => {
-            console.error(error)
-          })
-      })
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    })
   }
 
   const payCart = () => {
     UserService.payCart(
-      selectedCard?.id,
+      selectedCard.id,
       total,
-      user?.direccion1,
+      user.direccion1,
       auth.currentUser.uid
     )
       .then(data => {
         setOrder(data)
         console.log('checkout pay cart', data)
         navigation.navigate('Confirmation', { order: data })
-        // navigation.navigate('StatusOrder', { order: data });
       })
       .catch(err => {
         console.log('ERROR AL PAGAR', err)
@@ -138,14 +133,13 @@ export const Checkout = ({ navigation, route }) => {
   }
 
   React.useEffect(() => {
-    if (route.params["reorder"]){
+    if (route.params['reorder']) {
       route.params['order']
       setUser(route.params['order'].UsuarioInfo)
       setRest(route.params['order'].Restaurante)
       setCart(route.params['order'].Carro)
       setTotal(route.params['order'].Total)
-    }
-    else{
+    } else {
       getUser()
       isFocused && setSelectedCard(route.params['card'])
       isFocused && route.params['cart'] && setCart(route.params['cart'])
@@ -163,15 +157,21 @@ export const Checkout = ({ navigation, route }) => {
     }, 100)
   }
   const changeUserDirection = () => {
-    console.log("cangeUesrDirection")
-    UserService.update(user?.nombrecliente, locationBuilding + " " + locationDescription, user?.e_mail, user?.Telefono, user?.uid)
+    console.log('cangeUserDirection')
+    UserService.update(
+      user?.nombrecliente,
+      locationBuilding + ' ' + locationDescription,
+      user?.e_mail,
+      user?.Telefono,
+      user?.uid
+    )
       .then(data => {
         console.log(data)
-        setLocationDescription("")
-        user.direccion1 = locationBuilding + " " + locationDescription
+        setLocationDescription('')
+        user.direccion1 = locationBuilding + ' ' + locationDescription
         isOpen && bottomSheetModalRef.current?.close()
-      }
-      ).catch(err => console.error(err));
+      })
+      .catch(err => console.error(err))
   }
 
   // let condicion = 0
@@ -232,7 +232,6 @@ export const Checkout = ({ navigation, route }) => {
             >
               {' '}
               Modalidad del pedido{' '}
-
             </Text>
             <View
               style={{
@@ -253,10 +252,7 @@ export const Checkout = ({ navigation, route }) => {
                     size={24}
                     color='black'
                   />
-                  <Text style={{ fontSize: 17, marginLeft: 5 }}>
-                    {' '}
-
-                  </Text>
+                  <Text style={{ fontSize: 17, marginLeft: 5 }}> </Text>
                   <Text style={{ fontSize: 17, marginLeft: 5 }}>
                     {' '}
                     | Servicio a{' '}
@@ -271,10 +267,7 @@ export const Checkout = ({ navigation, route }) => {
                   }}
                 >
                   <FontAwesome5 name='store-alt' size={20} color='black' />
-                  <Text style={{ fontSize: 17, marginLeft: 5 }}>
-                    {' '}
-
-                  </Text>
+                  <Text style={{ fontSize: 17, marginLeft: 5 }}> </Text>
                   <Text style={{ fontSize: 17, marginLeft: 5 }}>
                     {' '}
                     | Servicio a{' '}
@@ -325,7 +318,7 @@ export const Checkout = ({ navigation, route }) => {
                         marginTop: 5
                       }}
                     >
-                      {user?.direccion1}
+                      {user?.DomicilioCarro ? user?.direccion1 : rest?.Direccion}
                     </Text>
                     <TouchableOpacity
                       onPress={handlePresentModal}
@@ -468,7 +461,12 @@ export const Checkout = ({ navigation, route }) => {
                           onChangeText={text => setLocationDescription(text)}
                         />
 
-                        <TouchableOpacity style={styles.btnCambioUbi2} onPress={() => { changeUserDirection() }}>
+                        <TouchableOpacity
+                          style={styles.btnCambioUbi2}
+                          onPress={() => {
+                            changeUserDirection()
+                          }}
+                        >
                           <Text
                             style={{
                               fontSize: normalize(18),
@@ -502,7 +500,7 @@ export const Checkout = ({ navigation, route }) => {
                       borderWidth: 0.5,
                       marginLeft: 5
                     }}
-                    source={{ uri: rest?.Imagen}}
+                    source={{ uri: rest?.Imagen }}
                   />
                   <View
                     style={{
