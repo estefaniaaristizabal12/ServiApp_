@@ -76,6 +76,11 @@ const ProfileDeliv = ({ navigation, route }) => {
             pro
             onPress={() => navigation.navigate('AccountDeliv')}
           />
+          <DrawerItem
+            iconName="star"
+            text="Calificaciones"
+            onPress={() => navigation.navigate('AccountDeliv')}
+          />
 
           <DrawerItem
             iconName="account-multiple"

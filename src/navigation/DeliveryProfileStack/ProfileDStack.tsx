@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import OrdersDeliv from '../../screens/delivProfileScreens/ordersDelivery/OrdersDeliv'
 import InfoOrdersDeliv from '../../screens/delivProfileScreens/ordersDelivery/InfoOrdersDeliv'
 import ProfileDeliv from '../../screens/delivProfileScreens/ProfileDeliv'
-import { AccountDeliv } from '../../screens/delivProfileScreens/AccountDeliv'
+import  AccountDeliv  from '../../screens/delivProfileScreens/AccountDeliv'
 
 const StackProfile = createStackNavigator()
 

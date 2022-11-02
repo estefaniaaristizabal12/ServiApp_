@@ -114,7 +114,7 @@ const InitialMenu = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Hola rest {user?.Restaurante.Nombre},
+          Hola rest {user?.Restaurante?.Nombre},
         </Text>
         <Text
           style={{
