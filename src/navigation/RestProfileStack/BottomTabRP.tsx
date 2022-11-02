@@ -6,6 +6,7 @@ import ReviewRestStack from './ReviewRestStack'
 import OrderRestStack from './OrderRestStack'
 // import RestProfile from '../../screens/restProfileScreens/RestProfile';
 import ProfileDeliv from '../../screens/delivProfileScreens/ProfileDeliv'
+import ProfileRStack from './ProfileRStack'
 
 const BtTap = createMaterialBottomTabNavigator()
 
@@ -57,7 +58,7 @@ export default function BottomTabRP({ navigation, route }) {
       <BtTap.Screen
         name="Profile"
         options={{ title: 'Perfil' }}
-        component={ProfileDeliv}
+        component={ProfileRStack}
       />
     </BtTap.Navigator>
   )

@@ -23,14 +23,18 @@ const auth = getAuth(app)
 
 const { Dimensions } = require('react-native')
 const { width, height } = Dimensions.get('window')
+import { useIsFocused } from '@react-navigation/native'
 
 const Profile = ({ navigation, route }) => {
+  const isFocused = useIsFocused()
   const [user, setUser] = React.useState<any>(null)
 
   useEffect(() => {
+    if(isFocused){
     console.log("Profile")
     getUser()
-  }, [])
+    }
+  }, [isFocused])
 
   const getUser = async () => {
     AsyncStorage.getUser()

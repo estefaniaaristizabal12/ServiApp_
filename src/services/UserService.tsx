@@ -291,3 +291,18 @@ export async function reorder(card: any, total: any, address: any, uid: any) {
   })
   return res.json()
 }
+
+export async function finishOrder(id: any) {
+  const data = {
+    id: id,
+  }
+  const res = await fetch(`${urlOrder}/finish/`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+  return res.json()
+}

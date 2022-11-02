@@ -36,13 +36,13 @@ export const LogIn = ({ navigation }) => {
         data.nombrecliente = name_normalized
         const newUser = { ...data, ...authData }
         AsyncStorage.saveUser(newUser)
-        setUser(data)
+        setUser(newUser)
         if (data?.Rol == 'Domiciliario') {
           console.log('Entro Domiciliario')
-          navigation.navigate('BottomTabDP')
+          navigation.navigate('BottomTabRP')
         } else if (data?.Rol == 'Restaurante') {
           console.log('Entro Restaurante')
-          navigation.navigate('BottomTabRP')
+          navigation.navigate('BottomTabDP')
         } else {
           console.log('Entro Usuario')
           navigation.navigate('BottomTab')

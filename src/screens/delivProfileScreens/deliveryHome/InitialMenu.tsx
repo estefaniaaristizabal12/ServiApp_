@@ -134,7 +134,7 @@ const InitialMenu = ({ navigation }) => {
     return (
       <View style={styles.box}>
         <SegmentedControl
-          values={['Recogida', 'Domiciliario']}
+          values={['Recogida', 'Domiciliario', 'Finalizados']}
           selectedIndex={0}
           style={{ height: 38 }}
           onChange={event => {
@@ -156,7 +156,7 @@ const InitialMenu = ({ navigation }) => {
         }}
       >
         <FlatList
-          data={tabIndex == 1 ? delivery : orders}
+          data={tabIndex == 1 ? delivery : tabIndex == 2 ? finished : orders}
           style={{ height: Dimensions.get('window').height / 2 + 60 }}
           ItemSeparatorComponent={() => (
             <View style={{ marginVertical: 8 }}></View>

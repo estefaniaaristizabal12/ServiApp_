@@ -39,10 +39,10 @@ export const Splash = ({ navigation }) => {
     NotificationsService.updateToken(user.uid)
     if (user?.Rol == 'Domiciliario') {
       console.log('Entro Domiciliario')
-      navigation.navigate('BottomTabDP')
+      navigation.navigate('BottomTabRP')
     } else if (user?.Rol == 'Restaurante') {
       console.log('Entro Restaurante')
-      navigation.navigate('BottomTabRP')
+      navigation.navigate('BottomTabDP')
     } else {
       console.log('Entro Usuario')
       navigation.navigate('BottomTab')

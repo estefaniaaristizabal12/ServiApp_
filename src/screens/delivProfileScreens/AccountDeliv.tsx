@@ -24,8 +24,6 @@ import {
 } from '@gorhom/bottom-sheet'
 import { CardOrderBottom } from '../../components/CardOrderBottom'
 import { useIsFocused } from '@react-navigation/native'
-import * as UserService from '../../services/UserService'
-import * as AsyncStorage from '../../services/AsyncStorage'
 import * as NotificationService from '../../services/NotificationService'
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
@@ -47,6 +45,9 @@ import {
   update
 } from 'firebase/database'
 import { Alert } from 'react-native'
+import * as UserService from '../../services/UserService'
+import * as AsyncStorage from '../../services/AsyncStorage'
+import * as RestaurantService from '../../services/RestaurantService'
 const db = getDatabase(app)
 
 const AccountDeliv = ({ navigation }) => {
@@ -58,52 +59,62 @@ const AccountDeliv = ({ navigation }) => {
   const [user, setUser] = React.useState<any>(null)
   const [totals, setTotals] = React.useState<any>(null)
   const [selectedOrder, setSelectedOrder] = React.useState<any>(null)
-
+  const [ordersQ, setOrdersQ] = React.useState<any>({
+    q0: [],
+    q1: [],
+    q2: []
+  })
 
   const snapPoints = ['80%']
 
-  const CRYPTOCURRENCIES = [
-    {
-      id: 1,
-      name: 'Processed',
-      cryptobalance: '3.5290123123 BTC',
-      actualbalance: '$19.53',
-      percentage: '+ 4.32%',
-      difference: '$ 5.44',
-      decreased: true,
-      imgsrc: require('../../../assets/salad.png')
-    },
-    {
-      id: 2,
-      name: 'Active',
-      cryptobalance: '3.5290123123 ETH',
-      actualbalance: '$19.53',
-      percentage: '+ 4.32%',
-      difference: '$ 5.44',
-      decreased: false,
-      imgsrc: require('../../../assets/salad.png')
-    },
-    {
-      id: 3,
-      name: 'Processed',
-      cryptobalance: '3.5290123123 BTC',
-      actualbalance: '$19.53',
-      percentage: '+ 4.32%',
-      difference: '$ 5.44',
-      decreased: true,
-      imgsrc: require('../../../assets/salad.png')
-    },
-    {
-      id: 4,
-      name: 'Active',
-      cryptobalance: '3.5290123123 ETH',
-      actualbalance: '$19.53',
-      percentage: '+ 4.32%',
-      difference: '$ 5.44',
-      decreased: false,
-      imgsrc: require('../../../assets/salad.png')
+  React.useEffect(() => {
+    if (isFocused) {
+      console.log('OrdersRest')
+      AsyncStorage.getUser()
+        .then(user => {
+          setUser(user)
+          getOrders(user)
+        })
+        .catch(error => console.error(error))
     }
-  ]
+  }, [isFocused])
+
+  const getOrders = async (user: any) => {
+    UserService.getOrders('Domiciliario', 1, user.uid)
+      .then(data => {
+        let q0 = []
+        let q1 = []
+        let q2 = []
+        console.log(data)
+        data.forEach((order: any) => {
+          order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
+          if (JSON.stringify(order.Resena) == "{}")
+            return
+          if (0 <= order.Resena.Calificacion && order.Resena.Calificacion <= 3)
+            q0.push(order)
+          else if (3 <= order.Resena.Calificacion && order.Resena.Calificacion <= 4)
+            q1.push(order)
+          else
+            q2.push(order)
+          order.RestauranteImagen = order.Restaurante.Imagen
+        })
+        const newOrdersQ = {
+          q0: q0,
+          q1: q1,
+          q2: q2
+        }
+        const newOrdersQtotal = {
+          q0: q0.length,
+          q1: q1.length,
+          q2: q2.length
+        }
+        console.log("_--------_-", newOrdersQtotal)
+        setOrdersQ(newOrdersQ)
+      })
+      .catch(error => {
+        console.error('getOrders: ', error)
+      })
+  }
 
   const renderHeader = () => {
     return (
@@ -126,7 +137,7 @@ const AccountDeliv = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Calificaciones 
+          Calificaciones
         </Text>
       </View>
     )
@@ -234,7 +245,7 @@ const AccountDeliv = ({ navigation }) => {
         }}
       >
         <FlatList
-          data={Object.values(orders)}
+          data={tabIndex == 0 ? ordersQ.q0 : tabIndex == 1 ? ordersQ.q1 : ordersQ.q2}
           style={{ height: Dimensions.get('window').height / 2 + 80 }}
           ItemSeparatorComponent={() => (
             <View style={{ marginVertical: -5 }}></View>
@@ -242,6 +253,7 @@ const AccountDeliv = ({ navigation }) => {
           renderItem={({ item }) => (
             <CardOrderNew
               item={item}
+              onPress={() => {}}
             />
           )}
           keyExtractor={item => item.id}
@@ -266,11 +278,11 @@ const AccountDeliv = ({ navigation }) => {
           data={
             selectedOrder
               ? Object.keys(selectedOrder?.Carro).map(key => {
-                  return {
-                    id: key,
-                    ...selectedOrder?.Carro[key]
-                  }
-                })
+                return {
+                  id: key,
+                  ...selectedOrder?.Carro[key]
+                }
+              })
               : []
           }
           // data={selectedOrder? Object.values(selectedOrder?.Carro): []}
@@ -288,7 +300,7 @@ const AccountDeliv = ({ navigation }) => {
     )
   }
 
- 
+
 
   return (
     <BottomSheetModalProvider>
@@ -305,7 +317,7 @@ const AccountDeliv = ({ navigation }) => {
         {SegmentedCont()}
 
         {/* Body */}
-        {/* {renderBody()} */}
+        {renderBody()}
 
         {/* <Button title="Present Modal" onPress={handlePresentModal} /> */}
         <StatusBar style="auto" />

@@ -74,7 +74,7 @@ const ProfileDeliv = ({ navigation, route }) => {
             iconName="account"
             text="Mi Cuenta"
             pro
-            onPress={() => navigation.navigate('AccountDeliv')}
+            onPress={() => navigation.navigate('EditProfile')}
           />
           <DrawerItem
             iconName="star"

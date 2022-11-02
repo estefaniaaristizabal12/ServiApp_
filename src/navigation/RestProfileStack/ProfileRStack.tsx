@@ -8,7 +8,7 @@ import EditProfile from '../../screens/delivProfileScreens/EditProfile'
 
 const StackProfile = createStackNavigator()
 
-export default function ProfileDStack({ route, navigation }) {
+export default function ProfileRStack({ route, navigation }) {
   return (
     <StackProfile.Navigator
       screenOptions={{

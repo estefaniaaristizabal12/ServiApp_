@@ -23,7 +23,7 @@ import TextIconButton from '../../components/TextIconButton'
 import * as AsyncStorage from '../../services/AsyncStorage'
 import { useIsFocused } from '@react-navigation/native'
 
-export const Account = ({ navigation }) => {
+export const EditProfile = ({ navigation }) => {
   const isFocused = useIsFocused()
   const [user, setUser] = React.useState<any>({})
   const [statusOrder, setStatusOrder] = React.useState(1)
@@ -357,4 +357,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Account
+export default EditProfile

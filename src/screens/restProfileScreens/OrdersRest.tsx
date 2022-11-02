@@ -64,29 +64,13 @@ const InitialMenu = ({ navigation, route }) => {
       })
   }
 
-  const CRYPTOCURRENCIES = [
-    {
-      id: 1,
-      name: 'Processed',
-      cryptobalance: '3.5290123123 BTC',
-      actualbalance: '$19.53',
-      percentage: '+ 4.32%',
-      difference: '$ 5.44',
-      decreased: true,
-      imgsrc: require('../../../assets/salad.png')
-    },
-    {
-      id: 2,
-      name: 'Active',
-      cryptobalance: '3.5290123123 ETH',
-      actualbalance: '$19.53',
-      percentage: '+ 4.32%',
-      difference: '$ 5.44',
-      decreased: false,
-      imgsrc: require('../../../assets/salad.png')
-    }
-  ]
+  const goToChangeStatusOrder = (order: any) => {
+    UserService.getOrder(order.id).then((data: any) => {
+      navigation.navigate('ChangeStatusOrderRest', { order: data })
+    })
+  }
 
+  
   const renderHeader = () => {
     return (
       <View style={styles.headerbar}>
@@ -145,7 +129,13 @@ const InitialMenu = ({ navigation, route }) => {
           ItemSeparatorComponent={() => (
             <View style={{ marginVertical: 8 }}></View>
           )}
-          renderItem={({ item }) => <CardOrderDelivery item={item} />}
+          renderItem={({ item }) => 
+          <CardOrderDelivery 
+            item={item} 
+            onPress={() => {
+              goToChangeStatusOrder(item)
+            }}
+          />}
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
