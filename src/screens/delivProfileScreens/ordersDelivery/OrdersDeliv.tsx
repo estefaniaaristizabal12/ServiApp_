@@ -164,6 +164,20 @@ const OrdersDeliv = ({ navigation }) => {
     UserService.rejectOrder(selectedOrder?.id, user.uid)
       .then((data: any) => {
         console.log(data)
+        // TODO: reject order logic
+        // const statusRef = ref(db, 'Ordenes/' + selectedOrder?.id)
+        // update(statusRef, {
+        //   Estado: -2
+        // })
+        //send notification to user
+        UserService.getUser(selectedOrder?.Usuario).then((orderUser: any) => {
+          NotificationService.sendOrderStatusUpdate(
+            orderUser.DeviceToken,
+            '¡El restaurante rechazó tu pedido!, contáctalos 😥'
+          )
+            .then(data => console.log(data))
+            .catch(error => console.error(error))
+        })
       })
       .catch((error: any) => {
         console.error(error)

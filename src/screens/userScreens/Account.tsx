@@ -20,19 +20,22 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import TextButton from '../../components/TextButton'
 import TextIconButton from '../../components/TextIconButton'
 import * as AsyncStorage from '../../services/AsyncStorage'
+import { useIsFocused } from '@react-navigation/native'
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 
 export const Account = ({ navigation }) => {
+  const isFocused = useIsFocused()
   const [user, setUser] = React.useState<any>({})
   const [statusOrder, setStatusOrder] = React.useState(1)
 
   const insets = useSafeAreaInsets()
 
   React.useEffect(() => {
-    getUser()
-  }, [])
+    if(isFocused)
+      getUser()
+  }, [isFocused])
 
   const getUser = async () => {
     AsyncStorage.getUser()
@@ -54,7 +57,10 @@ export const Account = ({ navigation }) => {
       auth.currentUser.uid
     )
       .then(data => {
-        console.log('editUser', data)
+        console.log('editUser')
+        const newUser = { ...user, ...data }
+        console.log('newUser: ', newUser)
+        AsyncStorage.saveUser(user).catch(error => console.error(error))
       })
       .catch(error => {
         console.error(error)

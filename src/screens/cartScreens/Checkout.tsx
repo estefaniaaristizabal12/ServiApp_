@@ -22,6 +22,7 @@ import * as AsyncStorage from '../../services/AsyncStorage'
 import * as RestaurantService from '../../services/RestaurantService'
 import * as UserService from '../../services/UserService'
 import { firebaseConfig } from '../firebaseConfig'
+import { edificios } from '../../constants/buildings'
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -30,56 +31,6 @@ export const Checkout = ({ navigation, route }) => {
   const isFocused = useIsFocused()
   const { top: paddingTop } = useSafeAreaInsets()
   const snapPoints = ['90%']
-  const edificios = [
-    'Casa Navarro',
-    'Ed. Fernando Barón',
-    'Ed. Gabriel Giraldo',
-    'Ed. Gerardo Arango Puerta',
-    'Talleres de Diseño Industrial',
-    'Ed. Lorenzo Uribe',
-    'Ed. Ático',
-    'Ed. Julio Carrizosa',
-    'Ed. José Gabriel Maldonado',
-    'Ed. Luis Felipe Silva Garativo',
-    'Ed. Leopoldo Rother',
-    'Ed. Carlos Arbeláez Camacho',
-    'Capilla Nuestra Señora del Camino',
-    'Talleres de Arquitectura',
-    'Ed. Jorge Hoyos Vásquez',
-    'Ed. Emilio Arango',
-    'Cafetería Central',
-    'Hospital Universitario San Ignacio',
-    'Facultad de Educación',
-    'Facultad de Odontología',
-    'Ed. José del Carmen Acosta',
-    'Ed. Jesús María Fernandez',
-    'Urgencias HUSI',
-    'Ed. Néstor Santacoloma',
-    'Ed. Rafael Barrientos Conto',
-    'Instituto de Genética Humana',
-    'Auditorio Alejandro Novoa',
-    'Central de Vigilancia',
-    'Ed. Pavlo VI',
-    'Facultad de Artes Ala Oriental',
-    'Ed. Catalán',
-    'Salones Carrera de Estudios Musicales',
-    'Capilla San Francisco Javier',
-    'Ed. Cataluña',
-    'Ed. Quindío',
-    'Ed. Juniorado, Bienestar',
-    'Auditorio Félix Restrepo',
-    'Ed. Ángel Valtierra',
-    'Ed. Carlos Ortiz',
-    'Ed. Jesús Emilio Ramírez',
-    'Ed. Bioterio',
-    'Ed. José Rafael Arboleda',
-    'Cancha de Fútbol',
-    'Centro Javeriano de Formación Deportiva',
-    'Ed. Pedro Arrupe',
-    'Ed. Manuel Briceño Jáuregui',
-    'Ed. Don Guillermo Castro',
-    'Ed. Hernando Arellano Ángel'
-  ]
 
   const [selectedCard, setSelectedCard] = React.useState<any>(null)
   const [selectedIdCard, setSelectedIdCard] = React.useState<any>({})
@@ -157,7 +108,7 @@ export const Checkout = ({ navigation, route }) => {
     }, 100)
   }
   const changeUserDirection = () => {
-    console.log('cangeUserDirection')
+    console.log('changeUserDirection')
     UserService.update(
       user?.nombrecliente,
       locationBuilding + ' ' + locationDescription,
@@ -166,7 +117,9 @@ export const Checkout = ({ navigation, route }) => {
       user?.uid
     )
       .then(data => {
-        console.log(data)
+        const newUser = { ...user, ...data }
+        console.log('newUser: ', newUser)
+        AsyncStorage.saveUser(newUser).catch(error => console.error(error))
         setLocationDescription('')
         user.direccion1 = locationBuilding + ' ' + locationDescription
         isOpen && bottomSheetModalRef.current?.close()
@@ -318,7 +271,9 @@ export const Checkout = ({ navigation, route }) => {
                         marginTop: 5
                       }}
                     >
-                      {user?.DomicilioCarro ? user?.direccion1 : rest?.Direccion}
+                      {user?.DomicilioCarro
+                        ? user?.direccion1
+                        : rest?.Direccion}
                     </Text>
                     <TouchableOpacity
                       onPress={handlePresentModal}
@@ -594,9 +549,9 @@ export const Checkout = ({ navigation, route }) => {
                   >
                     {selectedCard?.NumeroTarjeta
                       ? '*****' +
-                      selectedCard?.NumeroTarjeta?.substring(
-                        selectedCard?.NumeroTarjeta?.length - 3
-                      )
+                        selectedCard?.NumeroTarjeta?.substring(
+                          selectedCard?.NumeroTarjeta?.length - 3
+                        )
                       : 'Seleccionar tarjeta'}
                   </Text>
                   {/* <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>{selectedCard?.NumeroTarjeta}</Text> */}

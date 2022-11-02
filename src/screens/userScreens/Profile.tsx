@@ -28,6 +28,7 @@ const Profile = ({ navigation, route }) => {
   const [user, setUser] = React.useState<any>(null)
 
   useEffect(() => {
+    console.log("Profile")
     getUser()
   }, [])
 
@@ -35,7 +36,7 @@ const Profile = ({ navigation, route }) => {
     AsyncStorage.getUser()
       .then(data => {
         setUser(data)
-        console.log('getUser', user)
+        console.log('getUser', data.uid)
       })
       .catch(error => {
         console.error(error)

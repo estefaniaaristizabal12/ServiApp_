@@ -37,6 +37,8 @@ import {
   update
 } from 'firebase/database'
 import { Alert } from 'react-native'
+import * as UserService from '../../../services/UserService'
+
 const db = getDatabase(app)
 
 const ChangeStatusOrder = ({ navigation, route }) => {
@@ -61,16 +63,19 @@ const ChangeStatusOrder = ({ navigation, route }) => {
   }, [isFocused])
 
   const changeStatus = () => {
-    const statusRef = ref(db, 'Ordenes/' + route.params['order'].id)
-    update(statusRef, {
-      Estado: 2
+    UserService.getOrder(order.id).then(order => {
+      const statusRef = ref(db, 'Ordenes/' + route.params['order'].id)
+      update(statusRef, {
+        Estado: 2,
+        IdDomiciliario: order.Domiciliario
+      })
     })
   }
 
   const renderHeader = () => {
     return (
       <HeaderNavigation
-        title="ESTADO DE TU PEDIDO"
+        title='ESTADO DE TU PEDIDO'
         containerStyle={{
           height: 50,
           // marginHorizontal: SIZES.padding,
@@ -222,7 +227,7 @@ const ChangeStatusOrder = ({ navigation, route }) => {
                           height: 50,
                           marginLeft: 17
                         }}
-                        resizeMode="cover"
+                        resizeMode='cover'
                       />
                     )}
                   </View>
@@ -241,7 +246,7 @@ const ChangeStatusOrder = ({ navigation, route }) => {
         {currentStep === -2 && (
           <TextButton
             buttonContainerStyle={{ height: 55, borderRadius: 12 }}
-            label="Pedido Cancelado"
+            label='Pedido Cancelado'
             onPress={() => {
               navigation.navigate('Cart')
               navigation.navigate('Delivery')
@@ -259,7 +264,7 @@ const ChangeStatusOrder = ({ navigation, route }) => {
                 borderRadius: 8,
                 backgroundColor: Colors.lightGray2
               }}
-              label="Productos"
+              label='Productos'
               labelStyle={{ color: Colors.primary }}
               onPress={() => navigation.navigate('FoodDetail')}
             />
@@ -271,7 +276,7 @@ const ChangeStatusOrder = ({ navigation, route }) => {
                 borderRadius: 12,
                 backgroundColor: Colors.primary
               }}
-              label="Orden Entregada"
+              label='Orden Entregada'
               labelStyle={{
                 color: Colors.white,
                 fontSize: normalize(16)
@@ -283,7 +288,7 @@ const ChangeStatusOrder = ({ navigation, route }) => {
         {currentStep > 1 && currentStep < 4 && (
           <TextButton
             buttonContainerStyle={{ height: 55, borderRadius: 12 }}
-            label="Llamar al Domiciliario"
+            label='Llamar al Domiciliario'
             onPress={() => {
               navigation.navigate('Cart')
               navigation.navigate('Delivery')

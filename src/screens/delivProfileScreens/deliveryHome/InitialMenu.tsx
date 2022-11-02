@@ -17,6 +17,7 @@ import { CardOrderDelivery } from '../../../components/CardOrderDelivery'
 import { useIsFocused } from '@react-navigation/native'
 import * as UserService from '../../../services/UserService'
 import * as AsyncStorage from '../../../services/AsyncStorage'
+import * as RestaurantService from '../../../services/RestaurantService'
 import { initializeApp } from 'firebase/app'
 import { firebaseConfig } from '../../firebaseConfig'
 const app = initializeApp(firebaseConfig)
@@ -36,7 +37,11 @@ const InitialMenu = ({ navigation }) => {
       console.log('InitialMenu')
       AsyncStorage.getUser()
         .then(user => {
-          // console.log(Object.keys(user))
+          RestaurantService.getRestaurant(user.Restaurante)
+            .then(rest => {
+              user.Restaurante = { id: user.Restaurante, ...rest }
+            })
+            .catch(error => console.error(error))
           setUser(user)
           getOrders(user)
         })
@@ -109,7 +114,7 @@ const InitialMenu = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Hola rest,
+          Hola rest {user?.Restaurante.Nombre},
         </Text>
         <Text
           style={{
