@@ -62,7 +62,7 @@ export const CardOrderDelivery = props => {
                 fontSize: 13
               }}
             >
-              {order.Estado == '4' ? 'Entregado' : 'En Curso'}
+              {order.Finalizado ? 'Entregado' : 'En Curso'}
             </Text>
           </View>
           <View
