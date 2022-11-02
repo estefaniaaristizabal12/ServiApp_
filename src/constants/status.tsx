@@ -7,7 +7,7 @@ const status = [
   {
     id: 2,
     title: 'Preparando Orden',
-    sub_title: 'Tu pedido esta siendo preparado'
+    sub_title: 'Tu pedido está siendo preparado'
   },
   {
     id: 3,
@@ -17,12 +17,12 @@ const status = [
   {
     id: 4,
     title: 'Orden en Camino',
-    sub_title: 'Tu pedido esta en camino!'
+    sub_title: '¡Tu pedido esta en camino!'
   },
   {
     id: 5,
     title: 'Pedido Entregado',
-    sub_title: 'Muchas gracias por tu compra!'
+    sub_title: '¡Muchas gracias por tu compra!'
   }
 ]
 

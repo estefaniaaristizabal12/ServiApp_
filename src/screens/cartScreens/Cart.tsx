@@ -121,7 +121,7 @@ export const Cart = ({ navigation }) => {
       }}
     >
       <View style={styles.superior}>
-        <View style={{ flex: 0.3, marginBottom: 30 }}>
+        <View style={{ flex: 0.2, marginBottom: 30, alignItems: 'center',}}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={styles.btnAtas}
@@ -131,7 +131,7 @@ export const Cart = ({ navigation }) => {
         </View>
         <View
           style={{
-            flex: 0.7,
+            flex: 0.6,
             alignItems: 'center',
             marginBottom: 30
           }}
@@ -140,19 +140,20 @@ export const Cart = ({ navigation }) => {
         </View>
         <View
           style={{
-            flex: 0.3,
-            alignItems: 'flex-end',
+            flex: 0.2,
+            alignItems: 'center',
             marginBottom: 30,
-            marginRight: 20
           }}
         >
           {!vacio ? (
             <TouchableOpacity
+            style={styles.btnVaciar}
               onPress={() => {
                 clearCart()
               }}
             >
-              <Text style={styles.textVaciar}> Vaciar </Text>
+              <Ionicons name="md-trash-bin" size={20} color={Colors.grey}/>
+              {/* <Text style={styles.textVaciar}> Vaciar </Text> */}
             </TouchableOpacity>
           ) : (
             <Text></Text>
@@ -318,7 +319,6 @@ const styles = StyleSheet.create({
     color: '#4DA537'
   },
   btnAtas: {
-    marginLeft: 25,
     backgroundColor: '#E7E7E7',
     justifyContent: 'center',
     alignItems: 'center',
@@ -354,5 +354,13 @@ const styles = StyleSheet.create({
     color: 'white',
     paddingHorizontal: 30,
     paddingVertical: 15
-  }
+  },
+  btnVaciar: {
+    backgroundColor: '#E7E7E7',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
+    height: 30,
+    width: 30
+  },
 })

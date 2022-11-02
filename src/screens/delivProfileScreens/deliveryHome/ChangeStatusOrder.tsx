@@ -152,7 +152,7 @@ const ChangeStatusOrder = ({ navigation, route }) => {
           }}
         >
           <Text style={{ fontSize: normalize(16), color: Colors.black }}>
-            Numero Pedido
+            Número Pedido
           </Text>
           <Text style={{ color: Colors.gray, fontSize: normalize(16) }}>
             {order?.id}
