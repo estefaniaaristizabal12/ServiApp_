@@ -1,3 +1,5 @@
+import { images } from "../../images"
+
 const productEx = [
   {
     id: 1,
@@ -6,7 +8,7 @@ const productEx = [
     precio: 15000,
     description:
       'Increible comida de servicios de alimentacion, se destaca por su ..',
-    image: require('../../assets/pizza.jpg')
+    image: images.pizza_jpg
   },
   {
     id: 2,
@@ -15,7 +17,7 @@ const productEx = [
     precio: 15000,
     description:
       'Increible comida de servicios de alimentacion, se destaca por su ..',
-    image: require('../../assets/pizza.jpg')
+    image: images.pizza_jpg
   },
   {
     id: 3,
@@ -24,7 +26,7 @@ const productEx = [
     precio: 15000,
     description:
       'Increible comida de servicios de alimentacion, se destaca por su ..',
-    image: require('../../assets/pizza.jpg')
+    image: images.pizza_jpg
   },
   {
     id: 4,
@@ -33,7 +35,7 @@ const productEx = [
     precio: 15000,
     description:
       'Increible comida de servicios de alimentacion, se destaca por su ..',
-    image: require('../../assets/pizza.jpg')
+    image: images.pizza_jpg
   },
   {
     id: 5,
@@ -42,7 +44,7 @@ const productEx = [
     precio: 15000,
     description:
       'Increible comida de servicios de alimentacion, se destaca por su ..',
-    image: require('../../assets/pizza.jpg')
+    image: images.pizza_jpg
   },
   {
     id: 6,
@@ -51,7 +53,7 @@ const productEx = [
     precio: 15000,
     description:
       'Increible comida de servicios de alimentacion, se destaca por su ..',
-    image: require('../../assets/pizza.jpg')
+    image: images.pizza_jpg
   },
   {
     id: 7,
@@ -60,7 +62,7 @@ const productEx = [
     precio: 15000,
     description:
       'Increible comida de servicios de alimentacion, se destaca por su ..',
-    image: require('../../assets/pizza.jpg')
+    image: images.pizza_jpg
   },
   {
     id: 8,
@@ -69,7 +71,7 @@ const productEx = [
     precio: 15000,
     description:
       'Increible comida de servicios de alimentacion, se destaca por su ..',
-    image: require('../../assets/pizza.jpg')
+    image: images.pizza_jpg
   },
   {
     id: 9,
@@ -78,7 +80,7 @@ const productEx = [
     precio: 15000,
     description:
       'Increible comida de servicios de alimentacion, se destaca por su ..',
-    image: require('../../assets/pizza.jpg')
+    image: images.pizza_jpg
   }
 ]
 

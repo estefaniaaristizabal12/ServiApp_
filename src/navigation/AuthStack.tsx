@@ -1,12 +1,12 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { LogIn } from '../screens/authScreens/LogIn'
-import { SignIn } from '../screens/authScreens/SignIn'
-import { Splash } from '../screens/authScreens/Splash'
+import { LogIn } from '../screens/auth/LogIn'
+import { SignIn } from '../screens/auth/SignIn'
+import { Splash } from '../screens/auth/Splash'
 import BottomTab from './BottomTab'
-import RecoverPassword from '../screens/authScreens/RecoverPassword'
-import BottomTabDP from './DeliveryProfileStack/BottomTabDP'
+import RecoverPassword from '../screens/auth/RecoverPassword'
 import BottomTabRP from './RestProfileStack/BottomTabRP'
+import BottomTabDP from './DeliveryProfileStack/BottomTabDP'
 
 const Stack = createStackNavigator()
 export const AuthStack = () => {

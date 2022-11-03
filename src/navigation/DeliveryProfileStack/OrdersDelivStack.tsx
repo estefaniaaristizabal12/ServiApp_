@@ -1,20 +1,19 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import OrdersDeliv from '../../screens/delivProfileScreens/ordersDelivery/OrdersDeliv'
-import InfoOrdersDeliv from '../../screens/delivProfileScreens/ordersDelivery/InfoOrdersDeliv'
+import Orders from '../../screens/domiciliary/Orders'
+import ChangeStatusOrder from '../../screens/domiciliary/ChangeStatusOrder'
 
-const StackOrderD = createStackNavigator()
-
+const StackOrderRest = createStackNavigator()
 export default function OrdersDelivStack() {
   return (
-    <StackOrderD.Navigator
+    <StackOrderRest.Navigator
       screenOptions={{
         headerShown: false,
         animationTypeForReplace: 'pop'
       }}
     >
-      <StackOrderD.Screen name="OrdersDeliv" component={OrdersDeliv} />
-      <StackOrderD.Screen name="InfoOrdersDeliv" component={InfoOrdersDeliv} />
-    </StackOrderD.Navigator>
+      <StackOrderRest.Screen name="Order" component={Orders} />
+      <StackOrderRest.Screen name="ChangeStatusOrder" component={ChangeStatusOrder} />
+    </StackOrderRest.Navigator>
   )
 }

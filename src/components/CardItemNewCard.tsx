@@ -10,6 +10,7 @@ import {
   Platform
 } from 'react-native'
 import { normalize } from '../../FontNormalize'
+import { images } from '../../images'
 import { Colors } from '../constants/colors'
 
 // id: 1,
@@ -59,8 +60,8 @@ const CardItem: FunctionComponent<CardItemProps> = ({
       <Image
         source={
           isSelected
-            ? require('../../assets/check.png')
-            : require('../../assets/check_off.png')
+            ? images.check
+            : images.check_off
         }
         style={{
           width: 25,

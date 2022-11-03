@@ -1,8 +1,10 @@
+import { images } from "../../images";
+
 export default [
   {
     id: 1,
     name: 'Pasta Bolognesa',
-    image: require('../../assets/1.jpg'),
+    image: images.i1,
     price: '12.000',
     description: 'XXX',
     categoryId: 1,
@@ -12,7 +14,7 @@ export default [
   {
     id: 2,
     name: 'Pasta Pomoro',
-    image: require('../../assets/pasta1.jpg'),
+    image: images.pasta1,
     price: '11.500',
     description: 'XXX',
     categoryId: 1,
@@ -22,7 +24,7 @@ export default [
   {
     id: 3,
     name: 'Ensalada francesa',
-    image: require('../../assets/ensalada2.jpg'),
+    image: images.ensalada2,
     price: '12.000',
     description: 'XXX',
     categoryId: 4,
@@ -32,7 +34,7 @@ export default [
   {
     id: 4,
     name: 'Napolitana',
-    image: require('../../assets/ensalada1.jpg'),
+    image: images.ensalada1,
     price: '10.000',
     description:
       'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam officiis maxime saepe voluptatibus? Iure, maiores provident. Alias voluptates ab beatae, facilis rerum reiciendis laborum, fugiat iure vero ipsum suscipit corrupti!',
@@ -43,7 +45,7 @@ export default [
   {
     id: 5,
     name: 'Pizza Hawaiana',
-    image: require('../../assets/pizza1.jpg'),
+    image: images.pizza1,
     price: '4.000',
     description: 'XXX',
     categoryId: 2,
@@ -53,7 +55,7 @@ export default [
   {
     id: 6,
     name: 'Pizza Napolitana',
-    image: require('../../assets/2.jpg'),
+    image: images.i2,
     price: '5.000',
     description: 'XXX',
     categoryId: 2,
@@ -63,7 +65,7 @@ export default [
   {
     id: 7,
     name: 'Foccacia Inglesa',
-    image: require('../../assets/focaccia1.jpg'),
+    image: images.focaccia1,
     price: '12.000',
     description: 'XXX',
     categoryId: 3,
@@ -73,7 +75,7 @@ export default [
   {
     id: 8,
     name: 'Focassia Nauture',
-    image: require('../../assets/4.jpg'),
+    image: images.i4,
     price: '12.000',
     description: 'XXX',
     categoryId: 3,
@@ -83,7 +85,7 @@ export default [
   {
     id: 9,
     name: 'Focaccia Italiana',
-    image: require('../../assets/4.jpg'),
+    image: images.i4,
     price: '12.000',
     description: 'XXX',
     categoryId: 3,

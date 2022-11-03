@@ -1,6 +1,7 @@
 import { View, Text, Image } from 'react-native'
 import React, { FunctionComponent } from 'react'
 import { Colors } from '../constants/colors'
+import { images } from '../../images'
 
 type FormInputCheckProps = {
   value: string
@@ -16,8 +17,8 @@ const FormInputCheck: FunctionComponent<FormInputCheckProps> = ({
       <Image
         source={
           value === '' || (value !== '' && error === '')
-            ? require('../../assets/correct.png')
-            : require('../../assets/cancel.png')
+            ? images.correct
+            : images.cancel
         }
         style={{
           height: 20,

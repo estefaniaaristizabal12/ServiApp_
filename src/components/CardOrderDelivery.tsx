@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { View, StyleSheet, Image, Text, Pressable } from 'react-native'
+import { images } from '../../images'
 import { Colors } from '../constants/colors'
 import { CustomCard } from './CustomCard'
 
@@ -84,7 +85,7 @@ export const CardOrderDelivery = props => {
           >
             <View style={{ flexDirection: 'row' }}>
               <Image
-                source={require('../../assets/iconMapsInicio2.png')}
+                source={images.iconMapsInicio2}
                 style={{
                   width: 26,
                   height: 26,
@@ -127,7 +128,7 @@ export const CardOrderDelivery = props => {
             </View>
             <View style={{ flexDirection: 'row', marginTop: 4 }}>
               <Image
-                source={require('../../assets/IconMapsFinal.png')}
+                source={images.IconMapsFinal}
                 style={{
                   height: 29,
                   width: 23,

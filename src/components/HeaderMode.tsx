@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import Delivery from '../screens/Delivery'
+import Delivery from '../screens/user/Delivery'
 import { Colors } from '../constants/colors'
 
 export default function HeaderTabs(props) {

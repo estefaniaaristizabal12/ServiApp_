@@ -1,16 +1,14 @@
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import React from 'react'
+
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { Colors } from '../../constants/colors'
 import { FontAwesome5 } from '@expo/vector-icons'
-import ReviewRestStack from './ReviewRestStack'
-import OrderRestStack from './OrderRestStack'
-// import RestProfile from '../../screens/restProfileScreens/RestProfile';
-import ProfileDeliv from '../../screens/delivProfileScreens/ProfileDeliv'
+import OrdersRestStack from './OrdersRestStack'
+import RequestsRestStack from './RequestsRestStack'
 import ProfileRStack from './ProfileRStack'
 
 const BtTap = createMaterialBottomTabNavigator()
-
-export default function BottomTabRP({ navigation, route }) {
+export default function BottomTabRP({ route, navigation }) {
   return (
     <BtTap.Navigator
       initialRouteName="TopTab" //OJO
@@ -31,7 +29,7 @@ export default function BottomTabRP({ navigation, route }) {
               iconName = 'home'
               break
 
-            case 'ReviewRestStack':
+            case 'RequestsRestStack':
               iconName = 'clipboard-list'
               break
 
@@ -46,17 +44,16 @@ export default function BottomTabRP({ navigation, route }) {
     >
       <BtTap.Screen
         name="Home"
-        options={{ title: 'Inicio' }}
-        component={OrderRestStack}
+        options={{ title: 'Ordenes' }}
+        component={OrdersRestStack}
       />
       <BtTap.Screen
-        name="ReviewRestStack"
-        options={{ title: 'Pedidos finalizados' }}
-        component={ReviewRestStack}
+        name="Requests"
+        options={{ title: 'Solicitudes' }}
+        component={RequestsRestStack}
       />
-      {/* <BtTap.Screen name="Profile" options={{ title: 'Perfil' }} component={OrderRestStack} /> */}
       <BtTap.Screen
-        name="Profile"
+        name="ProfileDStack"
         options={{ title: 'Perfil' }}
         component={ProfileRStack}
       />

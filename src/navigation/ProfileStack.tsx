@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Account from '../screens/userScreens/Account'
-import Profile from '../screens/userScreens/Profile'
+import Account from '../screens/user/userScreens/Account'
+import Profile from '../screens/user/userScreens/Profile'
 
 const StackOrder = createStackNavigator()
 export const ProfileStack = () => {

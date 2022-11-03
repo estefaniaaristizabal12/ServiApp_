@@ -3,6 +3,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Text, Image, View, StyleSheet, Dimensions } from 'react-native'
 import { normalize } from '../../FontNormalize'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { images } from '../../images'
 
 const { width, height } = Dimensions.get('screen')
 
@@ -19,7 +20,7 @@ export const ProductsOrderRest = () => {
               borderRadius: 20,
               marginLeft: 5
             }}
-            source={require('../../assets/pizza.jpg')}
+            source={images.pizza_jpg}
           />
         </View>
 

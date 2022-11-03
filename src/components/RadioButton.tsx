@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native'
+import { images } from '../../images'
 
 type RadioButtonProps = {
   containerStyle: ViewStyle
@@ -42,8 +43,8 @@ const RadioButton: FunctionComponent<RadioButtonProps> = ({
       <Image
         source={
           isSelected
-            ? require('../../assets/check.png')
-            : require('../../assets/check_off.png')
+            ? require(images.check)
+            : require(images.check_off)
         }
         style={{ marginLeft: 5, width: 20, height: 20, ...iconStyle }}
       />

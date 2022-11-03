@@ -1,13 +1,10 @@
 import {
-  Dimensions,
-  ImageBackground,
+  Dimensions, Image, ImageBackground,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  Image,
-  View
+  TouchableOpacity, View
 } from 'react-native'
 
 import React, { useState } from 'react'
@@ -16,12 +13,13 @@ const SPACING = 10
 const { height } = Dimensions.get('window')
 const { width } = Dimensions.get('window')
 
-import { BlurView } from 'expo-blur'
 import { Ionicons } from '@expo/vector-icons'
-import { Colors } from '../constants/colors'
-import Categories from '../components/Categories'
-import products from '../constants/products'
+import { BlurView } from 'expo-blur'
 import { normalize } from '../../FontNormalize'
+import { images } from '../../images'
+import Categories from '../components/Categories'
+import { Colors } from '../constants/colors'
+import products from '../constants/products'
 
 const PickUp = ({}) => {
   const [activeCategoryId, setActiveCategoryId] = useState(null)
@@ -37,7 +35,7 @@ const PickUp = ({}) => {
               flexDirection: 'row',
               justifyContent: 'space-between'
             }}
-            source={require('../../assets/1.jpg')}
+            source={images.i1}
           >
             <TouchableOpacity
               style={{

@@ -1,12 +1,12 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import AddCard from '../screens/cartScreens/AddCard'
-import { Cart } from '../screens/cartScreens/Cart'
-import { Checkout } from '../screens/cartScreens/Checkout'
-import MyCard from '../screens/MyCard'
-import StatusOrder from '../screens/restScreens/StatusOrder'
-import { ChangeLocation } from '../screens/cartScreens/ChangeLocation'
-import Confirmation from '../screens/Confirmation'
+import AddCard from '../screens/user/cartScreens/AddCard'
+import { Cart } from '../screens/user/cartScreens/Cart'
+import { Checkout } from '../screens/user/cartScreens/Checkout'
+import MyCard from '../screens/user/MyCard'
+import StatusOrder from '../screens/user/restScreens/StatusOrder'
+import { ChangeLocation } from '../screens/user/cartScreens/ChangeLocation'
+import Confirmation from '../screens/user/Confirmation'
 
 const StackCart = createStackNavigator()
 export const CartStack = () => {

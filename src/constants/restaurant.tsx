@@ -1,3 +1,5 @@
+import { images } from "../../images"
+
 const restaurant = [
   {
     id: 1,
@@ -5,7 +7,7 @@ const restaurant = [
     Localizacion: 'Edificio 67, G Maldonado',
     Descripcion: 'Ofrecemos amplia carta, de deliciosos platos italianos',
     InformacionHorario: 'xxx',
-    Imagen: require('../../assets/2.jpg')
+    Imagen: images.i2
   },
   {
     id: 2,
@@ -15,7 +17,7 @@ const restaurant = [
     information: 'XXX',
     paymentInfo: 'XXX',
     detailedDescription: 'xxx',
-    image: require('../../assets/4.jpg')
+    image: images.i4
   },
   {
     id: 3,
@@ -26,7 +28,7 @@ const restaurant = [
     detailedDescription: 'xxx',
 
     description: 'Desayunos, amuerzos, comidas rapidas y pizzas!',
-    image: require('../../assets/1.jpg')
+    image: images.i1
   },
   {
     id: 4,
@@ -36,7 +38,7 @@ const restaurant = [
     information: 'xxx',
     paymentInfo: 'XXX',
     detailedDescription: 'XXX',
-    image: require('../../assets/2.jpg')
+    image: images.i2
   }
 ]
 export default restaurant

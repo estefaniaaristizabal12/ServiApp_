@@ -1,28 +1,30 @@
+import { images } from "../../images"
+
 const categories = [
   {
     id: '1',
     name: 'Restaurantes',
-    image: require('../../assets/restaurantes.png')
+    image: images.restaurantes
   },
   {
     id: '2',
     name: 'Cafés y kioskos',
-    image: require('../../assets/cafes_kioskos.png')
+    image: images.cafes_kioskos
   },
   {
     id: '3',
     name: 'Saludable',
-    image: require('../../assets/opcionSaludable.png')
+    image: images.opcionSaludable
   },
   {
     id: '4',
     name: 'Especialidades',
-    image: require('../../assets/especialidades.png')
+    image: images.especialidades
   },
   {
     id: '5',
     name: 'Cafeterías',
-    image: require('../../assets/cafeterias.png')
+    image: images.cafeterias
   }
 ]
 

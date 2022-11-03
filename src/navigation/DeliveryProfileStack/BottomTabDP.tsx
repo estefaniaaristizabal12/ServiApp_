@@ -1,14 +1,15 @@
-import React from 'react'
-
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import React from 'react'
 import { Colors } from '../../constants/colors'
 import { FontAwesome5 } from '@expo/vector-icons'
-import DeliveryStack from './DeliveryStack'
+import RequestsDelivStack from './RequestsDelivStack'
 import OrdersDelivStack from './OrdersDelivStack'
+import ProfileDelivRest from '../../screens/profileRestDomi/Profile'
 import ProfileDStack from './ProfileDStack'
 
 const BtTap = createMaterialBottomTabNavigator()
-export default function BottomTabDP({ route, navigation }) {
+
+export default function BottomTabDP({ navigation, route }) {
   return (
     <BtTap.Navigator
       initialRouteName="TopTab" //OJO
@@ -29,11 +30,11 @@ export default function BottomTabDP({ route, navigation }) {
               iconName = 'home'
               break
 
-            case 'OrdersDelivStack':
+            case 'RequestsDelivStack':
               iconName = 'clipboard-list'
               break
 
-            case 'ProfileDStack':
+            case 'Profile':
               iconName = 'user'
               break
           }
@@ -45,15 +46,15 @@ export default function BottomTabDP({ route, navigation }) {
       <BtTap.Screen
         name="Home"
         options={{ title: 'Domicilios' }}
-        component={DeliveryStack}
-      />
-      <BtTap.Screen
-        name="OrdersDelivStack"
-        options={{ title: 'Solicitudes' }}
         component={OrdersDelivStack}
       />
       <BtTap.Screen
-        name="ProfileDStack"
+        name="ReviewRestStack"
+        options={{ title: 'Solicitudes' }}
+        component={RequestsDelivStack}
+      />
+      <BtTap.Screen
+        name="Profile"
         options={{ title: 'Perfil' }}
         component={ProfileDStack}
       />

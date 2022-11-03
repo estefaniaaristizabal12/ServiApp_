@@ -1,37 +1,39 @@
+import { images } from "../../images"
+
 const productCategories = [
   {
     id: '1',
     name: 'Platos Fuertes',
-    image: require('../../assets/platosFuertes.png')
+    image: images.platosFuertes
   },
-  { id: '2', name: 'Entradas', image: require('../../assets/entradas.png') },
+  { id: '2', name: 'Entradas', image: images.entradas },
   {
     id: '3',
     name: 'Adiciones',
-    image: require('../../assets/adiciones.png')
+    image: images.adiciones
   },
-  { id: '4', name: 'Snacks', image: require('../../assets/snacks.png') },
-  { id: '5', name: 'Postres', image: require('../../assets/postres.png') },
-  { id: '6', name: 'Bebidas', image: require('../../assets/bebidas.png') },
+  { id: '4', name: 'Snacks', image: images.snacks },
+  { id: '5', name: 'Postres', image: images.postres },
+  { id: '6', name: 'Bebidas', image: images.bebidas },
   {
     id: '7',
     name: 'Ensaladas y fruta',
-    image: require('../../assets/endaladas_frutas.png')
+    image: images.endaladas_frutas
   },
   {
     id: '8',
     name: 'Panadería',
-    image: require('../../assets/panaderia_pasteleria.png')
+    image: images.panaderia_pasteleria
   },
   {
     id: '9',
     name: 'Comida rápida',
-    image: require('../../assets/comidaRapida.png')
+    image: images.comidaRapida
   },
   {
     id: '10',
     name: 'Desayunos',
-    image: require('../../assets/desayunos.png')
+    image: images.desayunos
   }
 ]
 

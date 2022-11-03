@@ -1,17 +1,17 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Cart } from '../screens/cartScreens/Cart'
-import Profile from '../screens/userScreens/Profile'
+import { Cart } from '../screens/user/cartScreens/Cart'
+import Profile from '../screens/user/userScreens/Profile'
 import { FontAwesome5 } from '@expo/vector-icons'
-import { Orders } from '../screens/ordersScreens/Orders'
+import { Orders } from '../screens/user/ordersScreens/Orders'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { RestStack } from './RestStack'
 import { OrderStack } from './OrderStack'
 import { Colors } from '../constants/colors'
 import { CartStack } from './CartStack'
-import Account from '../screens/userScreens/Account'
+import Account from '../screens/user/userScreens/Account'
 import { ProfileStack } from './ProfileStack'
-import { ServiceOrder } from '../screens/ordersScreens/ServiceOrder'
+import { ServiceOrder } from '../screens/user/ordersScreens/ServiceOrder'
 
 const BtTap = createMaterialBottomTabNavigator()
 
