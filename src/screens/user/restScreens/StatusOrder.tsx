@@ -9,6 +9,8 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Colors } from '../../../constants/colors'
 
+import Moment from 'moment';
+
 import { useIsFocused } from '@react-navigation/native'
 import { normalize } from '../../../../FontNormalize'
 import HeaderNavigation from '../../../components/HeaderNavigation'
@@ -26,6 +28,7 @@ import * as UserService from '../../../services/UserService'
 import app from '../../firebaseConfig'
 
 const db = getDatabase(app)
+Moment.locale('es');
 
 const StatusOrder = ({ navigation, route }) => {
   const isFocused = useIsFocused()
@@ -37,6 +40,7 @@ const StatusOrder = ({ navigation, route }) => {
   const [del, setDel] = useState<any>(null)
 
   React.useEffect(() => {
+    console.log("sdjfsdasdñasdf", route.params["order"])  
     if (!route.params['order']) return
     isFocused && setOrder(route.params['order'])
     getRest(route.params['order'])
@@ -53,7 +57,7 @@ const StatusOrder = ({ navigation, route }) => {
           .then(order => {
             getDel(order.Domiciliario)
           })
-          .catch(error => console.error(error))
+          .catch(error => console.error("getOrder", error))
       }
       // data?.IdDomiciliario?
       //   getDel(data.IdDomiciliario):
@@ -67,7 +71,7 @@ const StatusOrder = ({ navigation, route }) => {
         setDel(data)
       })
       .catch(error => {
-        console.error(error)
+        console.error("getDel", error)
       })
   }
 
@@ -77,13 +81,18 @@ const StatusOrder = ({ navigation, route }) => {
         setRest(data)
       })
       .catch(error => {
-        console.error(error)
+        console.error("getRest", error)
       })
   }
 
   const callNumberWhitLinking = (number: any) => {
     Linking.openURL(`tel:${number}`).catch(error => console.error(error))
   }
+
+  const goToWhatsapp = (number: any) => {
+    Linking.openURL(`whatsapp://send?phone=${number}`).catch(error => console.error(error))
+  }
+
 
   const renderHeader = () => {
     return (
@@ -134,9 +143,7 @@ const StatusOrder = ({ navigation, route }) => {
             color: Colors.black
           }}
         >
-          {new Date(
-            new Date(order?.Fecha).getTime() + 15 * 60000
-          ).toUTCString()}
+          {Moment(order?.Fecha).format('d MMM YYYY, h:mm a')}
         </Text>
       </View>
     )
@@ -265,9 +272,11 @@ const StatusOrder = ({ navigation, route }) => {
                 borderRadius: 8,
                 backgroundColor: Colors.lightGray2
               }}
-              label='Cancelar'
+              label='WhatsApp'
               labelStyle={{ color: Colors.primary }}
-              onPress={() => navigation.navigate('FoodDetail')}
+              onPress={() => 
+                goToWhatsapp(573175552995)
+              }
             />
             {/* MapView*/}
             <TextIconButton

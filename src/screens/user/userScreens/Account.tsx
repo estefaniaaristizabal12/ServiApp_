@@ -20,6 +20,7 @@ export const Account = ({ navigation }) => {
   const isFocused = useIsFocused()
   const [user, setUser] = React.useState<any>({})
   const [statusOrder, setStatusOrder] = React.useState(1)
+  const [booleanEditar, setBooleanEditar] = React.useState(false)
 
   const [inputs, setInputs] = React.useState({
     email: '',
@@ -115,7 +116,10 @@ export const Account = ({ navigation }) => {
               }}
               label="Cancelar"
               labelStyle={{ color: Colors.primary }}
-              onPress={() => setStatusOrder(1)}
+              onPress={() => {
+                 setStatusOrder(1)
+                 setBooleanEditar(false)
+                }}
             />
             {/* MapView*/}
             <TextIconButton
@@ -147,7 +151,10 @@ export const Account = ({ navigation }) => {
           <TextButton
             buttonContainerStyle={{ height: 55, borderRadius: 12 }}
             label="Editar información"
-            onPress={() => setStatusOrder(0)}
+            onPress={() => {
+              setStatusOrder(0)
+              setBooleanEditar(true)
+            }}
           />
         )}
       </View>
@@ -189,6 +196,7 @@ export const Account = ({ navigation }) => {
             iconName="email-outline"
             label="Correo Electrónico"
             placeholder={user?.e_mail}
+            editable={booleanEditar}
             error
             password={false}
           />
@@ -198,6 +206,7 @@ export const Account = ({ navigation }) => {
             iconName="account-outline"
             label="Nombre"
             placeholder={user?.nombrecliente}
+            editable={booleanEditar}
             error
             password={false}
           />
@@ -207,6 +216,7 @@ export const Account = ({ navigation }) => {
             iconName="account-outline"
             label="Dirección"
             placeholder={user?.direccion1}
+            editable={booleanEditar}
             error
             password={false}
           />
@@ -218,6 +228,7 @@ export const Account = ({ navigation }) => {
             iconName="phone-outline"
             label="Número telefónico"
             placeholder={user?.Telefono}
+            editable={booleanEditar}
             password={false}
             error
           />

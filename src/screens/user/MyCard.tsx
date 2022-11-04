@@ -29,9 +29,13 @@ const MyCard = ({ navigation, route }) => {
   const [selectedCard, setSelectedCard] = useState<any>(null)
   const [cards, setCards] = useState<any>([])
   const [user, setUser] = useState<any>(null)
+  const [profile, setProfile] = useState(false)
 
   React.useEffect(() => {
     // if (isFocused) {
+    if (route.params?.profile) {
+      setProfile(route.params.profile)
+    }
     console.log('Ejecutando useeffect mycard...')
     getUser()
     // }
@@ -79,11 +83,11 @@ const MyCard = ({ navigation, route }) => {
             }}
             //onPress={() => navigation.goBack()}
 
-            onPress={() =>
-              navigation.navigate('Checkout', {
-                card: selectedCard
-              })
-            }
+            onPress={() => {
+              profile ?
+                navigation.goBack() :
+                navigation.navigate('Checkout', { card: selectedCard })
+            }}
           />
         }
         rightComponent={<View style={{ width: 40 }} />}
@@ -157,17 +161,34 @@ const MyCard = ({ navigation, route }) => {
               selectedCard === null ? Colors.grayItemCard : Colors.primary
           }}
           label={
-            selectedCard?.key === 'NewCard' ? 'Agregar' : 'Realizar Mi Pedido'
+            profile ? selectedCard?.key === 'NewCard' ? 'Agregar' : 'Eliminar' : selectedCard?.key === 'NewCard' ? 'Agregar' : 'Realizar Mi Pedido'
           }
           onPress={() => {
-            if (selectedCard?.key === 'NewCard') {
-              navigation.navigate('AddCard', {
-                selectedCard
-              })
-            } else {
-              navigation.navigate('Checkout', {
-                card: selectedCard
-              })
+            if (profile) {
+              if (selectedCard?.key === 'NewCard') {
+                navigation.navigate('AddCard', {selectedCard})
+              } else {
+                console.log("klñjfs", selectedCard?.id, user?.uid)
+                UserService.delCard(selectedCard?.id, user?.uid)
+                  .then(data => {
+                    getCards(user)
+                    console.log(data)
+                  })
+                  .catch(error => {
+                    console.error("delCard", error)
+                  })
+              }
+            }
+            else{
+              if (selectedCard?.key === 'NewCard') {
+                navigation.navigate('AddCard', {
+                  selectedCard
+                })
+              } else {
+                navigation.navigate('Checkout', {
+                  card: selectedCard
+                })
+              }
             }
           }}
         />

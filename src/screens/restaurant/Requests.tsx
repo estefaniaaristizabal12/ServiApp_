@@ -176,7 +176,7 @@ const Requests = ({ navigation }) => {
     Alert.alert('Orden rechazada')
     bottomSheetModalRef.current.close()
     // ERROR:
-    navigation.navigate('OrdersRest')
+    navigation.navigate('Orders')
   }
 
   function handlePresentModal() {

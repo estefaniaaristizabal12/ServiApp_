@@ -128,7 +128,7 @@ export async function delCard(numTarjeta: any, uid: any) {
     NumeroTarjeta: numTarjeta
   }
   const res = await fetch(`${urlUser}/delcard/?uid=${uid}`, {
-    method: 'POST',
+    method: 'DELETE',
     body: JSON.stringify(data),
     headers: {
       Accept: 'application/json',

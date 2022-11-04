@@ -32,7 +32,7 @@ const CardOrder = ({ item, navigation }) => {
             }}
           >
             <Text style={style.cardTitle}>{item.Restaurante.Nombre}</Text>
-            <Text style={style.cardFecha}>{item.Fecha}</Text>
+            <Text style={style.cardFecha}>{item.FechaFormated}</Text>
           </View>
         </View>
 
@@ -45,8 +45,8 @@ const CardOrder = ({ item, navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={style.btnOrdenes}>
-            <TouchableOpacity onPress={() => navigation.navigate('HelpOrder')}>
-              <Text style={style.textAyuda}>Ayuda</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('StatusOrder', {order:{...item, Restaurante: item.Restaurante.id}})}>
+              <Text style={style.textAyuda}>Estado</Text>
             </TouchableOpacity>
           </View>
         </View>

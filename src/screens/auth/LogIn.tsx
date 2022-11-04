@@ -84,8 +84,8 @@ export const LogIn = ({ navigation }) => {
         getUser(userAuth)
       })
       .catch(error => {
-        console.error(error)
-        Alert.alert('Algo salio mal...')
+        // console.error(error)
+        Alert.alert('El correo o la contraseña son incorrectos')
         setLoading(false)
       })
     console.log('Signed in!')

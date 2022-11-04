@@ -48,7 +48,7 @@ export default function BottomTabRP({ route, navigation }) {
         component={OrdersRestStack}
       />
       <BtTap.Screen
-        name="Requests"
+        name="RequestsStack"
         options={{ title: 'Solicitudes' }}
         component={RequestsRestStack}
       />

@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import {
+  Alert,
   FlatList, Image, StyleSheet,
   Text,
   TouchableOpacity,
@@ -55,8 +56,10 @@ export const Product = ({ navigation, route }) => {
   ) => {
     UserService.addProdCart(prodId, cant, restId, delivery, uid)
       .then(res => {
+        if(res.status == 302){
+          Alert.alert(res.msg)
+        }
         navigation.navigate('CartStack', { screen: 'Cart' })
-        // navigation.navigate('Cart')
       })
       .catch(error => console.error(error))
   }

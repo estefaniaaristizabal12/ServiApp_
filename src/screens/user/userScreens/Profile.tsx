@@ -43,6 +43,12 @@ const Profile = ({ navigation, route }) => {
       })
   }
 
+  const activateNotifications = () => {
+    Alert.alert('Activar notificaciones')
+
+  }
+
+
   const cerrarSesion = () => {
     signOut(auth)
       .then(() => {
@@ -119,10 +125,10 @@ const Profile = ({ navigation, route }) => {
             pro
             onPress={() => navigation.navigate('Account')}
           />
-          <DrawerItem iconName="swap-horizontal" text="Transacciones" />
           <DrawerItem
             iconName="credit-card-check"
-            text="Datos De Facturación"
+            text="Metodos de Pago"
+            onPress={() => navigation.navigate('MyCard', { profile: true })}
           />
           <DrawerItem
             iconName="account-multiple"
@@ -131,7 +137,11 @@ const Profile = ({ navigation, route }) => {
             onPress={() => cerrarSesion()}
           />
           <View style={styles.line} />
-          <DrawerItem iconName="bell-ring" text="Notificación" notification />
+          <DrawerItem iconName="bell-ring" 
+          text="Notificación" 
+          notification
+          onPress={() => activateNotifications()}
+           />
           <DrawerItem
             iconName="delete"
             text="Eliminar Cuenta "

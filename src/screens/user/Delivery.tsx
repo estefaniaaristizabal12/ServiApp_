@@ -49,8 +49,8 @@ const Delivery = ({ navigation, route }) => {
     setSearchTextInput('')
     setSelectedCategoryIndex('-1')
     setLoading(true)
-    setFilteredData(null)
-    setRestaurants(null)
+    setFilteredData([])
+    setRestaurants([])
     getUser()
       .then(() => {
         activeTab == 'Delivery' ? getRestaurantesDelivery() : getRestaurantes()

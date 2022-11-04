@@ -756,10 +756,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textPedido: {
-    fontSize: 18,
+    fontSize: 16,
     marginLeft: 12,
     marginRight: 12,
     fontWeight: 'bold',
+    textAlign: 'center',
     color: 'white'
   },
   contentContainer: {
