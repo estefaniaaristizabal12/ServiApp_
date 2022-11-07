@@ -115,6 +115,7 @@ const Requests = ({ navigation }) => {
   const selectOrder = async (order: any) => {
     UserService.getOrder(order.id)
       .then((data: any) => {
+        console.log(data)
         setSelectedOrder(data)
       })
       .catch((error: any) => {
@@ -470,7 +471,7 @@ const Requests = ({ navigation }) => {
         >
           <View style={styles.contentContainer}>
             <Text style={[styles.title, { marginBottom: 20, marginTop: 10 }]}>
-              Pedido #{selectedOrder?.id.substring(0, 5)}
+              Pedido #{selectedOrder?.id?.substring(0, 5)}
             </Text>
             <Text style={styles.description}>
               Pedido Domicilio | Edificio Ingenieria

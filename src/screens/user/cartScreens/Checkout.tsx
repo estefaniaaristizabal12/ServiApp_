@@ -45,6 +45,7 @@ export const Checkout = ({ navigation, route }) => {
   const [locationDescription, setLocationDescription] = React.useState('')
   const [locationBuilding, setLocationBuilding] = React.useState('')
   const [rest, setRest] = React.useState<any>(null)
+  const [reorder, setReorder] = React.useState<any>(false)
 
   const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
@@ -57,17 +58,33 @@ export const Checkout = ({ navigation, route }) => {
         .then(data => {
           data.uid = user.uid
           setUser(data)
-          RestaurantService.getRestaurant(data.RestauranteCarro).then(data => {
-            setRest(data)
-          })
+          return data
         })
         .catch(error => {
-          console.error(error)
+          console.error("getUser", error)
         })
     })
   }
 
   const payCart = () => {
+    console.log("test",
+      selectedCard.id,
+      total,
+      user.direccion1,
+      auth.currentUser.uid)
+
+    console.log("reoreder?:", reorder)
+    if (reorder) {
+      UserService.reorder(selectedCard.id, total, user.direccion1, auth.currentUser.uid)
+        .then(data => {
+          setOrder(data)
+          console.log('checkout reorder', data)
+          navigation.navigate('Confirmation', { order: data })
+        })
+        .catch(error => console.error("reorder", error))
+      return
+    }
+    console.log("paso el if")
     UserService.payCart(
       selectedCard.id,
       total,
@@ -80,25 +97,33 @@ export const Checkout = ({ navigation, route }) => {
         navigation.navigate('Confirmation', { order: data })
       })
       .catch(err => {
-        console.log('ERROR AL PAGAR', err)
+        console.error('ERROR AL PAGAR', err)
       })
   }
 
   React.useEffect(() => {
-    if (route.params['reorder']) {
-      route.params['order']
+    // if (!isFocused) return
+    getUser().then((user: any) => {
+      if (!route.params['reorder']) {
+        RestaurantService.getRestaurant(user.RestauranteCarro).then(data => {
+          setRest(data)
+        }).catch(error => console.error("getUser, getRestaurant", error))
+      }
+    })
+    console.log("reorder=???", route.params['reorder'])
+    if (route.params['reorder'] == true) {
+      setReorder(true)
       setUser(route.params['order'].UsuarioInfo)
-      setRest(route.params['order'].Restaurante)
       setCart(route.params['order'].Carro)
       setTotal(route.params['order'].Total)
+      setRest(route.params['order'].Restaurante)
+      // RestaurantService.getRestaurant(route.params['order'].Restaurante).then(data => setRest(data)).catch(error => console.error(error))
     } else {
-      getUser()
-      isFocused && setSelectedCard(route.params['card'])
-      isFocused && route.params['cart'] && setCart(route.params['cart'])
-      isFocused && route.params['total'] && setTotal(route.params['total'])
-      isFocused &&
-        route.params['delivery'] &&
-        setDelivery(route.params['delivery'])
+      setReorder(false)
+      setSelectedCard(route.params['card'])
+      route.params['cart'] && setCart(route.params['cart'])
+      route.params['total'] && setTotal(route.params['total'])
+      route.params['delivery'] && setDelivery(route.params['delivery'])
     }
   }, [isFocused])
 
@@ -513,7 +538,7 @@ export const Checkout = ({ navigation, route }) => {
                 alignItems: 'center',
                 marginTop: 30
               }}
-              onPress={() => navigation.navigate('MyCard')}
+              onPress={() => navigation.navigate('MyCard', {reorder: reorder})}
             >
               <View style={{ flex: 0.8, flexDirection: 'row' }}>
                 <TouchableOpacity style={styles.btnTarjeta}>
@@ -550,9 +575,9 @@ export const Checkout = ({ navigation, route }) => {
                   >
                     {selectedCard?.NumeroTarjeta
                       ? '*****' +
-                        selectedCard?.NumeroTarjeta?.substring(
-                          selectedCard?.NumeroTarjeta?.length - 3
-                        )
+                      selectedCard?.NumeroTarjeta?.substring(
+                        selectedCard?.NumeroTarjeta?.length - 3
+                      )
                       : 'Seleccionar tarjeta'}
                   </Text>
                   {/* <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>{selectedCard?.NumeroTarjeta}</Text> */}

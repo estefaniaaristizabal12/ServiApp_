@@ -16,7 +16,7 @@ export default function ProfileRStack({ route, navigation }) {
       }}
     >
       <StackProfile.Screen name="Profile" component={Profile} />
-      <StackProfile.Screen name="Ratings" component={Ratings} />
+      <StackProfile.Screen name="Ratings" component={Ratings} initialParams={{domiciliary: false}}/>
       <StackProfile.Screen name="EditProfile" component={EditProfile} />
     </StackProfile.Navigator>
   )

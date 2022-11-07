@@ -23,9 +23,8 @@ export const Orders = ({ navigation }) => {
   const [user, setUser] = React.useState<any>(null)
   
   React.useEffect(() => {
-    getUser()
     if (isFocused) {
-      getOrders()
+      getUser()
     }
   }, [isFocused])
 
@@ -33,13 +32,14 @@ export const Orders = ({ navigation }) => {
     AsyncStorage.getUser()
       .then(data => {
         setUser(data)
+        getOrders(data)
       })
       .catch(error => {
         console.error(error)
       })
   }
 
-  const getOrders = async () => {
+  const getOrders = async (user: any) => {
     UserService.getOrders('Usuario', 2, user?.uid)
       .then(data => {
         const newData = data.map((order: any) => {

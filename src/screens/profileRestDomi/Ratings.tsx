@@ -27,7 +27,7 @@ const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const db = getDatabase(app)
 
-const Ratings = ({ navigation }) => {
+const Ratings = ({ navigation, route }) => {
   const [tabIndex, setTabIndex] = React.useState(0)
   const isFocused = useIsFocused()
   const bottomSheetModalRef = React.useRef(null)
@@ -41,12 +41,14 @@ const Ratings = ({ navigation }) => {
     q1: [],
     q2: []
   })
+  const [domiciliary, setDomiciliary] = React.useState<any>(null)
 
   const snapPoints = ['80%']
 
   React.useEffect(() => {
     if (isFocused) {
       console.log('Ratings')
+      setDomiciliary(route.params.domiciliary)
       AsyncStorage.getUser()
         .then(user => {
           setUser(user)
@@ -57,7 +59,8 @@ const Ratings = ({ navigation }) => {
   }, [isFocused])
 
   const getOrders = async (user: any) => {
-    UserService.getOrders('Domiciliario', 1, user.uid)
+    const role = domiciliary == true? 'Domiciliario': 'Restaurante'
+    UserService.getOrders(role, 2, user.uid)
       .then(data => {
         let q0 = []
         let q1 = []

@@ -44,7 +44,7 @@ export async function updateToken(uid: any) {
     console.log('deviceToken:', token)
     UserService.updateDeviceToken(token, uid)
   } catch (error) {
-    console.error('error getting expo push token', error)
+    console.log('error getting expo push token', error)
   }
 }
 

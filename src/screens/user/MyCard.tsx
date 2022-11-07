@@ -33,7 +33,7 @@ const MyCard = ({ navigation, route }) => {
 
   React.useEffect(() => {
     // if (isFocused) {
-    if (route.params?.profile) {
+    if (route.params['profile']) {
       setProfile(route.params.profile)
     }
     console.log('Ejecutando useeffect mycard...')
