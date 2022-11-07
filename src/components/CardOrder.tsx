@@ -39,7 +39,7 @@ const CardOrder = ({ item, navigation }) => {
         <View style={{ flex: 0.3, flexDirection: 'row' }}>
           <View style={style.btnOrdenes}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Details', { orderP: item })}
+              onPress={() => navigation.navigate('Details', { order: item })}
             >
               <Text style={style.textDetalle}>Detalle</Text>
             </TouchableOpacity>

@@ -251,7 +251,7 @@ const ChangeStatusOrder = ({ navigation, route }) => {
               }}
               label='Productos'
               labelStyle={{ color: Colors.primary }}
-              onPress={() => navigation.navigate('FoodDetail')}
+              onPress={() => navigation.navigate('ListProductsR', { order })}
             />
             {/* Cambiar estado*/}
             <TextIconButton

@@ -149,7 +149,7 @@ export const ServiceOrder = ({ navigation, route }) => {
     >
       <View style={{ flex: 0.2 }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Details')}
+          onPress={() => navigation.navigate('OrdersStack', { screen: 'Orders' })}
           style={styles.btnAtas}
         >
           <Ionicons name="arrow-back" size={25} color={Colors.gray} />

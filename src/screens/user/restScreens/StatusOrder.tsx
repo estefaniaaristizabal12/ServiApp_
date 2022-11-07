@@ -116,7 +116,7 @@ const StatusOrder = ({ navigation, route }) => {
               height: 20,
               tintColor: Colors.gray2
             }}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate("Orders")}
           />
         }
       />

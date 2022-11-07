@@ -13,8 +13,11 @@ export const Details = ({ navigation, route }) => {
   const [order, setOrder] = React.useState<any>(null)
 
   React.useEffect(() => {
-    const orderP = route.params.orderP
-    orderP && setOrder(orderP)
+    if(!route.params.order) {
+      return;
+    }
+    const order = route.params.order
+    order && setOrder(order)
   }, [])
 
   const reorder = () => {

@@ -241,7 +241,8 @@ export const Cart = ({ navigation }) => {
           </View>
           <View style={{ flex: 0.8, flexDirection: 'column' }}>
             {!vacio ? (
-              <ScrollView>
+              // <ScrollView>
+              <View>
                 <FlatList
                   data={cart?.Productos}
                   renderItem={({ item }) => (
@@ -255,19 +256,23 @@ export const Cart = ({ navigation }) => {
                     />
                   )}
                 />
+                
                 <View style={{ borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.gray, marginTop: 10 }}>
                   <Text style={{ fontSize: normalize(20), fontWeight: 'bold', color: 'black', marginLeft: 20, marginTop: 20 }}>Podrías combinar tu pedido con...</Text>
 
                   <FlatList
                     horizontal
                     data={cart?.Productos}
+                    //ocultar scroll
+                    showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => (
                       <TouchableOpacity style={styles.add} onPress={handlePresentModal}>
                         <Image
                           style={{
                             width: 100,
                             height: 60,
-                            alignSelf: "center"
+                            alignSelf: "center",
+                            borderRadius : 15
                           }}
                           source={{ uri: item.Imagen }}
                         />
@@ -363,8 +368,10 @@ export const Cart = ({ navigation }) => {
 
                   </BottomSheetModal>
                 </View>
+              {/* </ScrollView> */}
+              </View>
 
-              </ScrollView>
+       
 
             ) : (
               <View style={{ alignItems: 'center' }}>
@@ -396,7 +403,8 @@ export const Cart = ({ navigation }) => {
               flex: 0.13,
               flexDirection: 'row',
               borderTopWidth: StyleSheet.hairlineWidth,
-              borderTopColor: Colors.gray
+              borderTopColor: Colors.gray,
+              marginTop: 200
             }}
           >
             <View style={{ flex: 0.5, justifyContent: 'center' }}>
@@ -407,7 +415,8 @@ export const Cart = ({ navigation }) => {
               style={{
                 flex: 0.5,
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                margin : 5
               }}
             >
               {!vacio ? (
@@ -486,7 +495,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     paddingHorizontal: 30,
-    paddingVertical: 15
+    paddingVertical: 15,
+    textAlign: 'center',
+    alignItems: 'center',
+    marginbottom: 60
   },
   btnVaciar: {
     backgroundColor: '#E7E7E7',
