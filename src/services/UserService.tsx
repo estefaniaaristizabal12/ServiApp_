@@ -4,6 +4,7 @@ import { ipApi } from './ApiConfig'
 const urlUser = `${ipApi}/usuarios`
 const urlOrder = `${ipApi}/ordenes`
 const urlCart = `${ipApi}/carros`
+const urlRecommendations = `${ipApi}/recomendaciones`
 
 //User
 export async function getUser(uid: any) {
@@ -299,6 +300,19 @@ export async function finishOrder(id: any) {
   const res = await fetch(`${urlOrder}/finish/`, {
     method: 'POST',
     body: JSON.stringify(data),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+  return res.json()
+}
+
+//RECOMMENDATIONS
+export async function getRecommendations(cart: any) {
+  const res = await fetch(`${urlRecommendations}/`, {
+    method: 'POST',
+    body: JSON.stringify(cart),
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'

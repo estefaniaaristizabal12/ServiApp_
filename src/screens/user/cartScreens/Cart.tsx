@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Alert } from 'react-native'
 import { Colors } from '../../../constants/colors'
 import { Ionicons } from '@expo/vector-icons'
 import { Image } from 'react-native-animatable'
-import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
+import {
+  FlatList,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native-gesture-handler'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import CardCart from '../../../components/CardCart'
 import * as AsyncStorage from '../../../services/AsyncStorage'
@@ -11,9 +15,10 @@ import { useIsFocused } from '@react-navigation/native'
 import { normalize } from '../../../../FontNormalize'
 import { images } from '../../../../images'
 import * as UserService from '../../../services/UserService'
-import { BottomSheetModalProvider, BottomSheetModal } from '@gorhom/bottom-sheet';
-
-
+import {
+  BottomSheetModalProvider,
+  BottomSheetModal
+} from '@gorhom/bottom-sheet'
 
 const { width, height } = Dimensions.get('screen')
 export const Cart = ({ navigation }) => {
@@ -32,7 +37,9 @@ export const Cart = ({ navigation }) => {
   const [delivery, setDelivery] = React.useState<any>(null)
   const bottomSheetModalRef = React.useRef(null)
   const [isOpen, setIsOpen] = React.useState(false)
-  
+  const [recs, setRecs] = React.useState<any>(null)
+  const [selectedRec, setSelectedRec] = React.useState<any>(null)
+
   const snapPoints = ['90%']
   function handlePresentModal() {
     bottomSheetModalRef.current?.present()
@@ -41,26 +48,53 @@ export const Cart = ({ navigation }) => {
     }, 100)
   }
 
-
   React.useEffect(() => {
     if (isFocused) {
       getUser()
     }
   }, [isFocused])
 
+  const getRecommendations = (cart: any) => {
+    UserService.getRecommendations(cart)
+      .then(data => setRecs(data))
+      .catch(error => console.error(error))
+  }
+
   const getUser = async () => {
     AsyncStorage.getUser()
       .then(data => {
         setUser(data)
         getCart(data)
-        UserService.getUser(data.uid)
-          .then(uInf => {
-            setDelivery(uInf.DomicilioCarro)
-          })
+        UserService.getUser(data.uid).then(uInf => {
+          setDelivery(uInf.DomicilioCarro)
+        })
       })
       .catch(error => {
         console.error(error)
       })
+  }
+
+  const addProdCart = (
+    prodId: any,
+    cant: any,
+    restId: any,
+    delivery: any,
+    uid: any
+  ) => {
+    console.log(prodId, cant, restId, delivery, uid)
+    UserService.addProdCart(prodId, cant, restId, delivery, uid)
+      .then(res => {
+        if (res.status == 302) {
+          Alert.alert(res.msg)
+          return
+        }
+        navigation.navigate('CartStack', { screen: 'Cart' })
+        getCart(user)
+        getRecommendations(cart)
+        setIsOpen(false)
+        bottomSheetModalRef.current.close()
+      })
+      .catch(error => console.error(error))
   }
 
   const currencyFormat = (num: number) => {
@@ -87,6 +121,7 @@ export const Cart = ({ navigation }) => {
         setCart({ ...data })
         setTotal(getTotal(data))
         setVacio(false)
+        getRecommendations(data)
       })
       .catch(error => {
         console.error('getCart: ', error)
@@ -111,7 +146,6 @@ export const Cart = ({ navigation }) => {
         console.log('removeProdCart:', data)
       })
       .catch(error => {
-        // alert("No se pudo eliminar el producto")
         console.error('removeProdCart:', error)
       })
 
@@ -127,11 +161,11 @@ export const Cart = ({ navigation }) => {
     }
     setTotal(getTotal(newCart))
     setCart(newCart)
+    getRecommendations(newCart)
   }
 
   return (
     <BottomSheetModalProvider>
-
       <View
         style={{
           flex: 1,
@@ -141,7 +175,7 @@ export const Cart = ({ navigation }) => {
         }}
       >
         <View style={styles.superior}>
-          <View style={{ flex: 0.2, marginBottom: 30, alignItems: 'center', }}>
+          <View style={{ flex: 0.2, marginBottom: 30, alignItems: 'center' }}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}
               style={styles.btnAtas}
@@ -162,7 +196,7 @@ export const Cart = ({ navigation }) => {
             style={{
               flex: 0.2,
               alignItems: 'center',
-              marginBottom: 30,
+              marginBottom: 30
             }}
           >
             {!vacio ? (
@@ -172,7 +206,7 @@ export const Cart = ({ navigation }) => {
                   clearCart()
                 }}
               >
-                <Ionicons name="md-trash-bin" size={20} color={Colors.grey} />
+                <Ionicons name='md-trash-bin' size={20} color={Colors.grey} />
                 {/* <Text style={styles.textVaciar}> Vaciar </Text> */}
               </TouchableOpacity>
             ) : (
@@ -233,9 +267,12 @@ export const Cart = ({ navigation }) => {
                 }}
               >
                 {' '}
-                {cart?.Restaurante?.Nombre}
-                {' '}
-                {!vacio ? delivery ? " - (Domicilio)" : " - (Recoger en Tienda)" : ""}
+                {cart?.Restaurante?.Nombre}{' '}
+                {!vacio
+                  ? delivery
+                    ? ' - (Domicilio)'
+                    : ' - (Recoger en Tienda)'
+                  : ''}
               </Text>
             </View>
           </View>
@@ -256,28 +293,63 @@ export const Cart = ({ navigation }) => {
                     />
                   )}
                 />
-                
-                <View style={{ borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.gray, marginTop: 10 }}>
-                  <Text style={{ fontSize: normalize(20), fontWeight: 'bold', color: 'black', marginLeft: 20, marginTop: 20 }}>Podrías combinar tu pedido con...</Text>
+
+                <View
+                  style={{
+                    borderTopWidth: StyleSheet.hairlineWidth,
+                    borderTopColor: Colors.gray,
+                    marginTop: 10
+                  }}
+                >
+                  {recs?.length > 0 && (
+                    <Text
+                      style={{
+                        fontSize: normalize(20),
+                        fontWeight: 'bold',
+                        color: 'black',
+                        marginLeft: 20,
+                        marginTop: 20
+                      }}
+                    >
+                      Podrías combinar tu pedido con...
+                    </Text>
+                  )}
 
                   <FlatList
                     horizontal
-                    data={cart?.Productos}
-                    //ocultar scroll
+                    data={recs!}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => (
-                      <TouchableOpacity style={styles.add} onPress={handlePresentModal}>
+                      <TouchableOpacity
+                        style={styles.add}
+                        onPress={() => {
+                          setSelectedRec(item)
+                          handlePresentModal()
+                        }}
+                      >
                         <Image
                           style={{
                             width: 100,
                             height: 60,
-                            alignSelf: "center",
-                            borderRadius : 15
+                            alignSelf: 'center',
+                            borderRadius: 15
                           }}
                           source={{ uri: item.Imagen }}
                         />
-                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.text} >{item.Nombre}</Text>
-                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.precio} >${item.Precio}</Text>
+                        <Text
+                          numberOfLines={1}
+                          ellipsizeMode='tail'
+                          style={styles.text}
+                        >
+                          {item.Nombre}
+                        </Text>
+                        <Text
+                          numberOfLines={1}
+                          ellipsizeMode='tail'
+                          style={styles.precio}
+                        >
+                          ${item.Precio}
+                        </Text>
                       </TouchableOpacity>
                     )}
                   />
@@ -290,38 +362,37 @@ export const Cart = ({ navigation }) => {
                     }}
                     onDismiss={() => setIsOpen(false)}
                   >
-                    <View style={{flex:1}}>
-
-
+                    <View style={{ flex: 1 }}>
                       <View style={styles.componente2}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                           <View style={{ flex: 0.8 }}>
                             <Text
                               numberOfLines={2}
-                              ellipsizeMode="tail"
+                              ellipsizeMode='tail'
                               style={styles.tituloProd}
                             >
-                              Nombre prod
+                              {selectedRec?.Nombre}
                               {/* {selectedProduct?.Nombre} */}
                             </Text>
                             <Text
                               numberOfLines={3}
-                              ellipsizeMode="tail"
+                              ellipsizeMode='tail'
                               style={styles.descrProd}
                             >
-                              Esta es la descripcion completa de este producto de servicios de alimentacion
+                              {selectedRec?.Descripcion}
                               {/* {selectedProduct?.Descripcion} */}
                             </Text>
-                            <Text style={styles.preProd}> $
-                              5000
+                            <Text style={styles.preProd}>
+                              {' '}
+                              $ {selectedRec?.Precio}
                               {/* {selectedProduct?.Precio} */}
                             </Text>
                           </View>
                           <View style={{ flex: 0.3 }}>
                             <Image
                               style={styles.logo}
-                              source={require('../../../../assets/mastercardI.png')}
-                            // source={{ uri: selectedProduct?.Imagen }}
+                              source={{ uri: selectedRec?.Imagen }}
+                              // source={{ uri: selectedProduct?.Imagen }}
                             />
                           </View>
                         </View>
@@ -347,32 +418,27 @@ export const Cart = ({ navigation }) => {
                         <View style={styles.btnACarro}>
                           <TouchableOpacity
                             onPress={() => {
-                              // addProdCart(
-                              //   selectedProduct?.id,
-                              //   count,
-                              //   selectedRestaurant?.id,
-                              //   delivery ? 1 : 0,
-                              //   user?.uid
-                              // )
+                              addProdCart(
+                                selectedRec.id,
+                                count,
+                                cart.Restaurante.id,
+                                delivery ? 1 : 0,
+                                user.uid
+                              )
                             }}
                           >
                             <Text style={styles.textBtnCarro}>
-                              Agregar $5.000
+                              Agregar ${selectedRec?.Precio}
                               {/* {selectedProduct?.Precio}{' '} */}
                             </Text>
                           </TouchableOpacity>
                         </View>
                       </View>
                     </View>
-
-
                   </BottomSheetModal>
                 </View>
-              {/* </ScrollView> */}
+                {/* </ScrollView> */}
               </View>
-
-       
-
             ) : (
               <View style={{ alignItems: 'center' }}>
                 <Image
@@ -416,7 +482,7 @@ export const Cart = ({ navigation }) => {
                 flex: 0.5,
                 justifyContent: 'center',
                 alignItems: 'center',
-                margin : 5
+                margin: 5
               }}
             >
               {!vacio ? (
@@ -515,8 +581,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     width: width / 3,
     marginHorizontal: 20,
-    height: height / 7.2,
-
+    height: height / 7.2
   },
   text: {
     fontSize: normalize(17),
@@ -548,7 +613,7 @@ const styles = StyleSheet.create({
     marginLeft: 3
   },
   componente2: {
-    flex: 0.90,
+    flex: 0.9,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     backgroundColor: 'white',
@@ -587,6 +652,5 @@ const styles = StyleSheet.create({
     marginRight: 12,
     fontWeight: 'bold',
     color: 'white'
-  },
-
+  }
 })

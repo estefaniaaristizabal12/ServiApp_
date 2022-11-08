@@ -40,7 +40,7 @@ export const Orders = ({ navigation }) => {
   }
 
   const getOrders = async (user: any) => {
-    UserService.getOrders('Usuario', 2, user?.uid)
+    UserService.getOrders('Usuario', 2, user.uid)
       .then(data => {
         const newData = data.map((order: any) => {
           order.FechaFormated = new Date(order.Fecha).toLocaleDateString('es-ES')

@@ -44,7 +44,7 @@ export const Checkout = ({ navigation, route }) => {
   const [locationDescription, setLocationDescription] = React.useState('')
   const [locationBuilding, setLocationBuilding] = React.useState('')
   const [rest, setRest] = React.useState<any>(null)
-  const [reorder, setReorder] = React.useState<any>(null)
+  const [reorder, setReorder] = React.useState<any>(false)
 
   const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
@@ -52,17 +52,20 @@ export const Checkout = ({ navigation, route }) => {
   }
 
   const getUser = async () => {
-    AsyncStorage.getUser().then(user => {
-      UserService.getUser(user.uid)
-        .then(data => {
-          data.uid = user.uid
-          setUser(data)
-          return data
-        })
-        .catch(error => {
-          console.error('getUser', error)
-        })
-    })
+    return AsyncStorage.getUser()
+      .then(async (user: any) => {
+        return UserService.getUser(user.uid)
+          .then(data => {
+            setDelivery(data.DomicilioCarro == "1")
+            const newUser = { ...user, ...data }
+            setUser(newUser)
+            return newUser
+          })
+          .catch(error => {
+            console.error('getUser', error)
+          })
+      })
+      .catch(error => console.error(error))
   }
 
   const payCart = () => {
@@ -98,19 +101,20 @@ export const Checkout = ({ navigation, route }) => {
   }
 
   React.useEffect(() => {
-    // if (!isFocused) return
-    getUser().then((user: any) => {
-      if (!route.params['reorder']) {
-        RestaurantService.getRestaurant(user.RestauranteCarro)
+    if (!isFocused) return
+    // console.log(route.params['reorder'])
+    getUser()
+      .then((newUser: any) => {
+        if (route.params['reorder']) return
+        RestaurantService.getRestaurant(newUser.RestauranteCarro)
           .then(data => {
             setRest(data)
           })
           .catch(error => console.error('getUser, getRestaurant', error))
-      }
-    })
-    // console.log('reorder=???', route.params['reorder'])
+      })
+      .catch(error => console.error(error))
     if (route.params['reorder']) {
-      setUser(route.params['reorder'].UsuarioInfo)
+   setDelivery(route.params['reorder'].Domicilio)
       setRest(route.params['reorder'].Restaurante)
       setReorder(route.params['reorder'])
 
@@ -118,12 +122,11 @@ export const Checkout = ({ navigation, route }) => {
       setCart(route.params['reorder'].Carro)
       setTotal(route.params['reorder'].Total)
       setDelivery(route.params['reorder'].Domicilio)
-    } else {
-      setSelectedCard(route.params['card'])
-      setCart(route.params['cart'])
-      setTotal(route.params['total'])
-      setDelivery(route.params['delivery'])
+      return
     }
+    route.params['card'] && setSelectedCard(route.params['card'])
+    route.params['cart'] && setCart(route.params['cart'])
+    route.params['total'] && setTotal(route.params['total'])
   }, [isFocused])
 
   function handlePresentModal() {
@@ -135,15 +138,18 @@ export const Checkout = ({ navigation, route }) => {
   const changeUserDirection = () => {
     console.log('changeUserDirection')
     UserService.update(
-      user?.nombrecliente,
+      user.nombrecliente,
       locationBuilding + ' ' + locationDescription,
-      user?.e_mail,
-      user?.Telefono,
-      user?.uid
+      user.e_mail,
+      user.Telefono,
+      user.uid
     )
       .then(data => {
         const newUser = { ...user, ...data }
-        console.log('newUser: ', newUser)
+        console.log(
+          'newDirection: ',
+          locationBuilding + ' ' + locationDescription
+        )
         AsyncStorage.saveUser(newUser).catch(error => console.error(error))
         setLocationDescription('')
         user.direccion1 = locationBuilding + ' ' + locationDescription
@@ -166,7 +172,10 @@ export const Checkout = ({ navigation, route }) => {
         <View style={styles.superior}>
           <View style={{ flex: 0.1, marginBottom: 30 }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Cart')}
+              onPress={() => {
+                // navigation.navigate('Cart')
+                navigation.goBack()
+              }}
               style={styles.btnAtas}
             >
               <Ionicons name='arrow-back' size={25} color={Colors.grey} />
@@ -218,7 +227,7 @@ export const Checkout = ({ navigation, route }) => {
                 marginLeft: 8
               }}
             >
-              {user?.DomicilioCarro ? (
+              {delivery ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -234,7 +243,7 @@ export const Checkout = ({ navigation, route }) => {
                   <Text style={{ fontSize: 17, marginLeft: 5 }}>
                     {' '}
                     | Servicio a{' '}
-                    {user?.DomicilioCarro ? 'domicilio' : 'recoger'}
+                    {delivery ? 'domicilio' : 'recoger'}
                   </Text>
                 </View>
               ) : (
@@ -249,14 +258,14 @@ export const Checkout = ({ navigation, route }) => {
                   <Text style={{ fontSize: 17, marginLeft: 5 }}>
                     {' '}
                     | Servicio a{' '}
-                    {user?.DomicilioCarro ? 'domicilio' : 'recoger'}
+                    {delivery ? 'domicilio' : 'recoger'}
                   </Text>
                 </View>
               )}
             </View>
 
             <View style={{ flex: 0.65, marginTop: 40, marginLeft: 8 }}>
-              {user?.DomicilioCarro ? (
+              {delivery ? (
                 <View
                   style={{
                     flex: 0.65,
@@ -296,7 +305,7 @@ export const Checkout = ({ navigation, route }) => {
                         marginTop: 5
                       }}
                     >
-                      {user?.DomicilioCarro
+                      {delivery
                         ? user?.direccion1
                         : rest?.Direccion}
                     </Text>
