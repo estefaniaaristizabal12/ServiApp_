@@ -13,21 +13,22 @@ export const Details = ({ navigation, route }) => {
   const [order, setOrder] = React.useState<any>(null)
 
   React.useEffect(() => {
-    if(!route.params.order) {
-      return;
+    if (!route.params.order) {
+      return
     }
     const order = route.params.order
     order && setOrder(order)
   }, [])
 
   const reorder = () => {
-    AsyncStorage.getUser()
-      .then((user) => {
-        UserService.getOrder(order?.id)
-          .then((data) => {
-            navigation.navigate('CartStack', { screen: 'Checkout', params: { reorder: true, order: data } })
-          })
+    AsyncStorage.getUser().then(user => {
+      UserService.getOrder(order?.id).then(data => {
+        navigation.navigate('CartStack', {
+          screen: 'Checkout',
+          params: { reorder: data }
+        })
       })
+    })
   }
 
   const { top: paddingTop } = useSafeAreaInsets()
@@ -45,7 +46,7 @@ export const Details = ({ navigation, route }) => {
           onPress={() => navigation.goBack()}
           style={styles.btnAtas}
         >
-          <Ionicons name="arrow-back" size={25} color={Colors.gray} />
+          <Ionicons name='arrow-back' size={25} color={Colors.gray} />
         </TouchableOpacity>
 
         <Text style={styles.textoInicio}>{order?.Restaurante?.Nombre}</Text>
@@ -116,9 +117,9 @@ export const Details = ({ navigation, route }) => {
                 }}
               >
                 <Ionicons
-                  name="chevron-forward-outline"
+                  name='chevron-forward-outline'
                   size={25}
-                  color="black"
+                  color='black'
                 />
               </View>
             </View>
@@ -131,8 +132,7 @@ export const Details = ({ navigation, route }) => {
             marginTop: 10,
             borderBottomWidth: StyleSheet.hairlineWidth,
             borderBottomColor: '#E7E7E7',
-            paddingVertical: 30,
-
+            paddingVertical: 30
           }}
         >
           <View style={{ flexDirection: 'row' }}>
@@ -143,8 +143,7 @@ export const Details = ({ navigation, route }) => {
               style={{
                 flex: 0.5,
                 justifyContent: 'center',
-                alignItems: 'center',
-
+                alignItems: 'center'
               }}
             >
               <TouchableOpacity
@@ -159,9 +158,7 @@ export const Details = ({ navigation, route }) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.btnVerLista}
-                onPress={() =>
-                  reorder()
-                }
+                onPress={() => reorder()}
               >
                 <Text style={styles.verLista}>Repetir</Text>
               </TouchableOpacity>
@@ -180,7 +177,7 @@ export const Details = ({ navigation, route }) => {
                 justifyContent: 'center'
               }}
             >
-              <Ionicons name="location" size={25} color={Colors.primary} />
+              <Ionicons name='location' size={25} color={Colors.primary} />
             </View>
             <View
               style={{

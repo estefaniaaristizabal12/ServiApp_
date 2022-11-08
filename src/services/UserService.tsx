@@ -275,10 +275,10 @@ export async function getRejectedOrders(uid: any) {
   return res.json()
 }
 
-export async function reorder(card: any, total: any, address: any, uid: any) {
+export async function reorder(id: any, card: any, address: any, uid: any) {
   const data = {
+    id: id,
     Tarjeta: card,
-    Total: total,
     Direccion: address
   }
   const res = await fetch(`${urlOrder}/reorder/?uid=${uid}`, {

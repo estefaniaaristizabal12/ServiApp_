@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
-import {
-  ScrollView,
-  StatusBar, StyleSheet, Text, View
-} from 'react-native'
+import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import CardItem from '../../components/CardItem'
 import CardItemNewCard from '../../components/CardItemNewCard'
@@ -18,8 +15,6 @@ import { images } from '../../../images'
 import * as AsyncStorage from '../../services/AsyncStorage'
 import * as UserService from '../../services/UserService'
 
-
-
 //type MyCardProps = StackScreenProps<MainParamType, 'MyCard'>;
 
 const MyCard = ({ navigation, route }) => {
@@ -30,11 +25,15 @@ const MyCard = ({ navigation, route }) => {
   const [cards, setCards] = useState<any>([])
   const [user, setUser] = useState<any>(null)
   const [profile, setProfile] = useState(false)
+  const [reorder, setReorder] = useState<any>(false)
 
   React.useEffect(() => {
     // if (isFocused) {
     if (route.params['profile']) {
-      setProfile(route.params.profile)
+      setProfile(route.params['profile'])
+    }
+    if (route.params['reorder']) {
+      setReorder(route.params['reorder'])
     }
     console.log('Ejecutando useeffect mycard...')
     getUser()
@@ -65,7 +64,7 @@ const MyCard = ({ navigation, route }) => {
   const renderHeader = () => {
     return (
       <HeaderNavigation
-        title="Mis Tarjetas"
+        title='Mis Tarjetas'
         containerStyle={{
           height: 50,
           marginHorizontal: 24,
@@ -84,9 +83,12 @@ const MyCard = ({ navigation, route }) => {
             //onPress={() => navigation.goBack()}
 
             onPress={() => {
-              profile ?
-                navigation.goBack() :
-                navigation.navigate('Checkout', { card: selectedCard })
+              profile
+                ? navigation.goBack()
+                : navigation.navigate('Checkout', {
+                    card: selectedCard,
+                    reorder: reorder
+                  })
             }}
           />
         }
@@ -99,8 +101,8 @@ const MyCard = ({ navigation, route }) => {
     return (
       <View>
         <StatusBar
-          backgroundColor="#FFFFFF"
-          barStyle="dark-content"
+          backgroundColor='#FFFFFF'
+          barStyle='dark-content'
           hidden={false}
         />
         {cards.map((item, index) => {
@@ -161,32 +163,38 @@ const MyCard = ({ navigation, route }) => {
               selectedCard === null ? Colors.grayItemCard : Colors.primary
           }}
           label={
-            profile ? selectedCard?.key === 'NewCard' ? 'Agregar' : 'Eliminar' : selectedCard?.key === 'NewCard' ? 'Agregar' : 'Realizar Mi Pedido'
+            profile
+              ? selectedCard?.key === 'NewCard'
+                ? 'Agregar'
+                : 'Eliminar'
+              : selectedCard?.key === 'NewCard'
+              ? 'Agregar'
+              : 'Realizar Mi Pedido'
           }
           onPress={() => {
             if (profile) {
               if (selectedCard?.key === 'NewCard') {
-                navigation.navigate('AddCard', {selectedCard})
+                navigation.navigate('AddCard', { selectedCard })
               } else {
-                console.log("klñjfs", selectedCard?.id, user?.uid)
+                console.log('klñjfs', selectedCard?.id, user?.uid)
                 UserService.delCard(selectedCard?.id, user?.uid)
                   .then(data => {
                     getCards(user)
                     console.log(data)
                   })
                   .catch(error => {
-                    console.error("delCard", error)
+                    console.error('delCard', error)
                   })
               }
-            }
-            else{
+            } else {
               if (selectedCard?.key === 'NewCard') {
                 navigation.navigate('AddCard', {
                   selectedCard
                 })
               } else {
                 navigation.navigate('Checkout', {
-                  card: selectedCard
+                  card: selectedCard,
+                  reorder: reorder
                 })
               }
             }

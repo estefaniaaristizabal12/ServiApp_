@@ -424,7 +424,8 @@ export const Cart = ({ navigation }) => {
                   onPress={() =>
                     navigation.navigate('Checkout', {
                       cart: cart,
-                      total: total
+                      total: total,
+                      reorder: false
                     })
                   }
                   style={styles.btnIrPago}

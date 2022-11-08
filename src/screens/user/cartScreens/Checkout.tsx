@@ -37,7 +37,6 @@ export const Checkout = ({ navigation, route }) => {
   const [selectedIdCard, setSelectedIdCard] = React.useState<any>({})
   const [cart, setCart] = React.useState<any>({})
   const [total, setTotal] = React.useState<any>(0)
-  const [order, setOrder] = React.useState<any>(null)
   const [user, setUser] = React.useState<any>(null)
   const [delivery, setDelivery] = React.useState<any>(null)
   const bottomSheetModalRef = React.useRef(null)
@@ -45,7 +44,7 @@ export const Checkout = ({ navigation, route }) => {
   const [locationDescription, setLocationDescription] = React.useState('')
   const [locationBuilding, setLocationBuilding] = React.useState('')
   const [rest, setRest] = React.useState<any>(null)
-  const [reorder, setReorder] = React.useState<any>(false)
+  const [reorder, setReorder] = React.useState<any>(null)
 
   const currencyFormat = (num: number) => {
     if (!num) return '$0,00'
@@ -61,30 +60,27 @@ export const Checkout = ({ navigation, route }) => {
           return data
         })
         .catch(error => {
-          console.error("getUser", error)
+          console.error('getUser', error)
         })
     })
   }
 
   const payCart = () => {
-    console.log("test",
-      selectedCard.id,
-      total,
-      user.direccion1,
-      auth.currentUser.uid)
-
-    console.log("reoreder?:", reorder)
     if (reorder) {
-      UserService.reorder(selectedCard.id, total, user.direccion1, auth.currentUser.uid)
+      UserService.reorder(
+        reorder.id,
+        selectedCard.id,
+        user.direccion1,
+        auth.currentUser.uid
+      )
         .then(data => {
-          setOrder(data)
-          console.log('checkout reorder', data)
+          setReorder(data)
+          // console.log('checkout reorder', data)
           navigation.navigate('Confirmation', { order: data })
         })
-        .catch(error => console.error("reorder", error))
+        .catch(error => console.error('reorder', error))
       return
     }
-    console.log("paso el if")
     UserService.payCart(
       selectedCard.id,
       total,
@@ -92,8 +88,8 @@ export const Checkout = ({ navigation, route }) => {
       auth.currentUser.uid
     )
       .then(data => {
-        setOrder(data)
-        console.log('checkout pay cart', data)
+        setReorder(data)
+        // console.log('checkout pay cart', data)
         navigation.navigate('Confirmation', { order: data })
       })
       .catch(err => {
@@ -105,25 +101,28 @@ export const Checkout = ({ navigation, route }) => {
     // if (!isFocused) return
     getUser().then((user: any) => {
       if (!route.params['reorder']) {
-        RestaurantService.getRestaurant(user.RestauranteCarro).then(data => {
-          setRest(data)
-        }).catch(error => console.error("getUser, getRestaurant", error))
+        RestaurantService.getRestaurant(user.RestauranteCarro)
+          .then(data => {
+            setRest(data)
+          })
+          .catch(error => console.error('getUser, getRestaurant', error))
       }
     })
-    console.log("reorder=???", route.params['reorder'])
-    if (route.params['reorder'] == true) {
-      setReorder(true)
-      setUser(route.params['order'].UsuarioInfo)
-      setCart(route.params['order'].Carro)
-      setTotal(route.params['order'].Total)
-      setRest(route.params['order'].Restaurante)
-      // RestaurantService.getRestaurant(route.params['order'].Restaurante).then(data => setRest(data)).catch(error => console.error(error))
-    } else {
-      setReorder(false)
+    // console.log('reorder=???', route.params['reorder'])
+    if (route.params['reorder']) {
+      setUser(route.params['reorder'].UsuarioInfo)
+      setRest(route.params['reorder'].Restaurante)
+      setReorder(route.params['reorder'])
+
       setSelectedCard(route.params['card'])
-      route.params['cart'] && setCart(route.params['cart'])
-      route.params['total'] && setTotal(route.params['total'])
-      route.params['delivery'] && setDelivery(route.params['delivery'])
+      setCart(route.params['reorder'].Carro)
+      setTotal(route.params['reorder'].Total)
+      setDelivery(route.params['reorder'].Domicilio)
+    } else {
+      setSelectedCard(route.params['card'])
+      setCart(route.params['cart'])
+      setTotal(route.params['total'])
+      setDelivery(route.params['delivery'])
     }
   }, [isFocused])
 
@@ -538,7 +537,9 @@ export const Checkout = ({ navigation, route }) => {
                 alignItems: 'center',
                 marginTop: 30
               }}
-              onPress={() => navigation.navigate('MyCard', {reorder: reorder})}
+              onPress={() =>
+                navigation.navigate('MyCard', { reorder: reorder })
+              }
             >
               <View style={{ flex: 0.8, flexDirection: 'row' }}>
                 <TouchableOpacity style={styles.btnTarjeta}>
@@ -575,9 +576,9 @@ export const Checkout = ({ navigation, route }) => {
                   >
                     {selectedCard?.NumeroTarjeta
                       ? '*****' +
-                      selectedCard?.NumeroTarjeta?.substring(
-                        selectedCard?.NumeroTarjeta?.length - 3
-                      )
+                        selectedCard?.NumeroTarjeta?.substring(
+                          selectedCard?.NumeroTarjeta?.length - 3
+                        )
                       : 'Seleccionar tarjeta'}
                   </Text>
                   {/* <Text style={{ fontSize: 15, color: Colors.grey1, marginTop: 5, fontWeight: 'bold' }}>{selectedCard?.NumeroTarjeta}</Text> */}
