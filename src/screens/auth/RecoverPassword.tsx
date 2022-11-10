@@ -59,7 +59,7 @@ export default function RecoverPassword({ navigation }) {
             textAlign: 'center'
           }}
         >
-          No recuerdas tu contraseña?
+          ¿No recuerdas tu contraseña?
         </Text>
         <Text
           style={{

@@ -96,5 +96,6 @@ export const images = {
   vacio: require('./assets/vacio.png'),
   visa: require('./assets/visa.png'),
   visaI: require('./assets/visaI.png'),
-  visa_text: require('./assets/visa_text.png')
+  visa_text: require('./assets/visa_text.png'),
+  historialVacio:require('./assets/historialV.png')
 }

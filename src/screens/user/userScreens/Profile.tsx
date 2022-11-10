@@ -127,7 +127,7 @@ const Profile = ({ navigation, route }) => {
           />
           <DrawerItem
             iconName="credit-card-check"
-            text="Metodos de Pago"
+            text="Métodos de Pago"
             onPress={() => navigation.navigate('MyCard', { profile: true })}
           />
           <DrawerItem

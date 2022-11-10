@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View, Image } from 'react-native';
 import CardOrder from '../../../components/CardOrder'
 import { Colors } from '../../../constants/colors'
 // import orders from '../../constants/orders'
@@ -11,6 +11,7 @@ import { normalize } from '../../../../FontNormalize'
 import * as AsyncStorage from '../../../services/AsyncStorage'
 import * as UserService from '../../../services/UserService'
 import { firebaseConfig } from '../../firebaseConfig'
+import { images } from '../../../../images';
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -21,7 +22,8 @@ export const Orders = ({ navigation }) => {
 
   const [orders, setOrders] = React.useState<any>([])
   const [user, setUser] = React.useState<any>(null)
-  
+  const [vacio, setVacio] = React.useState(true)
+
   React.useEffect(() => {
     if (isFocused) {
       getUser()
@@ -42,6 +44,13 @@ export const Orders = ({ navigation }) => {
   const getOrders = async (user: any) => {
     UserService.getOrders('Usuario', 2, user.uid)
       .then(data => {
+        // console.log(JSON.stringify(data) )
+        if (JSON.stringify(data) === '[]') {
+          setVacio(true)
+        } else {
+          setVacio(false)
+        }
+
         const newData = data.map((order: any) => {
           order.FechaFormated = new Date(order.Fecha).toLocaleDateString('es-ES')
           return order
@@ -70,6 +79,8 @@ export const Orders = ({ navigation }) => {
         </Text>
       </View>
 
+
+
       <View
         style={{
           flex: 0.8,
@@ -78,12 +89,40 @@ export const Orders = ({ navigation }) => {
           backgroundColor: 'white'
         }}
       >
-        <FlatList
-          data={orders}
-          renderItem={({ item }) => (
-            <CardOrder item={item} navigation={navigation} />
+        {!vacio ? (
+          <FlatList
+            data={orders}
+            renderItem={({ item }) => (
+              <CardOrder item={item} navigation={navigation} />
+            )}
+          />
+
+        ) :
+          (
+            <View style={{ alignItems: 'center' }}>
+              <Image
+                style={{
+                  width: 230,
+                  height: 230,
+                  marginTop: 35,
+                  borderRadius: 5
+                }}
+                source={images.historialVacio}
+              />
+              <Text
+                style={{
+                  fontSize: normalize(20),
+                  fontWeight: 'bold',
+                  color: Colors.grey1
+                }}
+              >
+                {' '}
+                Aún no has realizado alguna compra{' '}
+              </Text>
+            </View>
+
           )}
-        />
+
       </View>
     </View>
   )
