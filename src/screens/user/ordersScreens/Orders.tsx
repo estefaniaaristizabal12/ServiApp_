@@ -71,19 +71,18 @@ export const Orders = ({ navigation }) => {
         backgroundColor: Colors.grey
       }}
     >
-      <View style={{ flex: 0.2 }}>
-        <Text style={styles.textoInicio}>Historial de</Text>
-        <Text style={styles.textoInicio2}>pedidos</Text>
-        <Text style={styles.textoDescripcion}>
+      <View style={{ flex: 0.13, justifyContent:"center"}}>
+        <Text style={styles.textoInicio}>Historial de Pedidos</Text>
+        {/* <Text style={styles.textoDescripcion}>
           Encuentra aquí tus pedidos y servicios anteriores
-        </Text>
+        </Text> */}
       </View>
 
 
 
       <View
         style={{
-          flex: 0.8,
+          flex: 0.87,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: 'white'
@@ -130,21 +129,20 @@ export const Orders = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   textoInicio: {
-    fontSize: normalize(35),
+    fontSize: normalize(30),
     fontWeight: 'bold',
     color: 'white',
-    marginTop: 10,
-    marginLeft: 20
+    textAlign:"center"
   },
   textoInicio2: {
-    fontSize: normalize(35),
+    fontSize: normalize(25),
     fontWeight: 'bold',
     color: 'white',
     marginLeft: 20
   },
   textoDescripcion: {
     marginLeft: 20,
-    marginTop: 20,
+    marginTop: 10,
     fontSize: normalize(18),
     color: 'white'
   }

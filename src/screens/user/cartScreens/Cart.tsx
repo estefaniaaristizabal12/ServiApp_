@@ -217,7 +217,7 @@ export const Cart = ({ navigation }) => {
 
         <View
           style={{
-            flex: 0.9,
+            flex: 0.87,
             backgroundColor: 'white',
             borderTopLeftRadius: 30,
             borderTopRightRadius: 30
@@ -513,12 +513,13 @@ export const Cart = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   superior: {
-    flex: 0.1,
+    flex: 0.13,
     flexDirection: 'row',
-    alignItems: 'flex-end'
+    // alignItems: 'flex-end'
+    alignItems:"center"
   },
   textCarrito: {
-    fontSize: normalize(25),
+    fontSize: normalize(30),
     fontWeight: 'bold',
     color: 'white'
   },
