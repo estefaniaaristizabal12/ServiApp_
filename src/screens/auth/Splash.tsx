@@ -55,7 +55,7 @@ export const Splash = ({ navigation }) => {
       </View>
       <Animatable.View style={[styles.footer, {}]} animation='fadeInUpBig'>
         <Text style={[styles.title, {}]}>Pide tu comida</Text>
-        <Text style={[styles.title, {}]}>favorita Online</Text>
+        <Text style={[styles.title, {}]}>favorita en línea</Text>
         <View style={styles.button}>
           <TouchableOpacity
             onPress={() =>
