@@ -48,28 +48,28 @@ export const SignIn = ({ navigation }) => {
     let isValid = true
 
     if (!inputs.email) {
-      handleError('Ingrese un correo electronico', 'email')
+      handleError('Ingresa tu correo electronico', 'email')
       isValid = false
     } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-      handleError('Ingrese un correo electronico valido', 'email')
+      handleError('Ingresa un correo electronico valido', 'email')
       isValid = false
     }
 
     if (!inputs.fullname) {
-      handleError('Ingrese un nombre', 'fullname')
+      handleError('Ingresa tu nombre', 'fullname')
       isValid = false
     }
 
     if (!inputs.phone) {
-      handleError('Ingrese una Direccion valida', 'phone')
+      handleError('Ingresa una dirección valida', 'phone')
       isValid = false
     }
 
     if (!inputs.password) {
-      handleError('Ingrese una contraeña valida', 'password')
+      handleError('Ingresa una contraseña valida', 'password')
       isValid = false
     } else if (inputs.password.length < 5) {
-      handleError('Minimo contraeñas de 6 caracteres', 'password')
+      handleError('Minímo contraseñas de 6 caracteres', 'password')
       isValid = false
     }
 
@@ -148,7 +148,7 @@ export const SignIn = ({ navigation }) => {
             marginVertical: 10
           }}
         >
-          Desea registrarte y disfrutar de multiples servicios?
+          ¿Desea registrarte y disfrutar de múltiples servicios?
         </Text>
 
         <KeyboardAwareScrollView
@@ -163,7 +163,7 @@ export const SignIn = ({ navigation }) => {
               onFocus={() => handleError(null, 'email')}
               iconName="email-outline"
               label="Correo electrónico"
-              placeholder="Ingrese su correo electrónico"
+              placeholder="Ingresa tu correo electrónico"
               error={errors.email}
             />
 
@@ -172,7 +172,7 @@ export const SignIn = ({ navigation }) => {
               onFocus={() => handleError(null, 'fullname')}
               iconName="account-outline"
               label="Nombre"
-              placeholder="Ingrese su nombre completo"
+              placeholder="Ingresa tu nombre completo"
               error={errors.fullname}
             />
 
@@ -181,7 +181,7 @@ export const SignIn = ({ navigation }) => {
               onFocus={() => handleError(null, 'fullname')}
               iconName="account-outline"
               label="Dirección"
-              placeholder="Ingrese su Direccion"
+              placeholder="Ingresa tu dirección"
               error={errors.fullname}
             />
 
@@ -191,7 +191,7 @@ export const SignIn = ({ navigation }) => {
               onFocus={() => handleError(null, 'phone')}
               iconName="phone-outline"
               label="Número telefónico"
-              placeholder="Ingrese su número telefónico"
+              placeholder="Ingresa tu número telefónico"
               error={errors.phone}
             />
             <Input
@@ -199,7 +199,7 @@ export const SignIn = ({ navigation }) => {
               onFocus={() => handleError(null, 'password')}
               iconName="lock-outline"
               label="Contraseña"
-              placeholder="Ingrese su contraseña"
+              placeholder="Ingresa tu contraseña"
               error={errors.password}
               password
             />
@@ -213,7 +213,7 @@ export const SignIn = ({ navigation }) => {
                 fontSize: 16
               }}
             >
-              Tienes una cuenta? Iniciar sesión
+              ¿Ya tienes una cuenta? Inicia sesión
             </Text>
           </View>
         </KeyboardAwareScrollView>

@@ -69,7 +69,7 @@ export default function RecoverPassword({ navigation }) {
             textAlign: 'center'
           }}
         >
-          No te preocupes! ingresa tu correo electrónico y te enviaremos un
+          ¡No te preocupes! Ingresa tu correo electrónico y te enviaremos un
           correo
         </Text>
         <View style={{ marginVertical: 70 }}>
@@ -78,7 +78,7 @@ export default function RecoverPassword({ navigation }) {
             //onChangeText={(text) => setEmail(text)}
             iconName="email-outline"
             label="Correo Electrónico"
-            placeholder="Ingrese su correo electrónico"
+            placeholder="Ingresa tu correo electrónico"
           />
           <Button
             title="Enviar correo"
@@ -94,7 +94,7 @@ export default function RecoverPassword({ navigation }) {
               fontSize: 15
             }}
           >
-            Recuerdas tu contraseña? Iniciar Sesión
+            ¿Recuerdas tu contraseña? Inicia Sesión
           </Text>
         </View>
       </View>

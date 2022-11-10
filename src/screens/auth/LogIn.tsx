@@ -63,11 +63,11 @@ export const LogIn = ({ navigation }) => {
     Keyboard.dismiss()
     let isValid = true
     if (!inputs.email) {
-      handleError('Ingrese su correo electronico', 'email')
+      handleError('Ingresa tu correo electrónico', 'email')
       isValid = false
     }
     if (!inputs.password) {
-      handleError('Ingrese su contraseña ', 'password')
+      handleError('Ingresa tu contraseña ', 'password')
       isValid = false
     }
     if (isValid) {
@@ -122,7 +122,7 @@ export const LogIn = ({ navigation }) => {
             textAlign: 'center'
           }}
         >
-          Ingrese y disfrute de múltiples servicios
+          Ingresa y disfruta de múltiples servicios
         </Text>
         <View style={{ marginVertical: 80 }}>
           <Input
@@ -131,7 +131,7 @@ export const LogIn = ({ navigation }) => {
             onFocus={() => handleError(null, 'email')}
             iconName="email-outline"
             label="Correo Electrónico"
-            placeholder="Ingrese su correo electrónico"
+            placeholder="Ingresa tu correo electrónico"
             error={errors.email}
           />
           <Input
@@ -140,7 +140,7 @@ export const LogIn = ({ navigation }) => {
             onFocus={() => handleError(null, 'password')}
             iconName="lock-outline"
             label="Contraseña"
-            placeholder="Ingrese su contraseña"
+            placeholder="Ingresa tu contraseña"
             error={errors.password}
             password
           />
@@ -158,7 +158,7 @@ export const LogIn = ({ navigation }) => {
               fontSize: 16
             }}
           >
-            Nuevo en Serviapp? Registrate
+            ¿Nuevo en ServiApp? Registrate
           </Text>
           <Text
             onPress={() => navigation.navigate('RecoverPassword')}
@@ -170,7 +170,7 @@ export const LogIn = ({ navigation }) => {
               marginTop: 9
             }}
           >
-            Olvidaste tu Contrasela? Recupérala
+            ¿Olvidaste tu contraseña? Recupérala
           </Text>
         </View>
       </View>
