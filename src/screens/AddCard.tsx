@@ -182,7 +182,7 @@ const AddCard = ({ navigation, route }) => {
         />
         {/* Cardholder Name */}
         <FormInput
-          label="Nombre De Tarjeta"
+          label="Nombre del titular"
           value={cardName}
           containerStyle={{ marginTop: 12 }}
           onChange={value => {

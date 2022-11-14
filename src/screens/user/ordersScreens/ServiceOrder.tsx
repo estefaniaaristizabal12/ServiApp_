@@ -155,7 +155,7 @@ export const ServiceOrder = ({ navigation, route }) => {
           <Ionicons name="arrow-back" size={25} color={Colors.gray} />
         </TouchableOpacity>
 
-        <Text style={styles.textoInicio}>{order?.Restaurante?.Nombre}</Text>
+        <Text style={styles.textoInicio}>Restaurante La Central{order?.Restaurante?.Nombre}</Text>
         <Text style={styles.textoFecha}>{order?.Fecha}</Text>
       </View>
       <View

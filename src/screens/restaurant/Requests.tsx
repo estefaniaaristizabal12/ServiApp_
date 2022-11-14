@@ -32,6 +32,7 @@ import { CustomCardNew } from '../../components/CustomCardNew'
 import * as AsyncStorage from '../../services/AsyncStorage'
 import * as NotificationService from '../../services/NotificationService'
 import * as UserService from '../../services/UserService'
+import * as  RestaurantService from '../../services/RestaurantService'
 import { firebaseConfig } from '../firebaseConfig'
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -53,8 +54,14 @@ const Requests = ({ navigation }) => {
       console.log('OrdersDeliv')
       AsyncStorage.getUser()
         .then(user => {
-          setUser(user)
           getNotAcceptedOrders(user)
+          RestaurantService.getRestaurant(user.Restaurante)
+            .then(rest => {
+              user.Restaurante = { id: user.Restaurante, ...rest }
+            })
+            .catch(error => console.error(error))
+            console.log(user.Restaurante)
+          setUser(user)
         })
         .catch(error => console.error(error))
     }
@@ -198,7 +205,7 @@ const Requests = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Pedidos rest
+          Hola La Central {user?.Restaurante?.Nombre},
         </Text>
         <Text
           style={{
@@ -208,8 +215,21 @@ const Requests = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Disponibles
+          {user?.nombrecliente}
         </Text>
+
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: '200',
+            color: Colors.black,
+            letterSpacing: 0.5,
+            marginTop: 10
+          }}
+        >
+          Acá encontrarás las órdenes actuales
+        </Text>
+
       </View>
     )
   }
@@ -337,11 +357,11 @@ const Requests = ({ navigation }) => {
           data={
             selectedOrder
               ? Object.keys(selectedOrder?.Carro).map(key => {
-                  return {
-                    id: key,
-                    ...selectedOrder?.Carro[key]
-                  }
-                })
+                return {
+                  id: key,
+                  ...selectedOrder?.Carro[key]
+                }
+              })
               : []
           }
           // data={selectedOrder? Object.values(selectedOrder?.Carro): []}

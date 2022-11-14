@@ -62,7 +62,7 @@ const Profile = ({ navigation, route }) => {
             <Text style={styles.name}>{user?.nombrecliente}</Text>
             <View style={styles.row}>
               <Icon name="map-marker" size={15} style={styles.icon} />
-              <Text style={styles.locationText}>{user?.direccion1}</Text>
+              <Text style={styles.locationText}> Universidad Javeriana</Text>
             </View>
           </View>
         </View>

@@ -27,11 +27,11 @@ export default function BottomTabDP({ navigation, route }) {
           let iconName: string = ''
           switch (route.name) {
             case 'Home':
-              iconName = 'home'
+              iconName = 'clipboard-list'
               break
 
-            case 'RequestsDelivStack':
-              iconName = 'clipboard-list'
+            case 'ReviewRestStack':
+              iconName = 'th-list'
               break
 
             case 'Profile':
@@ -43,15 +43,16 @@ export default function BottomTabDP({ navigation, route }) {
         }
       })}
     >
-      <BtTap.Screen
-        name="Home"
-        options={{ title: 'Domicilios' }}
-        component={OrdersDelivStack}
-      />
+
       <BtTap.Screen
         name="ReviewRestStack"
         options={{ title: 'Solicitudes' }}
         component={RequestsDelivStack}
+      />
+      <BtTap.Screen
+        name="Home"
+        options={{ title: 'Domicilios' }}
+        component={OrdersDelivStack}
       />
       <BtTap.Screen
         name="Profile"

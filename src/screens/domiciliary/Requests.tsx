@@ -187,7 +187,7 @@ const Requests = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Domicilios
+          Hola Domiciliario,
         </Text>
         <Text
           style={{
@@ -197,8 +197,18 @@ const Requests = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Disponibles
+          {user?.nombrecliente}
         </Text>
+
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: '200',
+            color: Colors.black,
+            letterSpacing: 0.5,
+            marginTop:15
+          }}>
+          Acá encontrarás los pedidos disponibles</Text>
       </View>
     )
   }
@@ -326,11 +336,11 @@ const Requests = ({ navigation }) => {
           data={
             selectedOrder
               ? Object.keys(selectedOrder?.Carro).map(key => {
-                  return {
-                    id: key,
-                    ...selectedOrder?.Carro[key]
-                  }
-                })
+                return {
+                  id: key,
+                  ...selectedOrder?.Carro[key]
+                }
+              })
               : []
           }
           // data={selectedOrder!}

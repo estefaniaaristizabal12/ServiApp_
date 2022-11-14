@@ -74,7 +74,7 @@ const Orders = ({ navigation, route }) => {
             letterSpacing: 0.5
           }}
         >
-          Hola domi,
+          Domicilios
         </Text>
         <Text
           style={{
@@ -84,7 +84,7 @@ const Orders = ({ navigation, route }) => {
             letterSpacing: 0.5
           }}
         >
-          {user?.nombrecliente}
+          En curso
         </Text>
       </View>
     )

@@ -64,7 +64,7 @@ const Delivery = ({ navigation, route }) => {
         setUser(data)
       })
       .catch(error => {
-        console.error(error)
+        console.error("", error)
       })
   }
 
@@ -74,7 +74,7 @@ const Delivery = ({ navigation, route }) => {
         setFilteredData(data)
         setRestaurants(data)
       })
-      .catch(error => console.error(error))
+      .catch(error => console.error("sdfdsf", error))
   }
 
   const getRestaurantesDelivery = async () => {
@@ -226,7 +226,7 @@ const Delivery = ({ navigation, route }) => {
           <Icon name='search' size={28} />
           <TextInput
             style={{ flex: 1, fontSize: normalize(18) }}
-            placeholder='Buscar un restaurante'
+            placeholder='Buscar un restaurante o producto'
             onChangeText={text => filterFunction(text, selectedCategoryIndex)}
             value={searchTextInput}
           />

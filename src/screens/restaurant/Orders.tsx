@@ -83,7 +83,8 @@ const Orders = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Hola rest {user?.Restaurante?.Nombre},
+           Órdenes
+          {/* Hola Restaurante {user?.Restaurante?.Nombre}, */}
         </Text>
         <Text
           style={{
@@ -93,7 +94,8 @@ const Orders = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          {user?.nombrecliente}
+          En curso
+          {/* {user?.nombrecliente} */}
         </Text>
       </View>
     )

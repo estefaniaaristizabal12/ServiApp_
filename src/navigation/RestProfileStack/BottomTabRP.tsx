@@ -26,14 +26,14 @@ export default function BottomTabRP({ route, navigation }) {
           let iconName: string = ''
           switch (route.name) {
             case 'Home':
-              iconName = 'home'
+              iconName = 'th-list'
               break
 
             case 'RequestsRestStack':
               iconName = 'clipboard-list'
               break
 
-            case 'Profile':
+            case 'ProfileDStack':
               iconName = 'user'
               break
           }
@@ -41,17 +41,18 @@ export default function BottomTabRP({ route, navigation }) {
           return <FontAwesome5 name={iconName} size={20} color={color} />
         }
       })}
-    >
+    > 
+    <BtTap.Screen
+        name="RequestsRestStack"
+        options={{ title: 'Solicitudes' }}
+        component={RequestsRestStack}
+      />
       <BtTap.Screen
         name="Home"
         options={{ title: 'Ordenes' }}
         component={OrdersRestStack}
       />
-      <BtTap.Screen
-        name="RequestsStack"
-        options={{ title: 'Solicitudes' }}
-        component={RequestsRestStack}
-      />
+     
       <BtTap.Screen
         name="ProfileDStack"
         options={{ title: 'Perfil' }}
