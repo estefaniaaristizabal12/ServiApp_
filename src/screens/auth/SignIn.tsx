@@ -48,10 +48,10 @@ export const SignIn = ({ navigation }) => {
     let isValid = true
 
     if (!inputs.email) {
-      handleError('Ingresa tu correo electronico', 'email')
+      handleError('Ingresa tu correo electrónico', 'email')
       isValid = false
     } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-      handleError('Ingresa un correo electronico valido', 'email')
+      handleError('Ingresa un correo electronico válido', 'email')
       isValid = false
     }
 
@@ -106,9 +106,10 @@ export const SignIn = ({ navigation }) => {
           inputs.phone
         )
         // navigation.navigate('BottomTab');
+        Alert.alert('Se registró correctamente, inicie sesión')
         navigation.navigate('LogIn')
       } catch (error) {
-        Alert.alert('Error', 'Something went wrong')
+        Alert.alert('Error: no se pudo registrar el usuario')
       }
     }, 3000)
   }
@@ -148,7 +149,7 @@ export const SignIn = ({ navigation }) => {
             marginVertical: 10
           }}
         >
-          ¿Desea registrarte y disfrutar de múltiples servicios?
+          ¿Deseas registrarte y disfrutar de múltiples servicios?
         </Text>
 
         <KeyboardAwareScrollView

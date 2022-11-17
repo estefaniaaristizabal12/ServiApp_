@@ -205,7 +205,7 @@ const Requests = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Hola La Central {user?.Restaurante?.Nombre},
+          Hola {user?.Restaurante?.Nombre},
         </Text>
         <Text
           style={{

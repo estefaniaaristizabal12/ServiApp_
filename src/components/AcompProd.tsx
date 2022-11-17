@@ -4,10 +4,11 @@ import { Text, Image, View, StyleSheet, Dimensions, Button } from 'react-native'
 import { normalize } from '../../FontNormalize'
 import { CheckBox } from 'react-native-elements'
 import { Colors } from '../constants/colors'
+import { Product } from '../screens/user/restScreens/Product';
 
 const { width, height } = Dimensions.get('screen')
 
-const AcompProd = ({ title, precio, navigation }) => {
+const AcompProd = ({ title, precio, navigation,codigo }) => {
   const [checked, setChecked] = useState(false)
   return (
     <View style={styles.item}>
@@ -23,6 +24,7 @@ const AcompProd = ({ title, precio, navigation }) => {
               checked={checked}
               onPress={() => {
                 setChecked(!checked)
+                navigation.navigate("Product", codigo)
               }}
             />
           </View>

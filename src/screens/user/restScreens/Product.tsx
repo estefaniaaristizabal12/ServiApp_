@@ -16,6 +16,7 @@ import { Colors } from '../../../constants/colors'
 import * as AsyncStorage from '../../../services/AsyncStorage'
 import * as UserService from '../../../services/UserService'
 import { firebaseConfig } from '../../firebaseConfig'
+import { CheckBox } from 'react-native-elements'
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -24,6 +25,7 @@ export const Product = ({ navigation, route }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
   const { top: paddingTop } = useSafeAreaInsets()
   const [count, setCount] = useState(1)
+  const [checked, setChecked] = useState("")
   const onPressPlus = () => setCount(prevCount => prevCount + 1)
   const onPressRest = () => setCount(prevCount => prevCount - 1)
 
@@ -32,19 +34,23 @@ export const Product = ({ navigation, route }) => {
   const [additions, setAdditions] = React.useState<any>(null)
   const [delivery, setDelivery] = React.useState<any>(null)
   const [user, setUser] = React.useState<any>(null)
-  
+
   // const {cambioNombre} = useContext(CartContext);
 
   useEffect(() => {
     AsyncStorage.getUser().then((user) => {
       setUser(user)
-      let { selectedProduct, selectedRestaurant, additions, delivery } =
+      let { selectedProduct, selectedRestaurant, additions, delivery, checked } =
         route.params
+      
+      checked && setChecked(checked)
+      console.log("HPTA", checked)
+    
       selectedProduct && setSelectedProduct(selectedProduct)
       selectedRestaurant && setSelectedRestaurant(selectedRestaurant)
       additions && setAdditions(additions)
       delivery && setDelivery(delivery)
-  })
+    })
   }, [])
 
   const addProdCart = (
@@ -56,7 +62,7 @@ export const Product = ({ navigation, route }) => {
   ) => {
     UserService.addProdCart(prodId, cant, restId, delivery, uid)
       .then(res => {
-        if(res.status == 302){
+        if (res.status == 302) {
           Alert.alert(res.msg)
         }
         navigation.navigate('CartStack', { screen: 'Cart' })
@@ -104,8 +110,8 @@ export const Product = ({ navigation, route }) => {
       </View>
 
       <View style={styles.componente2}>
-        <View style={{ flex: 1.4, flexDirection: 'row' }}>
-          <View style={{ flex: 0.8 }}>
+        <View style={{ flex: 0.2, flexDirection: 'row' }}>
+          <View style={{ flex: 0.7 }}>
             <Text
               numberOfLines={2}
               ellipsizeMode="tail"
@@ -122,7 +128,7 @@ export const Product = ({ navigation, route }) => {
             </Text>
             <Text style={styles.preProd}> $ {selectedProduct?.Precio}</Text>
           </View>
-          <View style={{ flex: 0.3, justifyContent: 'center' }}>
+          <View style={{ flex: 0.3, alignItems: 'center', justifyContent: "center" }}>
             <Image
               style={styles.logo}
               source={{ uri: selectedProduct?.Imagen }}
@@ -130,37 +136,48 @@ export const Product = ({ navigation, route }) => {
           </View>
         </View>
 
-        <View
-          style={{
-            flex: 0.6,
-            flexDirection: 'row',
-            borderBottomWidth: StyleSheet.hairlineWidth,
-            borderBottomColor: '#E7E7E7',
-            borderTopWidth: StyleSheet.hairlineWidth,
-            borderTopColor: '#E7E7E7',
-            marginTop: 20
-          }}
-        >
-          <View style={{ flex: 0.7 }}>
-            <Text style={styles.acompanamientos}>Acompaña Tu Orden Con</Text>
-          </View>
-          <View style={{ flex: 0.3, paddingRight: 10 }}>
-            <Text style={styles.sugerido}>Sugerido</Text>
-          </View>
-        </View>
 
-        <View style={{ flex: 3.5, backgroundColor: 'white' }}>
-          <FlatList
-            data={additions}
-            renderItem={({ item }) => (
-              <AcompProd
-                title={item.Nombre}
-                precio={item.Precio}
-                navigation={navigation}
+
+        {((selectedProduct?.Categoria != 6) && (selectedProduct?.Categoria != 3)) ?
+          <View style={{ flex: 0.8, backgroundColor: "white" }}>
+            <View
+              style={{
+                flex: 0.15,
+                flexDirection: 'row',
+                borderBottomWidth: StyleSheet.hairlineWidth,
+                borderBottomColor: '#E7E7E7',
+                borderTopWidth: StyleSheet.hairlineWidth,
+                borderTopColor: '#E7E7E7',
+                marginTop: 20
+              }}
+            >
+              <View style={{ flex: 0.7 }}>
+                <Text style={styles.acompanamientos}>Acompaña tu órden con</Text>
+              </View>
+              <View style={{ flex: 0.3, paddingRight: 10 }}>
+                <Text style={styles.sugerido}>Sugerido</Text>
+              </View>
+            </View>
+            <View style={{ flex: 0.85 }}>
+              <FlatList
+                data={additions}
+                renderItem={({ item }) => (
+                  <AcompProd
+                    title={item.Nombre}
+                    precio={item.Precio}
+                    navigation={navigation}
+                    codigo={item.id}
+                  />
+                )}
+                
               />
-            )}
-          />
-        </View>
+              {/* <Text> Hola {checked}</Text> */}
+              {/* {checked==true? <Text> Hola</Text>: <Text> Perro hpta</Text>} */}
+            </View>
+          </View> :
+          <Text></Text>
+        }
+
       </View>
 
       <View
@@ -216,7 +233,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     backgroundColor: 'white',
     paddingTop: 10,
-    paddingBottom: 20,
+    paddingBottom: 10,
     paddingLeft: 15,
     paddingRight: 15
   },
@@ -330,5 +347,22 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  item: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 10,
+    marginVertical: 6,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#E7E7E7'
+  },
+  titulo: {
+    fontSize: normalize(18),
+    color: '#000000'
+  },
+  precio: {
+    fontSize: normalize(17),
+    fontWeight: 'bold',
+    marginTop: 10
   }
 })
