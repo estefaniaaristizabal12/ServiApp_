@@ -8,7 +8,7 @@ import { Product } from '../screens/user/restScreens/Product';
 
 const { width, height } = Dimensions.get('screen')
 
-const AcompProd = ({ title, precio, navigation,codigo }) => {
+const AcompProd = ({ title, precio, id, addAddition }) => {
   const [checked, setChecked] = useState(false)
   return (
     <View style={styles.item}>
@@ -24,7 +24,7 @@ const AcompProd = ({ title, precio, navigation,codigo }) => {
               checked={checked}
               onPress={() => {
                 setChecked(!checked)
-                navigation.navigate("Product", codigo)
+                addAddition(id)
               }}
             />
           </View>

@@ -276,7 +276,7 @@ export const Cart = ({ navigation }) => {
               </Text>
             </View>
           </View>
-          <View style={{ flex: 0.8, flexDirection: 'column' }}>
+          <View style={{ flex: 0.8, flexDirection: 'column' ,marginTop: 2}}>
             {!vacio ? (
               // <ScrollView>
               <View>
@@ -301,7 +301,7 @@ export const Cart = ({ navigation }) => {
                     marginTop: 10
                   }}
                 >
-                  {recs?.length > 0 && (
+                  {recs?.length > 0 ?
                     <Text
                       style={{
                         fontSize: normalize(20),
@@ -313,46 +313,48 @@ export const Cart = ({ navigation }) => {
                     >
                       Podrías combinar tu pedido con...
                     </Text>
-                  )}
+                    : null}
 
-                  <FlatList
-                    horizontal
-                    data={recs!}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity
-                        style={styles.add}
-                        onPress={() => {
-                          setSelectedRec(item)
-                          handlePresentModal()
-                        }}
-                      >
-                        <Image
-                          style={{
-                            width: 100,
-                            height: 60,
-                            alignSelf: 'center',
-                            borderRadius: 15
+                  {recs?.length > 0 ?
+                    <FlatList
+                      horizontal
+                      data={recs!}
+                      showsHorizontalScrollIndicator={false}
+                      renderItem={({ item }) => (
+                        <TouchableOpacity
+                          style={styles.add}
+                          onPress={() => {
+                            setSelectedRec(item)
+                            handlePresentModal()
                           }}
-                          source={{ uri: item.Imagen }}
-                        />
-                        <Text
-                          numberOfLines={1}
-                          ellipsizeMode='tail'
-                          style={styles.text}
                         >
-                          {item.Nombre}
-                        </Text>
-                        <Text
-                          numberOfLines={1}
-                          ellipsizeMode='tail'
-                          style={styles.precio}
-                        >
-                          ${item.Precio}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  />
+                          <Image
+                            style={{
+                              width: 100,
+                              height: 60,
+                              alignSelf: 'center',
+                              borderRadius: 15
+                            }}
+                            source={{ uri: item.Imagen }}
+                          />
+                          <Text
+                            numberOfLines={1}
+                            ellipsizeMode='tail'
+                            style={styles.text}
+                          >
+                            {item.Nombre}
+                          </Text>
+                          <Text
+                            numberOfLines={1}
+                            ellipsizeMode='tail'
+                            style={styles.precio}
+                          >
+                            ${item.Precio}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    />
+                    : null}
                   <BottomSheetModal
                     ref={bottomSheetModalRef}
                     index={0}
@@ -392,7 +394,7 @@ export const Cart = ({ navigation }) => {
                             <Image
                               style={styles.logo}
                               source={{ uri: selectedRec?.Imagen }}
-                              // source={{ uri: selectedProduct?.Imagen }}
+                            // source={{ uri: selectedProduct?.Imagen }}
                             />
                           </View>
                         </View>
@@ -437,7 +439,6 @@ export const Cart = ({ navigation }) => {
                     </View>
                   </BottomSheetModal>
                 </View>
-                {/* </ScrollView> */}
               </View>
             ) : (
               <View style={{ alignItems: 'center' }}>
@@ -463,14 +464,18 @@ export const Cart = ({ navigation }) => {
               </View>
             )}
           </View>
-
           <View
-            style={{
+            style={recs?.length > 0 ? {
               flex: 0.13,
               flexDirection: 'row',
               borderTopWidth: StyleSheet.hairlineWidth,
               borderTopColor: Colors.gray,
               marginTop: 200
+            } : {
+              flex: 0.13,
+              flexDirection: 'row',
+              borderTopWidth: StyleSheet.hairlineWidth,
+              borderTopColor: Colors.gray,
             }}
           >
             <View style={{ flex: 0.5, justifyContent: 'center' }}>
@@ -516,7 +521,7 @@ const styles = StyleSheet.create({
     flex: 0.13,
     flexDirection: 'row',
     // alignItems: 'flex-end'
-    alignItems:"center"
+    alignItems: "center"
   },
   textCarrito: {
     fontSize: normalize(30),

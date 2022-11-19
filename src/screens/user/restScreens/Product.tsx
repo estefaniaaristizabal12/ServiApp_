@@ -25,13 +25,13 @@ export const Product = ({ navigation, route }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0)
   const { top: paddingTop } = useSafeAreaInsets()
   const [count, setCount] = useState(1)
-  const [checked, setChecked] = useState("")
   const onPressPlus = () => setCount(prevCount => prevCount + 1)
   const onPressRest = () => setCount(prevCount => prevCount - 1)
 
   const [selectedProduct, setSelectedProduct] = React.useState<any>(null)
   const [selectedRestaurant, setSelectedRestaurant] = React.useState<any>(null)
   const [additions, setAdditions] = React.useState<any>(null)
+  const [selectedAdditions, setSelectedAdditions] = React.useState<any>([])
   const [delivery, setDelivery] = React.useState<any>(null)
   const [user, setUser] = React.useState<any>(null)
 
@@ -40,34 +40,58 @@ export const Product = ({ navigation, route }) => {
   useEffect(() => {
     AsyncStorage.getUser().then((user) => {
       setUser(user)
-      let { selectedProduct, selectedRestaurant, additions, delivery, checked } =
-        route.params
-      
-      checked && setChecked(checked)
-      console.log("HPTA", checked)
-    
-      selectedProduct && setSelectedProduct(selectedProduct)
-      selectedRestaurant && setSelectedRestaurant(selectedRestaurant)
-      additions && setAdditions(additions)
-      delivery && setDelivery(delivery)
     })
+    let { selectedProduct, selectedRestaurant, additions, delivery } =
+      route.params
+
+    selectedProduct && setSelectedProduct(selectedProduct)
+    selectedRestaurant && setSelectedRestaurant(selectedRestaurant)
+    additions && setAdditions(additions)
+    delivery && setDelivery(delivery)
   }, [])
 
-  const addProdCart = (
-    prodId: any,
-    cant: any,
-    restId: any,
-    delivery: any,
-    uid: any
-  ) => {
-    UserService.addProdCart(prodId, cant, restId, delivery, uid)
+  const addAddition = (prod: any) => {
+    if (selectedAdditions.includes(prod)) {
+      const newAdds = selectedAdditions.filter((add: any) => {
+        return add != prod
+      })
+      setSelectedAdditions(newAdds)
+      console.log("newAdds", newAdds)
+      return
+    }
+    setSelectedAdditions([...selectedAdditions, prod])
+    console.log("newAdds", [...selectedAdditions, prod])
+  }
+
+  const addProdCart = async () => {
+    const prodId = selectedProduct?.id
+    const cant = count
+    const restId = selectedRestaurant?.id
+    const deliv = delivery ? 1 : 0
+    const uid = user?.uid
+    console.log(prodId, cant, restId, deliv, uid)
+
+    await UserService.addProdCart(prodId, cant, restId, deliv, uid)
       .then(res => {
         if (res.status == 302) {
           Alert.alert(res.msg)
         }
-        navigation.navigate('CartStack', { screen: 'Cart' })
       })
-      .catch(error => console.error(error))
+      .catch(error => console.error("addprod", error))
+    if (selectedAdditions.length > 0) {
+      for (const add of selectedAdditions) {
+        console.log("adduid", add)
+        await UserService.addProdCart(add, 1, restId, deliv, uid)
+          .then((res) => {
+            if (res.status == 302) {
+              Alert.alert(res.msg)
+            }
+            console.log(res)
+          })
+          .catch(error => console.error("addaddition", error))
+      }
+    }
+    navigation.navigate('CartStack', { screen: 'Cart' })
   }
 
   return (
@@ -165,11 +189,11 @@ export const Product = ({ navigation, route }) => {
                   <AcompProd
                     title={item.Nombre}
                     precio={item.Precio}
-                    navigation={navigation}
-                    codigo={item.id}
+                    id={item.id}
+                    addAddition={addAddition}
                   />
                 )}
-                
+
               />
               {/* <Text> Hola {checked}</Text> */}
               {/* {checked==true? <Text> Hola</Text>: <Text> Perro hpta</Text>} */}
@@ -201,13 +225,7 @@ export const Product = ({ navigation, route }) => {
         <View style={styles.btnACarro}>
           <TouchableOpacity
             onPress={() => {
-              addProdCart(
-                selectedProduct?.id,
-                count,
-                selectedRestaurant?.id,
-                delivery ? 1 : 0,
-                user?.uid
-              )
+              addProdCart()
             }}
           >
             <Text style={styles.textBtnCarro}>
