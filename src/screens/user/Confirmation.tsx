@@ -6,6 +6,7 @@ import TextButton from '../../components/TextButton'
 import { Colors } from '../../constants/colors'
 
 const Confirmation = ({ navigation, route }) => {
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -59,7 +60,11 @@ const Confirmation = ({ navigation, route }) => {
           backgroundColor: Colors.primary
         }}
         onPress={() =>
-          navigation.navigate('StatusOrder', {
+          route.params.order.Domicilio
+          ? navigation.navigate('StatusOrder', {
+            order: route.params.order
+          })
+          : navigation.navigate('StatusOrderPickup', {
             order: route.params.order
           })
         }

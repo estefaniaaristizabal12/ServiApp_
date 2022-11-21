@@ -28,7 +28,8 @@ import {
   orderByChild,
   query,
   ref,
-  update
+  update,
+  remove
 } from 'firebase/database'
 import { Alert } from 'react-native'
 import { images } from '../../../images'
@@ -74,18 +75,19 @@ const Requests = ({ navigation }) => {
   const getNotAcceptedOrders = async (user: any) => {
     UserService.getRejectedOrders(user?.uid).then((data: any) => {
       const rejected = new Set(data)
+      console.log("rejected", rejected)
       const dbRef = query(ref(db, 'Ordenes/'), orderByChild('timestamp'))
       let ordersRt = {}
       onChildAdded(dbRef, order => {
         const newOrder = { id: order.key, ...order.val() }
-        // La orden rechazada la guarda el usuario no el restaurante, otro usu del mismo rest lo va a ver.
+        // La orden rechazada la guarda el encargado no el restaurante, otro encargado del mismo rest lo va a ver.
         if (
           newOrder.Estado != -1 ||
-          rejected.has(newOrder.id) ||
+          rejected.has(newOrder.id) || 
           newOrder.IdRestaurante != user.Restaurante
         )
           return
-        ordersRt[order.key] = newOrder
+        ordersRt[newOrder.id] = newOrder
         setOrders(ordersRt)
         countOrders(ordersRt)
       })
@@ -165,11 +167,10 @@ const Requests = ({ navigation }) => {
     UserService.rejectOrder(selectedOrder?.id, user.uid)
       .then((data: any) => {
         console.log(data)
-        // TODO: reject order logic
-        // const statusRef = ref(db, 'Ordenes/' + selectedOrder?.id)
-        // update(statusRef, {
-        //   Estado: -2
-        // })
+        const statusRef = ref(db, 'Ordenes/' + selectedOrder?.id)
+        update(statusRef, {
+          Estado: -2
+        })
         //send notification to user
         UserService.getUser(selectedOrder?.Usuario).then((orderUser: any) => {
           NotificationService.sendOrderStatusUpdate(
@@ -360,11 +361,11 @@ const Requests = ({ navigation }) => {
           data={
             selectedOrder
               ? Object.keys(selectedOrder?.Carro).map(key => {
-                  return {
-                    id: key,
-                    ...selectedOrder?.Carro[key]
-                  }
-                })
+                return {
+                  id: key,
+                  ...selectedOrder?.Carro[key]
+                }
+              })
               : []
           }
           // data={selectedOrder? Object.values(selectedOrder?.Carro): []}

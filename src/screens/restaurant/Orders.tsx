@@ -6,13 +6,16 @@ import { Colors } from '../../constants/colors'
 import SegmentedControl from '@react-native-segmented-control/segmented-control'
 import { useIsFocused } from '@react-navigation/native'
 import { initializeApp } from 'firebase/app'
-import { getDatabase } from 'firebase/database'
 import * as React from 'react'
 import { CardOrderDelivery } from '../../components/CardOrderDelivery'
 import * as AsyncStorage from '../../services/AsyncStorage'
 import * as RestaurantService from '../../services/RestaurantService'
 import * as UserService from '../../services/UserService'
 import { firebaseConfig } from '../firebaseConfig'
+import {
+  getDatabase, onValue, ref,
+  update
+} from 'firebase/database'
 const app = initializeApp(firebaseConfig)
 const db = getDatabase(app)
 
@@ -49,13 +52,10 @@ const Orders = ({ navigation }) => {
         let orders = []
         data.forEach((order: any) => {
           order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
-          // const statusRef = ref(db, 'Ordenes/' + order.id);
-          // onValue(statusRef, (snapshot) => {
-          //   const data = snapshot.val();
-          //   order.Estado = (data.estado);
-          // });
-          if (order.Finalizado) finished.push(order)
-          else order.Domicilio ? delivery.push(order) : orders.push(order)
+          if (order.Aceptado) {
+            if (order.Finalizado) finished.push(order)
+            else order.Domicilio ? delivery.push(order) : orders.push(order)
+          }
         })
         setDelivery(delivery)
         setOrders(orders)
@@ -68,7 +68,10 @@ const Orders = ({ navigation }) => {
 
   const goToChangeStatusOrder = (order: any) => {
     UserService.getOrder(order.id).then((data: any) => {
-      navigation.navigate('ChangeStatusOrder', { order: data })
+      console.log(data.Domicilio)
+      data.Domicilio
+        ? navigation.navigate('ChangeStatusOrder', { order: data })
+        : navigation.navigate('ChangeStatusOrderPickup', { order: data })
     })
   }
 
@@ -83,7 +86,7 @@ const Orders = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-           Órdenes
+          Órdenes
           {/* Hola Restaurante {user?.Restaurante?.Nombre}, */}
         </Text>
         <Text

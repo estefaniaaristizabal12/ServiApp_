@@ -18,7 +18,7 @@ import IconButton from '../../../components/IconButton'
 import LineDivider from '../../../components/LineDivider'
 import TextButton from '../../../components/TextButton'
 import TextIconButton from '../../../components/TextIconButton'
-import status from '../../../constants/status'
+import statusPickup from '../../../constants/statusPickup'
 
 import { getDatabase, onValue, ref } from 'firebase/database'
 import { Alert } from 'react-native'
@@ -30,7 +30,7 @@ import app from '../../firebaseConfig'
 const db = getDatabase(app)
 Moment.locale('es');
 
-const StatusOrder = ({ navigation, route }) => {
+const StatusOrderPickup = ({ navigation, route }) => {
   const isFocused = useIsFocused()
   const insets = useSafeAreaInsets()
 
@@ -47,32 +47,12 @@ const StatusOrder = ({ navigation, route }) => {
     onValue(statusRef, snapshot => {
       const data = snapshot.val()
       if (!data) {
-        setCurrentStep(4)
+        setCurrentStep(3)
         return
       }
       setCurrentStep(data.Estado)
-      if (data.Estado == 2) {
-        UserService.getOrder(route.params['order'].id)
-          .then(order => {
-            getDel(order.Domiciliario)
-          })
-          .catch(error => console.error("getOrder", error))
-      }
-      // data?.IdDomiciliario?
-      //   getDel(data.IdDomiciliario):
-      //   setDel(null)
     })
   }, [isFocused])
-
-  const getDel = (id: any) => {
-    UserService.getUser(id)
-      .then(data => {
-        setDel(data)
-      })
-      .catch(error => {
-        console.error("getDel", error)
-      })
-  }
 
   const getRest = (order: any) => {
     RestaurantService.getRestaurant(order.Restaurante)
@@ -188,7 +168,7 @@ const StatusOrder = ({ navigation, route }) => {
             paddingHorizontal: 24
           }}
         >
-          {status.map((item, index) => {
+          {statusPickup.map((item, index) => {
             return (
               <View key={`StatusList-${index}`} style={{}}>
                 <View
@@ -228,7 +208,7 @@ const StatusOrder = ({ navigation, route }) => {
                     </Text>
                   </View>
                 </View>
-                {index < status.length - 1 && (
+                {index < statusPickup.length - 1 && (
                   <View>
                     {index < currentStep && (
                       <View
@@ -265,7 +245,7 @@ const StatusOrder = ({ navigation, route }) => {
   const renderFooter = () => {
     return (
       <View style={{ marginTop: 12, marginBottom: 24 }}>
-        {currentStep < status.length - 1 && currentStep != -2 && (
+        {currentStep < statusPickup.length - 1 && currentStep != -2 && (
           <View style={{ flexDirection: 'row', height: 55 }}>
             {/* Cancel */}
             <TextButton
@@ -311,7 +291,7 @@ const StatusOrder = ({ navigation, route }) => {
             />
           </View>
         )}
-        {currentStep === status.length - 1 && (
+        {currentStep === statusPickup.length - 1 && (
           <TextButton
             buttonContainerStyle={{ height: 55, borderRadius: 12 }}
             label='CALIFICAR PEDIDO'
@@ -373,4 +353,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default StatusOrder
+export default StatusOrderPickup

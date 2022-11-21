@@ -45,7 +45,11 @@ const CardOrder = ({ item, navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={style.btnOrdenes}>
-            <TouchableOpacity onPress={() => navigation.navigate('StatusOrder', {order:{...item, Restaurante: item.Restaurante.id}})}>
+            <TouchableOpacity onPress={() => {
+                item.Domicilio
+                ? navigation.navigate('StatusOrder', {order:{...item, Restaurante: item.Restaurante.id}})
+                : navigation.navigate('StatusOrderPickup', {order:{...item, Restaurante: item.Restaurante.id}})
+              }}>
               <Text style={style.textAyuda}>Estado</Text>
             </TouchableOpacity>
           </View>

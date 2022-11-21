@@ -1,97 +1,83 @@
 import React, { useState } from 'react'
 import {
-  Image, Linking, ScrollView,
-  StyleSheet,
-  Text,
-  View
+  Image, ScrollView, StyleSheet, Text, View
 } from 'react-native'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Colors } from '../../../constants/colors'
-
-import Moment from 'moment';
+import { Colors } from '../../constants/colors'
 
 import { useIsFocused } from '@react-navigation/native'
-import { normalize } from '../../../../FontNormalize'
-import HeaderNavigation from '../../../components/HeaderNavigation'
-import IconButton from '../../../components/IconButton'
-import LineDivider from '../../../components/LineDivider'
-import TextButton from '../../../components/TextButton'
-import TextIconButton from '../../../components/TextIconButton'
-import status from '../../../constants/status'
+import { normalize } from '../../../FontNormalize'
+import HeaderNavigation from '../../components/HeaderNavigation'
+import IconButton from '../../components/IconButton'
+import LineDivider from '../../components/LineDivider'
+import TextButton from '../../components/TextButton'
+import TextIconButton from '../../components/TextIconButton'
+import statusPickup from '../../constants/statusPickup'
 
-import { getDatabase, onValue, ref } from 'firebase/database'
+import {
+  getDatabase, onValue, ref,
+  update
+} from 'firebase/database'
 import { Alert } from 'react-native'
-import { images } from '../../../../images'
-import * as RestaurantService from '../../../services/RestaurantService'
-import * as UserService from '../../../services/UserService'
-import app from '../../firebaseConfig'
+import { images } from '../../../images'
+import * as UserService from '../../services/UserService'
+import * as NotificationService from '../../services/NotificationService'
+import app from '../firebaseConfig'
 
 const db = getDatabase(app)
-Moment.locale('es');
 
-const StatusOrder = ({ navigation, route }) => {
+const ChangeStatusOrderPickup = ({ navigation, route }) => {
   const isFocused = useIsFocused()
   const insets = useSafeAreaInsets()
 
   const [currentStep, setCurrentStep] = useState(-1)
   const [order, setOrder] = useState<any>(null)
-  const [rest, setRest] = useState<any>(null)
-  const [del, setDel] = useState<any>(null)
 
   React.useEffect(() => {
-    if (!route.params['order']) return
-    isFocused && setOrder(route.params['order'])
-    getRest(route.params['order'])
-    const statusRef = ref(db, 'Ordenes/' + route.params['order'].id)
-    onValue(statusRef, snapshot => {
-      const data = snapshot.val()
-      if (!data) {
-        setCurrentStep(4)
-        return
-      }
-      setCurrentStep(data.Estado)
-      if (data.Estado == 2) {
-        UserService.getOrder(route.params['order'].id)
-          .then(order => {
-            getDel(order.Domiciliario)
-          })
-          .catch(error => console.error("getOrder", error))
-      }
-      // data?.IdDomiciliario?
-      //   getDel(data.IdDomiciliario):
-      //   setDel(null)
-    })
+    if (isFocused) {
+      console.log('ChangeStatusOrderPickup')
+      if (!route.params['order']) return
+      setOrder(route.params['order'])
+      const statusRef = ref(db, 'Ordenes/' + route.params['order'].id)
+      onValue(statusRef, snapshot => {
+        const data = snapshot.val()
+        if (!data) return // return si se borro la orden en rt db
+        setCurrentStep(data.Estado)
+      })
+    }
   }, [isFocused])
 
-  const getDel = (id: any) => {
-    UserService.getUser(id)
-      .then(data => {
-        setDel(data)
+  const changeStatus = () => {
+    UserService.getOrder(order.id).then(order => {
+      if (currentStep === 1) {
+        NotificationService.sendOrderStatusUpdate(
+          order.UsuarioInfo.DeviceToken,
+          '¡Tu pedido esta listo para que pases por el! 👌🍽️'
+        )
+      }
+      const statusRef = ref(db, 'Ordenes/' + route.params['order'].id)
+      update(statusRef, {
+        Estado: currentStep + 1,
       })
-      .catch(error => {
-        console.error("getDel", error)
-      })
+    })
   }
 
-  const getRest = (order: any) => {
-    RestaurantService.getRestaurant(order.Restaurante)
-      .then(data => {
-        setRest(data)
+  const finishOrder = () => {
+    UserService.getOrder(order.id).then(order => {
+      const statusRef = ref(db, 'Ordenes/' + route.params['order'].id)
+      update(statusRef, {
+        Estado: 4,
+        IdDomiciliario: order.Domiciliario
       })
-      .catch(error => {
-        console.error("getRest", error)
+      UserService.finishOrder(order.id).then(() => {
+        NotificationService.sendOrderStatusUpdate(
+          order.UsuarioInfo.DeviceToken,
+          'Tu pedido ha sido entregado 👌'
+        )
       })
+    })
   }
-
-  const callNumberWhitLinking = (number: any) => {
-    Linking.openURL(`tel:${number}`).catch(error => console.error(error))
-  }
-
-  const goToWhatsapp = (number: any) => {
-    Linking.openURL(`whatsapp://send?phone=${number}`).catch(error => console.error(error))
-  }
-
 
   const renderHeader = () => {
     return (
@@ -115,10 +101,7 @@ const StatusOrder = ({ navigation, route }) => {
               height: 20,
               tintColor: Colors.gray2
             }}
-            onPress={() => {
-              // navigation.navigate("Orders")
-              navigation.goBack()
-            }}
+            onPress={() => navigation.goBack()}
           />
         }
       />
@@ -145,7 +128,9 @@ const StatusOrder = ({ navigation, route }) => {
             color: Colors.black
           }}
         >
-          {Moment(order?.Fecha).format('D MMM YYYY, h:mm a')}
+          {new Date(
+            new Date(order?.Fecha).getTime() + 15 * 60000
+          ).toUTCString()}
         </Text>
       </View>
     )
@@ -188,7 +173,7 @@ const StatusOrder = ({ navigation, route }) => {
             paddingHorizontal: 24
           }}
         >
-          {status.map((item, index) => {
+          {statusPickup.map((item, index) => {
             return (
               <View key={`StatusList-${index}`} style={{}}>
                 <View
@@ -228,7 +213,7 @@ const StatusOrder = ({ navigation, route }) => {
                     </Text>
                   </View>
                 </View>
-                {index < status.length - 1 && (
+                {index < statusPickup.length - 1 && (
                   <View>
                     {index < currentStep && (
                       <View
@@ -265,65 +250,6 @@ const StatusOrder = ({ navigation, route }) => {
   const renderFooter = () => {
     return (
       <View style={{ marginTop: 12, marginBottom: 24 }}>
-        {currentStep < status.length - 1 && currentStep != -2 && (
-          <View style={{ flexDirection: 'row', height: 55 }}>
-            {/* Cancel */}
-            <TextButton
-              buttonContainerStyle={{
-                width: '40%',
-                borderRadius: 8,
-                backgroundColor: Colors.lightGray2
-              }}
-              label='WhatsApp'
-              labelStyle={{ color: Colors.primary }}
-              onPress={() => 
-                goToWhatsapp(573175552995)
-              }
-            />
-            {/* MapView*/}
-            <TextIconButton
-              containerStyle={{
-                flex: 1,
-                marginLeft: 12,
-                borderRadius: 12,
-                backgroundColor: Colors.primary
-              }}
-              label={del ? 'Llamar domiciliario' : 'Llamar restaurante'}
-              labelStyle={{
-                color: Colors.white,
-                alignItems: 'center',
-                marginTop: 3,
-                fontSize: normalize(20)
-              }}
-              icon={images.ring_phone}
-              iconPosition='LEFT'
-              iconStyle={{
-                width: 25,
-                height: 25,
-                marginRight: 5,
-                tintColor: Colors.white
-              }}
-              onPress={() =>
-                del
-                  ? callNumberWhitLinking(del?.Telefono)
-                  : callNumberWhitLinking(rest?.Telefono)
-              }
-            />
-          </View>
-        )}
-        {currentStep === status.length - 1 && (
-          <TextButton
-            buttonContainerStyle={{ height: 55, borderRadius: 12 }}
-            label='CALIFICAR PEDIDO'
-            onPress={() =>
-              navigation.navigate('OrdersStack', {
-                screen: 'ServiceOrder',
-                params: { order: order }
-              })
-            }
-            // onPress={() => navigation.navigate('OrdersStack', {order: order})}
-          />
-        )}
         {currentStep === -2 && (
           <TextButton
             buttonContainerStyle={{ height: 55, borderRadius: 12 }}
@@ -333,7 +259,47 @@ const StatusOrder = ({ navigation, route }) => {
               navigation.navigate('Delivery')
               Alert.alert('El restaurante no tiene el producto en stock')
             }}
-            // onPress={() => navigation.navigate('OrdersStack', {order: order})}
+          // onPress={() => navigation.navigate('OrdersStack', {order: order})}
+          />
+        )}
+        {currentStep <= 1 && currentStep <= 2 && (
+          <View style={{ flexDirection: 'row', height: 55 }}>
+            {/* Productos */}
+            <TextButton
+              buttonContainerStyle={{
+                width: '40%',
+                borderRadius: 8,
+                backgroundColor: Colors.lightGray2
+              }}
+              label='Productos'
+              labelStyle={{ color: Colors.primary }}
+              onPress={() => navigation.navigate('ListProductsR', { order })}
+            />
+            {/* Cambiar estado*/}
+            <TextIconButton
+              containerStyle={{
+                flex: 1,
+                marginLeft: 12,
+                borderRadius: 12,
+                backgroundColor: Colors.primary
+              }}
+              label='Siguiente estado'
+              labelStyle={{
+                color: Colors.white,
+                fontSize: normalize(16)
+              }}
+              onPress={() => changeStatus()}
+            />
+          </View>
+        )}
+        {currentStep === 2 && (
+          <TextButton
+            buttonContainerStyle={{ height: 55, borderRadius: 12 }}
+            label='Finalizar'
+            onPress={() => {
+              finishOrder()
+            }}
+          // onPress={() => navigation.navigate('OrdersStack', {order: order})}
           />
         )}
       </View>
@@ -373,4 +339,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default StatusOrder
+export default ChangeStatusOrderPickup

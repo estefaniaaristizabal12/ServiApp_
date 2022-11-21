@@ -28,6 +28,7 @@ import Loader from '../../components/Loader'
 import * as AsyncStorage from '../../services/AsyncStorage'
 import * as RestService from '../../services/RestaurantService'
 import { firebaseConfig } from '../firebaseConfig'
+import { useIsFocused } from '@react-navigation/native'
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -36,6 +37,7 @@ const { width } = Dimensions.get('screen')
 const cardWidth = width / 2 - 20
 
 const Delivery = ({ navigation, route }) => {
+  const isFocused = useIsFocused()
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState('-1')
   const [restaurants, setRestaurants] = React.useState<any>(null)
   const [filteredData, setFilteredData] = React.useState<any>(null)
@@ -45,6 +47,7 @@ const Delivery = ({ navigation, route }) => {
   const [searchTextInput, setSearchTextInput] = React.useState<any>('')
 
   React.useEffect(() => {
+    if(!isFocused) return
     console.log('Delivery')
     setSearchTextInput('')
     setSelectedCategoryIndex('-1')
@@ -56,7 +59,7 @@ const Delivery = ({ navigation, route }) => {
         activeTab == 'Delivery' ? getRestaurantesDelivery() : getRestaurantes()
       })
       .then(() => setLoading(false))
-  }, [activeTab])
+  }, [activeTab, isFocused])
 
   const getUser = async () => {
     AsyncStorage.getUser()

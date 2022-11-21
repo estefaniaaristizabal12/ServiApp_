@@ -407,7 +407,7 @@ const Requests = ({ navigation }) => {
                       marginBottom: 5
                     }}
                   >
-                    {selectedOrder?.UsuarioInfo.nombrecliente}
+                    {selectedOrder?.UsuarioInfo?.nombrecliente!}
                   </Text>
                   <Text
                     style={{
