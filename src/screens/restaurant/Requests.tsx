@@ -1,6 +1,10 @@
 import {
-  Dimensions, FlatList, Image,
-  StyleSheet, Text, View
+  Dimensions,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View
 } from 'react-native'
 import { Colors } from '../../constants/colors'
 // import { Ionicons } from '@expo/vector-icons';
@@ -20,7 +24,8 @@ import {
   getDatabase,
   onChildAdded,
   onChildChanged,
-  onChildRemoved, orderByChild,
+  onChildRemoved,
+  orderByChild,
   query,
   ref,
   update
@@ -32,7 +37,7 @@ import { CustomCardNew } from '../../components/CustomCardNew'
 import * as AsyncStorage from '../../services/AsyncStorage'
 import * as NotificationService from '../../services/NotificationService'
 import * as UserService from '../../services/UserService'
-import * as  RestaurantService from '../../services/RestaurantService'
+import * as RestaurantService from '../../services/RestaurantService'
 import { firebaseConfig } from '../firebaseConfig'
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
@@ -53,15 +58,14 @@ const Requests = ({ navigation }) => {
     if (isFocused) {
       console.log('OrdersDeliv')
       AsyncStorage.getUser()
-        .then(user => {
+        .then((user: any) => {
           getNotAcceptedOrders(user)
           RestaurantService.getRestaurant(user.Restaurante)
             .then(rest => {
               user.Restaurante = { id: user.Restaurante, ...rest }
+              setUser(user)
             })
             .catch(error => console.error(error))
-            console.log(user.Restaurante)
-          setUser(user)
         })
         .catch(error => console.error(error))
     }
@@ -205,7 +209,7 @@ const Requests = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Hola {user?.Restaurante?.Nombre},
+          Hola {user?.nombrecliente} de
         </Text>
         <Text
           style={{
@@ -215,7 +219,7 @@ const Requests = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          {user?.nombrecliente}
+          {user?.Restaurante?.Nombre}
         </Text>
 
         <Text
@@ -229,7 +233,6 @@ const Requests = ({ navigation }) => {
         >
           Acá encontrarás las órdenes actuales
         </Text>
-
       </View>
     )
   }
@@ -357,11 +360,11 @@ const Requests = ({ navigation }) => {
           data={
             selectedOrder
               ? Object.keys(selectedOrder?.Carro).map(key => {
-                return {
-                  id: key,
-                  ...selectedOrder?.Carro[key]
-                }
-              })
+                  return {
+                    id: key,
+                    ...selectedOrder?.Carro[key]
+                  }
+                })
               : []
           }
           // data={selectedOrder? Object.values(selectedOrder?.Carro): []}
@@ -439,7 +442,7 @@ const Requests = ({ navigation }) => {
                   </Text>
                 </View>
                 <Ionicons
-                  name="checkmark-circle-sharp"
+                  name='checkmark-circle-sharp'
                   size={40}
                   style={styles.iconAceptar}
                   onPress={() => {
@@ -447,7 +450,7 @@ const Requests = ({ navigation }) => {
                   }}
                 ></Ionicons>
                 <Ionicons
-                  name="close-circle-sharp"
+                  name='close-circle-sharp'
                   size={40}
                   style={styles.iconRechazar}
                   onPress={() => {
@@ -480,7 +483,7 @@ const Requests = ({ navigation }) => {
         {renderBody()}
 
         {/* <Button title="Present Modal" onPress={handlePresentModal} /> */}
-        <StatusBar style="auto" />
+        <StatusBar style='auto' />
 
         <BottomSheetModal
           ref={bottomSheetModalRef}

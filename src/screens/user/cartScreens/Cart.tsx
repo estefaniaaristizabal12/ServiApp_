@@ -110,7 +110,8 @@ export const Cart = ({ navigation }) => {
   }
 
   const getCart = async (user: any) => {
-    UserService.getCart(user?.uid)
+    console.log(user.uid)
+    UserService.getCart(user.uid)
       .then(data => {
         if (JSON.stringify(data) === '{}') {
           setCart(null)

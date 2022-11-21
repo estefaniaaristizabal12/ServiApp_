@@ -143,7 +143,7 @@ const StatusOrder = ({ navigation, route }) => {
             color: Colors.black
           }}
         >
-          {Moment(order?.Fecha).format('d MMM YYYY, h:mm a')}
+          {Moment(order?.Fecha).format('D MMM YYYY, h:mm a')}
         </Text>
       </View>
     )

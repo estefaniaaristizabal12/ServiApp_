@@ -1,6 +1,4 @@
-import {
-  Dimensions, FlatList, StyleSheet, Text, View
-} from 'react-native'
+import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
 import { Colors } from '../../constants/colors'
 // import { Ionicons } from '@expo/vector-icons';
 import SegmentedControl from '@react-native-segmented-control/segmented-control'
@@ -18,11 +16,11 @@ import { getAuth } from 'firebase/auth'
 import { CardOrderBottom } from '../../components/CardOrderBottom'
 import { firebaseConfig } from '../firebaseConfig'
 
-import {
-  getDatabase
-} from 'firebase/database'
+import { getDatabase } from 'firebase/database'
 import * as AsyncStorage from '../../services/AsyncStorage'
 import * as UserService from '../../services/UserService'
+import * as RestaurantService from '../../services/RestaurantService'
+
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const db = getDatabase(app)
@@ -34,6 +32,7 @@ const Ratings = ({ navigation, route }) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const [orders, setOrders] = React.useState<any>([])
   const [user, setUser] = React.useState<any>(null)
+  const [rest, setRest] = React.useState<any>(null)
   const [totals, setTotals] = React.useState<any>(null)
   const [selectedOrder, setSelectedOrder] = React.useState<any>(null)
   const [ordersQ, setOrdersQ] = React.useState<any>({
@@ -47,35 +46,43 @@ const Ratings = ({ navigation, route }) => {
 
   React.useEffect(() => {
     if (isFocused) {
-      console.log('Ratings')
+      console.log('Ratings', route.params.domiciliary)
       setDomiciliary(route.params.domiciliary)
       AsyncStorage.getUser()
         .then(user => {
           setUser(user)
           getOrders(user)
+          if (user.Rol == 'Restaurante') getRestaurant(user.Restaurante)
         })
         .catch(error => console.error(error))
     }
   }, [isFocused])
 
+  const getRestaurant = async (idRest: any) => {
+    const rest = await RestaurantService.getRestaurant(idRest).catch(error =>
+      console.error(error)
+    )
+    setRest(rest)
+  }
+
   const getOrders = async (user: any) => {
-    const role = domiciliary == true? 'Domiciliario': 'Restaurante'
-    UserService.getOrders(role, 2, user.uid)
+    const role = domiciliary == true ? 'Domiciliario' : 'Restaurante'
+    UserService.getOrders(role, 2, role == "Domiciliario"? user.uid: user.Restaurante)
       .then(data => {
         let q0 = []
         let q1 = []
         let q2 = []
-        console.log(data)
         data.forEach((order: any) => {
           order.Fecha = new Date(order.Fecha).toLocaleDateString('es-ES')
-          if (JSON.stringify(order.Resena) == "{}")
-            return
+          if (JSON.stringify(order.Resena) == '{}') return
           if (0 <= order.Resena.Calificacion && order.Resena.Calificacion <= 3)
             q0.push(order)
-          else if (3 <= order.Resena.Calificacion && order.Resena.Calificacion <= 4)
+          else if (
+            3 <= order.Resena.Calificacion &&
+            order.Resena.Calificacion <= 4
+          )
             q1.push(order)
-          else
-            q2.push(order)
+          else q2.push(order)
           order.RestauranteImagen = order.Restaurante.Imagen
         })
         const newOrdersQ = {
@@ -88,7 +95,7 @@ const Ratings = ({ navigation, route }) => {
           q1: q1.length,
           q2: q2.length
         }
-        console.log("_--------_-", newOrdersQtotal)
+        console.log('_--------_-', newOrdersQtotal)
         setOrdersQ(newOrdersQ)
       })
       .catch(error => {
@@ -107,7 +114,9 @@ const Ratings = ({ navigation, route }) => {
             letterSpacing: 0.5
           }}
         >
-          Mirador,
+          {user?.Rol == 'Restaurante'
+            ? 'Restaurante ' + user?.Restaurante! + ','
+            : user?.nombrecliente! + ', '}
         </Text>
         <Text
           style={{
@@ -129,7 +138,7 @@ const Ratings = ({ navigation, route }) => {
         <SegmentedControl
           values={['0-3 ☆', '3-4 ☆', '5 ☆']}
           selectedIndex={0}
-          style={{ height: 40, backgroundColor: "#DAF7FE" }}
+          style={{ height: 40, backgroundColor: '#DAF7FE' }}
           onChange={event => {
             setTabIndex(event.nativeEvent.selectedSegmentIndex)
           }}
@@ -149,16 +158,15 @@ const Ratings = ({ navigation, route }) => {
         }}
       >
         <FlatList
-          data={tabIndex == 0 ? ordersQ.q0 : tabIndex == 1 ? ordersQ.q1 : ordersQ.q2}
+          data={
+            tabIndex == 0 ? ordersQ.q0 : tabIndex == 1 ? ordersQ.q1 : ordersQ.q2
+          }
           style={{ height: Dimensions.get('window').height / 2 + 80 }}
           ItemSeparatorComponent={() => (
             <View style={{ marginVertical: -5 }}></View>
           )}
           renderItem={({ item }) => (
-            <CardOrderNew
-              item={item}
-              onPress={() => {}}
-            />
+            <CardOrderNew item={item} onPress={() => {}} />
           )}
           keyExtractor={item => item.id}
         />
@@ -182,11 +190,11 @@ const Ratings = ({ navigation, route }) => {
           data={
             selectedOrder
               ? Object.keys(selectedOrder?.Carro).map(key => {
-                return {
-                  id: key,
-                  ...selectedOrder?.Carro[key]
-                }
-              })
+                  return {
+                    id: key,
+                    ...selectedOrder?.Carro[key]
+                  }
+                })
               : []
           }
           // data={selectedOrder? Object.values(selectedOrder?.Carro): []}
@@ -203,8 +211,6 @@ const Ratings = ({ navigation, route }) => {
       </View>
     )
   }
-
-
 
   return (
     <BottomSheetModalProvider>
@@ -224,7 +230,7 @@ const Ratings = ({ navigation, route }) => {
         {renderBody()}
 
         {/* <Button title="Present Modal" onPress={handlePresentModal} /> */}
-        <StatusBar style="auto" />
+        <StatusBar style='auto' />
 
         <BottomSheetModal
           ref={bottomSheetModalRef}

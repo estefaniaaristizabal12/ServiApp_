@@ -187,7 +187,7 @@ const Requests = ({ navigation }) => {
             letterSpacing: 0.5
           }}
         >
-          Hola Domiciliario,
+          Hola domiciliario
         </Text>
         <Text
           style={{

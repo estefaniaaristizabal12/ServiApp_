@@ -242,7 +242,7 @@ const Delivery = ({ navigation, route }) => {
           <Card
             title={item.Nombre}
             image={item.Imagen}
-            location={item.Localizacion}
+            location={item.Localización}
             description={item.Descripcion}
             onPress={() => {
               navigation.navigate('Restaurant', {
